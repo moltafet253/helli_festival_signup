@@ -15,9 +15,29 @@ import axios from 'axios';
 
 const app = createApp({});
 
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
+import Header from './components/Helli/Header.vue';
+app.component('Header', Header);
 
+import Header2 from './components/Helli/Header2.vue';
+app.component('Header2', Header2);
+
+import Personal_Info from './components/Helli/Personal_Info.vue';
+app.component('Personal_Info', Personal_Info);
+
+import Contact_Info from './components/Helli/Contact_Info.vue';
+app.component('Contact_Info', Contact_Info);
+
+import Educational_Info from './components/Helli/Educational_Info.vue';
+app.component('Educational_Info', Educational_Info);
+
+import Teaching_Info from './components/Helli/Teaching_Info.vue';
+app.component('Teaching_Info', Teaching_Info);
+
+import Blue_Warn from './components/Helli/Blue_Warn.vue';
+app.component('Blue_Warn', Blue_Warn);
+
+import Posts from './components/Helli/Posts.vue';
+app.component('Blue_Warn', Posts);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

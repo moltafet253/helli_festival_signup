@@ -14,9 +14,4 @@ use App\Http\Controllers\VueController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/', [VueController::class , 'index']);
-Route::post('/router', [VueController::class , 'recieve']);

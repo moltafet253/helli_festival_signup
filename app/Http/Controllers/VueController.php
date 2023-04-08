@@ -8,14 +8,7 @@ class VueController extends Controller
 {
     public function index()
     {
-        $dataFromController = ['name' => 'John', 'age' => 30];
-        return view('welcome', compact('dataFromController'));
+        return view('index');
     }
-    public function recieve(Request $request)
-    {
-        $name = $request->input('name');
-        return view('test', compact('name'));
 
-        // do something with the data
-    }
 }
