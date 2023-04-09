@@ -1,10 +1,14 @@
 <template>
-
+<div>
+    <h1>
+        Blue Warn
+    </h1>
+</div>
 </template>
 
 <script>
 export default {
-    name: "Contact_Info"
+    name: "bluewarn"
 }
 </script>
 

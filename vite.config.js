@@ -1,9 +1,6 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
-import postcss from 'vite-plugin-postcss'
-import svelte from '@sveltejs/vite-plugin-svelte';
-import postcss from 's-vite-postcss-plugin';
 
 export default defineConfig({
     plugins: [
@@ -22,8 +19,6 @@ export default defineConfig({
                 },
             },
         }),
-        svelte(),
-        postcss(),
     ],
     resolve: {
         alias: {

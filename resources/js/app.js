@@ -15,29 +15,29 @@ import axios from 'axios';
 
 const app = createApp({});
 
-import Header from './components/Helli/Header.vue';
-app.component('Header', Header);
+import appheader from './components/Helli/appheader.vue';
+app.component('appheader', appheader);
 
-import Header2 from './components/Helli/Header2.vue';
-app.component('Header2', Header2);
+import underheader from './components/Helli/underheader.vue';
+app.component('underheader', underheader);
 
-import Personal_Info from './components/Helli/Personal_Info.vue';
-app.component('Personal_Info', Personal_Info);
+import personalinfo from './components/Helli/personalinfo.vue';
+app.component('personalinfo', personalinfo);
 
-import Contact_Info from './components/Helli/Contact_Info.vue';
-app.component('Contact_Info', Contact_Info);
+import contactinfo from './components/Helli/contactinfo.vue';
+app.component('contactinfo', contactinfo);
 
-import Educational_Info from './components/Helli/Educational_Info.vue';
-app.component('Educational_Info', Educational_Info);
+import educationalinfo from './components/Helli/educationalinfo.vue';
+app.component('educationalinfo', educationalinfo);
 
-import Teaching_Info from './components/Helli/Teaching_Info.vue';
-app.component('Teaching_Info', Teaching_Info);
+import teachinginfo from './components/Helli/teachinginfo.vue';
+app.component('teachinginfo', teachinginfo);
 
-import Blue_Warn from './components/Helli/Blue_Warn.vue';
-app.component('Blue_Warn', Blue_Warn);
+import bluewarn from './components/Helli/bluewarn.vue';
+app.component('bluewarn', bluewarn);
 
-import Posts from './components/Helli/Posts.vue';
-app.component('Blue_Warn', Posts);
+import posts from './components/Helli/posts.vue';
+app.component('posts', posts);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
