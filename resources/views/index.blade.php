@@ -14,6 +14,7 @@
         <underheader></underheader>
         <personalinfo></personalinfo>
         <contactinfo></contactinfo>
+        <educationalinfo></educationalinfo>
         <teachinginfo></teachinginfo>
         <bluewarn></bluewarn>
         <posts></posts>
