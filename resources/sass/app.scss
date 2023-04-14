@@ -6,3 +6,20 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+@font-face {
+    font-family: 'IRANSansX';
+    src: url('../fonts/IRANSansX-Black.ttf') format('truetype');
+    src: url('../fonts/IRANSansX-Bold.ttf') format('truetype');
+    src: url('../fonts/IRANSansX-DemiBold.ttf') format('truetype');
+    src: url('../fonts/IRANSansX-ExtraBold.ttf') format('truetype');
+    src: url('../fonts/IRANSansX-Light.ttf') format('truetype');
+    src: url('../fonts/IRANSansX-Medium.ttf') format('truetype');
+    src: url('../fonts/IRANSansX-Regular.ttf') format('truetype');
+    src: url('../fonts/IRANSansX-Thin.ttf') format('truetype');
+    src: url('../fonts/IRANSansX-UltraLight.ttf') format('truetype');
+}
+
+*{
+    font-family: 'IRANSansX', sans-serif;
+}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
@@ -9,10 +10,34 @@ class VueController extends Controller
 {
     public function index()
     {
+        if (isset($_GET['token'])) {
+            $token = $_GET['token']; // دریافت توکن از پارامتر token در کوئری استرینگ
+            $url = "http://api-base.ismc.ir/Redirect/GetTokenInfo?key=" . $token; // تشکیل لینک با پارامتر توکن
+            $client = new Client();
+            $response = $client->request('GET', 'http://api-base.ismc.ir/Redirect/GetTokenInfo?key=' . $token);
+            $data = json_decode($response->getBody(), true);
+            if (isset($data['data']['person'])) {
+                $dataPersonal = $data['data']['person'];
+                $socialID = $data['data']['person']['SocialID'];
+                session()->put(['nationalcode'=>$socialID]);
+                Contact::firstOrCreate([
+                    'national_code' => $socialID
+                ], [
+                    'national_code' => $socialID,
+                ]);
+                return view('index', compact('dataPersonal'));
+            }
+            else {
+                return redirect('http://login.ismc.ir/?refurl=http://ssmp.ismc.ir', 302);
+            }
+        }
+        else {
+            return redirect('http://login.ismc.ir/?refurl=http://ssmp.ismc.ir', 302);
+        }
 //        $client = new Client();
-//        $response = $client->request('GET', 'http://ws.ismc.ir/api/WebService/Handler?username=AllamehHeli&password=F2Hr5U6QSh1C0UK%@&ParamsArray=[{"Keyword":"EduStatus","Params":[{"NationalCode":"1756195171"}]}]');
+//        $response = $client->request('GET', 'http://api-base.ismc.ir/Redirect/GetTokenInfo?key=77985308-E13F-4DC1-9648-9740345177C7');
 //        $data = json_decode($response->getBody(), true);
-//        return view('index', $data['data']);
-        return view('index');
+//        $dataPersonal=$data['data']['person'];
+//        return view('index',compact('dataPersonal'));
     }
 }

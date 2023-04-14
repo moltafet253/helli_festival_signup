@@ -13,5 +13,5 @@ use App\Http\Controllers\VueController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/', [VueController::class , 'index']);
+

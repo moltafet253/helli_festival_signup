@@ -1,14 +1,76 @@
 <template>
     <div>
-        <h1>
-            Personal Info
-        </h1>
+        <h1></h1>
+        <form>
+            <div class="flex items-center ">
+                <span class="text-orange-500 pl-4">◼️</span> <h3 class="text-lg font-bold ">اطلاعات‌ شخصی</h3>
+                <hr class="w-full border-t-2 border-b-orange mr-4">
+            </div>
+            <div class="flex flex-wrap mt-5">
+                <div class="w-full lg:w-4/12 px-4 ">
+                    <div class="relative flex items-center justify-center mx-auto">
+                        <img class="rounded-3xl w-32 h-32 object-cover" src="{{  }}" alt="">
+                    </div>
+                </div>
+                <div class="w-full lg:w-4/12 px-4 flex-row">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase  text-xs font-bold mb-2" htmlfor="grid-password">نام</label>
+                        <label class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{ datapersonal.FirstName}}</label>
+                    </div>
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase  text-xs font-bold mb-2" htmlfor="grid-password">نام پدر</label>
+                        <label class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{ datapersonal.FatherName}}</label>
+                    </div>
+                </div>
+                <div class="w-full lg:w-4/12 px-4 flex-row">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase  text-xs font-bold mb-2" htmlfor="grid-password">نام خانوادگی</label>
+                        <label class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{ datapersonal.LastName}}</label>
+                    </div>
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase  text-xs font-bold mb-2" htmlfor="grid-password">کد ملی</label>
+                        <label class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{ datapersonal.SocialID}}</label>
+                    </div>
+                </div>
+                <div class="w-full lg:w-4/12 px-4 flex-row">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase  text-xs font-bold mb-2" htmlfor="grid-password">شماره شناسنامه</label>
+                        <label class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{ }}</label>
+                    </div>
+                </div>
+                <div class="w-full lg:w-4/12 px-4 flex-row">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase  text-xs font-bold mb-2" htmlfor="grid-password">تاریخ تولد</label>
+                        <label class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{ datapersonal.Birthdate}}</label>
+                    </div>
+                </div>
+                <div class="w-full lg:w-4/12 px-4 flex-row">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase  text-xs font-bold mb-2" htmlfor="grid-password">جنسیت</label>
+                        <label class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{ datapersonal.Gender}}</label>
+                    </div>
+                </div>
+                <div class="w-full lg:w-4/12 px-4 flex-row">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase  text-xs font-bold mb-2" htmlfor="grid-password">صادره از</label>
+                        <label class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{ datapersonal.Sodor}}</label>
+                    </div>
+                </div>
+                <div class="w-full lg:w-4/12 px-4 flex-row">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase  text-xs font-bold mb-2" htmlfor="grid-password">ملیت</label>
+                        <label class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{ }}</label>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </template>
 
 <script>
 export default {
-    name: "personalinfo"
+    name: "personalinfo",
+    props: ['datapersonal']
 }
 </script>
 

@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family:'IRANSansX';
+    /*src: URL('Fonts/IRANSansX-Black') format('truetype');*/
+    /*src: URL('Fonts/IRANSansX-Bold.ttf') format('truetype');*/
+    /*src: URL('Fonts/IRANSansX-DemiBold.ttf') format('truetype');*/
+    /*src: URL('Fonts/IRANSansX-ExtraBold.ttf') format('truetype');*/
+    /*src: URL('Fonts/IRANSansX-Light.ttf') format('truetype');*/
+    /*src: URL('Fonts/IRANSansX-Medium.ttf') format('truetype');*/
+    /*src: URL('Fonts/IRANSansX-Regular.ttf') format('truetype');*/
+    /*src: URL('Fonts/IRANSansX-Thin.ttf') format('truetype');*/
+    /*src: URL('Fonts/IRANSansX-UltraLight.ttf') format('truetype');*/
+}
+body{
+    font-family: 'IRANSansX';
+}
+
+* {
+
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    color-scheme: light dark;
+    color: #3d3d3d;
+    text-decoration: none !important;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
