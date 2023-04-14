@@ -5,7 +5,17 @@
                 <span class="text-orange-500 pl-1">◼</span> <h2 class="text-base font-bold  ">اطلاعات ‌تدریس</h2>
                 <hr class="w-full border-t-2 border-b-orange mr-4 mt-3">
             </div>
+            <div class="w-full lg:w-4/12 px-4 flex-row">
+                <div class="relative w-full mb-3">
+                    <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">استاد می باشید؟</label>
+                    <select class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
+                        <option selected value="خیر">خیر</option>
+                        <option value="بله">بله</option>
+                    </select>
+                </div>
+            </div>
             <div class="flex flex-wrap mt-5">
+
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">کد استادی</label>
@@ -25,18 +35,18 @@
                     </div>
                 </div>
 
-                <div class="mt-8 mx-4 w-full lg:w-6/12 px-4 flex py-3 bg-yellow-50 rounded-xl border border-colorborder">
-                    <div class=" flex-row ">
-                        <div class="relative w-full ">
-                            <img class="bg-yellow-500 rounded-md p-1" src="" alt="">
-                        </div>
-                    </div>
-                    <div class="w-full flex-row">
-                        <div class="relative w-full mb-3 mr-3">
-                            <p>اطلاعات تدریس شما وارد نشده است.</p>
-                        </div>
-                    </div>
-                </div>
+<!--                <div class="mt-8 mx-4 w-full lg:w-6/12 px-4 flex py-3 bg-yellow-50 rounded-xl border border-colorborder">-->
+<!--                    <div class=" flex-row ">-->
+<!--                        <div class="relative w-full ">-->
+<!--                            <img class="bg-yellow-500 rounded-md p-1" src="" alt="">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="w-full flex-row">-->
+<!--                        <div class="relative w-full mb-3 mr-3">-->
+<!--                            <p>اطلاعات تدریس شما وارد نشده است.</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
             </div>
         </form>

@@ -26,20 +26,10 @@ return new class extends Migration
             $table->text('vaziattaahol');
             $table->text('codeshahr');
             $table->text('telephone');
-            $table->text('ostantahsili');
-            $table->text('shahrtahsili');
-            $table->text('madrese');
-            $table->text('paye');
-            $table->text('sath');
-            $table->text('term');
-            $table->text('tahsilatghhozavi');
-            $table->text('reshtedaneshgahi');
-            $table->text('shparvandetahsili');
+
             $table->text('sh_shenasnameh');
 
-            $table->text('reshtetakhasosihozavi');
-            $table->text('markaztakhasosihozavi');
-            $table->text('noetahsilathozavi');
+
             $table->text('meliat');
             $table->text('namekeshvar');
             $table->text('gozarname');

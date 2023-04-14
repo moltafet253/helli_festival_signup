@@ -13,9 +13,9 @@
         <underheader></underheader>
         <personalinfo :datapersonal="{{json_encode($dataPersonal)}}"></personalinfo>
         <contactinfo :nationalcode="{{ json_encode(session('nationalcode')) }}"></contactinfo>
-        <educationalinfo></educationalinfo>
-        <teachinginfo></teachinginfo>
-        <posts></posts>
+        <educationalinfo :nationalcode="{{ json_encode(session('nationalcode')) }}"></educationalinfo>
+        <teachinginfo :nationalcode="{{ json_encode(session('nationalcode')) }}"></teachinginfo>
+        <posts :nationalcode="{{ json_encode(session('nationalcode')) }}"></posts>
     </div>
 </body>
 </html>

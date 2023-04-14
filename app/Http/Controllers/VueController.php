@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\EducationalInfo;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
@@ -21,6 +22,11 @@ class VueController extends Controller
                 $socialID = $data['data']['person']['SocialID'];
                 session()->put(['nationalcode'=>$socialID]);
                 Contact::firstOrCreate([
+                    'national_code' => $socialID
+                ], [
+                    'national_code' => $socialID,
+                ]);
+                EducationalInfo::firstOrCreate([
                     'national_code' => $socialID
                 ], [
                     'national_code' => $socialID,
