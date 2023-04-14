@@ -20,12 +20,16 @@ class VueController extends Controller
             if (isset($data['data']['person'])) {
                 $dataPersonal = $data['data']['person'];
                 $socialID = $data['data']['person']['SocialID'];
+                $Gender = $data['data']['person']['Gender'];
                 session()->put(['nationalcode'=>$socialID]);
+                session()->put(['gender'=>$Gender]);
+
                 Contact::firstOrCreate([
                     'national_code' => $socialID
                 ], [
                     'national_code' => $socialID,
                 ]);
+
                 EducationalInfo::firstOrCreate([
                     'national_code' => $socialID
                 ], [

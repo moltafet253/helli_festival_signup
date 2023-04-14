@@ -4,6 +4,7 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 /*
@@ -37,4 +38,14 @@ Route::post('/contact/save/{nationCode}', function (Request $request,$nationCode
         'address'=> $address,
         'postal_code'=> $postal_code,
     ]);
+});
+
+Route::get('/edu/{nationalcode}', function (Request $request,$nationalcode) {
+    $a= DB::table('educational_infos')->where('national_code', '=',$nationalcode)->get();
+//    dd(session());
+    $b = session('nationalcode');
+    return [
+        'edu'=>$a,
+        'gender'=>$b
+    ];
 });
