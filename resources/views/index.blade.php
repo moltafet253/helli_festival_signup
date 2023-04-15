@@ -1,4 +1,3 @@
-{{ session('gender') }}
 <!DOCTYPE html>
 <html dir="rtl" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -14,7 +13,10 @@
         <underheader></underheader>
         <personalinfo :datapersonal="{{json_encode($dataPersonal)}}"></personalinfo>
         <contactinfo :nationalcode="{{ json_encode(session('nationalcode')) }}"></contactinfo>
-        <educationalinfo :nationalcode="{{ json_encode(session('nationalcode')) }}" :gender="{{ $dataPersonal['Gender'] }}"></educationalinfo>
+        @php
+        $edudata = array('nationalcode' => session('nationalcode'), 'gender' => session('gender'));
+        @endphp
+        <educationalinfo :nationalcode="{{ json_encode($edudata) }}"></educationalinfo>
         <teachinginfo :nationalcode="{{ json_encode(session('nationalcode')) }}"></teachinginfo>
         <posts :nationalcode="{{ json_encode(session('nationalcode')) }}"></posts>
     </div>

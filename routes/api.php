@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Middleware\CheckSession;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +19,11 @@ use Illuminate\Support\Facades\Validator;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
-Route::get('/contact/{nationalcode}', function ($nationalcode) {
+Route::middleware('CheckSession')->get('/contact/{nationalcode}', function ($nationalcode) {
     return DB::table('contacts')->where('national_code', '=',$nationalcode)->get();
 });
 
@@ -41,11 +42,10 @@ Route::post('/contact/save/{nationCode}', function (Request $request,$nationCode
 });
 
 Route::get('/edu/{nationalcode}', function (Request $request,$nationalcode) {
-    $a= DB::table('educational_infos')->where('national_code', '=',$nationalcode)->get();
-//    dd(session());
-    $b = session('nationalcode');
+    $edu= DB::table('educational_infos')->where('national_code', '=',$nationalcode)->get();
+    $gender = session()->get('gender');
     return [
-        'edu'=>$a,
-        'gender'=>$b
+        'edu'=>$edu,
+        'gender'=>$gender
     ];
 });

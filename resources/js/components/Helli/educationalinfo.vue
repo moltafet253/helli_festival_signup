@@ -28,10 +28,11 @@
                         </select>
                     </div>
                 </div>
-                <div class="w-full lg:w-2/12 px-4 flex-row">
+                <div class="w-full lg:w-2/12 px-4 flex-row" v-if="nationalcode['gender']=='مرد'">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">پایه</label>
                         <select class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
+                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option value="1" v-for="(item, index) in edu" :key="index" v-bind:selected="item.paye=='1'">1</option>
                             <option value="2" v-for="(item, index) in edu" :key="index" v-bind:selected="item.paye=='2'">2</option>
                             <option value="3" v-for="(item, index) in edu" :key="index" v-bind:selected="item.paye=='3'">3</option>
@@ -118,19 +119,14 @@ export default {
     data() {
         return {
             edu: [],
-            // address: '',
-            // phone: '',
-            // mobile: '',
-            // postal_code: '',
+            gender :'',
         }
     },
     mounted() {
-        axios.get(`/api/edu/${this.nationalcode}/`)
+        axios.get(`/api/edu/${this.nationalcode.nationalcode}/`)
             .then(response => {
                 this.edu = response.data.edu;
                 this.gender = response.data.gender;
-                console.log(response.data.gender);
-
             })
             .catch(error => {
                 console.log(error)
