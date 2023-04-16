@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use App\Models\EducationalInfo;
+use App\Models\TeachingInfo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -23,13 +24,23 @@ class VueController extends Controller
                 $socialID = $data['data']['person']['SocialID'];
                 $Gender = $data['data']['person']['Gender'];
 //                $Gender = 'زن';
-                session()->put(['nationalcode'=>$socialID]);
-                session()->put(['gender'=>$Gender]);
+                session()->put(['nationalcode' => $socialID]);
+                session()->put(['gender' => $Gender]);
 
-                User::firstOrNew([
+                User::firstOrCreate([
                     'national_code' => $socialID
                 ], [
                     'national_code' => $socialID,
+                ]);
+
+
+                User::where('national_code', '=', $socialID)->update([
+                    'name' => $data['data']['person']['FirstName'],
+                    'family' => $data['data']['person']['LastName'],
+                    'father_name' => $data['data']['person']['FatherName'],
+                    'shenasname' => $data['data']['person']['IDNumber'],
+                    'birthdate' => $data['data']['person']['Birthdate'],
+                    'gender' => $data['data']['person']['Gender'],
                 ]);
 
                 Contact::firstOrCreate([
@@ -38,18 +49,32 @@ class VueController extends Controller
                     'national_code' => $socialID,
                 ]);
 
+                $contacts = Contact::where('national_code', '=', $socialID)->get();
+                foreach ($contacts as $contact) {
+                }
+                if (empty($contact['mobile'])) {
+                    Contact::where('national_code', '=', $socialID)->update([
+                        'mobile' => $data['data']['contact']['Mobile'],
+                    ]);
+                }
+
                 EducationalInfo::firstOrCreate([
                     'national_code' => $socialID
                 ], [
                     'national_code' => $socialID,
                 ]);
+
+                TeachingInfo::firstOrCreate([
+                    'national_code' => $socialID
+                ], [
+                    'national_code' => $socialID,
+                ]);
+
                 return view('index', compact('dataPersonal'));
-            }
-            else {
+            } else {
                 return redirect('http://login.ismc.ir/?refurl=http://ssmp.ismc.ir', 302);
             }
-        }
-        else {
+        } else {
             return redirect('http://login.ismc.ir/?refurl=http://ssmp.ismc.ir', 302);
         }
 //        $client = new Client();

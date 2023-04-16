@@ -315,7 +315,7 @@ export default {
                     gender: gender,
                 })
                     .then(function (response) {
-                        alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.')
+                        alert('اطلاعات تحصیلی شما با موفقیت در سامانه ثبت شد.')
                         console.log(response.data);
                     })
                     .catch(function (error) {

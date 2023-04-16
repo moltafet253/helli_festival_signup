@@ -83,5 +83,33 @@ Route::post('/edu/save/{nationCode}', function (Request $request) {
         'tahsilatghhozavi' => $tahsilatghhozavi,
         'reshtedaneshgahi' => $reshtedaneshgahi,
     ]);
+});
+
+Route::middleware('CheckSession')->get('/teaching/{nationalcode}', function ($nationalcode) {
+    return DB::table('teaching_infos')->where('national_code', '=', $nationalcode)->get();
+});
+
+Route::post('/contact/save/{nationCode}', function (Request $request, $nationCode) {
+    $phone = $request->input('contact.0.phone');
+    $mobile = $request->input('contact.0.mobile');
+    $address = $request->input('contact.0.address');
+    $postal_code = $request->input('contact.0.postal_code');
+    $contact = Contact::where('national_code', '=', $nationCode)->update([
+        'phone' => $phone,
+        'mobile' => $mobile,
+        'address' => $address,
+        'postal_code' => $postal_code,
+    ]);
+});
+
+
+Route::get('/provinces',function (){
+    $provinces = DB::table('provinces')->orderBy('id')->get()->where('parent','=',0);
+//    foreach ($provinces as $info){
+//        return $parent=$info['id'];
+//        $cities = DB::table('provinces')->get()->where('parent','=',$parent);
+//        return $cities;
+//    }
+    return $provinces;
 
 });

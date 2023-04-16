@@ -10,10 +10,10 @@
                 <div class="relative w-full mb-3">
                     <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">استاد می
                         باشید؟</label>
-                    <select
+                    <select v-model="item.isMaster" v-for="(item, index) in teaching"
                         class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
-                        <option selected value="خیر">خیر</option>
-                        <option value="بله">بله</option>
+                        <option selected value="خیر" v-bind:selected="item.term=='خیر'">خیر</option>
+                        <option value="بله" v-bind:selected="item.term=='بله'">بله</option>
                     </select>
                 </div>
             </div>
@@ -22,28 +22,32 @@
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">کد
-                            استادی</label>
-                        <input type="text"
+                            استادی<span
+                                style="color: red;">*</span></label>
+                        <input type="text" v-for="(item, index) in teaching" :key="index"
                                class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
-                               value="45123">
+                               v-model="item.masterCode">
                     </div>
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">استان و شهر محل
-                            تدریس</label>
-                        <input type="text"
-                               class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
-                               value="قم - جعفریه">
+                            تدریس<span
+                                style="color: red;">*</span></label>
+                        <select
+                                class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
+                            <option v-for="province in provinces" :value="province.id">{{ province.title }}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">نام محل
-                            تدریس</label>
-                        <input type="text"
+                            تدریس<span
+                                style="color: red;">*</span></label>
+                        <input type="text" v-for="(item, index) in teaching" :key="index"
                                class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
-                               value="موسسه آموزش تشیع">
+                               v-model="item.teachingPlaceName">
                     </div>
                 </div>
 
@@ -58,10 +62,58 @@
 
 <script>
 export default {
-    name: "teachinginfo"
+    name: "teachinginfo",
+    props: ['nationalcode'],
+    data() {
+        return {
+            teaching: [],
+            provinces: [],
+
+        }
+    },
+    mounted() {
+        axios.get(`/api/teaching/${this.nationalcode}/`)
+            .then(response => {
+                this.teaching = response.data;
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    },
+    created() {
+        axios.get('/api/provinces')
+            .then(response => {
+                this.provinces = response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    },
+    methods: {
+        // handleSubmit() {
+        //     let mobile = this.contact[0]['mobile'];
+        //     if (mobile == '' || mobile == null) {
+        //         alert('شماره همراه وارد نشده است.');
+        //     } else if (mobile.length < 11 || mobile.length > 11) {
+        //         alert('شماره همراه در فرمت اشتباه وارد شده است.');
+        //         return false;
+        //     } else {
+        //         axios.post(`/api/contact/save/${this.nationalcode}/`, {
+        //             contact: this.contact,
+        //         })
+        //             .then(function (response) {
+        //                 alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.')
+        //                 // console.log(response.data);
+        //             })
+        //             .catch(function (error) {
+        //                 // console.log(error);
+        //             });
+        //     }
+        // },
+    }
+
 }
 </script>
-
 <style scoped>
 
 </style>
