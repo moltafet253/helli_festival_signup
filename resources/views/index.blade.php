@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ثبت نام جشنواره علامه حلی</title>
+    <title>سامانه ثبت آثار جشنواره علامه حلی(ره)</title>
     @vite(['resources/css/app.css','resources/sass/app.scss','resources/js/app.js'])
 </head>
 <body class="antialiased">
@@ -18,6 +18,7 @@
         @endphp
         <educationalinfo :nationalcode="{{ json_encode($edudata) }}"></educationalinfo>
         <teachinginfo :nationalcode="{{ json_encode(session('nationalcode')) }}"></teachinginfo>
+        <bluewarn></bluewarn>
         <posts :nationalcode="{{ json_encode(session('nationalcode')) }}"></posts>
     </div>
 </body>

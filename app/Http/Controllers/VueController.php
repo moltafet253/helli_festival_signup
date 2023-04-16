@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use App\Models\EducationalInfo;
+use App\Models\User;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
@@ -21,8 +22,15 @@ class VueController extends Controller
                 $dataPersonal = $data['data']['person'];
                 $socialID = $data['data']['person']['SocialID'];
                 $Gender = $data['data']['person']['Gender'];
+//                $Gender = 'زن';
                 session()->put(['nationalcode'=>$socialID]);
                 session()->put(['gender'=>$Gender]);
+
+                User::firstOrNew([
+                    'national_code' => $socialID
+                ], [
+                    'national_code' => $socialID,
+                ]);
 
                 Contact::firstOrCreate([
                     'national_code' => $socialID

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Contact;
+use App\Models\EducationalInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -24,28 +25,63 @@ use App\Http\Middleware\CheckSession;
 //});
 
 Route::middleware('CheckSession')->get('/contact/{nationalcode}', function ($nationalcode) {
-    return DB::table('contacts')->where('national_code', '=',$nationalcode)->get();
+    return DB::table('contacts')->where('national_code', '=', $nationalcode)->get();
 });
 
-Route::post('/contact/save/{nationCode}', function (Request $request,$nationCode) {
-    $phone=$request->input('contact.0.phone');
-    $mobile=$request->input('contact.0.mobile');
-    $address=$request->input('contact.0.address');
-    $postal_code=$request->input('contact.0.postal_code');
-    $user = Contact::where('national_code','=',$nationCode)->update([
-        'national_code' => $nationCode,
+Route::post('/contact/save/{nationCode}', function (Request $request, $nationCode) {
+    $phone = $request->input('contact.0.phone');
+    $mobile = $request->input('contact.0.mobile');
+    $address = $request->input('contact.0.address');
+    $postal_code = $request->input('contact.0.postal_code');
+    $contact = Contact::where('national_code', '=', $nationCode)->update([
         'phone' => $phone,
         'mobile' => $mobile,
-        'address'=> $address,
-        'postal_code'=> $postal_code,
+        'address' => $address,
+        'postal_code' => $postal_code,
     ]);
 });
 
-Route::get('/edu/{nationalcode}', function (Request $request,$nationalcode) {
-    $edu= DB::table('educational_infos')->where('national_code', '=',$nationalcode)->get();
+Route::get('/edu/{nationalcode}', function (Request $request, $nationalcode) {
+    $edu = DB::table('educational_infos')->where('national_code', '=', $nationalcode)->get();
     $gender = session()->get('gender');
     return [
-        'edu'=>$edu,
-        'gender'=>$gender
+        'edu' => $edu,
+        'gender' => $gender
     ];
+});
+
+Route::post('/edu/save/{nationCode}', function (Request $request) {
+//    echo $request;
+    $national_code = $request->input('edu.0.national_code');
+    $namemarkaztahsili = $request->input('edu.0.namemarkaztahsili');
+    $noetahsilhozavi = $request->input('edu.0.noetahsilhozavi');
+    $shparvandetahsili = $request->input('edu.0.shparvandetahsili');
+    $paye = $request->input('edu.0.paye');
+    $sath = $request->input('edu.0.sath');
+    $term = $request->input('edu.0.term');
+    $markaztakhasosihozavi = $request->input('edu.0.markaztakhasosihozavi');
+    $reshtedaneshgahi = $request->input('edu.0.reshtedaneshgahi');
+    $tahsilatghhozavi = $request->input('edu.0.tahsilatghhozavi');
+    $gender = $request->input('gender');
+    switch ($gender) {
+        case 'زن':
+            $paye = null;
+            break;
+        case 'مرد':
+            $sath = null;
+            $term = null;
+            break;
+    }
+    $edu=EducationalInfo::where('national_code','=',$national_code)->update([
+        'namemarkaztahsili' => $namemarkaztahsili,
+        'noetahsilhozavi' => $noetahsilhozavi,
+        'shparvandetahsili' => $shparvandetahsili,
+        'paye' => $paye,
+        'sath' => $sath,
+        'term' => $term,
+        'markaztakhasosihozavi' => $markaztakhasosihozavi,
+        'tahsilatghhozavi' => $tahsilatghhozavi,
+        'reshtedaneshgahi' => $reshtedaneshgahi,
+    ]);
+
 });

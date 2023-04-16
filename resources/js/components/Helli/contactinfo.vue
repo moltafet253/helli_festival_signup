@@ -9,7 +9,7 @@
             <div class="mt-3 flex items-center">
                 <span><img class="bg-orange-400 rounded-md w-5 ml-2" src="build/assets/icons/Danger Triangle.svg"
                            alt=""></span>
-                <p>در صورت نیاز به تغییر اطلاعات تماس فیلدهای زیر را کامل نمائید. (توجه داشته باشید که اطلاعات وارد شده
+                <p>در صورت نیاز به تغییر اطلاعات تماس فیلدهای زیر را تکمیل نمائید. (توجه داشته باشید که اطلاعات وارد شده
                     توسط شما در سامانه پیشخوان ثبت نخواهد شد.)</p>
             </div>
             <div class="flex flex-wrap mt-5">
@@ -78,15 +78,13 @@ export default {
     },
     methods: {
         handleSubmit() {
-            let mobile=this.contact[0]['mobile'];
-            if (mobile=='' || mobile==null){
-                alert ('شماره همراه وارد نشده است.');
-            }
-            else if (mobile.length<11 || mobile.length>11){
+            let mobile = this.contact[0]['mobile'];
+            if (mobile == '' || mobile == null) {
+                alert('شماره همراه وارد نشده است.');
+            } else if (mobile.length < 11 || mobile.length > 11) {
                 alert('شماره همراه در فرمت اشتباه وارد شده است.');
                 return false;
-            }
-            else{
+            } else {
                 axios.post(`/api/contact/save/${this.nationalcode}/`, {
                     contact: this.contact,
                 })
