@@ -189,7 +189,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">مدرک تحصیلی غیر
                             حوزوی</label>
-                        <select v-for="(item, index) in edu" :key="index" type="text" v-model="item.tahsilatghhozavi"
+                        <select v-for="(item, index) in edu" :key="index" v-model="item.tahsilatghhozavi"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option value="دیپلم" v-for="(item, index) in edu" :key="index"
@@ -233,7 +233,7 @@
                     </div>
                 </div>
                 <div class="w-full mt-4">
-                    <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mx-auto block">ذخیره</button>
+                    <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mx-auto block">ذخیره اطلاعات تحصیلی</button>
                 </div>
             </div>
         </form>

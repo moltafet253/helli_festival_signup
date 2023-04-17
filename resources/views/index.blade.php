@@ -11,6 +11,7 @@
     <div id="app">
         <appheader></appheader>
         <underheader></underheader>
+        <div class="px-16">
         <personalinfo :datapersonal="{{json_encode($dataPersonal)}}"></personalinfo>
         <contactinfo :nationalcode="{{ json_encode(session('nationalcode')) }}"></contactinfo>
         @php
@@ -20,6 +21,7 @@
         <teachinginfo :nationalcode="{{ json_encode(session('nationalcode')) }}"></teachinginfo>
         <bluewarn></bluewarn>
         <posts :nationalcode="{{ json_encode(session('nationalcode')) }}"></posts>
+        </div>
     </div>
 </body>
 </html>

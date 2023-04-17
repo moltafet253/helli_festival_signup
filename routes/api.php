@@ -2,6 +2,7 @@
 
 use App\Models\Contact;
 use App\Models\EducationalInfo;
+use App\Models\TeachingInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -72,7 +73,7 @@ Route::post('/edu/save/{nationCode}', function (Request $request) {
             $term = null;
             break;
     }
-    $edu=EducationalInfo::where('national_code','=',$national_code)->update([
+    $edu = EducationalInfo::where('national_code', '=', $national_code)->update([
         'namemarkaztahsili' => $namemarkaztahsili,
         'noetahsilhozavi' => $noetahsilhozavi,
         'shparvandetahsili' => $shparvandetahsili,
@@ -89,22 +90,24 @@ Route::middleware('CheckSession')->get('/teaching/{nationalcode}', function ($na
     return DB::table('teaching_infos')->where('national_code', '=', $nationalcode)->get();
 });
 
-Route::post('/contact/save/{nationCode}', function (Request $request, $nationCode) {
-    $phone = $request->input('contact.0.phone');
-    $mobile = $request->input('contact.0.mobile');
-    $address = $request->input('contact.0.address');
-    $postal_code = $request->input('contact.0.postal_code');
-    $contact = Contact::where('national_code', '=', $nationCode)->update([
-        'phone' => $phone,
-        'mobile' => $mobile,
-        'address' => $address,
-        'postal_code' => $postal_code,
+Route::post('/teaching/save/{nationCode}', function (Request $request) {
+    $national_code = $request->input('teaching.0.national_code');
+    $isMaster = $request->input('teaching.0.isMaster');
+    $masterCode = $request->input('teaching.0.masterCode');
+    $teachingLocation = $request->input('teaching.0.teachingLocation');
+    $teachingPlaceName = $request->input('teaching.0.teachingPlaceName');
+    $teaching = TeachingInfo::where('national_code', '=', $national_code)->update([
+        'isMaster' => $isMaster,
+        'masterCode'=>$masterCode,
+        'teachingLocation'=>$teachingLocation,
+        'teachingPlaceName'=>$teachingPlaceName,
     ]);
+    return $teaching;
 });
 
 
-Route::get('/provinces',function (){
-    $provinces = DB::table('provinces')->orderBy('id')->get()->where('parent','=',0);
+Route::get('/provinces', function () {
+    $provinces = DB::table('provinces')->orderBy('id')->get()->where('parent', '=', 0);
 //    foreach ($provinces as $info){
 //        return $parent=$info['id'];
 //        $cities = DB::table('provinces')->get()->where('parent','=',$parent);

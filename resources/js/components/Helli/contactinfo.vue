@@ -46,7 +46,7 @@
                         rows="5" v-for="(item, index) in contact" :key="index" v-model="item.address"></textarea>
                 </div>
                 <div class="w-full mt-4">
-                    <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mx-auto block">ذخیره</button>
+                    <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mx-auto block">ذخیره اطلاعات تماس</button>
                 </div>
 
             </div>
@@ -81,7 +81,7 @@ export default {
             let mobile = this.contact[0]['mobile'];
             if (mobile == '' || mobile == null) {
                 alert('شماره همراه وارد نشده است.');
-            } else if (mobile.length < 11 || mobile.length > 11) {
+            } else if (mobile.length != 11 ) {
                 alert('شماره همراه در فرمت اشتباه وارد شده است.');
                 return false;
             } else {
@@ -93,7 +93,7 @@ export default {
                         // console.log(response.data);
                     })
                     .catch(function (error) {
-                        // console.log(error);
+                        console.log(error);
                     });
             }
         },
