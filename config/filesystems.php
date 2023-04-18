@@ -56,6 +56,13 @@ return [
             'throw' => false,
         ],
 
+        'profile_images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/profile-images'),
+            'url' => env('APP_URL').'/storage/profile-images',
+            'visibility' => 'private',
+        ],
+
     ],
 
     /*

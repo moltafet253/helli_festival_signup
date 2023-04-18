@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\ImageController;
 use App\Models\Contact;
 use App\Models\EducationalInfo;
+use App\Models\File;
+use App\Models\Image;
 use App\Models\TeachingInfo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -115,4 +119,31 @@ Route::get('/provinces', function () {
 //    }
     return $provinces;
 
+});
+
+Route::post('/upload/{nationCode}', function (Request $request,$nationCode){
+
+    $file = $request->file('file');
+    $filename = $file->getClientOriginalName();
+    $hashName = hash('sha256', $request->file('file')->getClientOriginalName());
+    $file->storeAs('profile_images', $hashName . 'My=' . $filename);
+
+
+//    $imageTable=Image::Create([
+//        'name'=>$filename,
+//        'src'=>$path,
+//    ]);
+
+//    User::where('national_code', '=', $national_code)->update([
+//        'isMaster' => $isMaster,
+//        'masterCode'=>$masterCode,
+//        'teachingLocation'=>$teachingLocation,
+//        'teachingPlaceName'=>$teachingPlaceName,
+//    ]);
+//    $fileModel = new File;
+//    $fileModel->name = $filename;
+//    $fileModel->path = $path;
+//    $fileModel->save();
+
+    return response()->json(['message' => 'فایل با موفقیت ارسال شد.']);
 });
