@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Middleware\CheckSession;
 
@@ -125,9 +126,19 @@ Route::get('/provinces', function () {
 Route::post('/upload/{nationCode}', function (Request $request, $nationCode) {
     $file = $request->file('file');
     if ($file and $nationCode) {
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|image|mimes:jpeg,png,jpg,bmp|max:2048|dimensions:min_width=128,min_height=128',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         $filename = $file->getClientOriginalName();
-        $hashName = uniqid() . '.' . $request->file('file')->getClientOriginalName();
-        $path = $file->storeAs('profile_images', $hashName);
+        $hashName = uniqid('', true) . '.' . $request->file('file')->getClientOriginalName();
+        $path = $file->storeAs('public/profile_images', $hashName);
+
+
 
         $imageTable = Image::Create([
             'name' => $filename,
@@ -144,15 +155,14 @@ Route::post('/upload/{nationCode}', function (Request $request, $nationCode) {
 });
 
 Route::get('/getprofileimage/this/{nationalcode}', function ($nationalcode) {
-
-    $id=DB::table('users')->get()->where('national_code', '=', $nationalcode)->pluck('personalImageSrc');
-    $src=DB::table('images')->get()->where('id', '=', $id[0])->pluck('src');
-
-    return $src;
-//    $path = storage_path('app/' . $id[0]);
+    $id = DB::table('users')->where('national_code', $nationalcode)->value('personalImageSrc');
+    $path = Image::find($id);
+    $src = $path->src;
+    if (!User::exists($path)) {
+        abort(404);
+    }
+    $profileUrl = Storage::url($src);
 //
-//    if (!User::exists($path)) {
-//        abort(404);
-//    }
-//    return response()->file($path);
+    return response()->json(['imageSrc' => $profileUrl]);
 });
+
