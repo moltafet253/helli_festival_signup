@@ -10,24 +10,30 @@
             <div class="flex flex-wrap mt-5">
                 <div class="w-full lg:w-4/12 px-4">
                     <div class="relative flex items-center justify-center mx-auto mb-2 ">
-                        <!--                        <img class="rounded-3xl w-32 h-32 object-cover" src="{{  }}" alt="عکس کاربر">-->
-                        <div class="form-control w-full max-w-xs">
-<!--                            <label class="label">-->
-<!--                                <span class="label-text">لطفا تصویر پرسنلی خود را از کادر زیر انتخاب کرده و بر روی دکمه بارگذاری کلیک نمایید</span>-->
-<!--                            </label>-->
-<!--                            <br><br>-->
-<!--                            <input type="file" class="file-input file-input-bordered w-full max-w-xs"/>-->
 
-<!--                            <label class="label">-->
-<!--                                <span class="label-text-alt">حداکثر حجم فایل: 2 مگابایت</span>-->
-<!--                                <br>-->
-<!--                                <span class="label-text-alt">با پسوندهای: png-jpg-jpeg</span>-->
-<!--                            </label>-->
-<!--                            <br>-->
-<!--                            <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mx-auto block">بارگذاری</button>-->
+                        <img class="rounded-3xl w-32 h-32 object-cover" src="" alt="عکس کاربر">
+
+                        <div class="form-control w-full max-w-xs">
                             <form @submit.prevent="submitForm">
-                                <input type="file" name="file" ref="fileInput">
-                                <button type="submit">ارسال</button>
+
+                                <label class="label">
+                                    <span class="label-text">لطفا تصویر پرسنلی خود را از کادر زیر انتخاب کرده و بر روی دکمه بارگذاری کلیک نمایید</span>
+                                </label>
+                                <br><br>
+                                <input type="file" name="file" ref="fileInput"
+                                       class="file-input file-input-bordered w-full max-w-xs"/>
+
+                                <label class="label">
+                                    <span class="label-text-alt">حداکثر حجم فایل: 2 مگابایت</span>
+                                    <br>
+                                    <span class="label-text-alt">با پسوندهای: png-jpg-jpeg</span>
+                                </label>
+                                <br>
+                                <button type="submit"
+                                        class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mx-auto block">
+                                    بارگذاری
+                                </button>
+
                             </form>
                         </div>
 
@@ -123,16 +129,17 @@ export default {
     props: ['datapersonal'],
     data() {
         return {
-            nationalID:[],
+            imageSrc: [],
         };
     },
-    methods:{
+    methods: {
         submitForm() {
             const fileInput = this.$refs.fileInput;
             const file = fileInput.files[0];
+
             const formData = new FormData();
             formData.append('file', file);
-            const nationalID=this.datapersonal['SocialID'];
+            const nationalID = this.datapersonal['SocialID'];
 
             axios.post(`/api/upload/${nationalID}`, formData)
                 .then(response => {
@@ -141,7 +148,20 @@ export default {
                 .catch(error => {
                     console.log(error.response.data);
                 });
+        },
+
+        getPersonalImage() {
+            axios.get(`/api/getprofileimage/this/${this.nationalcode}/`)
+                .then(response => {
+                    this.imageSrc = response.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         }
+    },
+    created() {
+        this.getPersonalImage();
     }
 }
 </script>

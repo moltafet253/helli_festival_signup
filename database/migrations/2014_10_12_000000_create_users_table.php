@@ -22,10 +22,8 @@ return new class extends Migration
             $table->string('gender')->nullable();
             $table->string('sodoor')->nullable();
             $table->string('meliat')->nullable();
-            $table->string('email')->unique()->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password')->nullable();
             $table->rememberToken()->nullable();
+            $table->text('personalImageSrc')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -6,6 +6,7 @@ use App\Models\EducationalInfo;
 use App\Models\File;
 use App\Models\Image;
 use App\Models\TeachingInfo;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -102,16 +103,16 @@ Route::post('/teaching/save/{nationCode}', function (Request $request) {
     $teachingPlaceName = $request->input('teaching.0.teachingPlaceName');
     $teaching = TeachingInfo::where('national_code', '=', $national_code)->update([
         'isMaster' => $isMaster,
-        'masterCode'=>$masterCode,
-        'teachingLocation'=>$teachingLocation,
-        'teachingPlaceName'=>$teachingPlaceName,
+        'masterCode' => $masterCode,
+        'teachingLocation' => $teachingLocation,
+        'teachingPlaceName' => $teachingPlaceName,
     ]);
     return $teaching;
 });
 
 
 Route::get('/provinces', function () {
-    $provinces = DB::table('provinces')->orderBy('id')->get()->where('parent', '=', 0);
+    $provinces = DB::table('provinces')->get()->where('parent', '=', 0);
 //    foreach ($provinces as $info){
 //        return $parent=$info['id'];
 //        $cities = DB::table('provinces')->get()->where('parent','=',$parent);
@@ -121,29 +122,37 @@ Route::get('/provinces', function () {
 
 });
 
-Route::post('/upload/{nationCode}', function (Request $request,$nationCode){
-
+Route::post('/upload/{nationCode}', function (Request $request, $nationCode) {
     $file = $request->file('file');
-    $filename = $file->getClientOriginalName();
-    $hashName = hash('sha256', $request->file('file')->getClientOriginalName());
-    $file->storeAs('profile_images', $hashName . 'My=' . $filename);
+    if ($file and $nationCode) {
+        $filename = $file->getClientOriginalName();
+        $hashName = uniqid() . '.' . $request->file('file')->getClientOriginalName();
+        $path = $file->storeAs('profile_images', $hashName);
 
+        $imageTable = Image::Create([
+            'name' => $filename,
+            'src' => $path,
+        ]);
 
-//    $imageTable=Image::Create([
-//        'name'=>$filename,
-//        'src'=>$path,
-//    ]);
+        if ($imageTable) {
+            User::where('national_code', '=', $nationCode)->update([
+                'personalImageSrc' => $imageTable->id,
+            ]);
+        }
+        return response()->json(['message' => 'فایل با موفقیت ارسال شد.']);
+    }
+});
 
-//    User::where('national_code', '=', $national_code)->update([
-//        'isMaster' => $isMaster,
-//        'masterCode'=>$masterCode,
-//        'teachingLocation'=>$teachingLocation,
-//        'teachingPlaceName'=>$teachingPlaceName,
-//    ]);
-//    $fileModel = new File;
-//    $fileModel->name = $filename;
-//    $fileModel->path = $path;
-//    $fileModel->save();
+Route::get('/getprofileimage/this/{nationalcode}', function ($nationalcode) {
 
-    return response()->json(['message' => 'فایل با موفقیت ارسال شد.']);
+    $id=DB::table('users')->get()->where('national_code', '=', $nationalcode)->pluck('personalImageSrc');
+    $src=DB::table('images')->get()->where('id', '=', $id[0])->pluck('src');
+
+    return $src;
+//    $path = storage_path('app/' . $id[0]);
+//
+//    if (!User::exists($path)) {
+//        abort(404);
+//    }
+//    return response()->file($path);
 });
