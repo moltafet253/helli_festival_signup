@@ -11,9 +11,8 @@
                 <div class="w-full lg:w-4/12 px-4">
                     <div class="relative flex items-center justify-center mx-auto mb-2 ">
 
-                        <img v-if="imageSrc" :src="imageSrc" class="rounded-3xl w-32 h-32 object-cover" src="{{ }}" alt="عکس کاربر">
 
-                        <div v-else class="form-control w-full max-w-xs">
+                        <div v-if="!imageSrc" class="form-control w-full max-w-xs">
                             <form @submit.prevent="submitForm">
 
                                 <label class="label">
@@ -39,6 +38,8 @@
                             </form>
                         </div>
 
+                        <img v-else :src="imageSrc" class="rounded-3xl w-32 h-32 object-cover" src="{{ }}"
+                             alt="عکس کاربر">
 
                     </div>
                 </div>
@@ -75,15 +76,15 @@
                             }}</label>
                     </div>
                 </div>
-<!--                <div class="w-full lg:w-4/12 px-4 flex-row">-->
-<!--                    <div class="relative w-full mb-3">-->
-<!--                        <label class="block uppercase  text-xs font-bold mb-2">شماره-->
-<!--                            شناسنامه</label>-->
-<!--                        <label-->
-<!--                            class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{-->
-<!--                            }}</label>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <!--                <div class="w-full lg:w-4/12 px-4 flex-row">-->
+                <!--                    <div class="relative w-full mb-3">-->
+                <!--                        <label class="block uppercase  text-xs font-bold mb-2">شماره-->
+                <!--                            شناسنامه</label>-->
+                <!--                        <label-->
+                <!--                            class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{-->
+                <!--                            }}</label>-->
+                <!--                    </div>-->
+                <!--                </div>-->
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-xs font-bold mb-2">تاریخ
@@ -103,23 +104,23 @@
                             }}</label>
                     </div>
                 </div>
-<!--                <div class="w-full lg:w-4/12 px-4 flex-row">-->
-<!--                    <div class="relative w-full mb-3">-->
-<!--                        <label class="block uppercase  text-xs font-bold mb-2">صادره از</label>-->
-<!--                        <label-->
-<!--                            class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{-->
-<!--                                datapersonal.Sodor-->
-<!--                            }}</label>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="w-full lg:w-4/12 px-4 flex-row">-->
-<!--                    <div class="relative w-full mb-3">-->
-<!--                        <label class="block uppercase  text-xs font-bold mb-2">ملیت</label>-->
-<!--                        <label-->
-<!--                            class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{-->
-<!--                            }}</label>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <!--                <div class="w-full lg:w-4/12 px-4 flex-row">-->
+                <!--                    <div class="relative w-full mb-3">-->
+                <!--                        <label class="block uppercase  text-xs font-bold mb-2">صادره از</label>-->
+                <!--                        <label-->
+                <!--                            class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{-->
+                <!--                                datapersonal.Sodor-->
+                <!--                            }}</label>-->
+                <!--                    </div>-->
+                <!--                </div>-->
+                <!--                <div class="w-full lg:w-4/12 px-4 flex-row">-->
+                <!--                    <div class="relative w-full mb-3">-->
+                <!--                        <label class="block uppercase  text-xs font-bold mb-2">ملیت</label>-->
+                <!--                        <label-->
+                <!--                            class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{-->
+                <!--                            }}</label>-->
+                <!--                    </div>-->
+                <!--                </div>-->
             </div>
         </form>
     </div>
@@ -132,7 +133,8 @@ export default {
     data() {
         return {
             imageSrc: '',
-            datapersonals:[],
+            datapersonals: [],
+            confirm: false,
         };
     },
     methods: {
@@ -143,14 +145,17 @@ export default {
             const formData = new FormData();
             formData.append('file', file);
             const nationalID = this.datapersonal['SocialID'];
+            if (confirm('آیا از بارگذاری عکس انتخاب شده مطمئن هستید؟ \n این عملیات قابل بازگشت نیست!')) {
 
-            axios.post(`/api/upload/${nationalID}`, formData)
-                .then(response => {
-                    console.log(response.data);
-                })
-                .catch(error => {
-                    console.log(error.response.data);
-                });
+                axios.post(`/api/upload/${nationalID}`, formData)
+                    .then(response => {
+                        console.log(response.data);
+                        location.reload();
+                    })
+                    .catch(error => {
+                        // console.log(error.response.data);
+                    });
+            }
         },
 
     },

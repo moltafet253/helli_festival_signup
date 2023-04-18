@@ -8,6 +8,7 @@ use App\Models\TeachingInfo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Route;
 
 class VueController extends Controller
 {
@@ -23,7 +24,6 @@ class VueController extends Controller
                 $dataPersonal = $data['data']['person'];
                 $socialID = $data['data']['person']['SocialID'];
                 $Gender = $data['data']['person']['Gender'];
-//                $Gender = 'زن';
                 session()->put(['nationalcode' => $socialID]);
                 session()->put(['gender' => $Gender]);
 
@@ -70,7 +70,9 @@ class VueController extends Controller
                     'national_code' => $socialID,
                 ]);
 
-                return view('index', compact('dataPersonal'));
+                return view('helli', compact('dataPersonal'));
+//                Route::get('/helli', [HelliController::class , 'index']);
+
             } else {
                 return redirect('http://login.ismc.ir/?refurl=http://ssmp.ismc.ir', 302);
             }
