@@ -4,12 +4,12 @@
             <div class="flex items-center ">
                 <span class="text-orange-500 pl-1">◼</span>
                 <h2 class="text-base font-bold">اطلاعات ‌تحصیلی</h2>
-                <hr class="w-full border-t-2 border-b-orange mr-4 mt-3">
+                <hr class="flex-grow border-t-2 border-b-orange mr-4 mt-3">
             </div>
             <div class="flex flex-wrap mt-5">
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">نام مرکز
+                        <label class="block uppercase  text-base font-bold mb-2">نام مرکز
                             حوزوی<span style="color: red;">*</span></label>
                         <select v-model="item.namemarkaztahsili" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
@@ -39,7 +39,7 @@
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">نوع تحصیل حوزوی
+                        <label class="block uppercase  text-base font-bold mb-2">نوع تحصیل حوزوی
                             <span style="color: red;">*</span></label>
                         <select v-model="item.noetahsilhozavi" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
@@ -55,7 +55,7 @@
                 </div>
                 <div class="w-full lg:w-2/12 px-4 flex-row" v-if="nationalcode['gender']=='مرد'">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">پایه<span
+                        <label class="block uppercase  text-base font-bold mb-2">پایه<span
                             style="color: red;">*</span></label>
                         <select v-model="item.paye" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
@@ -101,7 +101,7 @@
                 </div>
                 <div class="w-full lg:w-2/12 px-4 flex-row" v-if="nationalcode['gender']=='زن'">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">سطح<span
+                        <label class="block uppercase  text-base font-bold mb-2">سطح<span
                             style="color: red;">*</span></label>
                         <select v-model="item.sath" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
@@ -120,7 +120,7 @@
                 </div>
                 <div class="w-full lg:w-2/12 px-4 flex-row" v-if="nationalcode['gender']=='زن'">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">ترم<span
+                        <label class="block uppercase  text-base font-bold mb-2">ترم<span
                             style="color: red;">*</span></label>
                         <select v-model="item.term" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
@@ -150,7 +150,7 @@
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">استان محل تحصیل<span
+                        <label class="block uppercase  text-base font-bold mb-2">استان محل تحصیل<span
                             style="color: red;">*</span></label>
                         <input type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
@@ -159,7 +159,7 @@
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">شهر محل
+                        <label class="block uppercase  text-base font-bold mb-2">شهر محل
                             تحصیل<span style="color: red;">*</span></label>
                         <input type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
@@ -168,7 +168,7 @@
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">مدرسه<span
+                        <label class="block uppercase  text-base font-bold mb-2">مدرسه<span
                             style="color: red;">*</span></label>
                         <input type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
@@ -177,7 +177,7 @@
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">شماره پرونده
+                        <label class="block uppercase  text-base font-bold mb-2">شماره پرونده
                             حوزوی<span style="color: red;">*</span></label>
                         <input v-for="(item, index) in edu" :key="index" type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
@@ -187,7 +187,7 @@
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">مدرک تحصیلی غیر
+                        <label class="block uppercase  text-base font-bold mb-2">مدرک تحصیلی غیر
                             حوزوی</label>
                         <select v-for="(item, index) in edu" :key="index" v-model="item.tahsilatghhozavi"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
@@ -216,7 +216,7 @@
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">رشته تحصیلی غیر
+                        <label class="block uppercase  text-base font-bold mb-2">رشته تحصیلی غیر
                             حوزوی</label>
                         <input v-for="(item, index) in edu" :key="index" type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
@@ -225,7 +225,7 @@
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">مرکز تخصصی
+                        <label class="block uppercase  text-base font-bold mb-2">مرکز تخصصی
                             حوزوی</label>
                         <input v-for="(item, index) in edu" :key="index" type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"

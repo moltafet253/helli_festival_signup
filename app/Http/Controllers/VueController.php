@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Contact;
-use App\Models\EducationalInfo;
-use App\Models\TeachingInfo;
+use App\Models\Helli\Contact;
+use App\Models\Helli\EducationalInfo;
+use App\Models\Helli\TeachingInfo;
 use App\Models\User;
-use Illuminate\Http\Request;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Route;
 
 class VueController extends Controller
 {

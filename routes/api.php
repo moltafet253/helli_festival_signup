@@ -1,20 +1,17 @@
 <?php
 
 use App\Http\Controllers\ImageController;
-use App\Models\Contact;
-use App\Models\EducationalInfo;
 use App\Models\File;
-use App\Models\Image;
-use App\Models\TeachingInfo;
+use App\Models\Helli\Contact;
+use App\Models\Helli\EducationalInfo;
+use App\Models\Helli\Image;
+use App\Models\Helli\TeachingInfo;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Middleware\CheckSession;
 
 /*
 |--------------------------------------------------------------------------

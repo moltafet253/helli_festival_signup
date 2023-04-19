@@ -3,8 +3,8 @@
         <form class="mt-8" @submit.prevent="handleSubmit">
             <div class="flex items-center ">
                 <span class="text-orange-500 pl-1">◼</span>
-                <h2 class="text-base font-bold  ">اطلاعات ‌تماس</h2>
-                <hr class="w-full border-t-2 border-b-orange mr-4 mt-3">
+                <h2 class="text-base font-bold">اطلاعات ‌تماس</h2>
+                <hr class="flex-grow border-t-2 border-b-orange mr-4 mt-3">
             </div>
             <div class="mt-3 flex items-center">
                 <span><img class="bg-orange-400 rounded-md w-5 ml-2" src="build/assets/icons/Danger Triangle.svg"
@@ -15,7 +15,7 @@
             <div class="flex flex-wrap mt-5">
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">تلفن ثابت (به
+                        <label class="block uppercase  text-base font-bold mb-2">تلفن ثابت (به
                             همراه کد شهر)</label>
                         <input v-for="(item, index) in contact" :key="index" type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
@@ -24,7 +24,7 @@
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">تلفن
+                        <label class="block uppercase  text-base font-bold mb-2">تلفن
                             همراه<span style="color: red;">*</span></label>
                         <input v-for="(item, index) in contact" :key="index" type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
@@ -33,14 +33,14 @@
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">کدپستی</label>
+                        <label class="block uppercase  text-base font-bold mb-2">کدپستی</label>
                         <input v-for="(item, index) in contact" :key="index" type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                v-model="item.postal_code">
                     </div>
                 </div>
                 <div class="w-full px-4 flex-row">
-                    <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">آدرس</label>
+                    <label class="block uppercase  text-base font-bold mb-2">آدرس</label>
                     <textarea
                         class="border border-colorborder p-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                         rows="5" v-for="(item, index) in contact" :key="index" v-model="item.address"></textarea>

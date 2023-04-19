@@ -4,11 +4,11 @@
             <div class="flex items-center ">
                 <span class="text-orange-500 pl-1">◼</span>
                 <h2 class="text-base font-bold  ">اطلاعات ‌تدریس</h2>
-                <hr class="w-full border-t-2 border-b-orange mr-4 mt-3">
+                <hr class="flex-grow border-t-2 border-b-orange mr-4 mt-3">
             </div>
             <div class="w-full lg:w-4/12 px-4 flex-row">
                 <div class="relative w-full mb-3">
-                    <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">استاد می
+                    <label class="block uppercase  text-base font-bold mb-2">استاد می
                         باشید؟</label>
                     <select :disabled="disableSelection" v-model="item.isMaster" v-for="(item, index) in teaching" @change="divStatus"
                             class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
@@ -22,7 +22,7 @@
 
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">کد
+                        <label class="block uppercase  text-base font-bold mb-2">کد
                             استادی<span
                                 style="color: red;">*</span></label>
                         <input type="text" v-for="(item, index) in teaching" :key="index"
@@ -32,7 +32,7 @@
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">استان و شهر محل
+                        <label class="block uppercase  text-base font-bold mb-2">استان و شهر محل
                             تدریس<span
                                 style="color: red;">*</span></label>
                         <select v-for="(item, index) in teaching" :key="index" v-model="item.teachingLocation"
@@ -44,7 +44,7 @@
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2" htmlfor="grid-password">نام محل
+                        <label class="block uppercase  text-base font-bold mb-2">نام محل
                             تدریس<span
                                 style="color: red;">*</span></label>
                         <input type="text" v-for="(item, index) in teaching" :key="index"

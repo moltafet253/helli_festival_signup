@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Helli;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Image extends Model
+class TeachingInfo extends Model
 {
     use HasFactory,SoftDeletes;
-    protected $table='images';
+    protected $table='teaching_infos';
     protected $guarded=[];
 }
