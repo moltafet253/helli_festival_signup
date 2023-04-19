@@ -139,7 +139,6 @@ Route::post('/upload/{nationCode}', function (Request $request, $nationCode) {
         $path = $file->storeAs('public/profile_images', $hashName);
 
 
-
         $imageTable = Image::Create([
             'name' => $filename,
             'src' => $path,
@@ -162,7 +161,6 @@ Route::get('/getprofileimage/this/{nationalcode}', function ($nationalcode) {
         abort(404);
     }
     $profileUrl = Storage::url($src);
-//
     return response()->json(['imageSrc' => $profileUrl]);
 });
 
