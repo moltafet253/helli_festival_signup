@@ -109,17 +109,6 @@ Route::post('/teaching/save/{nationCode}', function (Request $request) {
 });
 
 
-Route::get('/provinces', function () {
-    $provinces = DB::table('provinces')->get()->where('parent', '=', 0);
-//    foreach ($provinces as $info){
-//        return $parent=$info['id'];
-//        $cities = DB::table('provinces')->get()->where('parent','=',$parent);
-//        return $cities;
-//    }
-    return $provinces;
-
-});
-
 Route::post('/upload/{nationCode}', function (Request $request, $nationCode) {
     $file = $request->file('file');
     if ($file and $nationCode) {
@@ -160,4 +149,48 @@ Route::get('/getprofileimage/this/{nationalcode}', function ($nationalcode) {
     $profileUrl = Storage::url($src);
     return response()->json(['imageSrc' => $profileUrl]);
 });
+
+Route::middleware('CheckSession')->get('/posts/getpost/{nationalcode}', function ($nationalcode) {
+    return DB::table('posts')->where('national_code', '=', $nationalcode)->get();
+});
+
+Route::middleware('CheckSession')->get('/users/getuserinfo/{nationalcode}', function ($nationalcode) {
+    return DB::table('users')->where('national_code', '=', $nationalcode)->get();
+});
+
+Route::middleware('CheckSession')->get('/edu/geteduinfo/{nationalcode}', function ($nationalcode) {
+    return DB::table('educational_infos')->where('national_code', '=', $nationalcode)->get();
+});
+
+
+Route::prefix('defaults')->group(function () {
+    Route::get('/provinces', function () {
+        $provinces = DB::table('provinces')->get()->where('parent', '=', 0);
+//    foreach ($provinces as $info){
+//        return $parent=$info['id'];
+//        $cities = DB::table('provinces')->get()->where('parent','=',$parent);
+//        return $cities;
+//    }
+        return $provinces;
+
+    });
+    Route::get('/research_formats', function () {
+        $research_formats = DB::table('research_formats')->get()->where('active', '=', 1);
+        return $research_formats;
+    });
+    Route::get('/scientific_groups', function () {
+        $scientific_groups = DB::table('scientific_groups')->get()->where('active', '=', 1);
+        return $scientific_groups;
+    });
+    Route::get('/research_types', function () {
+        $research_types = DB::table('research_types')->get()->where('active', '=', 1);
+        return $research_types;
+    });
+    Route::get('/special_sections', function () {
+        $special_sections = DB::table('special_sections')->get()->where('active', '=', 1);
+        return $special_sections;
+    });
+});
+
+
 

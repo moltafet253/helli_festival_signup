@@ -182,7 +182,7 @@
                         <input v-for="(item, index) in edu" :key="index" type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                v-model="item.shparvandetahsili"
-                               placeholder="شماره پرونده تحصیلی غیر حوزوی خود را وارد نمایید">
+                               placeholder="شماره پرونده تحصیلی حوزوی خود را وارد نمایید">
                     </div>
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">

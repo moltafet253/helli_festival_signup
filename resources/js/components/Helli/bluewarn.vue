@@ -5,9 +5,6 @@
                 <div class="relative w-full">
                     <img class="bg-blue-500 rounded-md p-1" src="build/assets/icons/Info Square.svg" alt="">
                 </div>
-                <!--            <div class="relative w-full mb-3">-->
-                <!--                <div class="mr-3 border-r-2 border-blue-500 h-9"></div>-->
-                <!--            </div>-->
             </div>
             <div class="w-full flex-row">
                 <div class="relative w-full mr-3">

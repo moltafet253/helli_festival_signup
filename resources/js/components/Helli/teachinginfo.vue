@@ -83,7 +83,7 @@ export default {
             })
     },
     created() {
-        axios.get('/api/provinces')
+        axios.get('/api/defaults/provinces')
             .then(response => {
                 this.fetchUserData();
                 this.provinces = response.data;

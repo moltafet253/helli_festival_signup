@@ -33,7 +33,7 @@ class DefaultValues extends Seeder
         ]);
 
         DB::table('research_formats')->insert([
-            ['title' => 'پایان نامه', 'user' => '0371714941', 'created_at'=>now(), 'updated_at'=>now()],
+            ['title' => 'پایان‌نامه', 'user' => '0371714941', 'created_at'=>now(), 'updated_at'=>now()],
             ['title' => 'تحقیق پایانی', 'user' => '0371714941', 'created_at'=>now(), 'updated_at'=>now()],
             ['title' => 'کتاب', 'user' => '0371714941', 'created_at'=>now(), 'updated_at'=>now()],
             ['title' => 'مقاله', 'user' => '0371714941', 'created_at'=>now(), 'updated_at'=>now()],

@@ -20,12 +20,13 @@
                                 <div @click="showModal3 = true"
                                      class=" cursor-pointer flex justify-center items-center rounded-t-lg  border-dashed border-4 border-colorborder border-b-0"
                                      href="#">
-                                    <img class="p-8 py-8 rounded-t-lg" src="build/assets/icons//Paper Upload.png"
+                                    <img class="p-8 py-8 rounded-t-lg" src="build/assets/icons/Paper Upload.png"
                                          alt="product image"/>
                                 </div>
                                 <div class="bg-slate-200 border border-colorborder rounded-b-lg">
                                     <div class="flex items-center justify-start px-5 py-3 ">
-                                        <img class="w-8 ml-2" src="build/assets/icons//miniCircle 37181.png" alt="product image"/>
+                                        <img class="w-8 ml-2" src="build/assets/icons/miniCircle 37181.png"
+                                             alt="product image"/>
                                         <p>اثر جدید</p>
                                     </div>
                                 </div>
@@ -52,8 +53,9 @@
                                                 <div dir="rtl"
                                                      class="px-8 flex items-center justify-between py-3 bg-white border  rounded-xl">
                                                     <div class="flex">
-                                                        <span class="pl-1"><img src="build/assets/icons//Edit Square.png" alt=""></span>
-                                                        <h2 class="text-base font-bold  ">انتخاب اثر برای شرکت در
+                                                        <span class="pl-1"><img src="build/assets/icons/Edit Square.png"
+                                                                                alt=""></span>
+                                                        <h2 class="text-base font-bold ">اطلاعات اثر برای شرکت در
                                                             پانزدهمین جشنواره علامه حلی (ره)</h2>
                                                     </div>
                                                     <div
@@ -68,7 +70,7 @@
                                                     <div class=" flex-row ">
                                                         <div class="relative w-full ">
                                                             <img class="bg-blue-500 rounded-md p-1"
-                                                                 src="build/assets/icons//Info Square.svg" alt="">
+                                                                 src="build/assets/icons/Info Square.svg" alt="">
                                                         </div>
                                                     </div>
                                                     <div class="w-full flex-row">
@@ -86,64 +88,61 @@
                                                         <div class="w-full lg:w-8/12 px-4 flex-row">
                                                             <div class="relative w-full mb-3">
                                                                 <label class="block uppercase  text-base font-bold mb-2"
-                                                                       htmlfor="grid-password">نام اثر</label>
-                                                                <select id="countries"
-                                                                        class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
-                                                                    <option selected>اصول فقه</option>
-                                                                    <option value="US">United States</option>
-                                                                    <option value="CA">Canada</option>
-                                                                    <option value="FR">France</option>
-                                                                    <option value="DE">Germany</option>
-                                                                </select>
-
+                                                                >نام اثر<span
+                                                                    style="color: red;">*</span></label>
+                                                                <input type="text" id="countries"
+                                                                       class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                                                             </div>
                                                         </div>
                                                         <div class="w-full lg:w-4/12 px-4 flex-row">
                                                             <div class="relative w-full mb-3">
                                                                 <label class="block uppercase  text-base font-bold mb-2"
-                                                                       htmlfor="grid-password">قالب پژوهش</label>
+                                                                >قالب پژوهش<span
+                                                                    style="color: red;">*</span></label>
                                                                 <select id="countries"
                                                                         class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
-                                                                    <option selected>تحقیق و تالیف</option>
-                                                                    <option value="US">United States</option>
-                                                                    <option value="CA">Canada</option>
-                                                                    <option value="FR">France</option>
-                                                                    <option value="DE">Germany</option>
+                                                                    <option disabled selected value="">انتخاب کنید
+                                                                    </option>
+                                                                    <option v-for="formats in research_formats"
+                                                                            :value="formats.id">{{ formats.title }}
+                                                                    </option>
                                                                 </select>
                                                             </div>
                                                         </div>
                                                         <div class="w-full lg:w-4/12 px-4 flex-row">
                                                             <div class="relative w-full mb-3">
                                                                 <label class="block uppercase  text-base font-bold mb-2"
-                                                                       htmlfor="grid-password">گروه علمی</label>
+                                                                >گروه علمی<span
+                                                                    style="color: red;">*</span></label>
                                                                 <select id="countries"
                                                                         class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
-                                                                    <option selected>تحقیق و تالیف</option>
-                                                                    <option value="US">United States</option>
-                                                                    <option value="CA">Canada</option>
-                                                                    <option value="FR">France</option>
-                                                                    <option value="DE">Germany</option>
+                                                                    <option disabled selected value="">انتخاب کنید
+                                                                    </option>
+                                                                    <option v-for="groups in scientific_groups"
+                                                                            :value="groups.id">{{ groups.title }}
+                                                                    </option>
                                                                 </select>
                                                             </div>
                                                         </div>
                                                         <div class="w-full lg:w-4/12 px-4 flex-row">
                                                             <div class="relative w-full mb-3">
                                                                 <label class="block uppercase  text-base font-bold mb-2"
-                                                                       htmlfor="grid-password">نوع پژوهش</label>
+                                                                >نوع پژوهش<span
+                                                                    style="color: red;">*</span></label>
                                                                 <select id="countries"
                                                                         class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
-                                                                    <option selected>تحقیق و تالیف</option>
-                                                                    <option value="US">United States</option>
-                                                                    <option value="CA">Canada</option>
-                                                                    <option value="FR">France</option>
-                                                                    <option value="DE">Germany</option>
+                                                                    <option disabled selected value="">انتخاب کنید
+                                                                    </option>
+                                                                    <option v-for="rTypes in research_types" :value="rTypes.id">
+                                                                        {{ rTypes.title }}
+                                                                    </option>
                                                                 </select>
                                                             </div>
                                                         </div>
                                                         <div class="w-full lg:w-4/12 px-4 flex-row">
                                                             <div class="relative w-full mb-3">
                                                                 <label class="block uppercase  text-base font-bold mb-2"
-                                                                       htmlfor="grid-password">تعداد صفحات (برای مقاله
+                                                                >تعداد صفحات (برای مقاله
                                                                     ضروری میباشد.)</label>
                                                                 <input type="text"
                                                                        class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
@@ -153,14 +152,14 @@
                                                         <div class="w-full lg:w-4/12 px-4 flex-row">
                                                             <div class="relative w-full mb-3">
                                                                 <label class="block uppercase  text-base font-bold mb-2"
-                                                                       htmlfor="grid-password">وضعیت نشر</label>
+                                                                >وضعیت نشر<span
+                                                                    style="color: red;">*</span></label>
                                                                 <select id="countries"
                                                                         class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
-                                                                    <option selected>وضعیت...</option>
-                                                                    <option value="US">United States</option>
-                                                                    <option value="CA">Canada</option>
-                                                                    <option value="FR">France</option>
-                                                                    <option value="DE">Germany</option>
+                                                                    <option disabled selected value="">انتخاب کنید
+                                                                    </option>
+                                                                    <option value="منتشر نشده">منتشر نشده</option>
+                                                                    <option value="منتشر شده">منتشر شده</option>
                                                                 </select>
 
                                                             </div>
@@ -168,14 +167,14 @@
                                                         <div class="w-full lg:w-4/12 px-4 flex-row">
                                                             <div class="relative w-full mb-3">
                                                                 <label class="block uppercase  text-base font-bold mb-2"
-                                                                       htmlfor="grid-password">بخش ویژه</label>
+                                                                >بخش ویژه</label>
                                                                 <select id="countries"
                                                                         class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
-                                                                    <option selected>الگوی ایرانی اسلامی پیشرفت</option>
-                                                                    <option value="US">United States</option>
-                                                                    <option value="CA">Canada</option>
-                                                                    <option value="FR">France</option>
-                                                                    <option value="DE">Germany</option>
+                                                                    <option disabled selected value="">انتخاب کنید
+                                                                    </option>
+                                                                    <option v-for="specials in special_sections" :value="specials.id">
+                                                                        {{ specials.title }}
+                                                                    </option>
                                                                 </select>
 
                                                             </div>
@@ -194,30 +193,26 @@
                                                         <div>
                                                             <div class="flex items-center">
                                                                 <span>نوع فعالیت: </span>
-                                                                <div class="flex items-center mr-2">
-                                                                    <input checked id="default-radio-1" type="radio"
-                                                                           value="shared" v-model="activityType"
-                                                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-blue-500 checked:bg-blue-600 checked:border-blue-600">
-                                                                    <label for="default-radio-1"
-                                                                           class="ml-2 text-sm font-medium ">فردی</label>
-                                                                </div>
                                                                 <div class="flex items-center">
-                                                                    <input id="default-radio-2" type="radio"
-                                                                           value="Common" v-model="activityType"
-                                                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500  focus:ring-2">
-                                                                    <label for="default-radio-2"
-                                                                           class="ml-2 text-sm font-medium">مشترک</label>
+                                                                    <select v-model="activityType"
+                                                                            class="border border-colorborder px-3 py-1 mr-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
+                                                                        <option value="fardi">فردی
+                                                                        </option>
+                                                                        <option value="moshtarak">                                 مشترک
+                                                                        </option>
+                                                                    </select>
                                                                 </div>
                                                             </div>
 
                                                         </div>
 
-                                                        <div
+                                                        <div v-if="activityType === 'moshtarak'"
                                                             class="mt-6  w-full lg:w-5/12 px-4 flex py-3 bg-blue-100 rounded-xl border border-colorborder">
                                                             <div class=" flex-row ">
                                                                 <div class="relative w-full ">
                                                                     <img class="bg-blue-500 rounded-md p-1"
-                                                                         src="build/assets/icons//Info Square.svg" alt="">
+                                                                         src="build/assets/icons/Info Square.svg"
+                                                                         alt="">
                                                                 </div>
                                                             </div>
                                                             <div class="w-full flex-row">
@@ -230,7 +225,7 @@
 
                                                     </div>
 
-                                                    <div v-if="activityType === 'Common'"
+                                                    <div v-if="activityType === 'moshtarak'"
                                                          class="relative overflow-x-auto shadow-md sm:rounded-lg mt-8">
                                                         <table class="w-full text-sm text-right">
                                                             <thead class="text-base text-black-3d bg-orange-fce ">
@@ -268,17 +263,17 @@
                                                                 <th class=" text-center  px-6 py-4 font-medium text-gray-8484 whitespace-nowrap ">
                                                                     1
                                                                 </th>
-                                                                <th class=" text-center  px-6 py-4 font-medium text-gray-8484 whitespace-nowrap ">
-                                                                    علی
+                                                                <th class=" text-center  px-6 py-4 font-medium text-black-8484 whitespace-nowrap ">
+                                                                    {{ this.personalInfo[0]['name'] }}
                                                                 </th>
                                                                 <td class="px-6 py-4 text-black-3d font-medium">
-                                                                    سعیدی
+                                                                    {{ this.personalInfo[0]['family'] }}
                                                                 </td>
                                                                 <td class="px-6 py-4  text-black-3d font-medium">
-                                                                    0372094504
+                                                                    {{ this.personalInfo[0]['national_code'] }}
                                                                 </td>
                                                                 <td class="px-6 py-4  text-black-3d font-medium">
-                                                                    5668765
+                                                                    {{ this.eduInfo[0]['shparvandetahsili'] }}
                                                                 </td>
                                                                 <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
                                                                     <input v-model="Cooperation" type="text"
@@ -287,7 +282,7 @@
                                                                            placeholder="75">
                                                                 </td>
                                                                 <td class="px-6 py-4  text-black-3d font-medium">
-                                                                    09121517243
+                                                                    {{ this.contactInfo[0]['mobile'] }}
                                                                 </td>
                                                                 <td class="px-6 py-4  text-black-3d font-medium">
 
@@ -305,44 +300,44 @@
                                                                 <td class=" border-l-0 text-black-3d font-medium">
                                                                     <input v-model="row.name" type="text"
                                                                            name="column_1"
-                                                                           class="w-20 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
-                                                                           placeholder="محمد">
+                                                                           class="w-32 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                           placeholder="نام">
                                                                 </td>
                                                                 <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
                                                                     <input v-model="row.lastname" type="text"
                                                                            name="column_1"
-                                                                           class="w-20 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
-                                                                           placeholder="مرتضوی">
+                                                                           class="w-40 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                           placeholder="نام خانوادگی">
                                                                 </td>
                                                                 <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
                                                                     <input v-model="row.codemeli" type="text"
                                                                            name="column_1"
-                                                                           class="w-24 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
-                                                                           placeholder="0372094504">
+                                                                           class="w-40 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                           placeholder="کد ملی">
                                                                 </td>
                                                                 <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
                                                                     <input v-model="row.filenumber" type="text"
                                                                            name="column_1"
-                                                                           class="w-20 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
-                                                                           placeholder="5668765">
+                                                                           class="w-24 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                           placeholder="شماره پرونده">
                                                                 </td>
                                                                 <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
                                                                     <input v-model="row.Cooperation" type="text"
                                                                            name="column_1"
                                                                            class="w-16 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
-                                                                           placeholder="75">
+                                                                           placeholder="درصد">
 
                                                                 </td>
                                                                 <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
                                                                     <input v-model="row.phonenumber" type="text"
                                                                            name="column_1"
-                                                                           class="w-24 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
-                                                                           placeholder="09121517243">
+                                                                           class="w-32 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                           placeholder="شماره همراه">
                                                                 </td>
                                                                 <td class="px-6 py-4 text-right border-l-0">
                                                                     <button @click="deleteRow(index)">
                                                                         <img class="bg-white rounded-md p-1"
-                                                                             src="build/assets/icons//delete.png" alt="">
+                                                                             src="build/assets/icons/delete.png" alt="">
                                                                     </button>
 
                                                                 </td>
@@ -355,7 +350,8 @@
                                                             <!--  :disabled="rows.length >= 10" if limit click btn to 10 -->
                                                             <button @click="addRow"
                                                                     class=" bg-br-f0e flex py-2 px-3 rounded-xl border border-colorborder">
-                                                                <span><img class="w-7" src="build/assets/icons//Down Button.png"
+                                                                <span><img class="w-7"
+                                                                           src="build/assets/icons/Down Button.png"
                                                                            alt="down"></span>
                                                                 <p class=" font-bold px-4 ">افزودن همکار</p>
                                                             </button>
@@ -378,7 +374,7 @@
                                                                 <label for="file-upload"
                                                                        class="cursor-pointer flex justify-center items-center rounded-t-lg border-dashed border-4 border-colorborder border-b-0">
                                                                     <img class="p-8 py-8 rounded-t-lg"
-                                                                         src="build/assets/icons//Paper Upload.png"
+                                                                         src="build/assets/icons/Paper Upload.png"
                                                                          alt="product image"/>
                                                                 </label>
                                                                 <input id="file-upload" name="file" type="file"
@@ -457,7 +453,8 @@
                                                                 class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                                                 <div class="px-6 py-4">
                                                                     <img class="mx-auto my-8"
-                                                                         src="build/assets/icons//Warning.png" alt="Image">
+                                                                         src="build/assets/icons/Warning.png"
+                                                                         alt="Image">
                                                                 </div>
                                                                 <div class="px-6 py-4 text-center">
                                                                     <p class="mb-14 font-bold">{{ message }}</p>
@@ -496,7 +493,8 @@
                                                                 class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                                                 <div class="px-6 pt-4">
                                                                     <img class="mx-auto mt-8"
-                                                                         src="build/assets/icons//success.png" alt="Image">
+                                                                         src="build/assets/icons/success.png"
+                                                                         alt="Image">
                                                                 </div>
                                                                 <div class="px-6 pb-4 text-center ">
                                                                     <p class="mb-14 font-bold w-1/2 mx-auto">آثار انتخاب
@@ -528,6 +526,9 @@
                                 <thead class="text-base text-black-3d bg-orange-fce ">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
+                                        جشنواره
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
                                         قالب اثر
                                     </th>
                                     <th scope="col" class="px-6 py-3">
@@ -547,200 +548,30 @@
                                 </thead>
                                 <tbody>
                                 <tr class="bg-gray-eee border-b border-gray-d1d1">
+                                    <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
+
+                                    </td>
                                     <th scope="row"
-                                        class=" text-center border-l border-gray-d1d1 px-6 py-4 font-medium text-gray-8484 whitespace-nowrap "
-                                        rowspan="3">
-                                        مقاله
+                                        class=" text-center border-l border-gray-d1d1 px-6 py-4 font-medium text-gray-8484 whitespace-nowrap ">
+
                                     </th>
                                     <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
-                                        ادیان و مذاهب در کلام امامین انقلاب
+
                                     </td>
                                     <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
-                                        25
+
                                     </td>
                                     <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
-                                        فردی
+
                                     </td>
                                     <td class="px-6 py-4 text-right border-l-0">
                                         <a href="#" class="font-medium">
                                             <img class="bg-white rounded-md border border-colorborder p-1"
-                                                 src="build/assets/icons//Download.svg" alt="">
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr class="border-b bg-gray-eee text-black-3d font-medium border-gray-d1d1">
-                                    <td class="px-6 py-4 border-l-0 border-black">
-                                        ادیان و مذاهب در کلام امامین انقلاب
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0 border-black">
-                                        14
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0 border-black">
-                                        گروهی
-                                    </td>
-                                    <td class="px-6 py-4 text-right border-l-0">
-                                        <a href="#" class="font-medium">
-                                            <img class="bg-white rounded-md border border-colorborder p-1"
-                                                 src="build/assets/icons//Download.svg" alt="">
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr class="border-b bg-gray-eee text-black-3d font-medium border-gray-d1d1">
-                                    <td class="px-6 py-4 border-l-0">
-                                        ادیان و مذاهب در کلام امامین انقلاب
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0">
-                                        15
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0">
-                                        گروهی
-                                    </td>
-                                    <td class="px-6 py-4 text-right border-l-0">
-                                        <a href="#" class="font-medium ">
-                                            <img class="bg-white rounded-md border border-colorborder p-1"
-                                                 src="build/assets/icons//Download.svg" alt="">
+                                                 src="build/assets/icons/Download.svg" alt="">
                                         </a>
                                     </td>
                                 </tr>
 
-                                <!-- row2 -->
-                                <tr class="bg-br-f0e border-b border-gray-d1d1">
-                                    <th scope="row"
-                                        class="text-center border-l border-gray-d1d1 px-6 py-4 font-medium text-gray-8484 whitespace-nowrap "
-                                        rowspan="2">
-                                        تحقیق پایانی
-                                    </th>
-                                    <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
-                                        ماهیت ریاست جمهوری
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
-                                        180
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
-                                        فردی
-                                    </td>
-                                    <td class="px-6 py-4 text-right border-l-0">
-                                        <a href="#" class="font-medium">
-                                            <img class="bg-white rounded-md border border-colorborder p-1"
-                                                 src="build/assets/icons//Download.svg" alt="">
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr class="border-b bg-br-f0e text-black-3d font-medium border-gray-d1d1">
-                                    <td class="px-6 py-4 border-l-0">
-                                        تعامل کلام و فقه سیاسی در ولایت فقیه
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0">
-                                        200
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0">
-                                        گروهی
-                                    </td>
-                                    <td class="px-6 py-4 text-right border-l-0">
-                                        <a href="#" class="font-medium">
-                                            <img class="bg-white rounded-md border border-colorborder p-1"
-                                                 src="build/assets/icons//Download.svg" alt="">
-                                        </a>
-                                    </td>
-                                </tr>
-
-                                <!-- row3 -->
-                                <tr class="bg-gray-eee border-b border-gray-d1d1">
-                                    <th scope="row"
-                                        class="text-center border-l border-gray-d1d1 px-6 py-4 font-medium text-gray-8484 whitespace-nowrap "
-                                        rowspan="3">
-                                        پایان‌نامه
-                                    </th>
-                                    <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
-                                        گفت و گوی انسانی
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
-                                        25
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
-                                        فردی
-                                    </td>
-                                    <td class="px-6 py-4 text-right border-l-0">
-                                        <a href="#" class="font-medium">
-                                            <img class="bg-white rounded-md border border-colorborder p-1"
-                                                 src="build/assets/icons//Download.svg" alt="">
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr class="border-b bg-gray-eee text-black-3d font-medium border-gray-d1d1">
-                                    <td class="px-6 py-4 border-l-0 border-black">
-                                        آیا می توان با تکفیری ها گفتگو داشت؟
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0 border-black">
-                                        14
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0 border-black">
-                                        گروهی
-                                    </td>
-                                    <td class="px-6 py-4 text-right border-l-0">
-                                        <a href="#" class="font-medium">
-                                            <img class="bg-white rounded-md border border-colorborder p-1"
-                                                 src="build/assets/icons//Download.svg" alt="">
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr class="border-b bg-gray-eee text-black-3d font-medium border-gray-d1d1">
-                                    <td class="px-6 py-4 border-l-0">
-                                        نقد و بررسی ریاست جمهوری زنان
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0">
-                                        15
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0">
-                                        گروهی
-                                    </td>
-                                    <td class="px-6 py-4 text-right border-l-0">
-                                        <a href="#" class="font-medium ">
-                                            <img class="bg-white rounded-md border border-colorborder p-1"
-                                                 src="build/assets/icons//Download.svg" alt="">
-                                        </a>
-                                    </td>
-                                </tr>
-                                <!-- row4 -->
-                                <tr class="bg-br-f0e border-b border-gray-d1d1">
-                                    <th scope="row"
-                                        class="text-center border-l border-gray-d1d1 px-6 py-4 font-medium text-gray-8484 whitespace-nowrap "
-                                        rowspan="2">
-                                        تحقیق پایانی
-                                    </th>
-                                    <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
-                                        ماهیت ریاست جمهوری
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
-                                        180
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
-                                        فردی
-                                    </td>
-                                    <td class="px-6 py-4 text-right border-l-0">
-                                        <a href="#" class="font-medium">
-                                            <img class="bg-white rounded-md border border-colorborder p-1"
-                                                 src="build/assets/icons//Download.svg" alt="">
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr class="border-b bg-br-f0e text-black-3d font-medium border-gray-d1d1">
-                                    <td class="px-6 py-4 border-l-0">
-                                        تعامل کلام و فقه سیاسی در ولایت فقیه
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0">
-                                        200
-                                    </td>
-                                    <td class="px-6 py-4 border-l-0">
-                                        گروهی
-                                    </td>
-                                    <td class="px-6 py-4 text-right border-l-0">
-                                        <a href="#" class="font-medium">
-                                            <img class="bg-white rounded-md border border-colorborder p-1"
-                                                 src="build/assets/icons//Download.svg" alt="">
-                                        </a>
-                                    </td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -765,6 +596,7 @@
 
 <script>
 export default {
+    props: ['nationalcode'],
     data() {
         return {
             rows: [
@@ -774,14 +606,65 @@ export default {
             showModal: false,
             showModal2: false,
             showModal3: false,
-            activityType: 'shared',
+            activityType: 'fardi',
             fileSelected: false,
             fileName: "",
             error: null,
             message: 'اطلاعات وارد شده را تایید می‌نمایید؟',
+            personalInfo: [],
+            contactInfo: [],
+            eduInfo: [],
+            research_formats: [],
+            scientific_groups: [],
+            research_types:[],
+            special_sections:[],
+
         };
     },
-
+    mounted() {
+        axios.get(`/api/users/getuserinfo/${this.nationalcode}/`)
+            .then(response => {
+                this.personalInfo = response.data;
+            })
+            .catch(error => {
+                console.log(error)
+            });
+        axios.get(`/api/contact/${this.nationalcode}/`)
+            .then(response => {
+                this.contactInfo = response.data;
+            })
+            .catch(error => {
+                console.log(error)
+            });
+        axios.get(`/api/edu/geteduinfo/${this.nationalcode}/`)
+            .then(response => {
+                this.eduInfo = response.data;
+            })
+            .catch(error => {
+                console.log(error)
+            });
+        axios.get('/api/defaults/research_formats')
+            .then(response => {
+                this.research_formats = response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        axios.get('/api/defaults/scientific_groups')
+            .then(response => {
+                this.scientific_groups = response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        axios.get('/api/defaults/special_sections')
+            .then(response => {
+                this.special_sections = response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    },
     computed: {
         isSubmitButtonDisabled() {
             return !this.fileSelected;
@@ -809,9 +692,9 @@ export default {
                 if (total === 100) {
                     return true;
                 } else if (total > 100) {
-                    alert('مجموع همکاری ها نمی‌تواند بیشتر از ۱۰۰ باشد.');
+                    alert('مجموع درصد مشارکت نمی‌تواند بیشتر از ۱۰۰ باشد.');
                 } else {
-                    alert('مجموع همکاری ها نمی‌تواند کمتر از ۱۰۰ باشد.');
+                    alert('مجموع درصد مشارکت نمی‌تواند کمتر از ۱۰۰ باشد.');
                     return false;
                 }
             }
@@ -832,7 +715,9 @@ export default {
                 } else {
                     // هنگامی که فایل مجاز است
                     this.fileSelected = true;
-                    this.error = '';
+                    this.error = false;
+                    const fileName = event.target.files[0];
+
                     // this.showModal = true;
                 }
             }

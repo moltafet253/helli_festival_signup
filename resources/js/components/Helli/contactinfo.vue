@@ -6,8 +6,8 @@
                 <h2 class="text-base font-bold">اطلاعات ‌تماس</h2>
                 <hr class="flex-grow border-t-2 border-b-orange mr-4 mt-3">
             </div>
-            <div class="mt-3 flex items-center">
-                <span><img class="bg-orange-400 rounded-md w-5 ml-2" src="build/assets/icons/Danger Triangle.svg"
+            <div class="mt-3 flex ">
+                <span><img class="flex items-center bg-orange-400 rounded-md w-5 ml-2" src="build/assets/icons/Danger Triangle.svg"
                            alt=""></span>
                 <p>در صورت نیاز به تغییر اطلاعات تماس فیلدهای زیر را تکمیل نمائید. (توجه داشته باشید که اطلاعات وارد شده
                     توسط شما در سامانه پیشخوان ثبت نخواهد شد.)</p>

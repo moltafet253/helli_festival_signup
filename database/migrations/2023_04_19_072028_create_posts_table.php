@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('publish_status')->default('منتشر نشده');
             $table->string('special_section')->nullable();
             $table->string('activity_type')->default('فردی');
+            $table->integer('participation_percentage')->default(100);
             $table->text('file_src');
             $table->boolean('sent')->default(0);
             $table->timestamps();
