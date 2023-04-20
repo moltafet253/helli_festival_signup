@@ -75,14 +75,15 @@
                                                     </div>
                                                     <div class="w-full flex-row">
                                                         <div class="relative w-full mr-3">
-                                                            <p class="mb-0">کاربر گرامی؛ لطفا اطلاعات مربوط به اثر خود را تکمیل
+                                                            <p class="mb-0">کاربر گرامی؛ لطفا اطلاعات مربوط به اثر خود
+                                                                را تکمیل
                                                                 نمائید</p>
                                                         </div>
                                                     </div>
                                                 </div>
 
 
-                                                <form class="mt-8">
+<!--                                                <form class="mt-8" >-->
 
                                                     <div class="flex flex-wrap mt-5 px-5">
                                                         <div class="w-full lg:w-8/12 px-4 flex-row">
@@ -90,7 +91,7 @@
                                                                 <label class="block uppercase  text-base font-bold mb-2"
                                                                 >نام اثر<span
                                                                     style="color: red;">*</span></label>
-                                                                <input type="text" id="countries"
+                                                                <input type="text" id="name" name="name" v-model="name"
                                                                        class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                                                             </div>
                                                         </div>
@@ -99,7 +100,7 @@
                                                                 <label class="block uppercase  text-base font-bold mb-2"
                                                                 >قالب پژوهش<span
                                                                     style="color: red;">*</span></label>
-                                                                <select id="countries"
+                                                                <select v-model="research_format"
                                                                         class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
                                                                     <option disabled selected value="">انتخاب کنید
                                                                     </option>
@@ -114,7 +115,7 @@
                                                                 <label class="block uppercase  text-base font-bold mb-2"
                                                                 >گروه علمی<span
                                                                     style="color: red;">*</span></label>
-                                                                <select id="countries"
+                                                                <select v-model="scientific_group"
                                                                         class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
                                                                     <option disabled selected value="">انتخاب کنید
                                                                     </option>
@@ -129,11 +130,12 @@
                                                                 <label class="block uppercase  text-base font-bold mb-2"
                                                                 >نوع پژوهش<span
                                                                     style="color: red;">*</span></label>
-                                                                <select id="countries"
+                                                                <select v-model="research_type"
                                                                         class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
                                                                     <option disabled selected value="">انتخاب کنید
                                                                     </option>
-                                                                    <option v-for="researchs in research_types" :value="researchs.id">
+                                                                    <option v-for="researchs in research_types"
+                                                                            :value="researchs.id">
                                                                         {{ researchs.title }}
                                                                     </option>
                                                                 </select>
@@ -144,9 +146,8 @@
                                                                 <label class="block uppercase  text-base font-bold mb-2"
                                                                 >تعداد صفحات (برای مقاله
                                                                     ضروری میباشد.)</label>
-                                                                <input type="text"
-                                                                       class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
-                                                                       value="231">
+                                                                <input type="number" v-model="page_number"
+                                                                       class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                                                             </div>
                                                         </div>
                                                         <div class="w-full lg:w-4/12 px-4 flex-row">
@@ -154,7 +155,7 @@
                                                                 <label class="block uppercase  text-base font-bold mb-2"
                                                                 >وضعیت نشر<span
                                                                     style="color: red;">*</span></label>
-                                                                <select id="countries"
+                                                                <select v-model="publish_status"
                                                                         class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
                                                                     <option disabled selected value="">انتخاب کنید
                                                                     </option>
@@ -168,11 +169,12 @@
                                                             <div class="relative w-full mb-3">
                                                                 <label class="block uppercase  text-base font-bold mb-2"
                                                                 >بخش ویژه</label>
-                                                                <select id="countries"
+                                                                <select v-model="special_section"
                                                                         class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
                                                                     <option disabled selected value="">انتخاب کنید
                                                                     </option>
-                                                                    <option v-for="specials in special_sections" :value="specials.id">
+                                                                    <option v-for="specials in special_sections"
+                                                                            :value="specials.id">
                                                                         {{ specials.title }}
                                                                     </option>
                                                                 </select>
@@ -180,7 +182,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </form>
 
                                                 <div class="mt-8 px-8">
                                                     <div class="flex items-center ">
@@ -198,7 +199,7 @@
                                                                             class="border border-colorborder px-3 py-1 mr-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
                                                                         <option value="fardi">فردی
                                                                         </option>
-                                                                        <option value="moshtarak">                                 مشترک
+                                                                        <option value="moshtarak"> مشترک
                                                                         </option>
                                                                     </select>
                                                                 </div>
@@ -207,7 +208,7 @@
                                                         </div>
 
                                                         <div v-if="activityType === 'moshtarak'"
-                                                            class="mt-6  w-full lg:w-5/12 px-4 flex py-3 bg-blue-100 rounded-xl border border-colorborder">
+                                                             class="mt-6  w-full lg:w-5/12 px-4 flex py-3 bg-blue-100 rounded-xl border border-colorborder">
                                                             <div class=" flex-row ">
                                                                 <div class="relative w-full ">
                                                                     <img class="bg-blue-500 rounded-md p-1"
@@ -217,7 +218,8 @@
                                                             </div>
                                                             <div class="w-full flex-row">
                                                                 <div class="relative w-full mr-3">
-                                                                    <p class="mb-0">کاربر گرامی؛ لطفا اطلاعات مربوط به مشارکان اثر را
+                                                                    <p class="mb-0">کاربر گرامی؛ لطفا اطلاعات مربوط به
+                                                                        مشارکان اثر را
                                                                         وارد نمائید</p>
                                                                 </div>
                                                             </div>
@@ -370,14 +372,13 @@
 
                                                         <div
                                                             class="w-full lg:w-3/12 flex-row bg-white rounded-lg shadow">
-                                                            <form>
                                                                 <label for="file-upload"
                                                                        class="cursor-pointer flex justify-center items-center rounded-t-lg border-dashed border-4 border-colorborder border-b-0">
                                                                     <img class="p-8 py-8 rounded-t-lg"
                                                                          src="build/assets/icons/Paper Upload.png"
                                                                          alt="product image"/>
                                                                 </label>
-                                                                <input id="file-upload" name="file" type="file"
+                                                                <input id="file-upload" name="file" type="file" ref="fileInput"
                                                                        class="hidden" accept=".pdf,.doc,.docx"
                                                                        v-on:change="checkFile"/>
                                                                 <div
@@ -389,7 +390,6 @@
                                                                     </div>
 
                                                                 </div>
-                                                            </form>
                                                             <div v-if="error"
                                                                  class="mt-2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
                                                                  role="alert">
@@ -466,10 +466,12 @@
                                                                 <div class="px-6 py-4 text-center">
                                                                     <p class="mb-14 font-bold">{{ message }}</p>
                                                                     <div class="flex justify-center pb-8">
-                                                                        <button @click="confirm3"
+                                                                        <form @submit.prevent="handleSubmit">
+                                                                        <button
                                                                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
                                                                             بله
                                                                         </button>
+                                                                        </form>
                                                                         <button @click="cancel"
                                                                                 class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
                                                                             خیر
@@ -480,6 +482,8 @@
                                                         </div>
                                                     </div>
                                                 </transition>
+<!--                                                </form>-->
+
                                                 <!-- show modal 2 -->
                                                 <transition enter-active-class="transition ease-out duration-100"
                                                             enter-class="opacity-0" enter-to-class="opacity-100"
@@ -584,10 +588,94 @@
                         </div>
 
 
-                        <button class="bg-green-600 text-white font-bold py-2 px-4 mt-14 rounded-lg mx-auto block"
-                                @click="submitForm">
+                        <button @click="showModalLastSend = true"
+                                class="bg-green-600 text-white font-bold py-2 px-4 mt-14 rounded-lg mx-auto block"
+                        >
                             ارسال نهایی آثار به جشنواره
                         </button>
+                        <transition enter-active-class="transition ease-out duration-100"
+                                    enter-class="opacity-0" enter-to-class="opacity-100"
+                                    leave-active-class="transition ease-in duration-75"
+                                    leave-class="opacity-100" leave-to-class="opacity-0">
+                            <div v-if="showModalLastSend" class="fixed z-10 inset-0 overflow-y-auto">
+                                <div
+                                    class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                    <div class="fixed inset-0 transition-opacity"
+                                         aria-hidden="true">
+                                        <div
+                                            class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                    </div>
+                                    <span
+                                        class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                                        aria-hidden="true">&#8203;</span>
+                                    <div
+                                        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                        <div class="px-6 py-4">
+                                            <img class="mx-auto my-8"
+                                                 src="build/assets/icons/Warning.png"
+                                                 alt="Image">
+                                        </div>
+                                        <div class="px-6 py-4 text-center">
+                                            <p class="mb-14 font-bold">آثار وارد شده پس از تایید شما
+                                                به دبیرخانه جشنواره ارسال خواهد شد.
+                                                <br>
+                                                پس از تایید، امکان ویرایش یا ارسال اثر دیگر وجود ندارد.
+                                                آیا تایید می‌کنید؟</p>
+                                            <div class="flex justify-center pb-8">
+                                                <button @click="showModal2 = true"
+                                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
+                                                    بله
+                                                </button>
+                                                <button @click="cancelshowModalLastSend"
+                                                        class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
+                                                    خیر
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
+                        <!-- show modal 2 -->
+                        <transition enter-active-class="transition ease-out duration-100"
+                                    enter-class="opacity-0" enter-to-class="opacity-100"
+                                    leave-active-class="transition ease-in duration-75"
+                                    leave-class="opacity-100" leave-to-class="opacity-0">
+                            <div v-if="showModal2" class="fixed z-40 inset-0 overflow-y-auto">
+                                <div
+                                    class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                    <div class="fixed inset-0 transition-opacity"
+                                         aria-hidden="true">
+                                        <div
+                                            class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                    </div>
+                                    <span
+                                        class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                                        aria-hidden="true">&#8203;</span>
+                                    <div
+                                        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                        <div class="px-6 pt-4">
+                                            <img class="mx-auto mt-8"
+                                                 src="build/assets/icons/success.png"
+                                                 alt="Image">
+                                        </div>
+                                        <div class="px-6 pb-4 text-center ">
+                                            <p class="mb-14 font-bold w-1/2 mx-auto">آثار انتخاب
+                                                شده با موفقیت
+                                                به دبیرخانه جشنواره ارسال شد
+                                            </p>
+                                            <div class="flex justify-center pb-8">
+
+                                                <button @click="confirm"
+                                                        class="bg-white hover:bg-slate-200 border border-colorborder text-black py-2 px-10 rounded-xl">
+                                                    بستن
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
 
 
                     </div>
@@ -617,15 +705,27 @@ export default {
             fileSelected: false,
             fileName: "",
             error: null,
-            nameFile:'',
+            nameFile: '',
             message: 'اطلاعات وارد شده را تایید می‌نمایید؟',
             personalInfo: [],
             contactInfo: [],
             eduInfo: [],
             research_formats: [],
             scientific_groups: [],
-            research_types:[],
-            special_sections:[],
+            research_types: [],
+            special_sections: [],
+            showModalLastSend: false,
+
+            name:'',
+            research_format:'',
+            scientific_group:'',
+            research_type:'',
+            page_number:'',
+            publish_status:'',
+            special_section:'',
+            file:'',
+
+
 
         };
     },
@@ -651,6 +751,13 @@ export default {
             .catch(error => {
                 console.log(error)
             });
+        // axios.get(`/api/posts/allposts/`)
+        //     .then(response => {
+        //         this.eduInfo = response.data;
+        //     })
+        //     .catch(error => {
+        //         console.log(error)
+        //     });
         axios.get('/api/defaults/research_formats')
             .then(response => {
                 this.research_formats = response.data;
@@ -692,7 +799,44 @@ export default {
 
     },
     methods: {
+        handleSubmit() {
+            const fileInput = this.$refs.fileInput;
+            const file = fileInput.files[0];
 
+            const formData = new FormData();
+
+            formData.append('name', this.name);
+            formData.append('research_format', this.research_format);
+            formData.append('scientific_group', this.scientific_group);
+            formData.append('research_type', this.research_type);
+            formData.append('page_number', this.page_number);
+            formData.append('publish_status', this.publish_status);
+            formData.append('special_section', this.special_section);
+            formData.append('activityType', this.activityType);
+            this.rows.forEach(row => {
+                formData.append('rows[][name]', row.name);
+                formData.append('rows[][lastname]', row.lastname);
+                formData.append('rows[][codemeli]', row.codemeli);
+                formData.append('rows[][filenumber]', row.filenumber);
+                formData.append('rows[][Cooperation]', row.Cooperation);
+                formData.append('rows[][phonenumber]', row.phonenumber);
+            });
+            formData.append('file', file);
+            axios.post(`/api/sendpost/this/`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then(function (response) {
+                    console.log(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        cancelshowModalLastSend() {
+            this.showModalLastSend = false;
+        },
         isTotalCooperationValid() {
             // Check if all required fields are filled
             const allFieldsFilled = this.rows.every(row => {
@@ -771,6 +915,8 @@ export default {
         },
         confirm() {
             this.showModal = false;
+            this.showModal2 = false;
+            this.showModalLastSend = false;
             this.showModal3 = false;
         },
         showModalsend() {
@@ -787,7 +933,9 @@ export default {
             this.showModal3 = false;
             this.showModal2 = false;
             this.showModal = false;
-            this.nameFile='';
+            this.nameFile = '';
+            this.showModalLastSend = false;
+            // location.reload();
         },
         cancel3() {
             this.showModal3 = false;

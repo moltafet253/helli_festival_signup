@@ -167,6 +167,37 @@ Route::middleware('CheckSession')->get('/edu/geteduinfo/{nationalcode}', functio
     return DB::table('educational_infos')->where('national_code', '=', $nationalcode)->get();
 });
 
+Route::middleware('CheckSession')->get('/posts/allposts/{nationalcode}', function ($nationalcode) {
+    return DB::table('users')->where('national_code', '=', $nationalcode)->get();
+
+});
+Route::post('/sendpost/this', function (Request $request) {
+    return $request;
+//    $name = $request->input('name');
+//    $research_format = $request->input('research_format');
+//    $scientific_group = $request->input('scientific_group');
+//    $research_type = $request->input('research_type');
+//    $page_number = $request->input('page_number');
+//    $publish_status = $request->input('publish_status');
+//    $special_section = $request->input('special_section');
+//    $activityType = $request->input('activityType');
+//    $rows = $request->input('rows');
+//    return $rows = $request->all()['rows'];
+
+    //    $id = DB::table('users')->where('national_code', $nationalcode)->value('personalImageSrc');
+//    $path = Image::find($id);
+//    $src = $path->src;
+//    if (!User::exists($path)) {
+//        abort(404);
+//    }
+//    $profileUrl = Storage::url($src);
+//    if ($profileUrl){
+//        return response()->json(['imageSrc' => $profileUrl]);
+//    }
+//    else{
+//        return false;
+//    }
+});
 
 Route::prefix('defaults')->group(function () {
     Route::get('/provinces', function () {

@@ -117,7 +117,6 @@ export default {
         },
 
         handleSubmit() {
-            console.log(this.teaching);
             let isMaster = this.teaching[0]['isMaster'];
             let masterCode = this.teaching[0]['masterCode'];
             let teachingLocation = this.teaching[0]['teachingLocation'];

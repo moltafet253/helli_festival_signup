@@ -25,7 +25,7 @@
                                 <label class="label">
                                     <span class="label-text-alt">حداکثر حجم فایل: 2 مگابایت</span>
                                     <br>
-                                    <span class="label-text-alt">با پسوندهای: png-jpg-jpeg</span>
+                                    <span class="label-text-alt">با پسوندهای: png-jpg-jpeg-bmp</span>
                                     <br>
                                     <span class="label-text-alt">حداقل عرض و ارتفاع عکس: 128px*128px</span>
                                 </label>
@@ -76,15 +76,6 @@
                             }}</label>
                     </div>
                 </div>
-                <!--                <div class="w-full lg:w-4/12 px-4 flex-row">-->
-                <!--                    <div class="relative w-full mb-3">-->
-                <!--                        <label class="block uppercase  text-xs font-bold mb-2">شماره-->
-                <!--                            شناسنامه</label>-->
-                <!--                        <label-->
-                <!--                            class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{-->
-                <!--                            }}</label>-->
-                <!--                    </div>-->
-                <!--                </div>-->
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-xs font-bold mb-2">تاریخ
@@ -104,23 +95,6 @@
                             }}</label>
                     </div>
                 </div>
-                <!--                <div class="w-full lg:w-4/12 px-4 flex-row">-->
-                <!--                    <div class="relative w-full mb-3">-->
-                <!--                        <label class="block uppercase  text-xs font-bold mb-2">صادره از</label>-->
-                <!--                        <label-->
-                <!--                            class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{-->
-                <!--                                datapersonal.Sodor-->
-                <!--                            }}</label>-->
-                <!--                    </div>-->
-                <!--                </div>-->
-                <!--                <div class="w-full lg:w-4/12 px-4 flex-row">-->
-                <!--                    <div class="relative w-full mb-3">-->
-                <!--                        <label class="block uppercase  text-xs font-bold mb-2">ملیت</label>-->
-                <!--                        <label-->
-                <!--                            class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{-->
-                <!--                            }}</label>-->
-                <!--                    </div>-->
-                <!--                </div>-->
             </div>
         </form>
     </div>
@@ -152,11 +126,24 @@ export default {
                         location.reload();
                     })
                     .catch(error => {
-                        alert(error.response.data['errors']['file']);
+                        console.log(error.response.data['errors']['file']);
+                        switch (error.response.data['errors']['file'][0]){
+                            case "The file field has invalid image dimensions.":
+                                alert ('سایز تصویر اشتباه است.');
+                                break;
+                            case 'The file field must not be greater than 2048 kilobytes.':
+                                alert ('حجم فایل تصویر بزرگتر از 2 مگابایت است.');
+                                break;
+                            case 'The file field must be an image.':
+                                alert ('فایل تصویر نامعتبر است.');
+                                break;
+                            case 'The file field must be a file of type: jpeg, png, jpg, bmp.':
+                                alert ('فرمت فایل تصویر نامعتبر است.');
+                                break;
+                        }
                     });
             }
         },
-
     },
     mounted() {
         axios.get(`/api/getprofileimage/this/0371714941`)
