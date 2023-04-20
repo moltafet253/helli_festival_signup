@@ -147,7 +147,12 @@ Route::get('/getprofileimage/this/{nationalcode}', function ($nationalcode) {
         abort(404);
     }
     $profileUrl = Storage::url($src);
-    return response()->json(['imageSrc' => $profileUrl]);
+    if ($profileUrl){
+        return response()->json(['imageSrc' => $profileUrl]);
+    }
+    else{
+        return false;
+    }
 });
 
 Route::middleware('CheckSession')->get('/posts/getpost/{nationalcode}', function ($nationalcode) {

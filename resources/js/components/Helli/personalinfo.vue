@@ -2,8 +2,8 @@
     <div>
         <h1></h1>
         <form>
-            <div class="flex items-center ">
-                <span class="text-orange-500 pl-1">◼</span>
+            <div class="flex items-start ">
+                <span class="text-orange-500 pl-1 pt-px">◼</span>
                 <h2 class="text-base font-bold ">اطلاعات‌ شخصی</h2>
                 <hr class="flex-grow border-t-2 border-b-orange mr-4 mt-3">
             </div>
@@ -12,7 +12,7 @@
                     <div class="relative flex items-center justify-center mx-auto mb-2 ">
 
 
-                        <div v-if="!imageSrc" class="form-control w-full max-w-xs">
+                        <div v-if="!imageSrc" class="form-control w-full max-w-md">
                             <form @submit.prevent="submitForm">
 
                                 <label class="label">
@@ -38,7 +38,7 @@
                             </form>
                         </div>
 
-                        <img v-else :src="imageSrc" class="rounded-3xl w-32 h-32 object-cover" src="{{ }}"
+                        <img v-else :src="imageSrc" class="rounded-3xl w-32 h-32 object-cover"
                              alt="عکس کاربر">
 
                     </div>
@@ -149,11 +149,10 @@ export default {
 
                 axios.post(`/api/upload/${nationalID}`, formData)
                     .then(response => {
-                        console.log(response.data);
                         location.reload();
                     })
                     .catch(error => {
-                        // console.log(error.response.data);
+                        alert(error.response.data['errors']['file']);
                     });
             }
         },
@@ -162,10 +161,10 @@ export default {
     mounted() {
         axios.get(`/api/getprofileimage/this/0371714941`)
             .then(response => {
-                this.imageSrc = response.data.imageSrc;
+                // this.imageSrc = response.data.imageSrc;
             })
             .catch(error => {
-                console.log(error)
+                // console.log(error)
             });
     }
 }

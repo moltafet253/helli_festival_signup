@@ -2,9 +2,9 @@
 
 
     <section dir="rtl" class="py-1">
-        <div class="w-full  px-4 mt-6">
+        <div class="w-full mt-6">
             <div class="relative flex flex-col min-w-0 break-words w-full mb-6 rounded-lg  border-0">
-                <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+                <div class="flex-auto  py-10 pt-0">
 
                     <div class="mt-8">
                         <div class="flex items-center">
@@ -27,7 +27,7 @@
                                     <div class="flex items-center justify-start px-5 py-3 ">
                                         <img class="w-8 ml-2" src="build/assets/icons/miniCircle 37181.png"
                                              alt="product image"/>
-                                        <p>اثر جدید</p>
+                                        <p class="m-0">اثر جدید</p>
                                     </div>
                                 </div>
                             </div>
@@ -74,8 +74,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="w-full flex-row">
-                                                        <div class="relative w-full mb-3 mr-3">
-                                                            <p>کاربر گرامی؛ لطفا اطلاعات مربوط به اثر خود را تکمیل
+                                                        <div class="relative w-full mr-3">
+                                                            <p class="mb-0">کاربر گرامی؛ لطفا اطلاعات مربوط به اثر خود را تکمیل
                                                                 نمائید</p>
                                                         </div>
                                                     </div>
@@ -133,8 +133,8 @@
                                                                         class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
                                                                     <option disabled selected value="">انتخاب کنید
                                                                     </option>
-                                                                    <option v-for="rTypes in research_types" :value="rTypes.id">
-                                                                        {{ rTypes.title }}
+                                                                    <option v-for="researchs in research_types" :value="researchs.id">
+                                                                        {{ researchs.title }}
                                                                     </option>
                                                                 </select>
                                                             </div>
@@ -216,8 +216,8 @@
                                                                 </div>
                                                             </div>
                                                             <div class="w-full flex-row">
-                                                                <div class="relative w-full mb-3 mr-3">
-                                                                    <p>کاربر گرامی؛ لطفا اطلاعات مربوط به مشارکان اثر را
+                                                                <div class="relative w-full mr-3">
+                                                                    <p class="mb-0">کاربر گرامی؛ لطفا اطلاعات مربوط به مشارکان اثر را
                                                                         وارد نمائید</p>
                                                                 </div>
                                                             </div>
@@ -229,7 +229,7 @@
                                                          class="relative overflow-x-auto shadow-md sm:rounded-lg mt-8">
                                                         <table class="w-full text-sm text-right">
                                                             <thead class="text-base text-black-3d bg-orange-fce ">
-                                                            <tr>
+                                                            <tr class="text-center">
                                                                 <th scope="col" class="px-6 py-3">
                                                                     ردیف
                                                                 </th>
@@ -246,7 +246,7 @@
                                                                     شماره پرونده حوزوی
                                                                 </th>
                                                                 <th scope="col" class="px-6 py-3">
-                                                                    درصد همکاری
+                                                                    درصد مشارکت
                                                                 </th>
                                                                 <th scope="col" class="px-6 py-3">
                                                                     تلفن همراه
@@ -266,25 +266,25 @@
                                                                 <th class=" text-center  px-6 py-4 font-medium text-black-8484 whitespace-nowrap ">
                                                                     {{ this.personalInfo[0]['name'] }}
                                                                 </th>
-                                                                <td class="px-6 py-4 text-black-3d font-medium">
+                                                                <td class="px-6 py-4 text-center text-black-3d font-medium">
                                                                     {{ this.personalInfo[0]['family'] }}
                                                                 </td>
-                                                                <td class="px-6 py-4  text-black-3d font-medium">
+                                                                <td class="px-6 py-4 text-center text-black-3d font-medium">
                                                                     {{ this.personalInfo[0]['national_code'] }}
                                                                 </td>
-                                                                <td class="px-6 py-4  text-black-3d font-medium">
+                                                                <td class="px-6 py-4 text-center text-black-3d font-medium">
                                                                     {{ this.eduInfo[0]['shparvandetahsili'] }}
                                                                 </td>
-                                                                <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
+                                                                <td class="px-6 py-4 text-center border-l-0 text-black-3d font-medium">
                                                                     <input v-model="Cooperation" type="text"
                                                                            name="column_1"
-                                                                           class="w-16 py-2 shadow-sm rounded-md bg-white text-center border border-colorborder"
-                                                                           placeholder="75">
+                                                                           class="w-12 py-2 shadow-sm rounded-md bg-white text-center border border-colorborder"
+                                                                           placeholder="درصد">
                                                                 </td>
-                                                                <td class="px-6 py-4  text-black-3d font-medium">
+                                                                <td class="px-6 py-4 text-center text-black-3d font-medium">
                                                                     {{ this.contactInfo[0]['mobile'] }}
                                                                 </td>
-                                                                <td class="px-6 py-4  text-black-3d font-medium">
+                                                                <td class="px-6 py-4 text-center text-black-3d font-medium">
 
                                                                 </td>
 
@@ -297,44 +297,44 @@
                                                                     rowspan="1">
                                                                     {{ index + 2 }}
                                                                 </th>
-                                                                <td class=" border-l-0 text-black-3d font-medium">
+                                                                <td class="text-center border-l-0 text-black-3d font-medium">
                                                                     <input v-model="row.name" type="text"
                                                                            name="column_1"
                                                                            class="w-32 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
                                                                            placeholder="نام">
                                                                 </td>
-                                                                <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
+                                                                <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
                                                                     <input v-model="row.lastname" type="text"
                                                                            name="column_1"
                                                                            class="w-40 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
                                                                            placeholder="نام خانوادگی">
                                                                 </td>
-                                                                <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
+                                                                <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
                                                                     <input v-model="row.codemeli" type="text"
                                                                            name="column_1"
                                                                            class="w-40 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
                                                                            placeholder="کد ملی">
                                                                 </td>
-                                                                <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
+                                                                <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
                                                                     <input v-model="row.filenumber" type="text"
                                                                            name="column_1"
                                                                            class="w-24 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
                                                                            placeholder="شماره پرونده">
                                                                 </td>
-                                                                <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
+                                                                <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
                                                                     <input v-model="row.Cooperation" type="text"
                                                                            name="column_1"
-                                                                           class="w-16 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                           class="w-12 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
                                                                            placeholder="درصد">
 
                                                                 </td>
-                                                                <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
+                                                                <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
                                                                     <input v-model="row.phonenumber" type="text"
                                                                            name="column_1"
                                                                            class="w-32 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
                                                                            placeholder="شماره همراه">
                                                                 </td>
-                                                                <td class="px-6 py-4 text-right border-l-0">
+                                                                <td class="text-center px-6 py-4 text-right border-l-0">
                                                                     <button @click="deleteRow(index)">
                                                                         <img class="bg-white rounded-md p-1"
                                                                              src="build/assets/icons/delete.png" alt="">
@@ -353,7 +353,7 @@
                                                                 <span><img class="w-7"
                                                                            src="build/assets/icons/Down Button.png"
                                                                            alt="down"></span>
-                                                                <p class=" font-bold px-4 ">افزودن همکار</p>
+                                                                <p class=" mb-0 font-bold px-4">افزودن مشارک</p>
                                                             </button>
                                                         </div>
 
@@ -363,7 +363,7 @@
                                                         <div class="my-8">
                                                             <div class="flex items-center ">
                                                                 <span class="text-orange-500 pl-1">◼</span>
-                                                                <h2 class="text-base font-bold  ">افزودن‌فایل‌اثر</h2>
+                                                                <h2 class="text-base font-bold">افزودن‌فایل‌اثر</h2>
                                                                 <hr class="w-full border-t-2 border-b-orange mr-4 mt-3">
                                                             </div>
                                                         </div>
@@ -395,6 +395,13 @@
                                                                  role="alert">
                                                                 <strong class="font-bold">{{ error }}</strong>
                                                             </div>
+                                                            <div v-if="nameFile"
+                                                                 class="mt-2 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                                                                 role="alert">
+                                                                <strong class="font-bold">
+                                                                    نام فایل انتخاب شده:
+                                                                    {{ nameFile }}</strong>
+                                                            </div>
                                                         </div>
 
                                                     </section>
@@ -406,7 +413,7 @@
 
                                                         <button
                                                             @click="handleButtonClick"
-                                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
+                                                            class="text-white bg-blue-500 hover:bg-blue-700  font-bold py-2 px-10 ml-8 rounded-xl">
                                                             <span>انتخاب برای ارسال به جشنواره</span>
                                                         </button>
 
@@ -423,7 +430,7 @@
                                                         <button
                                                             @click="handleButtonClick2"
                                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
-                                                            <span>انتخاب برای ارسال به جشنواره</span>
+                                                            <span class="text-white">ثبت اولیه اطلاعات</span>
                                                         </button>
 
                                                         <button @click="cancel3"
@@ -548,20 +555,20 @@
                                 </thead>
                                 <tbody>
                                 <tr class="bg-gray-eee border-b border-gray-d1d1">
-                                    <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
+                                    <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
 
                                     </td>
                                     <th scope="row"
                                         class=" text-center border-l border-gray-d1d1 px-6 py-4 font-medium text-gray-8484 whitespace-nowrap ">
 
                                     </th>
-                                    <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
+                                    <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
 
                                     </td>
-                                    <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
+                                    <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
 
                                     </td>
-                                    <td class="px-6 py-4 border-l-0 text-black-3d font-medium">
+                                    <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
 
                                     </td>
                                     <td class="px-6 py-4 text-right border-l-0">
@@ -610,6 +617,7 @@ export default {
             fileSelected: false,
             fileName: "",
             error: null,
+            nameFile:'',
             message: 'اطلاعات وارد شده را تایید می‌نمایید؟',
             personalInfo: [],
             contactInfo: [],
@@ -653,6 +661,13 @@ export default {
         axios.get('/api/defaults/scientific_groups')
             .then(response => {
                 this.scientific_groups = response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        axios.get('/api/defaults/research_types')
+            .then(response => {
+                this.research_types = response.data;
             })
             .catch(error => {
                 console.log(error);
@@ -716,7 +731,7 @@ export default {
                     // هنگامی که فایل مجاز است
                     this.fileSelected = true;
                     this.error = false;
-                    const fileName = event.target.files[0];
+                    this.nameFile = event.target.files[0].name;
 
                     // this.showModal = true;
                 }
@@ -769,7 +784,10 @@ export default {
         },
 
         confirm3() {
-            this.showModal2 = true;
+            this.showModal3 = false;
+            this.showModal2 = false;
+            this.showModal = false;
+            this.nameFile='';
         },
         cancel3() {
             this.showModal3 = false;

@@ -21,8 +21,7 @@ class VueController extends Controller
             if (isset($data['data']['person'])) {
                 $dataPersonal = $data['data']['person'];
                 $socialID = $data['data']['person']['SocialID'];
-//                $Gender = $data['data']['person']['Gender'];
-                $Gender='زن';
+                $Gender = $data['data']['person']['Gender'];
                 session()->put(['nationalcode' => $socialID]);
                 session()->put(['gender' => $Gender]);
 
