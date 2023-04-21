@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('starter');
             $table->string('finish_date');
             $table->string('finisher');
+            $table->boolean('active')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -5,6 +5,8 @@ use App\Models\File;
 use App\Models\Helli\Contact;
 use App\Models\Helli\EducationalInfo;
 use App\Models\Helli\Image;
+use App\Models\Helli\Participant;
+use App\Models\Helli\Post;
 use App\Models\Helli\TeachingInfo;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -147,12 +149,11 @@ Route::get('/getprofileimage/this/{nationalcode}', function ($nationalcode) {
         abort(404);
     }
     $profileUrl = Storage::url($src);
-    if ($profileUrl){
+    if ($profileUrl) {
         return response()->json(['imageSrc' => $profileUrl]);
     }
-    else{
-        return false;
-    }
+
+    return '';
 });
 
 Route::middleware('CheckSession')->get('/posts/getpost/{nationalcode}', function ($nationalcode) {
@@ -171,32 +172,79 @@ Route::middleware('CheckSession')->get('/posts/allposts/{nationalcode}', functio
     return DB::table('users')->where('national_code', '=', $nationalcode)->get();
 
 });
-Route::post('/sendpost/this', function (Request $request) {
-    return $request;
-//    $name = $request->input('name');
-//    $research_format = $request->input('research_format');
-//    $scientific_group = $request->input('scientific_group');
-//    $research_type = $request->input('research_type');
-//    $page_number = $request->input('page_number');
-//    $publish_status = $request->input('publish_status');
-//    $special_section = $request->input('special_section');
-//    $activityType = $request->input('activityType');
-//    $rows = $request->input('rows');
-//    return $rows = $request->all()['rows'];
+Route::post('/sendpost/this/{nationalcode}', function (Request $request,$nationalcode) {
+    $user_id = DB::table('users')->where('national_code', $nationalcode)->value('id');
+    $festival_id = DB::table('festivals')->where('active', 1)->value('id');
 
-    //    $id = DB::table('users')->where('national_code', $nationalcode)->value('personalImageSrc');
-//    $path = Image::find($id);
-//    $src = $path->src;
-//    if (!User::exists($path)) {
-//        abort(404);
-//    }
-//    $profileUrl = Storage::url($src);
-//    if ($profileUrl){
-//        return response()->json(['imageSrc' => $profileUrl]);
-//    }
-//    else{
-//        return false;
-//    }
+    $name = $request->input('name');
+    $research_format = $request->input('research_format');
+    $scientific_group = $request->input('scientific_group');
+    $research_type = $request->input('research_type');
+    $page_number = $request->input('page_number');
+    $publish_status = $request->input('publish_status');
+    $special_section = $request->input('special_section');
+    $activityType = $request->input('activityType');
+
+
+    $file = $request->file('file');
+    $filename = $file->getClientOriginalName();
+    $hashName = uniqid('', true) . '.' . $request->file('file')->getClientOriginalName();
+    $path = $file->storeAs('public/asar', $hashName);
+
+
+    $post = Post::create([
+        'user_id' => $user_id,
+        'festival_id' => $festival_id,
+        'title' => $name,
+        'research_format' => $research_format,
+        'scientific_group' => $scientific_group,
+        'research_type' => $research_type,
+        'pages_number' => $page_number,
+        'publish_status' => $publish_status,
+        'special_section' => $special_section,
+        'activity_type' => $activityType,
+        'file_src' => $path
+    ]);
+    if ($activityType === 'moshtarak') {
+        $myCooperation=$request->input('myCooperation');
+        Post::where('id',$post->id)-> update([
+            'participation_percentage'=>$myCooperation
+        ]);
+
+        $data = $request->input('rows');
+        $cooperators = $request->all()['rows'];
+        $a = 0;
+        $b = 1;
+        $c = 2;
+        $d = 3;
+        $e = 4;
+        $f = 5;
+        Participant::create([
+            'post_id' => $post->id,
+//            'post_id' => 1,
+            'name' => $cooperators[$a]['name'],
+            'family' => $cooperators[$b]['lastname'],
+            'national_code' => $cooperators[$c]['codemeli'],
+            'case_number' => $cooperators[$d]['filenumber'],
+            'participation_percentage' => $cooperators[$e]['Cooperation'],
+            'mobile' => $cooperators[$f]['phonenumber'],
+        ]);
+        $count = count($cooperators) / 6;
+        for ($i = 2; $i <= $count; $i++) {
+            Participant::create([
+                'post_id' => $post->id,
+//                'post_id' => 1,
+                'name' => $cooperators[$a += 6]['name'],
+                'family' => $cooperators[$b += 6]['lastname'],
+                'national_code' => $cooperators[$c += 6]['codemeli'],
+                'case_number' => $cooperators[$d += 6]['filenumber'],
+                'participation_percentage' => $cooperators[$e += 6]['Cooperation'],
+                'mobile' => $cooperators[$f += 6]['phonenumber'],
+            ]);
+        }
+    }
+
+
 });
 
 Route::prefix('defaults')->group(function () {

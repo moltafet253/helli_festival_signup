@@ -9,6 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class HelliUserMaxUploadPost extends Model
 {
     use HasFactory,SoftDeletes;
-    protected $table='images';
+    protected $table='helli_user_max_upload_posts';
     protected $guarded=[];
 }

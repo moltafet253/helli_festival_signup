@@ -148,10 +148,12 @@ export default {
     mounted() {
         axios.get(`/api/getprofileimage/this/0371714941`)
             .then(response => {
-                // this.imageSrc = response.data.imageSrc;
+                if (response.data.imageSrc){
+                    this.imageSrc =response.data.imageSrc ;
+                }
             })
             .catch(error => {
-                // console.log(error)
+                console.log(error)
             });
     }
 }

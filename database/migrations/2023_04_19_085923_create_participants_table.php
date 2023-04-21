@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('family');
             $table->string('national_code');
+            $table->string('case_number');
             $table->string('participation_percentage');
             $table->string('mobile');
             $table->timestamps();

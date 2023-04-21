@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Helli\Contact;
 use App\Models\Helli\EducationalInfo;
+use App\Models\Helli\HelliUserMaxUploadPost;
 use App\Models\Helli\TeachingInfo;
 use App\Models\User;
 use GuzzleHttp\Client;
@@ -25,7 +26,7 @@ class VueController extends Controller
                 session()->put(['nationalcode' => $socialID]);
                 session()->put(['gender' => $Gender]);
 
-                User::firstOrCreate([
+                $user=User::firstOrCreate([
                     'national_code' => $socialID
                 ], [
                     'national_code' => $socialID,
@@ -63,6 +64,12 @@ class VueController extends Controller
                 ]);
 
                 TeachingInfo::firstOrCreate([
+                    'national_code' => $socialID
+                ], [
+                    'national_code' => $socialID,
+                ]);
+
+                HelliUserMaxUploadPost::firstOrCreate([
                     'national_code' => $socialID
                 ], [
                     'national_code' => $socialID,

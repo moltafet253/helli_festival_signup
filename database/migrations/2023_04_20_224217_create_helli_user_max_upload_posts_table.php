@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('helli_user_max_upload_posts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('national_code');
             $table->integer('numbers')->default(3);
             $table->boolean('sent_status')->default(0);
             $table->timestamps();

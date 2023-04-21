@@ -23,8 +23,9 @@
                                     <img class="p-8 py-8 rounded-t-lg" src="build/assets/icons/Paper Upload.png"
                                          alt="product image"/>
                                 </div>
-                                <div class="bg-slate-200 border border-colorborder rounded-b-lg">
-                                    <div class="flex items-center justify-start px-5 py-3 ">
+                                <div @click="showModal3 = true"
+                                     class="bg-slate-200 border border-colorborder rounded-b-lg">
+                                    <div class="cursor-pointer flex items-center justify-start px-5 py-3 ">
                                         <img class="w-8 ml-2" src="build/assets/icons/miniCircle 37181.png"
                                              alt="product image"/>
                                         <p class="m-0">اثر جدید</p>
@@ -83,105 +84,105 @@
                                                 </div>
 
 
-<!--                                                <form class="mt-8" >-->
+                                                <!--                                                <form class="mt-8" >-->
 
-                                                    <div class="flex flex-wrap mt-5 px-5">
-                                                        <div class="w-full lg:w-8/12 px-4 flex-row">
-                                                            <div class="relative w-full mb-3">
-                                                                <label class="block uppercase  text-base font-bold mb-2"
-                                                                >نام اثر<span
-                                                                    style="color: red;">*</span></label>
-                                                                <input type="text" id="name" name="name" v-model="name"
-                                                                       class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
-                                                            </div>
-                                                        </div>
-                                                        <div class="w-full lg:w-4/12 px-4 flex-row">
-                                                            <div class="relative w-full mb-3">
-                                                                <label class="block uppercase  text-base font-bold mb-2"
-                                                                >قالب پژوهش<span
-                                                                    style="color: red;">*</span></label>
-                                                                <select v-model="research_format"
-                                                                        class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
-                                                                    <option disabled selected value="">انتخاب کنید
-                                                                    </option>
-                                                                    <option v-for="formats in research_formats"
-                                                                            :value="formats.id">{{ formats.title }}
-                                                                    </option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="w-full lg:w-4/12 px-4 flex-row">
-                                                            <div class="relative w-full mb-3">
-                                                                <label class="block uppercase  text-base font-bold mb-2"
-                                                                >گروه علمی<span
-                                                                    style="color: red;">*</span></label>
-                                                                <select v-model="scientific_group"
-                                                                        class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
-                                                                    <option disabled selected value="">انتخاب کنید
-                                                                    </option>
-                                                                    <option v-for="groups in scientific_groups"
-                                                                            :value="groups.id">{{ groups.title }}
-                                                                    </option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="w-full lg:w-4/12 px-4 flex-row">
-                                                            <div class="relative w-full mb-3">
-                                                                <label class="block uppercase  text-base font-bold mb-2"
-                                                                >نوع پژوهش<span
-                                                                    style="color: red;">*</span></label>
-                                                                <select v-model="research_type"
-                                                                        class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
-                                                                    <option disabled selected value="">انتخاب کنید
-                                                                    </option>
-                                                                    <option v-for="researchs in research_types"
-                                                                            :value="researchs.id">
-                                                                        {{ researchs.title }}
-                                                                    </option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="w-full lg:w-4/12 px-4 flex-row">
-                                                            <div class="relative w-full mb-3">
-                                                                <label class="block uppercase  text-base font-bold mb-2"
-                                                                >تعداد صفحات (برای مقاله
-                                                                    ضروری میباشد.)</label>
-                                                                <input type="number" v-model="page_number"
-                                                                       class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
-                                                            </div>
-                                                        </div>
-                                                        <div class="w-full lg:w-4/12 px-4 flex-row">
-                                                            <div class="relative w-full mb-3">
-                                                                <label class="block uppercase  text-base font-bold mb-2"
-                                                                >وضعیت نشر<span
-                                                                    style="color: red;">*</span></label>
-                                                                <select v-model="publish_status"
-                                                                        class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
-                                                                    <option disabled selected value="">انتخاب کنید
-                                                                    </option>
-                                                                    <option value="منتشر نشده">منتشر نشده</option>
-                                                                    <option value="منتشر شده">منتشر شده</option>
-                                                                </select>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="w-full lg:w-4/12 px-4 flex-row">
-                                                            <div class="relative w-full mb-3">
-                                                                <label class="block uppercase  text-base font-bold mb-2"
-                                                                >بخش ویژه</label>
-                                                                <select v-model="special_section"
-                                                                        class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
-                                                                    <option disabled selected value="">انتخاب کنید
-                                                                    </option>
-                                                                    <option v-for="specials in special_sections"
-                                                                            :value="specials.id">
-                                                                        {{ specials.title }}
-                                                                    </option>
-                                                                </select>
-
-                                                            </div>
+                                                <div class="flex flex-wrap mt-5 px-5">
+                                                    <div class="w-full lg:w-8/12 px-4 flex-row">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase  text-base font-bold mb-2"
+                                                            >نام اثر<span
+                                                                style="color: red;">*</span></label>
+                                                            <input type="text" id="name" name="name" v-model="name"
+                                                                   class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                                                         </div>
                                                     </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase  text-base font-bold mb-2"
+                                                            >قالب پژوهش<span
+                                                                style="color: red;">*</span></label>
+                                                            <select v-model="research_format"
+                                                                    class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
+                                                                <option disabled selected value="">انتخاب کنید
+                                                                </option>
+                                                                <option v-for="formats in research_formats"
+                                                                        :value="formats.id">{{ formats.title }}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase  text-base font-bold mb-2"
+                                                            >گروه علمی<span
+                                                                style="color: red;">*</span></label>
+                                                            <select v-model="scientific_group"
+                                                                    class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
+                                                                <option disabled selected value="">انتخاب کنید
+                                                                </option>
+                                                                <option v-for="groups in scientific_groups"
+                                                                        :value="groups.id">{{ groups.title }}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase  text-base font-bold mb-2"
+                                                            >نوع پژوهش<span
+                                                                style="color: red;">*</span></label>
+                                                            <select v-model="research_type"
+                                                                    class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
+                                                                <option disabled selected value="">انتخاب کنید
+                                                                </option>
+                                                                <option v-for="researchs in research_types"
+                                                                        :value="researchs.id">
+                                                                    {{ researchs.title }}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase  text-base font-bold mb-2"
+                                                            >تعداد صفحات (برای مقاله
+                                                                ضروری میباشد.)</label>
+                                                            <input type="number" v-model="page_number"
+                                                                   class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase  text-base font-bold mb-2"
+                                                            >وضعیت نشر<span
+                                                                style="color: red;">*</span></label>
+                                                            <select v-model="publish_status"
+                                                                    class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
+                                                                <option disabled selected value="">انتخاب کنید
+                                                                </option>
+                                                                <option value="منتشر نشده">منتشر نشده</option>
+                                                                <option value="منتشر شده">منتشر شده</option>
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase  text-base font-bold mb-2"
+                                                            >بخش ویژه</label>
+                                                            <select v-model="special_section"
+                                                                    class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
+                                                                <option disabled selected value="">انتخاب کنید
+                                                                </option>
+                                                                <option v-for="specials in special_sections"
+                                                                        :value="specials.id">
+                                                                    {{ specials.title }}
+                                                                </option>
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
 
                                                 <div class="mt-8 px-8">
                                                     <div class="flex items-center ">
@@ -372,24 +373,25 @@
 
                                                         <div
                                                             class="w-full lg:w-3/12 flex-row bg-white rounded-lg shadow">
-                                                                <label for="file-upload"
-                                                                       class="cursor-pointer flex justify-center items-center rounded-t-lg border-dashed border-4 border-colorborder border-b-0">
-                                                                    <img class="p-8 py-8 rounded-t-lg"
-                                                                         src="build/assets/icons/Paper Upload.png"
-                                                                         alt="product image"/>
-                                                                </label>
-                                                                <input id="file-upload" name="file" type="file" ref="fileInput"
-                                                                       class="hidden" accept=".pdf,.doc,.docx"
-                                                                       v-on:change="checkFile"/>
+                                                            <label for="fileInput"
+                                                                   class="cursor-pointer flex justify-center items-center rounded-t-lg border-dashed border-4 border-colorborder border-b-0">
+                                                                <img class="p-8 py-8 rounded-t-lg"
+                                                                     src="build/assets/icons/Paper Upload.png"
+                                                                     alt="product image"/>
+                                                            </label>
+                                                            <input id="fileInput" name="fileInput" type="file"
+                                                                   ref="fileInput"
+                                                                   class="hidden" accept=".pdf,.doc,.docx"
+                                                                   v-on:change="checkFile"/>
+                                                            <div
+                                                                class="bg-slate-200 border border-colorborder rounded-b-lg ">
                                                                 <div
-                                                                    class="bg-slate-200 border border-colorborder rounded-b-lg ">
-                                                                    <div
-                                                                        class="flex items-center justify-start px-5 py-3">
-                                                                        <p>آپلود فایل اثر <br>(با پسوند PDF, Doc, Docx )
-                                                                        </p>
-                                                                    </div>
-
+                                                                    class="flex items-center justify-start px-5 py-3">
+                                                                    <p>آپلود فایل اثر <br>(با پسوند PDF, Doc, Docx )
+                                                                    </p>
                                                                 </div>
+
+                                                            </div>
                                                             <div v-if="error"
                                                                  class="mt-2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
                                                                  role="alert">
@@ -445,7 +447,7 @@
                                                             enter-class="opacity-0" enter-to-class="opacity-100"
                                                             leave-active-class="transition ease-in duration-75"
                                                             leave-class="opacity-100" leave-to-class="opacity-0">
-                                                    <div v-if="showModal" class="fixed z-30 inset-0 overflow-y-auto">
+                                                    <div v-if="showModal" class="fixed md:mt-24 z-30 inset-0 overflow-y-auto">
                                                         <div
                                                             class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                                                             <div class="fixed inset-0 transition-opacity"
@@ -467,10 +469,10 @@
                                                                     <p class="mb-14 font-bold">{{ message }}</p>
                                                                     <div class="flex justify-center pb-8">
                                                                         <form @submit.prevent="handleSubmit">
-                                                                        <button
+                                                                            <button
                                                                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
-                                                                            بله
-                                                                        </button>
+                                                                                بله
+                                                                            </button>
                                                                         </form>
                                                                         <button @click="cancel"
                                                                                 class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
@@ -482,7 +484,7 @@
                                                         </div>
                                                     </div>
                                                 </transition>
-<!--                                                </form>-->
+                                                <!--                                                </form>-->
 
                                                 <!-- show modal 2 -->
                                                 <transition enter-active-class="transition ease-out duration-100"
@@ -716,15 +718,14 @@ export default {
             special_sections: [],
             showModalLastSend: false,
 
-            name:'',
-            research_format:'',
-            scientific_group:'',
-            research_type:'',
-            page_number:'',
-            publish_status:'',
-            special_section:'',
-            file:'',
-
+            name: '',
+            research_format: '',
+            scientific_group: '',
+            research_type: '',
+            page_number: '',
+            publish_status: '',
+            special_section: '',
+            file: '',
 
 
         };
@@ -813,22 +814,27 @@ export default {
             formData.append('publish_status', this.publish_status);
             formData.append('special_section', this.special_section);
             formData.append('activityType', this.activityType);
-            this.rows.forEach(row => {
-                formData.append('rows[][name]', row.name);
-                formData.append('rows[][lastname]', row.lastname);
-                formData.append('rows[][codemeli]', row.codemeli);
-                formData.append('rows[][filenumber]', row.filenumber);
-                formData.append('rows[][Cooperation]', row.Cooperation);
-                formData.append('rows[][phonenumber]', row.phonenumber);
-            });
+            if (this.activityType === 'moshtarak') {
+                formData.append('myCooperation',this.Cooperation);
+                this.rows.forEach(row => {
+                    formData.append('rows[][name]', row.name);
+                    formData.append('rows[][lastname]', row.lastname);
+                    formData.append('rows[][codemeli]', row.codemeli);
+                    formData.append('rows[][filenumber]', row.filenumber);
+                    formData.append('rows[][Cooperation]', row.Cooperation);
+                    formData.append('rows[][phonenumber]', row.phonenumber);
+                });
+            }
+
             formData.append('file', file);
-            axios.post(`/api/sendpost/this/`, formData, {
+            axios.post(`/api/sendpost/this/${this.nationalcode}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             })
                 .then(function (response) {
-                    console.log(response.data);
+                    // console.log(response.data);
+                    location.reload();
                 })
                 .catch(function (error) {
                     console.log(error);
