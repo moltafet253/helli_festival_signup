@@ -562,10 +562,10 @@
                                         نام اثر
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        تعداد صفحات
+                                        گروه علمی
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        نوع فعالیت
+                                        نوع پژوهش
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         فایل اثر
@@ -574,22 +574,22 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="bg-gray-eee border-b border-gray-d1d1">
+                                <tr  v-for="(post, index) in allPosts" :key="index" class="bg-gray-eee border-b border-gray-d1d1">
                                     <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
-
+                                        {{ post.festival_id }}
                                     </td>
                                     <th scope="row"
                                         class=" text-center border-l border-gray-d1d1 px-6 py-4 font-medium text-gray-8484 whitespace-nowrap ">
-
+                                        {{ post.research_format }}
                                     </th>
                                     <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
-
+                                        {{ post.title }}
                                     </td>
                                     <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
-
+                                        {{ post.scientific_group }}
                                     </td>
                                     <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
-
+                                        {{ post.research_type }}
                                     </td>
                                     <td class="px-6 py-4 text-right border-l-0">
                                         <a href="#" class="font-medium">
@@ -604,7 +604,7 @@
                         </div>
 
 
-                        <button @click="showModal2 = true"
+                        <button @click="showModalLastSend = true"
                                 class="bg-green-600 text-white font-bold py-2 px-4 mt-14 rounded-lg mx-auto block"
                         >
                             ارسال نهایی آثار به جشنواره
@@ -613,8 +613,8 @@
                                     enter-class="opacity-0" enter-to-class="opacity-100"
                                     leave-active-class="transition ease-in duration-75"
                                     leave-class="opacity-100" leave-to-class="opacity-0">
-                            <div v-if="showModal2" class="fixed z-10 inset-0 overflow-y-auto">
-                                <div
+                            <div v-if="showModalLastSend" class="fixed z-10 inset-0 overflow-y-auto">
+                                <div @click="cancelshowModalLastSend"
                                     class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                                     <div class="fixed inset-0 transition-opacity"
                                          aria-hidden="true">
@@ -658,7 +658,7 @@
                                     leave-active-class="transition ease-in duration-75"
                                     leave-class="opacity-100" leave-to-class="opacity-0">
                             <div v-if="showModal2" class="fixed z-40 inset-0 overflow-y-auto">
-                                <div
+                                <div @click="confirm"
                                     class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                                     <div class="fixed inset-0 transition-opacity"
                                          aria-hidden="true">
@@ -770,13 +770,13 @@ export default {
             .catch(error => {
                 console.log(error)
             });
-        // axios.get(`/api/posts/allposts/user/${this.nationalcode}/`)
-        //     .then(response => {
-        //         this.eduInfo = response.data;
-        //     })
-        //     .catch(error => {
-        //         console.log(error)
-        //     });
+        axios.get(`/api/posts/allposts/user/${this.nationalcode}/`)
+            .then(response => {
+                this.allPosts = response.data.posts;
+            })
+            .catch(error => {
+                console.log(error)
+            });
         axios.get('/api/defaults/research_formats')
             .then(response => {
                 this.research_formats = response.data;
@@ -956,6 +956,7 @@ export default {
             this.showModal2 = false;
             this.showModalLastSend = false;
             this.showModal3 = false;
+            location.reload();
         },
         showModalsend() {
             this.showModal = true;

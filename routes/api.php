@@ -168,10 +168,13 @@ Route::middleware('CheckSession')->get('/edu/geteduinfo/{nationalcode}', functio
     return DB::table('educational_infos')->where('national_code', '=', $nationalcode)->get();
 });
 
-Route::middleware('CheckSession')->get('/posts/allposts/{nationalcode}', function ($nationalcode) {
-    return DB::table('users')->where('national_code', '=', $nationalcode)->get();
-
+Route::middleware('CheckSession')->get('/posts/allposts/user/{nationalcode}', function ($nationalcode) {
+    $user_id = DB::table('users')->where('national_code', $nationalcode)->value('id');
+    $user = User::findOrFail($user_id);
+    $posts = $user->posts()->orderBy('id','desc')->get();
+    return response()->json(['posts' => $posts]);
 });
+
 Route::post('/sendpost/this/{nationalcode}', function (Request $request,$nationalcode) {
     $user_id = DB::table('users')->where('national_code', $nationalcode)->value('id');
     $festival_id = DB::table('festivals')->where('active', 1)->value('id');
