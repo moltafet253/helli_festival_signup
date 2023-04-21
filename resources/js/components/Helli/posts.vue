@@ -43,7 +43,7 @@
                                     <div
                                         class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                                         <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                                            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                            <div class="absolute inset-0 bg-gray-500 opacity-75" @click="cancel3"></div>
                                         </div>
                                         <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
                                               aria-hidden="true">&#8203;</span>
@@ -67,26 +67,31 @@
                                                 </div>
 
                                                 <div
-                                                    class="mt-8 mx-8 w-full lg:w-5/12 px-4 flex py-3 bg-blue-100 rounded-xl border border-colorborder">
-                                                    <div class=" flex-row ">
-                                                        <div class="relative w-full ">
-                                                            <img class="bg-blue-500 rounded-md p-1"
-                                                                 src="build/assets/icons/Info Square.svg" alt="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-full flex-row">
-                                                        <div class="relative w-full mr-3">
-                                                            <p class="mb-0">کاربر گرامی؛ لطفا اطلاعات مربوط به اثر خود
-                                                                را تکمیل
-                                                                نمائید</p>
-                                                        </div>
+                                                    class="mt-8 px-8 w-full lg:w-5/12 flex py-3   ">
+                                                        <div class=" flex bg-blue-100 p-3 rounded-xl border border-colorborder">
+
+                                                            <div class="pl-2">
+                                                                <img class="bg-blue-500 md:w-6 w-9 rounded-md p-1"
+                                                                     src="build/assets/icons/Info Square.svg" alt="">
+                                                            </div>
+                                                            <div>
+                                                                <p class="mb-0 pt-1">کاربر گرامی؛ لطفا اطلاعات مربوط به اثر خود
+                                                                    را تکمیل
+                                                                    نمائید</p>
+                                                            </div>
+
                                                     </div>
                                                 </div>
 
 
                                                 <!--                                                <form class="mt-8" >-->
+                                                <div class="px-8 mt-4 flex items-center"><span
+                                                    class="text-orange-500 pl-1">◼</span>
+                                                    <h2 class="text-base font-bold">اطلاعات‌ اثر</h2>
+                                                    <hr class="flex-grow border-t-2 border-b-orange mr-4 mt-3">
+                                                </div>
+                                                <div class="flex flex-wrap mt-2 px-4">
 
-                                                <div class="flex flex-wrap mt-5 px-5">
                                                     <div class="w-full lg:w-8/12 px-4 flex-row">
                                                         <div class="relative w-full mb-3">
                                                             <label class="block uppercase  text-base font-bold mb-2"
@@ -374,7 +379,7 @@
                                                         </div>
 
                                                         <div
-                                                            class="w-full lg:w-3/12 flex-row bg-white rounded-lg shadow">
+                                                            class="w-full lg:w-3/12 mx-3 flex-row bg-white rounded-lg shadow">
                                                             <label for="fileInput"
                                                                    class="cursor-pointer flex justify-center items-center rounded-t-lg border-dashed border-4 border-colorborder border-b-0">
                                                                 <img class="p-8 py-8 rounded-t-lg"
@@ -455,13 +460,14 @@
                                                             leave-active-class="transition ease-in duration-75"
                                                             leave-class="opacity-100" leave-to-class="opacity-0">
                                                     <div v-if="showModal"
-                                                         class="fixed md:mt-24 mt-0 z-30 inset-0 overflow-y-auto">
+                                                         class="fixed  mt-0 z-30 inset-0 overflow-y-auto">
                                                         <div
                                                             class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                                                             <div class="fixed inset-0 transition-opacity"
                                                                  aria-hidden="true">
                                                                 <div
-                                                                    class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                                                    class="absolute inset-0 bg-gray-500 opacity-75"
+                                                                    @click="cancel"></div>
                                                             </div>
                                                             <span
                                                                 class="hidden sm:inline-block sm:align-middle sm:h-screen"
@@ -598,7 +604,7 @@
                         </div>
 
 
-                        <button @click="showModalLastSend = true"
+                        <button @click="showModal2 = true"
                                 class="bg-green-600 text-white font-bold py-2 px-4 mt-14 rounded-lg mx-auto block"
                         >
                             ارسال نهایی آثار به جشنواره
@@ -607,7 +613,7 @@
                                     enter-class="opacity-0" enter-to-class="opacity-100"
                                     leave-active-class="transition ease-in duration-75"
                                     leave-class="opacity-100" leave-to-class="opacity-0">
-                            <div v-if="showModalLastSend" class="fixed z-10 inset-0 overflow-y-auto">
+                            <div v-if="showModal2" class="fixed z-10 inset-0 overflow-y-auto">
                                 <div
                                     class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                                     <div class="fixed inset-0 transition-opacity"
@@ -738,7 +744,7 @@ export default {
             emptyErrors: '',
 
             //get all this user posts
-            allPosts:[],
+            allPosts: [],
 
         };
     },
@@ -759,18 +765,18 @@ export default {
             });
         axios.get(`/api/edu/geteduinfo/${this.nationalcode}/`)
             .then(response => {
-                this.allPosts = response.data;
-            })
-            .catch(error => {
-                console.log(error)
-            });
-        axios.get(`/api/posts/allposts/user/${this.nationalcode}/`)
-            .then(response => {
                 this.eduInfo = response.data;
             })
             .catch(error => {
                 console.log(error)
             });
+        // axios.get(`/api/posts/allposts/user/${this.nationalcode}/`)
+        //     .then(response => {
+        //         this.eduInfo = response.data;
+        //     })
+        //     .catch(error => {
+        //         console.log(error)
+        //     });
         axios.get('/api/defaults/research_formats')
             .then(response => {
                 this.research_formats = response.data;
