@@ -145,8 +145,10 @@
                                                     <div class="w-full lg:w-4/12 px-4 flex-row">
                                                         <div class="relative w-full mb-3">
                                                             <label class="block uppercase  text-base font-bold mb-2"
-                                                            >تعداد صفحات (برای مقاله
-                                                                ضروری میباشد.)</label>
+                                                            >تعداد صفحات
+                                                                <span v-if="research_format==4"
+                                                                      style="color: red;">*</span>
+                                                            </label>
                                                             <input type="number" v-model="page_number"
                                                                    class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                                                         </div>
@@ -404,11 +406,16 @@
                                                                     نام فایل انتخاب شده:
                                                                     {{ nameFile }}</strong>
                                                             </div>
+                                                            <div v-if="emptyErrors"
+                                                                 class="mt-2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                                                                 role="alert">
+                                                                <strong class="font-bold">{{ emptyErrors }}</strong>
+                                                            </div>
                                                         </div>
 
                                                     </section>
-
                                                 </div>
+
                                                 <section v-if="activityType === 'Common'">
                                                     <div class="flex justify-center mb-8 mt-14">
 
@@ -447,7 +454,8 @@
                                                             enter-class="opacity-0" enter-to-class="opacity-100"
                                                             leave-active-class="transition ease-in duration-75"
                                                             leave-class="opacity-100" leave-to-class="opacity-0">
-                                                    <div v-if="showModal" class="fixed md:mt-24 z-30 inset-0 overflow-y-auto">
+                                                    <div v-if="showModal"
+                                                         class="fixed md:mt-24 mt-0 z-30 inset-0 overflow-y-auto">
                                                         <div
                                                             class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                                                             <div class="fixed inset-0 transition-opacity"
@@ -678,8 +686,6 @@
                                 </div>
                             </div>
                         </transition>
-
-
                     </div>
 
                 </div>
@@ -718,6 +724,7 @@ export default {
             special_sections: [],
             showModalLastSend: false,
 
+            //send items
             name: '',
             research_format: '',
             scientific_group: '',
@@ -727,6 +734,11 @@ export default {
             special_section: '',
             file: '',
 
+            //errors
+            emptyErrors: '',
+
+            //get all this user posts
+            allPosts:[],
 
         };
     },
@@ -747,18 +759,18 @@ export default {
             });
         axios.get(`/api/edu/geteduinfo/${this.nationalcode}/`)
             .then(response => {
+                this.allPosts = response.data;
+            })
+            .catch(error => {
+                console.log(error)
+            });
+        axios.get(`/api/posts/allposts/user/${this.nationalcode}/`)
+            .then(response => {
                 this.eduInfo = response.data;
             })
             .catch(error => {
                 console.log(error)
             });
-        // axios.get(`/api/posts/allposts/`)
-        //     .then(response => {
-        //         this.eduInfo = response.data;
-        //     })
-        //     .catch(error => {
-        //         console.log(error)
-        //     });
         axios.get('/api/defaults/research_formats')
             .then(response => {
                 this.research_formats = response.data;
@@ -815,7 +827,7 @@ export default {
             formData.append('special_section', this.special_section);
             formData.append('activityType', this.activityType);
             if (this.activityType === 'moshtarak') {
-                formData.append('myCooperation',this.Cooperation);
+                formData.append('myCooperation', this.Cooperation);
                 this.rows.forEach(row => {
                     formData.append('rows[][name]', row.name);
                     formData.append('rows[][lastname]', row.lastname);
@@ -866,6 +878,7 @@ export default {
 
         },
         checkFile(event) {
+            this.nameFile = '';
             if (event.target.files.length === 0) {
                 this.fileSelected = false;
                 this.fileName = "";
@@ -900,13 +913,26 @@ export default {
             }
         },
         handleButtonClick2(event) {
-
-            if (this.fileSelected) { // چک کردن اینکه آیا فایلی انتخاب شده یا خیر
-                this.showModal = true;
+            if (!this.name) {
+                this.emptyErrors = 'نام اثر وارد نشده است.';
+            } else if (!this.research_format) {
+                this.emptyErrors = 'قالب پژوهش انتخاب نشده است.';
+            } else if (!this.scientific_group) {
+                this.emptyErrors = 'گروه علمی انتخاب نشده است.';
+            } else if (!this.research_type) {
+                this.emptyErrors = 'نوع پژوهش انتخاب نشده است.';
+            } else if (!this.page_number && this.research_format == 4) {
+                this.emptyErrors = 'تعداد صفحات وارد نشده است.';
+            } else if (!this.publish_status) {
+                this.emptyErrors = 'وضعیت نشر انتخاب نشده است.';
             } else {
-                this.error = 'خطا: فایلی انتخاب نشده است!'; // افزودن پیغام خطا در صورت عدم انتخاب فایل
+                this.emptyErrors = '';
+                if (this.fileSelected) { // چک کردن اینکه آیا فایلی انتخاب شده یا خیر
+                    this.showModal = true;
+                } else {
+                    this.error = 'خطا: فایلی انتخاب نشده است!'; // افزودن پیغام خطا در صورت عدم انتخاب فایل
+                }
             }
-
         },
 
 
@@ -946,8 +972,6 @@ export default {
         cancel3() {
             this.showModal3 = false;
         },
-
-
     }
 };
 </script>
