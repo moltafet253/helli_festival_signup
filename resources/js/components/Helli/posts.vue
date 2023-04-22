@@ -768,7 +768,6 @@ export default {
             });
         axios.get(`/api/defaults/maxUploads/${this.nationalcode}/`)
             .then(response => {
-                console.log(response.data[0]);
                 this.max_uploads = response.data[0];
             })
             .catch(error => {

@@ -83,14 +83,14 @@ export default {
             })
     },
     created() {
-        axios.get('/api/defaults/provinces')
-            .then(response => {
-                this.fetchUserData();
-                this.provinces = response.data;
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        // axios.get('/api/defaults/provinces')
+        //     .then(response => {
+        //         this.fetchUserData();
+        //         this.provinces = response.data;
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     });
     },
     methods: {
         divStatus(event) {

@@ -1,8 +1,8 @@
 <template>
     <div dir="ltr">
-        <nav class="bg-navbar-base text-white px-10 border-b-8 border-c-orange">
+        <nav class="bg-navbar-base mb2 text-white px-10 border-b-8 border-c-orange">
             <div class="container flex items-center justify-between px-4 py-2">
-                <div class="">
+                <div class="mb-2">
 <!--                    <a href="#" class="text-white">ورود به پیشخوان</a>-->
                     <a href="#" class="mr-4 text-white">ورود به سایت معاونت پژوهش</a>
                 </div>

@@ -11,29 +11,10 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">نام مرکز
                             حوزوی<span style="color: red;">*</span></label>
-                        <select v-model="item.namemarkaztahsili" v-for="(item, index) in edu"
+                        <select v-model="item.namemarkaztahsili" v-for="(item, index) in edu" @change="returnProvince(item.namemarkaztahsili)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
-                            <option v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.namemarkaztahsili=='حوزه‌های علمیه برادران'">حوزه‌های علمیه
-                                برادران
-                            </option>
-                            <option v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.namemarkaztahsili=='حوزه‌های علمیه حواهران'">حوزه‌های علمیه
-                                خواهران
-                            </option>
-                            <option v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.namemarkaztahsili=='حوزه علمیه خراسان'">حوزه علمیه خراسان
-                            </option>
-                            <option v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.namemarkaztahsili=='حوزه علمیه اصفهان'">حوزه علمیه اصفهان
-                            </option>
-                            <option v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.namemarkaztahsili=='جامعةالمصطفی'">جامعةالمصطفی
-                            </option>
-                            <option v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.namemarkaztahsili=='جامعةالزهرا'">جامعةالزهرا
-                            </option>
+                            <option v-for="item in markaz" :value="item.markaz" v-bind:selected="item.namemarkaztahsili===item.markaz">{{ item.markaz }}</option>
                         </select>
                     </div>
                 </div>
@@ -152,9 +133,11 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">استان محل تحصیل<span
                             style="color: red;">*</span></label>
-                        <input type="text"
-                               class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
-                               value="قم">
+                        <select v-model="item.namemarkaztahsili" v-for="(item, index) in edu"
+                                class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
+                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option  v-for="item in markaz"  :value="item.markaz" v-bind:selected="item.namemarkaztahsili===item.markaz">{{ item.markaz }}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
@@ -252,8 +235,11 @@ export default {
             paye: '',
             sath: '',
             term: '',
+            markaz: [],
+            selectedMarkaz:[],
             namemarkaztahsili: '',
             noetahsilhozavi: '',
+
         }
     },
     mounted() {
@@ -264,9 +250,27 @@ export default {
             })
             .catch(error => {
                 console.log(error)
+            });
+        axios.get(`/api/defaults/centers/`)
+            .then(response => {
+                this.markaz = response.data;
+            })
+            .catch(error => {
+                console.log(error)
             })
     },
     methods: {
+        returnProvince(center){
+            // console.log(ma);
+            axios.get(`/api/defaults/provinces/${center}`)
+                .then(response => {
+                    console.log(response.data);
+                    // this.markaz = response.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
         handleSubmit(a) {
             let namemarkaztahsili = this.edu[0]['namemarkaztahsili'];
             let noetahsilhozavi = this.edu[0]['noetahsilhozavi'];

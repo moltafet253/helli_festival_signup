@@ -8,6 +8,7 @@ use App\Models\Helli\HelliUserMaxUploadPost;
 use App\Models\Helli\Image;
 use App\Models\Helli\Participant;
 use App\Models\Helli\Post;
+use App\Models\Helli\Provinces;
 use App\Models\Helli\TeachingInfo;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -266,14 +267,14 @@ Route::post('/posts/approve/last/send/{nationCode}', function (Request $request,
 });
 
 Route::prefix('defaults')->group(function () {
-    Route::get('/provinces', function () {
-        $provinces = DB::table('provinces')->get()->where('parent', '=', 0);
-//    foreach ($provinces as $info){
-//        return $parent=$info['id'];
-//        $cities = DB::table('provinces')->get()->where('parent','=',$parent);
-//        return $cities;
-//    }
-        return $provinces;
+    Route::get('/centers', function () {
+        $centers = Provinces::select('markaz')->distinct()->orderBy('markaz','asc')->get();
+        return response()->json($centers);
+
+    });
+    Route::get('/provinces/{center}', function ($center) {
+        $provinces = Provinces::select('ostan')->where('markaz','=',$center)->distinct()->orderBy('ostan','asc')->get();
+        return response()->json($provinces);
 
     });
     Route::get('/research_formats', function () {
