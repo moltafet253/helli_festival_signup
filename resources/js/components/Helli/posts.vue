@@ -499,47 +499,6 @@
                                                     </div>
                                                 </transition>
                                                 <!--                                                </form>-->
-
-                                                <!-- show modal 2 -->
-                                                <transition enter-active-class="transition ease-out duration-100"
-                                                            enter-class="opacity-0" enter-to-class="opacity-100"
-                                                            leave-active-class="transition ease-in duration-75"
-                                                            leave-class="opacity-100" leave-to-class="opacity-0">
-                                                    <div v-if="showModal2" class="fixed z-40 inset-0 overflow-y-auto">
-                                                        <div
-                                                            class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                                            <div class="fixed inset-0 transition-opacity"
-                                                                 aria-hidden="true">
-                                                                <div
-                                                                    class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                                                            </div>
-                                                            <span
-                                                                class="hidden sm:inline-block sm:align-middle sm:h-screen"
-                                                                aria-hidden="true">&#8203;</span>
-                                                            <div
-                                                                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                                                                <div class="px-6 pt-4">
-                                                                    <img class="mx-auto mt-8"
-                                                                         src="build/assets/icons/success.png"
-                                                                         alt="Image">
-                                                                </div>
-                                                                <div class="px-6 pb-4 text-center ">
-                                                                    <p class="mb-14 font-bold w-1/2 mx-auto">آثار انتخاب
-                                                                        شده با موفقیت
-                                                                        به دبیرخانه جشنواره ارسال شد
-                                                                    </p>
-                                                                    <div class="flex justify-center pb-8">
-
-                                                                        <button @click="confirm"
-                                                                                class="bg-white hover:bg-slate-200 border border-colorborder text-black py-2 px-10 rounded-xl">
-                                                                            بستن
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </transition>
                                             </div>
 
                                         </div>
@@ -551,7 +510,7 @@
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-8">
                             <table dir="rtl" class="w-full text-sm text-right">
                                 <thead class="text-base text-black-3d bg-orange-fce ">
-                                <tr>
+                                <tr class="text-center">
                                     <th scope="col" class="px-6 py-3">
                                         جشنواره
                                     </th>
@@ -575,20 +534,19 @@
                                 </thead>
                                 <tbody>
                                 <tr  v-for="(post, index) in allPosts" :key="index" class="bg-gray-eee border-b border-gray-d1d1">
-                                    <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
+                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
                                         {{ post.festival_title }}
                                     </td>
-                                    <th scope="row"
-                                        class=" text-center border-l border-gray-d1d1 px-6 py-4 font-medium text-gray-8484 whitespace-nowrap ">
+                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
                                         {{ post.research_format }}
-                                    </th>
+                                    </td>
                                     <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
                                         {{ post.title }}
                                     </td>
-                                    <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
+                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
                                         {{ post.scientific_group }}
                                     </td>
-                                    <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
+                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
                                         {{ post.research_type }}
                                     </td>
                                     <td class="px-6 py-4 text-right border-l-0">
@@ -605,12 +563,12 @@
                             </table>
                         </div>
 
-
-                        <button @click="showModalLastSend = true"
+                        <button v-if="max_uploads.numbers!==0" @click="showModalLastSend = true"
                                 class="bg-green-600 text-white font-bold py-2 px-4 mt-14 rounded-lg mx-auto block"
                         >
                             ارسال نهایی آثار به جشنواره
                         </button>
+
                         <transition enter-active-class="transition ease-out duration-100"
                                     enter-class="opacity-0" enter-to-class="opacity-100"
                                     leave-active-class="transition ease-in duration-75"
@@ -640,7 +598,7 @@
                                                 پس از تایید، امکان ویرایش یا ارسال اثر دیگر وجود ندارد.
                                                 آیا تایید می‌کنید؟</p>
                                             <div class="flex justify-center pb-8">
-                                                <button @click="showModal2 = true"
+                                                <button @click="lastSendFunction"
                                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
                                                     بله
                                                 </button>
@@ -730,6 +688,7 @@ export default {
             scientific_groups: [],
             research_types: [],
             special_sections: [],
+            max_uploads:[],
             showModalLastSend: false,
 
             //send items
@@ -807,6 +766,14 @@ export default {
             .catch(error => {
                 console.log(error);
             });
+        axios.get(`/api/defaults/maxUploads/${this.nationalcode}/`)
+            .then(response => {
+                console.log(response.data[0]);
+                this.max_uploads = response.data[0];
+            })
+            .catch(error => {
+                console.log(error);
+            });
     },
     computed: {
         isSubmitButtonDisabled() {
@@ -820,6 +787,19 @@ export default {
 
     },
     methods: {
+        lastSendFunction(){
+            axios.post(`/api/posts/approve/last/send/${this.nationalcode}/`, {
+                approved: '1'
+            })
+                .then(function (response) {
+                    console.log(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            this.showModal2 = true;
+
+        },
         downloadFile(fileSrc) {
             window.open(fileSrc, '_blank');
         },

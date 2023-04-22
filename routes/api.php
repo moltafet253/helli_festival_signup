@@ -4,6 +4,7 @@ use App\Http\Controllers\ImageController;
 use App\Models\File;
 use App\Models\Helli\Contact;
 use App\Models\Helli\EducationalInfo;
+use App\Models\Helli\HelliUserMaxUploadPost;
 use App\Models\Helli\Image;
 use App\Models\Helli\Participant;
 use App\Models\Helli\Post;
@@ -250,6 +251,20 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request,$nationa
 
 });
 
+Route::post('/posts/approve/last/send/{nationCode}', function (Request $request, $nationCode) {
+//    return $nationCode;
+    if ($request->input('approved')==1){
+        $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationCode)->update([
+            'sent_status' => 1,
+            'numbers'=>0,
+        ]);
+    }
+
+    if(!$maxUpload){
+        return response()->json(['errors' => 'this is error'], 422);
+    }
+});
+
 Route::prefix('defaults')->group(function () {
     Route::get('/provinces', function () {
         $provinces = DB::table('provinces')->get()->where('parent', '=', 0);
@@ -276,6 +291,10 @@ Route::prefix('defaults')->group(function () {
     Route::get('/special_sections', function () {
         $special_sections = DB::table('special_sections')->get()->where('active', '=', 1);
         return $special_sections;
+    });
+    Route::get('/maxUploads/{nationCode}', function ($nationCode) {
+        $max_upload = DB::table('helli_user_max_upload_posts')->get()->where('national_code', '=', $nationCode);
+        return $max_upload;
     });
 });
 
