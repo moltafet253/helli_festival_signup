@@ -177,7 +177,7 @@ Route::middleware('CheckSession')->get('/posts/allposts/user/{nationalcode}', fu
 
 Route::post('/sendpost/this/{nationalcode}', function (Request $request,$nationalcode) {
     $user_id = DB::table('users')->where('national_code', $nationalcode)->value('id');
-    $festival_id = DB::table('festivals')->where('active', 1)->value('id');
+    $festival_title = DB::table('festivals')->where('active', 1)->value('title');
 
     $name = $request->input('name');
     $research_format = $request->input('research_format');
@@ -192,12 +192,12 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request,$nationa
     $file = $request->file('file');
     $filename = $file->getClientOriginalName();
     $hashName = uniqid('', true) . '.' . $request->file('file')->getClientOriginalName();
-    $path = $file->storeAs('public/asar', $hashName);
+    $path = $file->storeAs('storage/asar', $hashName);
 
 
     $post = Post::create([
         'user_id' => $user_id,
-        'festival_id' => $festival_id,
+        'festival_title' => $festival_title,
         'title' => $name,
         'research_format' => $research_format,
         'scientific_group' => $scientific_group,

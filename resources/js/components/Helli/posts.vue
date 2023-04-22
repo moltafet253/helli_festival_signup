@@ -111,7 +111,7 @@
                                                                 <option disabled selected value="">انتخاب کنید
                                                                 </option>
                                                                 <option v-for="formats in research_formats"
-                                                                        :value="formats.id">{{ formats.title }}
+                                                                        :value="formats.title">{{ formats.title }}
                                                                 </option>
                                                             </select>
                                                         </div>
@@ -126,7 +126,7 @@
                                                                 <option disabled selected value="">انتخاب کنید
                                                                 </option>
                                                                 <option v-for="groups in scientific_groups"
-                                                                        :value="groups.id">{{ groups.title }}
+                                                                        :value="groups.title">{{ groups.title }}
                                                                 </option>
                                                             </select>
                                                         </div>
@@ -141,7 +141,7 @@
                                                                 <option disabled selected value="">انتخاب کنید
                                                                 </option>
                                                                 <option v-for="researchs in research_types"
-                                                                        :value="researchs.id">
+                                                                        :value="researchs.title">
                                                                     {{ researchs.title }}
                                                                 </option>
                                                             </select>
@@ -182,7 +182,7 @@
                                                                 <option disabled selected value="">انتخاب کنید
                                                                 </option>
                                                                 <option v-for="specials in special_sections"
-                                                                        :value="specials.id">
+                                                                        :value="specials.title">
                                                                     {{ specials.title }}
                                                                 </option>
                                                             </select>
@@ -576,7 +576,7 @@
                                 <tbody>
                                 <tr  v-for="(post, index) in allPosts" :key="index" class="bg-gray-eee border-b border-gray-d1d1">
                                     <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
-                                        {{ post.festival_id }}
+                                        {{ post.festival_title }}
                                     </td>
                                     <th scope="row"
                                         class=" text-center border-l border-gray-d1d1 px-6 py-4 font-medium text-gray-8484 whitespace-nowrap ">
@@ -592,7 +592,9 @@
                                         {{ post.research_type }}
                                     </td>
                                     <td class="px-6 py-4 text-right border-l-0">
-                                        <a href="#" class="font-medium">
+                                        <a
+                                            @click="downloadFile(post.file_src)"
+                                            class="font-medium ">
                                             <img class="bg-white rounded-md border border-colorborder p-1"
                                                  src="build/assets/icons/Download.svg" alt="">
                                         </a>
@@ -818,6 +820,9 @@ export default {
 
     },
     methods: {
+        downloadFile(fileSrc) {
+            window.open(fileSrc, '_blank');
+        },
         handleSubmit() {
             const fileInput = this.$refs.fileInput;
             const file = fileInput.files[0];
@@ -943,10 +948,8 @@ export default {
 
 
         addRow() {
-            this.rows.push({name: '', lastname: '', codemeli: '', filenumber: '', Cooperation: '', phonenumber: '',});
-            this.rows.push(newRow)
-// add a duplicate row with the gray background color
-            this.rows.push({...newRow})
+            const newRow = { name: '', lastname: '', codemeli: '', filenumber: '', Cooperation: '', phonenumber: '' };
+            this.rows.push({ ...newRow });
         },
         deleteRow(index) {
             this.rows.splice(index, 1);
