@@ -594,7 +594,7 @@
                                     <td class="px-6 py-4 text-right border-l-0">
                                         <a
                                             @click="downloadFile(post.file_src)"
-                                            class="font-medium ">
+                                            class="font-medium cursor-pointer">
                                             <img class="bg-white rounded-md border border-colorborder p-1"
                                                  src="build/assets/icons/Download.svg" alt="">
                                         </a>
