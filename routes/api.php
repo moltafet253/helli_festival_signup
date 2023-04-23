@@ -54,16 +54,19 @@ Route::get('/edu/{nationalcode}', function (Request $request, $nationalcode) {
     $gender = session()->get('gender');
     return [
         'edu' => $edu,
-        'gender' => $gender
+        'gender' => $gender,
     ];
 });
 
-Route::post('/edu/save/{nationCode}', function (Request $request) {
-//    echo $request;
+Route::post('/edu/save', function (Request $request) {
+//    return $request;
     $national_code = $request->input('edu.0.national_code');
     $namemarkaztahsili = $request->input('edu.0.namemarkaztahsili');
     $noetahsilhozavi = $request->input('edu.0.noetahsilhozavi');
     $shparvandetahsili = $request->input('edu.0.shparvandetahsili');
+    $ostantahsili = $request->input('edu.0.ostantahsili');
+    $shahrtahsili = $request->input('edu.0.shahrtahsili');
+    $madresetahsili = $request->input('edu.0.madresetahsili');
     $paye = $request->input('edu.0.paye');
     $sath = $request->input('edu.0.sath');
     $term = $request->input('edu.0.term');
@@ -84,12 +87,16 @@ Route::post('/edu/save/{nationCode}', function (Request $request) {
         'namemarkaztahsili' => $namemarkaztahsili,
         'noetahsilhozavi' => $noetahsilhozavi,
         'shparvandetahsili' => $shparvandetahsili,
+        'ostantahsili' => $ostantahsili,
+        'shahrtahsili' => $shahrtahsili,
+        'madresetahsili' => $madresetahsili,
         'paye' => $paye,
         'sath' => $sath,
         'term' => $term,
         'markaztakhasosihozavi' => $markaztakhasosihozavi,
         'tahsilatghhozavi' => $tahsilatghhozavi,
         'reshtedaneshgahi' => $reshtedaneshgahi,
+        'approved'=>1
     ]);
 });
 
@@ -108,6 +115,7 @@ Route::post('/teaching/save/{nationCode}', function (Request $request) {
         'masterCode' => $masterCode,
         'teachingLocation' => $teachingLocation,
         'teachingPlaceName' => $teachingPlaceName,
+        'approved'=>1,
     ]);
     return $teaching;
 });
@@ -173,11 +181,11 @@ Route::middleware('CheckSession')->get('/edu/geteduinfo/{nationalcode}', functio
 Route::middleware('CheckSession')->get('/posts/allposts/user/{nationalcode}', function ($nationalcode) {
     $user_id = DB::table('users')->where('national_code', $nationalcode)->value('id');
     $user = User::findOrFail($user_id);
-    $posts = $user->posts()->orderBy('id','desc')->get();
+    $posts = $user->posts()->orderBy('id', 'desc')->get();
     return response()->json(['posts' => $posts]);
 });
 
-Route::post('/sendpost/this/{nationalcode}', function (Request $request,$nationalcode) {
+Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nationalcode) {
     $user_id = DB::table('users')->where('national_code', $nationalcode)->value('id');
     $festival_title = DB::table('festivals')->where('active', 1)->value('title');
 
@@ -192,9 +200,8 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request,$nationa
 
 
     $file = $request->file('file');
-    $filename = $file->getClientOriginalName();
     $hashName = uniqid('', true) . '.' . $request->file('file')->getClientOriginalName();
-    $path = $file->storeAs('storage/asar', $hashName);
+    $path = $file->storeAs('public/asar', $hashName);
 
 
     $post = Post::create([
@@ -210,10 +217,10 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request,$nationa
         'activity_type' => $activityType,
         'file_src' => $path
     ]);
-    if ($activityType === 'moshtarak') {
-        $myCooperation=$request->input('myCooperation');
-        Post::where('id',$post->id)-> update([
-            'participation_percentage'=>$myCooperation
+    if ($activityType === 'common') {
+        $myCooperation = $request->input('myCooperation');
+        Post::where('id', $post->id)->update([
+            'participation_percentage' => $myCooperation
         ]);
 
         $data = $request->input('rows');
@@ -226,7 +233,6 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request,$nationa
         $f = 5;
         Participant::create([
             'post_id' => $post->id,
-//            'post_id' => 1,
             'name' => $cooperators[$a]['name'],
             'family' => $cooperators[$b]['lastname'],
             'national_code' => $cooperators[$c]['codemeli'],
@@ -238,7 +244,6 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request,$nationa
         for ($i = 2; $i <= $count; $i++) {
             Participant::create([
                 'post_id' => $post->id,
-//                'post_id' => 1,
                 'name' => $cooperators[$a += 6]['name'],
                 'family' => $cooperators[$b += 6]['lastname'],
                 'national_code' => $cooperators[$c += 6]['codemeli'],
@@ -254,31 +259,62 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request,$nationa
 
 Route::post('/posts/approve/last/send/{nationCode}', function (Request $request, $nationCode) {
 //    return $nationCode;
-    if ($request->input('approved')==1){
+    if ($request->input('approved') == 1) {
         $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationCode)->update([
             'sent_status' => 1,
-            'numbers'=>0,
+            'numbers' => 0,
         ]);
     }
 
-    if(!$maxUpload){
+    if (!$maxUpload) {
         return response()->json(['errors' => 'this is error'], 422);
     }
 });
 
 Route::prefix('defaults')->group(function () {
-    Route::get('/centers', function () {
-        $centers = Provinces::select('markaz')->distinct()->orderBy('markaz','asc')->get();
+    Route::get('/centers/{gender}', function ($gender) {
+        $centers = Provinces::select('markaz')
+            ->where('gender', '=', $gender)
+            ->distinct()
+            ->orderBy('markaz', 'asc')
+            ->get();
         return response()->json($centers);
 
     });
-    Route::get('/provinces/{center}', function ($center) {
-        $provinces = Provinces::select('ostan')->where('markaz','=',$center)->distinct()->orderBy('ostan','asc')->get();
+    Route::get('/provinces/{center}/{gender}', function ($center, $gender) {
+        $provinces = Provinces::select('ostan')
+            ->where('markaz', '=', $center)
+            ->where('gender', '=', $gender)
+            ->distinct()
+            ->orderBy('ostan', 'asc')
+            ->get();
         return response()->json($provinces);
-
+    });
+    Route::get('/cities/{center}/{province}/{gender}', function ($center, $province, $gender) {
+        $cities = Provinces::select('shahr')
+            ->where('markaz', '=', $center)
+            ->where('ostan', '=', $province)
+            ->where('gender', '=', $gender)
+            ->distinct()
+            ->orderBy('shahr', 'asc')
+            ->get();
+        return response()->json($cities);
+    });
+    Route::get('/schools/{center}/{province}/{city}/{gender}', function ($center, $province, $city, $gender) {
+        $cities = Provinces::select('madrese')
+            ->where('markaz', '=', $center)
+            ->where('ostan', '=', $province)
+            ->where('shahr', '=', $city)
+            ->where('gender', '=', $gender)
+            ->distinct()
+            ->orderBy('madrese', 'asc')
+            ->get();
+        return response()->json($cities);
     });
     Route::get('/research_formats', function () {
-        $research_formats = DB::table('research_formats')->get()->where('active', '=', 1);
+        $research_formats = DB::table('research_formats')
+            ->get()
+            ->where('active', '=', 1);
         return $research_formats;
     });
     Route::get('/scientific_groups', function () {

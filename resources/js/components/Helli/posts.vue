@@ -151,7 +151,7 @@
                                                         <div class="relative w-full mb-3">
                                                             <label class="block uppercase  text-base font-bold mb-2"
                                                             >تعداد صفحات
-                                                                <span v-if="research_format==4"
+                                                                <span v-if="research_format==='مقاله'"
                                                                       style="color: red;">*</span>
                                                             </label>
                                                             <input type="number" v-model="page_number"
@@ -421,14 +421,15 @@
                                                     </section>
                                                 </div>
 
-                                                <section v-if="activityType === 'Common'">
+                                                <section v-if="activityType === 'moshtarak'">
                                                     <div class="flex justify-center mb-8 mt-14">
 
 
                                                         <button
+
                                                             @click="handleButtonClick"
-                                                            class="text-white bg-blue-500 hover:bg-blue-700  font-bold py-2 px-10 ml-8 rounded-xl">
-                                                            <span>انتخاب برای ارسال به جشنواره</span>
+                                                            :class="[handleButtonClick ? ' bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl cursor-pointer' : 'bg-red-500 opacity-50  hover:bg-red-700 cursor-not-allowed text-white font-bold py-2 px-10 ml-8 rounded-xl']" >
+                                                            <span :class="[checkFile ? ' text-white' : 'text-black']">ثبت اولیه اطلاعات</span>
                                                         </button>
 
                                                         <button @click="cancel3"
@@ -455,41 +456,26 @@
                                                 </section>
                                                 <!-- show modal -->
 
-                                                <transition enter-active-class="transition ease-out duration-100"
-                                                            enter-class="opacity-0" enter-to-class="opacity-100"
-                                                            leave-active-class="transition ease-in duration-75"
-                                                            leave-class="opacity-100" leave-to-class="opacity-0">
-                                                    <div v-if="showModal"
-                                                         class="fixed  mt-0 z-30 inset-0 overflow-y-auto">
-                                                        <div
-                                                            class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                                            <div class="fixed inset-0 transition-opacity"
-                                                                 aria-hidden="true">
-                                                                <div
-                                                                    class="absolute inset-0 bg-gray-500 opacity-75"
-                                                                    @click="cancel"></div>
+                                                <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
+                                                    <div v-if="showModal" class="fixed  mt-0 z-30 inset-0 overflow-y-auto">
+                                                        <div class="flex items-end pb-48 justify-center min-h-full text-center ">
+                                                            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                                                                <div class="absolute inset-0 bg-gray-500 opacity-75" @click="cancel"></div>
                                                             </div>
-                                                            <span
-                                                                class="hidden sm:inline-block sm:align-middle sm:h-screen"
-                                                                aria-hidden="true">&#8203;</span>
-                                                            <div
-                                                                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                                            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                                                            <div class=" bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                                                 <div class="px-6 py-4">
-                                                                    <img class="mx-auto my-8"
-                                                                         src="build/assets/icons/Warning.png"
-                                                                         alt="Image">
+                                                                    <img class="mx-auto my-8" src="build/assets/icons/Warning.png" alt="Image">
                                                                 </div>
                                                                 <div class="px-6 py-4 text-center">
                                                                     <p class="mb-14 font-bold">{{ message }}</p>
                                                                     <div class="flex justify-center pb-8">
                                                                         <form @submit.prevent="handleSubmit">
-                                                                            <button
-                                                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
+                                                                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
                                                                                 بله
                                                                             </button>
                                                                         </form>
-                                                                        <button @click="cancel"
-                                                                                class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
+                                                                        <button @click="cancel" class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
                                                                             خیر
                                                                         </button>
                                                                     </div>
@@ -498,6 +484,8 @@
                                                         </div>
                                                     </div>
                                                 </transition>
+
+
                                                 <!--                                                </form>-->
                                             </div>
 
@@ -529,12 +517,14 @@
                                     <th scope="col" class="px-6 py-3">
                                         فایل اثر
                                     </th>
-
+                                    <th scope="col" class="px-6 py-3">
+                                        عملیات
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr  v-for="(post, index) in allPosts" :key="index" class="bg-gray-eee border-b border-gray-d1d1">
-                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
+                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-10">
                                         {{ post.festival_title }}
                                     </td>
                                     <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
@@ -549,9 +539,17 @@
                                     <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
                                         {{ post.research_type }}
                                     </td>
-                                    <td class="px-6 py-4 text-right border-l-0">
+                                    <td class="px-6 py-4 text-right border-l border-gray-d1d1">
                                         <a
                                             @click="downloadFile(post.file_src)"
+                                            class="font-medium cursor-pointer">
+                                            <img class="bg-white rounded-md border border-colorborder p-1"
+                                                 src="build/assets/icons/Download.svg" alt="">
+                                        </a>
+                                    </td>
+                                    <td class="px-6 py-4 text-right border-l-0">
+                                        <a
+                                            @click="reportRate(post.id)"
                                             class="font-medium cursor-pointer">
                                             <img class="bg-white rounded-md border border-colorborder p-1"
                                                  src="build/assets/icons/Download.svg" alt="">
@@ -562,34 +560,23 @@
                                 </tbody>
                             </table>
                         </div>
-
-                        <button v-if="max_uploads.numbers!==0" @click="showModalLastSend = true"
+<!--                        v-if="max_uploads.numbers!==0"-->
+                        <button  @click="showModalLastSend = true"
                                 class="bg-green-600 text-white font-bold py-2 px-4 mt-14 rounded-lg mx-auto block"
                         >
                             ارسال نهایی آثار به جشنواره
                         </button>
 
-                        <transition enter-active-class="transition ease-out duration-100"
-                                    enter-class="opacity-0" enter-to-class="opacity-100"
-                                    leave-active-class="transition ease-in duration-75"
-                                    leave-class="opacity-100" leave-to-class="opacity-0">
+                        <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
                             <div v-if="showModalLastSend" class="fixed z-10 inset-0 overflow-y-auto">
-                                <div @click="cancelshowModalLastSend"
-                                    class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                    <div class="fixed inset-0 transition-opacity"
-                                         aria-hidden="true">
-                                        <div
-                                            class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                <div @click="cancelshowModalLastSend" class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
+                                    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
                                     </div>
-                                    <span
-                                        class="hidden sm:inline-block sm:align-middle sm:h-screen"
-                                        aria-hidden="true">&#8203;</span>
-                                    <div
-                                        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                         <div class="px-6 py-4">
-                                            <img class="mx-auto my-8"
-                                                 src="build/assets/icons/Warning.png"
-                                                 alt="Image">
+                                            <img class="mx-auto my-8" src="build/assets/icons/Warning.png" alt="Image">
                                         </div>
                                         <div class="px-6 py-4 text-center">
                                             <p class="mb-14 font-bold">آثار وارد شده پس از تایید شما
@@ -598,12 +585,10 @@
                                                 پس از تایید، امکان ویرایش یا ارسال اثر دیگر وجود ندارد.
                                                 آیا تایید می‌کنید؟</p>
                                             <div class="flex justify-center pb-8">
-                                                <button @click="lastSendFunction"
-                                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
+                                                <button @click="showModalsuccess = true" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
                                                     بله
                                                 </button>
-                                                <button @click="cancelshowModalLastSend"
-                                                        class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
+                                                <button @click="cancelshowModalLastSend" class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
                                                     خیر
                                                 </button>
                                             </div>
@@ -612,42 +597,199 @@
                                 </div>
                             </div>
                         </transition>
+
                         <!-- show modal 2 -->
-                        <transition enter-active-class="transition ease-out duration-100"
-                                    enter-class="opacity-0" enter-to-class="opacity-100"
-                                    leave-active-class="transition ease-in duration-75"
-                                    leave-class="opacity-100" leave-to-class="opacity-0">
-                            <div v-if="showModal2" class="fixed z-40 inset-0 overflow-y-auto">
-                                <div @click="confirm"
-                                    class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                    <div class="fixed inset-0 transition-opacity"
-                                         aria-hidden="true">
-                                        <div
-                                            class="absolute inset-0 bg-gray-500 opacity-75"></div>
+
+
+                        <transition enter-active-class="3 transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
+                            <div v-if="showModalsuccess" class="fixed z-40 inset-0 overflow-y-auto">
+                                <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
+                                    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
                                     </div>
-                                    <span
-                                        class="hidden sm:inline-block sm:align-middle sm:h-screen"
-                                        aria-hidden="true">&#8203;</span>
-                                    <div
-                                        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                         <div class="px-6 pt-4">
-                                            <img class="mx-auto mt-8"
-                                                 src="build/assets/icons/success.png"
-                                                 alt="Image">
+                                            <img class="mx-auto mt-8" src="build/assets/icons/success.png" alt="Image">
                                         </div>
                                         <div class="px-6 pb-4 text-center ">
-                                            <p class="mb-14 font-bold w-1/2 mx-auto">آثار انتخاب
-                                                شده با موفقیت
+                                            <p class="mb-14 font-bold w-1/2 mx-auto">آثار انتخاب شده با موفقیت
                                                 به دبیرخانه جشنواره ارسال شد
                                             </p>
                                             <div class="flex justify-center pb-8">
 
-                                                <button @click="confirm"
-                                                        class="bg-white hover:bg-slate-200 border border-colorborder text-black py-2 px-10 rounded-xl">
+                                                <button @click="confirm" class="bg-white hover:bg-slate-200 border border-colorborder text-black py-2 px-10 rounded-xl">
                                                     بستن
                                                 </button>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
+
+
+
+                        <button @click="showModalArzyabi = true" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                            نمایش ارزیابی </button>
+                        <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
+                            <div v-if="showModalArzyabi" class="fixed z-30 inset-0 overflow-y-auto">
+                                <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                                        <div class="absolute inset-0 bg-gray-500 opacity-75" @click="showModalArzyabi = false" ></div>
+                                    </div>
+                                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl w-full">
+
+                                        <div dir="rtl" class="text-right rounded-xl border border-colorborder p-5">
+                                            <div dir="rtl" class="px-8 flex items-center justify-between py-3 bg-white border-t border-r border-l  rounded-t-xl">
+                                                <div class="flex">
+                                                <span class="pl-1">
+                                                    <img src="build/assets/icons/Edit Square.png" alt="">
+                                                </span>
+                                                    <h2 class="text-base font-bold  ">وضعیت ارزیابی اثر ارسالی به جشنواره</h2>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="border border-colorborder rounded-b-xl">
+                                                <div class="mt-8 px-8">
+                                                    <div class="flex items-center">
+                                                        <span class="text-orange-500 pl-1">◼</span>
+                                                        <h2 class="text-base font-bold">اطلاعات‌ تماس</h2>
+                                                        <hr class="flex-grow border-t-2 border-b-orange mr-4 mt-3">
+                                                    </div>
+                                                </div>
+
+                                                <div class="flex flex-wrap mx-4">
+
+                                                    <div class="w-full lg:w-full px-4 flex-row py-3">
+                                                        <span class="pl-1">نام اثر:</span> <span>اقدامات لازم جهت پیاده سازی نظریه دین در همایش ها</span>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row py-3">
+                                                        <span class="pl-1">گروه علمی:</span><span>فقه واصول</span>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row py-3">
+                                                        <span class="pl-1">نوع پژوهش:</span> <span>تحقیق و تالیف</span>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row py-3">
+                                                        <span class="pl-1">بخش ویژه:  الگوی ایرانی اسلامی پیشرفت</span>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row py-3">
+                                                        <span class="pl-1">دوره شرکت:</span><span>چهاردهم</span>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row py-3">
+                                                        <span class="pl-3">تاریخ ارسال به جشنواره:</span><span>1401/10/18</span>
+                                                    </div>
+                                                    <div class="w-full lg:w-full px-4 flex-row py-3">
+                                                        <span class="pl-1">وضعیت فعلی:</span><span>مرحله کشوری - در حال ارزیابی</span>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="mt-4 px-8">
+                                                    <div class="flex items-center">
+                                                        <span class="text-orange-500 pl-1">◼</span>
+                                                        <h2 class="text-base font-bold">وضعیت ارزیابی</h2>
+                                                        <hr class="flex-grow border-t-2 border-b-orange mr-4 mt-3">
+                                                    </div>
+                                                </div>
+
+                                                <div class="flex flex-wrap w-8/12 mx-4">
+
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row py-3">
+                                                        <span class="pl-1">مدرسه‌ای:</span><span>اتمام ارزیابی</span>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row py-3">
+                                                        <span class="pl-1">امتیاز:</span> <span>80</span>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row py-3">
+                                                        <span>برگزیده:</span><span>می‌باشد</span>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row py-3">
+                                                        <span>استانی:</span><span>اتمام ارزیابی</span>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row py-3">
+                                                        <span>امتیاز:</span><span>83</span>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row py-3">
+                                                        <span>برگزیده:</span><span>می‌باشد</span>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row py-3">
+                                                        <span>کشوری:</span><span>در حال ارزیابی</span>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row py-3">
+                                                        <span>امتیاز:</span><span>ثبت نشده</span>
+                                                    </div>
+                                                    <div class="w-full lg:w-4/12 px-4 flex-row py-3">
+                                                        <span>برگزیده:</span><span>-</span>
+                                                    </div>
+
+                                                </div>
+                                                <div class="flex items-center justify-center gap-1  my-4">
+                                                    <button class="border-2 border-gray-300 p-2 px-4 rounded-lg" @click="cancelarzyabi">بستن</button>
+
+                                                </div>
+                                            </div>
+
+                                            <!-- show modal -->
+
+
+                                        </div>
+                                        <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
+                                            <div v-if="showModal" class="fixed z-30 inset-0 overflow-y-auto">
+                                                <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                                    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                                                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                                    </div>
+                                                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                                                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                                        <div class="px-6 py-4">
+                                                            <img class="mx-auto my-8" src="build/assets/Warning.png" alt="Image">
+                                                        </div>
+                                                        <div class="px-6 py-4 text-center">
+                                                            <p class="mb-14 font-bold">{{ message }}</p>
+                                                            <div class="flex justify-center pb-8">
+                                                                <button @click="confirm3" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
+                                                                    بله
+                                                                </button>
+                                                                <button @click="cancel" class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
+                                                                    خیر
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </transition>
+                                        <!-- show modal 2 -->
+                                        <transition enter-active-class="3 transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
+                                            <div v-if="showModal2" class="fixed z-40 inset-0 overflow-y-auto">
+                                                <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                                    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                                                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                                    </div>
+                                                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                                                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                                        <div class="px-6 pt-4">
+                                                            <img class="mx-auto mt-8" src="build/assets/success.png" alt="Image">
+                                                        </div>
+                                                        <div class="px-6 pb-4 text-center ">
+                                                            <p class="mb-14 font-bold w-1/2 mx-auto">آثار انتخاب شده با موفقیت
+                                                                به دبیرخانه جشنواره ارسال شد
+                                                            </p>
+                                                            <div class="flex justify-center pb-8">
+
+                                                                <button @click="confirm" class="bg-white hover:bg-slate-200 border border-colorborder text-black py-2 px-10 rounded-xl">
+                                                                    بستن
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </transition>
                                     </div>
                                 </div>
                             </div>
@@ -675,6 +817,8 @@ export default {
             showModal: false,
             showModal2: false,
             showModal3: false,
+            showModalsuccess:false,
+            showModalArzyabi:false,
             activityType: 'fardi',
             fileSelected: false,
             fileName: "",
@@ -706,6 +850,9 @@ export default {
 
             //get all this user posts
             allPosts: [],
+
+            //Rate Info
+            rate:[],
 
         };
     },
@@ -835,7 +982,6 @@ export default {
                 }
             })
                 .then(function (response) {
-                    // console.log(response.data);
                     location.reload();
                 })
                 .catch(function (error) {
@@ -911,7 +1057,7 @@ export default {
                 this.emptyErrors = 'گروه علمی انتخاب نشده است.';
             } else if (!this.research_type) {
                 this.emptyErrors = 'نوع پژوهش انتخاب نشده است.';
-            } else if (!this.page_number && this.research_format == 4) {
+            } else if (!this.page_number && this.research_format === 'مقاله') {
                 this.emptyErrors = 'تعداد صفحات وارد نشده است.';
             } else if (!this.publish_status) {
                 this.emptyErrors = 'وضعیت نشر انتخاب نشده است.';
@@ -935,6 +1081,7 @@ export default {
         },
         confirm() {
             this.showModal = false;
+            this.showModalsuccess = false;
             this.showModal2 = false;
             this.showModalLastSend = false;
             this.showModal3 = false;
@@ -949,7 +1096,9 @@ export default {
         cancel2() {
             this.showModal2 = false;
         },
-
+        cancelarzyabi() {
+            this.showModalArzyabi = false;
+        },
         confirm3() {
             this.showModal3 = false;
             this.showModal2 = false;
@@ -961,6 +1110,10 @@ export default {
         cancel3() {
             this.showModal3 = false;
         },
+        reportRate(id){
+            console.log(id);
+            this.showModalArzyabi=true;
+        }
     }
 };
 </script>

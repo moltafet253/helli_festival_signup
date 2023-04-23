@@ -11,10 +11,14 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">نام مرکز
                             حوزوی<span style="color: red;">*</span></label>
-                        <select v-model="item.namemarkaztahsili" v-for="(item, index) in edu" @change="returnProvince(item.namemarkaztahsili)"
+                        <select v-model="item.namemarkaztahsili" v-for="(item, index) in edu"
+                                @change="returnProvince(item.namemarkaztahsili)"
+                                @loadeddata="returnProvince(item.namemarkaztahsili)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
-                            <option v-for="item in markaz" :value="item.markaz" v-bind:selected="item.namemarkaztahsili===item.markaz">{{ item.markaz }}</option>
+                            <option v-for="item in markaz" :value="item.markaz"
+                                    v-bind:selected="item.namemarkaztahsili===item.markaz">{{ item.markaz }}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -133,10 +137,13 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">استان محل تحصیل<span
                             style="color: red;">*</span></label>
-                        <select v-model="item.namemarkaztahsili" v-for="(item, index) in edu"
+                        <select v-model="item.ostantahsili" v-for="(item, index) in edu"
+                                @change="returnCity(item.ostantahsili,this.gender)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
-                            <option  v-for="item in markaz"  :value="item.markaz" v-bind:selected="item.namemarkaztahsili===item.markaz">{{ item.markaz }}</option>
+                            <option v-for="item in ostan" :value="item.ostan"
+                                    v-bind:selected="item.ostantahsili===item.ostan">{{ item.ostan }}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -144,18 +151,27 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">شهر محل
                             تحصیل<span style="color: red;">*</span></label>
-                        <input type="text"
-                               class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
-                               value="قم">
+                        <select v-model="item.shahrtahsili" v-for="(item, index) in edu"
+                                @change="returnSchool(item.shahrtahsili)"
+                                class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
+                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option v-for="item in shahr" :value="item.shahr"
+                                    v-bind:selected="item.shahrtahsili===item.shahr">{{ item.shahr }}
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">مدرسه<span
                             style="color: red;">*</span></label>
-                        <input type="text"
-                               class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
-                               value="امام صادق(ع)">
+                        <select v-model="item.madresetahsili" v-for="(item, index) in edu"
+                                class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
+                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option v-for="item in madrese" :value="item.madrese"
+                                    v-bind:selected="item.madresetahsili===item.madrese">{{ item.madrese }}
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
@@ -216,7 +232,9 @@
                     </div>
                 </div>
                 <div class="w-full mt-4">
-                    <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mx-auto block">ذخیره اطلاعات تحصیلی</button>
+                    <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mx-auto block">ذخیره اطلاعات
+                        تحصیلی
+                    </button>
                 </div>
             </div>
         </form>
@@ -235,10 +253,19 @@ export default {
             paye: '',
             sath: '',
             term: '',
-            markaz: [],
-            selectedMarkaz:[],
             namemarkaztahsili: '',
+            ostantahsili: [],
+            shahrtahsili: [],
+            madresetahsili: [],
             noetahsilhozavi: '',
+
+            markaz: [],
+            ostan: [],
+            shahr: [],
+            madrese: [],
+
+            centerSend:'',
+            provinceSend:'',
 
         }
     },
@@ -251,21 +278,45 @@ export default {
             .catch(error => {
                 console.log(error)
             });
-        axios.get(`/api/defaults/centers/`)
+        axios.get(`/api/defaults/centers/${this.nationalcode.gender}`)
             .then(response => {
                 this.markaz = response.data;
             })
             .catch(error => {
                 console.log(error)
-            })
+            });
+
     },
     methods: {
-        returnProvince(center){
-            // console.log(ma);
-            axios.get(`/api/defaults/provinces/${center}`)
+        returnProvince(center) {
+            this.ostan=[];
+            this.shahr=[];
+            this.madrese=[];
+            this.centerSend=center;
+            axios.get(`/api/defaults/provinces/${center}/${this.nationalcode.gender}`)
                 .then(response => {
-                    console.log(response.data);
-                    // this.markaz = response.data;
+                    this.ostan = response.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+        returnCity(province) {
+            this.shahr=[];
+            this.madrese=[];
+            this.provinceSend=province;
+            axios.get(`/api/defaults/cities/${this.centerSend}/${province}/${this.nationalcode.gender}`)
+                .then(response => {
+                    this.shahr = response.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+        returnSchool(city) {
+            axios.get(`/api/defaults/schools/${this.centerSend}/${this.provinceSend}/${city}/${this.nationalcode.gender}`)
+                .then(response => {
+                    this.madrese = response.data;
                 })
                 .catch(error => {
                     console.log(error)
@@ -276,7 +327,7 @@ export default {
             let noetahsilhozavi = this.edu[0]['noetahsilhozavi'];
             let ostantahsili = this.edu[0]['ostantahsili'];
             let shahrtahsili = this.edu[0]['shahrtahsili'];
-            let madrese = this.edu[0]['madrese'];
+            let madresetahsili = this.edu[0]['madresetahsili'];
             let shparvandetahsili = this.edu[0]['shparvandetahsili'];
             let paye = this.edu[0]['paye'];
             let sath = this.edu[0]['sath'];
@@ -289,15 +340,13 @@ export default {
                 alert('نام مرکز حوزوی انتخاب نشده است.');
             } else if (noetahsilhozavi == '' || noetahsilhozavi == null || noetahsilhozavi == 'انتخاب کنید') {
                 alert('نوع تحصیل حوزوی انتخاب نشده است.');
-            }
-                // else if (ostantahsili == '' || ostantahsili == null) {
-                //     alert('استان محل تحصیل انتخاب نشده است.');
-                // } else if (shahrtahsili == '' || shahrtahsili == null) {
-                //     alert('شهر محل تحصیل انتخاب نشده است.');
-                // }else if (madrese == '' || madrese == null) {
-                //     alert('مدرسه وارد نشده است.');
-            // }
-            else if (shparvandetahsili == '' || shparvandetahsili == null) {
+            } else if (ostantahsili == '' || ostantahsili == null) {
+                alert('استان محل تحصیل انتخاب نشده است.');
+            } else if (shahrtahsili == '' || shahrtahsili == null) {
+                alert('شهر محل تحصیل انتخاب نشده است.');
+            } else if (madresetahsili == '' || madresetahsili == null) {
+                alert('مدرسه انتخاب نشده است.');
+            } else if (shparvandetahsili == '' || shparvandetahsili == null) {
                 alert('شماره پرونده حوزوی وارد نشده است.');
             } else if (gender == 'زن' && (sath == '' || sath == null || sath == 'انتخاب کنید')) {
                 paye = null;
@@ -314,17 +363,19 @@ export default {
             } else if ((reshtedaneshgahi == null || reshtedaneshgahi == '') && (tahsilatghhozavi != '' || tahsilatghhozavi != null || tahsilatghhozavi != 'انتخاب کنید')) {
                 alert('رشته تحصیلی غیر حوزوی وارد نشده است.');
             } else {
-                axios.post(`/api/edu/save/${this.nationalcode}/`, {
-                    edu: this.edu,
-                    gender: gender,
-                })
-                    .then(function (response) {
-                        alert('اطلاعات تحصیلی شما با موفقیت در سامانه ثبت شد.')
-                        console.log(response.data);
+                if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟ اطلاعات شما در صورت تایید دیگر قابل تغییر نیستند')) {
+                    axios.post(`/api/edu/save/`, {
+                        edu: this.edu,
+                        gender: gender,
                     })
-                    .catch(function (error) {
-                        // console.log(error);
-                    });
+                        .then(function (response) {
+                            alert('اطلاعات تحصیلی شما با موفقیت در سامانه ثبت شد.')
+                            console.log(response.data);
+                        })
+                        .catch(function (error) {
+                            // console.log(error);
+                        });
+                }
             }
         },
     }

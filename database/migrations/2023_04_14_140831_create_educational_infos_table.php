@@ -21,11 +21,12 @@ return new class extends Migration
             $table->text('term')->nullable();
             $table->text('ostantahsili')->nullable();
             $table->text('shahrtahsili')->nullable();
-            $table->text('madrese')->nullable();
+            $table->text('madresetahsili')->nullable();
             $table->text('shparvandetahsili')->nullable();
             $table->text('tahsilatghhozavi')->nullable();
             $table->text('reshtedaneshgahi')->nullable();
             $table->text('markaztakhasosihozavi')->nullable();
+            $table->boolean('approved')->default(0);
 
             $table->timestamps();
             $table->softDeletes();

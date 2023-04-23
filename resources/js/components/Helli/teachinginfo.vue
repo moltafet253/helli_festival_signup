@@ -10,7 +10,8 @@
                 <div class="relative w-full mb-3">
                     <label class="block uppercase  text-base font-bold mb-2">استاد می
                         باشید؟</label>
-                    <select :disabled="disableSelection" v-model="item.isMaster" v-for="(item, index) in teaching" @change="divStatus"
+                    <select :disabled="disableSelection" v-model="item.isMaster" v-for="(item, index) in teaching"
+                            @change="divStatus"
                             class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                         <option selected value="خیر" v-bind:selected="item.term=='خیر'">خیر</option>
                         <option value="بله" v-bind:selected="item.term=='بله'">بله</option>
@@ -36,7 +37,7 @@
                             تدریس<span
                                 style="color: red;">*</span></label>
                         <select v-for="(item, index) in teaching" :key="index" v-model="item.teachingLocation"
-                            class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
+                                class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option disabled selected>انتخاب کنید</option>
                             <option v-for="province in provinces" :value="province.title">{{ province.title }}</option>
                         </select>
@@ -54,7 +55,9 @@
                 </div>
             </div>
             <div class="w-full mt-4">
-                <button v-show="showButton" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mx-auto block">ذخیره اطلاعات تدریس</button>
+                <button v-show="showButton" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mx-auto block">
+                    ذخیره اطلاعات تدریس
+                </button>
             </div>
         </form>
     </div>
@@ -69,14 +72,22 @@ export default {
             teaching: [],
             provinces: [],
             showDiv: false,
-            showButton: false,
-            disableSelection:false,
+            showButton: true,
+            disableSelection: false,
         }
     },
     mounted() {
         axios.get(`/api/teaching/${this.nationalcode}/`)
             .then(response => {
                 this.teaching = response.data;
+                const userData = response.data;
+                if (userData[0]['approved'] === 1) {
+                    this.showButton = false;
+                    this.disableSelection = true;
+                } else {
+                    this.disableSelection = false;
+                    this.showButton = true;
+                }
             })
             .catch(error => {
                 console.log(error)
@@ -100,22 +111,6 @@ export default {
                 this.showDiv = false;
             }
         },
-
-        fetchUserData() {
-            axios.get(`/api/teaching/${this.nationalcode}/`)
-                .then(response => {
-                    this.teaching = response.data;
-                    const userData = response.data;
-
-                    if (userData[0]['masterCode']==null){
-                        this.showButton = true;
-                    }else if (userData[0]['masterCode']!=null){
-                        this.disableSelection=true;
-                    }
-                });
-
-        },
-
         handleSubmit() {
             let isMaster = this.teaching[0]['isMaster'];
             let masterCode = this.teaching[0]['masterCode'];
@@ -127,7 +122,7 @@ export default {
                 if (masterCode == null || masterCode == '') {
                     alert('کد استادی وارد نشده است.');
                     return false;
-                } else if (teachingLocation == null || teachingLocation == '' || teachingLocation=='انتخاب کنید') {
+                } else if (teachingLocation == null || teachingLocation == '' || teachingLocation == 'انتخاب کنید') {
                     alert('استان و شهر محل تدریس انتخاب نشده است.');
                     return false;
                 } else if (teachingPlaceName == null || teachingPlaceName == '') {
@@ -136,16 +131,22 @@ export default {
                 }
 
             } else {
-                axios.post(`/api/teaching/save/${this.nationalcode}/`, {
-                    teaching: this.teaching,
-                })
-                    .then(function (response) {
-                        alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.')
-                        // console.log(response.data);
+                if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟ ' +
+                    '\n' +
+                    'پس از تایید دیگر قابل ویرایش نیست.')) {
+                    axios.post(`/api/teaching/save/${this.nationalcode}/`, {
+                        teaching: this.teaching,
                     })
-                    .catch(function (error) {
-                        // console.log(error);
-                    });
+                        .then(function (response) {
+                            alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.');
+                            location.reload();
+                            // console.log(response.data);
+                        })
+                        .catch(function (error) {
+                            // console.log(error);
+                        });
+                }
+
             }
         },
     }
