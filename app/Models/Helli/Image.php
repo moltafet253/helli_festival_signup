@@ -11,4 +11,9 @@ class Image extends Model
     use HasFactory,SoftDeletes;
     protected $table='images';
     protected $guarded=[];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

@@ -19,7 +19,7 @@
                                     <span class="label-text">لطفا تصویر پرسنلی خود را از کادر زیر انتخاب کرده و بر روی دکمه بارگذاری کلیک نمایید</span>
                                 </label>
                                 <br><br>
-                                <input type="file" name="file" ref="fileInput" accept=".jpg,.jpeg,.bmp,.png"
+                                <input type="file" name="file" ref="fileInput" accept=".jpg,.jpeg,.bmp,.png" @change="this.showButton=true"
                                        class="file-input file-input-bordered w-full max-w-xs"/>
 
                                 <label class="label">
@@ -30,7 +30,7 @@
                                     <span class="label-text-alt">حداقل عرض و ارتفاع عکس: 128px*128px</span>
                                 </label>
                                 <br>
-                                <button type="submit"
+                                <button type="submit" v-if="showButton"
                                         class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mx-auto block">
                                     بارگذاری
                                 </button>
@@ -109,51 +109,56 @@ export default {
             imageSrc: '',
             datapersonals: [],
             confirm: false,
+            showButton: false
         };
     },
     methods: {
         submitForm() {
             const fileInput = this.$refs.fileInput;
-            const file = fileInput.files[0];
+            if (this.$refs.fileInput.files.length) {
+                const file = fileInput.files[0];
+                const formData = new FormData();
+                formData.append('file', file);
+                const nationalID = this.datapersonal['SocialID'];
+                if (confirm('آیا از بارگذاری عکس انتخاب شده مطمئن هستید؟ \n این عملیات قابل بازگشت نیست!')) {
 
-            const formData = new FormData();
-            formData.append('file', file);
-            const nationalID = this.datapersonal['SocialID'];
-            if (confirm('آیا از بارگذاری عکس انتخاب شده مطمئن هستید؟ \n این عملیات قابل بازگشت نیست!')) {
-
-                axios.post(`/api/upload/${nationalID}`, formData)
-                    .then(response => {
-                        location.reload();
-                    })
-                    .catch(error => {
-                        console.log(error.response.data['errors']['file']);
-                        switch (error.response.data['errors']['file'][0]){
-                            case "The file field has invalid image dimensions.":
-                                alert ('سایز تصویر اشتباه است.');
-                                break;
-                            case 'The file field must not be greater than 2048 kilobytes.':
-                                alert ('حجم فایل تصویر بزرگتر از 2 مگابایت است.');
-                                break;
-                            case 'The file field must be an image.':
-                                alert ('فایل تصویر نامعتبر است.');
-                                break;
-                            case 'The file field must be a file of type: jpeg, png, jpg, bmp.':
-                                alert ('فرمت فایل تصویر نامعتبر است.');
-                                break;
-                        }
-                    });
+                    axios.post(`/api/upload/${nationalID}`, formData)
+                        .then(response => {
+                            location.reload();
+                        })
+                        .catch(error => {
+                            // console.log(error.response.data['errors']['file']);
+                            switch (error.response.data['errors']['file'][0]) {
+                                case "The file field has invalid image dimensions.":
+                                    alert('سایز تصویر اشتباه است.');
+                                    break;
+                                case 'The file field must not be greater than 2048 kilobytes.':
+                                    alert('حجم فایل تصویر بزرگتر از 2 مگابایت است.');
+                                    break;
+                                case 'The file field must be an image.':
+                                    alert('فایل تصویر نامعتبر است.');
+                                    break;
+                                case 'The file field must be a file of type: jpeg, png, jpg, bmp.':
+                                    alert('فرمت فایل تصویر نامعتبر است.');
+                                    break;
+                            }
+                            console.clear();
+                        });
+                }
+            }else{
+                alert('فایل انتخاب نشده است.');
             }
         },
     },
     mounted() {
-        axios.get(`/api/getprofileimage/this/0371714941`)
+        axios.get(`/api/getprofileimage/this/${this.datapersonal.SocialID}`)
             .then(response => {
-                if (response.data.imageSrc){
-                    this.imageSrc =response.data.imageSrc ;
+                if (response.data.imageSrc) {
+                    this.imageSrc = response.data.imageSrc;
                 }
             })
             .catch(error => {
-                console.log(error)
+                console.log('error')
             });
     }
 }

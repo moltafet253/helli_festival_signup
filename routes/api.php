@@ -96,7 +96,7 @@ Route::post('/edu/save', function (Request $request) {
         'markaztakhasosihozavi' => $markaztakhasosihozavi,
         'tahsilatghhozavi' => $tahsilatghhozavi,
         'reshtedaneshgahi' => $reshtedaneshgahi,
-        'approved'=>1
+        'approved' => 1
     ]);
 });
 
@@ -115,7 +115,7 @@ Route::post('/teaching/save/{nationCode}', function (Request $request) {
         'masterCode' => $masterCode,
         'teachingLocation' => $teachingLocation,
         'teachingPlaceName' => $teachingPlaceName,
-        'approved'=>1,
+        'approved' => 1,
     ]);
     return $teaching;
 });
@@ -153,15 +153,16 @@ Route::post('/upload/{nationCode}', function (Request $request, $nationCode) {
 
 Route::get('/getprofileimage/this/{nationalcode}', function ($nationalcode) {
     $id = DB::table('users')->where('national_code', $nationalcode)->value('personalImageSrc');
-    $path = Image::find($id);
-    $src = $path->src;
-    if (!User::exists($path)) {
-        abort(404);
-    }
-    $profileUrl = Storage::url($src);
-    if ($profileUrl) {
+    if ($id) {
+        $path = Image::find($id);
+        $src = $path->src;
+        if (!User::exists($path)) {
+            abort(404);
+        }
+        $profileUrl = Storage::url($src);
         return response()->json(['imageSrc' => $profileUrl]);
     }
+
 
     return '';
 });

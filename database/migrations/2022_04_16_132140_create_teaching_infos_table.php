@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('masterCode')->nullable();
             $table->string('teachingLocation')->nullable();
             $table->string('teachingPlaceName')->nullable();
+            $table->boolean('approved')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
