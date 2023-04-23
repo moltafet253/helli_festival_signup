@@ -628,7 +628,59 @@
                             </div>
                         </transition>
 
+                        <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
+                            <div v-if="showModal" class="fixed z-30 inset-0 overflow-y-auto">
+                                <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                    </div>
+                                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                        <div class="px-6 py-4">
+                                            <img class="mx-auto my-8" src="build/assets/Warning.png" alt="Image">
+                                        </div>
+                                        <div class="px-6 py-4 text-center">
+                                            <p class="mb-14 font-bold">{{ message }}</p>
+                                            <div class="flex justify-center pb-8">
+                                                <button @click="confirm3" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
+                                                    بله
+                                                </button>
+                                                <button @click="cancel" class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
+                                                    خیر
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
+                        <!-- show modal 2 -->
+                        <transition enter-active-class="3 transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
+                            <div v-if="showModal2" class="fixed z-40 inset-0 overflow-y-auto">
+                                <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                    </div>
+                                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                        <div class="px-6 pt-4">
+                                            <img class="mx-auto mt-8" src="build/assets/success.png" alt="Image">
+                                        </div>
+                                        <div class="px-6 pb-4 text-center ">
+                                            <p class="mb-14 font-bold w-1/2 mx-auto">آثار انتخاب شده با موفقیت
+                                                به دبیرخانه جشنواره ارسال شد
+                                            </p>
+                                            <div class="flex justify-center pb-8">
 
+                                                <button @click="confirm" class="bg-white hover:bg-slate-200 border border-colorborder text-black py-2 px-10 rounded-xl">
+                                                    بستن
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
 
                         <button @click="showModalArzyabi = true" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
                             نمایش ارزیابی </button>
@@ -737,59 +789,7 @@
 
 
                                         </div>
-                                        <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
-                                            <div v-if="showModal" class="fixed z-30 inset-0 overflow-y-auto">
-                                                <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                                    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                                                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                                                    </div>
-                                                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                                                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                                                        <div class="px-6 py-4">
-                                                            <img class="mx-auto my-8" src="build/assets/Warning.png" alt="Image">
-                                                        </div>
-                                                        <div class="px-6 py-4 text-center">
-                                                            <p class="mb-14 font-bold">{{ message }}</p>
-                                                            <div class="flex justify-center pb-8">
-                                                                <button @click="confirm3" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
-                                                                    بله
-                                                                </button>
-                                                                <button @click="cancel" class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
-                                                                    خیر
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </transition>
-                                        <!-- show modal 2 -->
-                                        <transition enter-active-class="3 transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
-                                            <div v-if="showModal2" class="fixed z-40 inset-0 overflow-y-auto">
-                                                <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                                    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                                                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                                                    </div>
-                                                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                                                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                                                        <div class="px-6 pt-4">
-                                                            <img class="mx-auto mt-8" src="build/assets/success.png" alt="Image">
-                                                        </div>
-                                                        <div class="px-6 pb-4 text-center ">
-                                                            <p class="mb-14 font-bold w-1/2 mx-auto">آثار انتخاب شده با موفقیت
-                                                                به دبیرخانه جشنواره ارسال شد
-                                                            </p>
-                                                            <div class="flex justify-center pb-8">
 
-                                                                <button @click="confirm" class="bg-white hover:bg-slate-200 border border-colorborder text-black py-2 px-10 rounded-xl">
-                                                                    بستن
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </transition>
                                     </div>
                                 </div>
                             </div>

@@ -108,12 +108,14 @@ Route::post('/teaching/save/{nationCode}', function (Request $request) {
     $national_code = $request->input('teaching.0.national_code');
     $isMaster = $request->input('teaching.0.isMaster');
     $masterCode = $request->input('teaching.0.masterCode');
-    $teachingLocation = $request->input('teaching.0.teachingLocation');
+    $teachingProvince = $request->input('teaching.0.teachingProvince');
+    $teachingCity = $request->input('teaching.0.teachingCity');
     $teachingPlaceName = $request->input('teaching.0.teachingPlaceName');
     $teaching = TeachingInfo::where('national_code', '=', $national_code)->update([
         'isMaster' => $isMaster,
         'masterCode' => $masterCode,
-        'teachingLocation' => $teachingLocation,
+        'teachingProvince' => $teachingProvince,
+        'teachingCity' => $teachingCity,
         'teachingPlaceName' => $teachingPlaceName,
         'approved' => 1,
     ]);
@@ -333,6 +335,32 @@ Route::prefix('defaults')->group(function () {
     Route::get('/maxUploads/{nationCode}', function ($nationCode) {
         $max_upload = DB::table('helli_user_max_upload_posts')->get()->where('national_code', '=', $nationCode);
         return $max_upload;
+    });
+
+    //For TeachingInfo
+    Route::get('/provinces/', function () {
+        $provinces = Provinces::select('ostan')
+            ->distinct()
+            ->orderBy('ostan', 'asc')
+            ->get();
+        return response()->json($provinces);
+    });
+    Route::get('/cities/{province}', function ($province) {
+        return $province;
+        $cities = Provinces::select('shahr')
+            ->where('ostan', '=', $province)
+            ->distinct()
+            ->orderBy('shahr', 'asc')
+            ->get();
+        return response()->json($cities);
+    });
+    Route::get('/schools/{city}', function ($city) {
+        $cities = Provinces::select('madrese')
+            ->where('shahr', '=', $city)
+            ->distinct()
+            ->orderBy('madrese', 'asc')
+            ->get();
+        return response()->json($cities);
     });
 });
 

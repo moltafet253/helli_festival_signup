@@ -31,15 +31,31 @@
                                v-model="item.masterCode">
                     </div>
                 </div>
-                <div class="w-full lg:w-4/12 px-4 flex-row">
+                <div class="w-full lg:w-2/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2">استان و شهر محل
-                            تدریس<span
-                                style="color: red;">*</span></label>
-                        <select v-for="(item, index) in teaching" :key="index" v-model="item.teachingLocation"
+                        <label class="block uppercase  text-base font-bold mb-2">استان محل تدریس<span
+                            style="color: red;">*</span></label>
+                        <select v-model="item.teachingProvince" v-for="(item, index) in teaching"
+                                @change="returnCity(item.teachingProvince)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
-                            <option disabled selected>انتخاب کنید</option>
-                            <option v-for="province in provinces" :value="province.title">{{ province.title }}</option>
+                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option v-for="item in ostan" :value="item.ostan"
+                                    v-bind:selected="item.teachingProvince===item.ostan">{{ item.ostan }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="w-full lg:w-2/12 px-4 flex-row">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase  text-base font-bold mb-2">شهر محل
+                            تدریس<span style="color: red;">*</span></label>
+                        <select v-model="item.teachingCity" v-for="(item, index) in teaching"
+                                @change="returnSchool(item.teachingCity)"
+                                class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
+                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option v-for="item in shahr" :value="item.shahr"
+                                    v-bind:selected="item.teachingCity===item.shahr">{{ item.shahr }}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -47,10 +63,14 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">نام محل
                             تدریس<span
-                                style="color: red;">*</span></label>
-                        <input type="text" v-for="(item, index) in teaching" :key="index"
-                               class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
-                               v-model="item.teachingPlaceName">
+                            style="color: red;">*</span></label>
+                        <select v-model="item.teachingPlaceName" v-for="(item, index) in teaching"
+                                class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
+                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option v-for="item in madrese" :value="item.madrese"
+                                    v-bind:selected="item.teachingPlaceName===item.madrese">{{ item.madrese }}
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -74,6 +94,13 @@ export default {
             showDiv: false,
             showButton: true,
             disableSelection: false,
+            ostan: [],
+            shahr: [],
+            madrese: [],
+            teachingProvince:[],
+            teachingCity:[],
+            teachingPlaceName:[],
+
         }
     },
     mounted() {
@@ -91,19 +118,37 @@ export default {
             })
             .catch(error => {
                 console.log(error)
+            });
+        axios.get(`/api/defaults/provinces`)
+            .then(response => {
+                this.ostan = response.data;
             })
-    },
-    created() {
-        // axios.get('/api/defaults/provinces')
-        //     .then(response => {
-        //         this.fetchUserData();
-        //         this.provinces = response.data;
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     });
+            .catch(error => {
+                console.log(error)
+            });
     },
     methods: {
+        returnCity(province) {
+            this.shahr=[];
+            this.madrese=[];
+            this.provinceSend=province;
+            axios.get(`/api/defaults/cities/${province}`)
+                .then(response => {
+                    this.shahr = response.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+        returnSchool(city) {
+            axios.get(`/api/defaults/schools/${city}`)
+                .then(response => {
+                    this.madrese = response.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
         divStatus(event) {
             if (event.target.value === 'بله') {
                 this.showDiv = true;
@@ -114,19 +159,23 @@ export default {
         handleSubmit() {
             let isMaster = this.teaching[0]['isMaster'];
             let masterCode = this.teaching[0]['masterCode'];
-            let teachingLocation = this.teaching[0]['teachingLocation'];
+            let teachingProvince = this.teaching[0]['teachingProvince'];
+            let teachingCity = this.teaching[0]['teachingCity'];
             let teachingPlaceName = this.teaching[0]['teachingPlaceName'];
             if (isMaster == '' || isMaster == null) {
                 alert('استاد می باشید؟');
-            } else if (isMaster == 'بله' && ((masterCode == null || masterCode == '') || (teachingLocation == null || teachingLocation == '') || (teachingPlaceName == null || teachingPlaceName == ''))) {
+            } else if (isMaster == 'بله' && ((masterCode == null || masterCode == '') || (teachingProvince == null || teachingProvince == '') || (teachingCity == null || teachingCity == '') || (teachingPlaceName == null || teachingPlaceName == ''))) {
                 if (masterCode == null || masterCode == '') {
                     alert('کد استادی وارد نشده است.');
                     return false;
-                } else if (teachingLocation == null || teachingLocation == '' || teachingLocation == 'انتخاب کنید') {
-                    alert('استان و شهر محل تدریس انتخاب نشده است.');
+                } else if (teachingProvince == null || teachingProvince == '' || teachingProvince == 'انتخاب کنید') {
+                    alert('استان محل تدریس انتخاب نشده است.');
                     return false;
-                } else if (teachingPlaceName == null || teachingPlaceName == '') {
-                    alert('نام محل تدریس وارد نشده است.');
+                }else if (teachingCity == null || teachingCity == '' || teachingCity == 'انتخاب کنید') {
+                    alert('شهر محل تدریس انتخاب نشده است.');
+                    return false;
+                } else if (teachingPlaceName == null || teachingPlaceName == '' || teachingPlaceName == 'انتخاب کنید') {
+                    alert('نام محل تدریس انتخاب نشده است.');
                     return false;
                 }
 

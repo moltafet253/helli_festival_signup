@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('national_code')->unique();
             $table->string('isMaster')->default('خیر');
             $table->string('masterCode')->nullable();
-            $table->string('teachingLocation')->nullable();
+            $table->string('teachingProvince')->nullable();
+            $table->string('teachingCity')->nullable();
             $table->string('teachingPlaceName')->nullable();
             $table->boolean('approved')->default(0);
             $table->timestamps();
