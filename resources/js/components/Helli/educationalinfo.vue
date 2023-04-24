@@ -11,7 +11,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">نام مرکز
                             حوزوی<span style="color: red;">*</span></label>
-                        <select v-model="item.namemarkaztahsili" v-for="(item, index) in edu"
+                        <select :disabled="!showButton" v-model="item.namemarkaztahsili" v-for="(item, index) in edu"
                                 @change="returnProvince(item.namemarkaztahsili)"
                                 @loadeddata="returnProvince(item.namemarkaztahsili)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
@@ -26,7 +26,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">نوع تحصیل حوزوی
                             <span style="color: red;">*</span></label>
-                        <select v-model="item.noetahsilhozavi" v-for="(item, index) in edu"
+                        <select :disabled="!showButton" v-model="item.noetahsilhozavi" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option value="آزاد" v-for="(item, index) in edu" :key="index"
@@ -42,7 +42,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">پایه<span
                             style="color: red;">*</span></label>
-                        <select v-model="item.paye" v-for="(item, index) in edu"
+                        <select :disabled="!showButton" v-model="item.paye" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option value="1" v-for="(item, index) in edu" :key="index"
@@ -88,7 +88,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">سطح<span
                             style="color: red;">*</span></label>
-                        <select v-model="item.sath" v-for="(item, index) in edu"
+                        <select :disabled="!showButton" v-model="item.sath" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option value="2" v-for="(item, index) in edu" :key="index"
@@ -107,7 +107,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">ترم<span
                             style="color: red;">*</span></label>
-                        <select v-model="item.term" v-for="(item, index) in edu"
+                        <select :disabled="!showButton" v-model="item.term" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option value="1" v-if="item.sath==2 || item.sath==3 || item.sath==4"
@@ -232,7 +232,8 @@
                     </div>
                 </div>
                 <div class="w-full mt-4">
-                    <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mx-auto block">ذخیره اطلاعات
+                    <button v-show="showButton"
+                            class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mx-auto block">ذخیره اطلاعات
                         تحصیلی
                     </button>
                 </div>
@@ -264,8 +265,9 @@ export default {
             shahr: [],
             madrese: [],
 
-            centerSend:'',
-            provinceSend:'',
+            centerSend: '',
+            provinceSend: '',
+            showButton: true,
 
         }
     },
@@ -274,10 +276,15 @@ export default {
             .then(response => {
                 this.edu = response.data.edu;
                 this.gender = response.data.gender;
+                console.log(response.data.edu);
+                if (response.data.edu[0]['approved'] === 1) {
+                    this.showButton = false;
+                }
             })
             .catch(error => {
                 console.log(error)
             });
+
         axios.get(`/api/defaults/centers/${this.nationalcode.gender}`)
             .then(response => {
                 this.markaz = response.data;
@@ -289,10 +296,10 @@ export default {
     },
     methods: {
         returnProvince(center) {
-            this.ostan=[];
-            this.shahr=[];
-            this.madrese=[];
-            this.centerSend=center;
+            this.ostan = [];
+            this.shahr = [];
+            this.madrese = [];
+            this.centerSend = center;
             axios.get(`/api/defaults/provinces/${center}/${this.nationalcode.gender}`)
                 .then(response => {
                     this.ostan = response.data;
@@ -302,9 +309,9 @@ export default {
                 })
         },
         returnCity(province) {
-            this.shahr=[];
-            this.madrese=[];
-            this.provinceSend=province;
+            this.shahr = [];
+            this.madrese = [];
+            this.provinceSend = province;
             axios.get(`/api/defaults/cities/${this.centerSend}/${province}/${this.nationalcode.gender}`)
                 .then(response => {
                     this.shahr = response.data;

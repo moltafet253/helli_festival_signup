@@ -16,18 +16,18 @@
                             <form @submit.prevent="submitForm">
 
                                 <label class="label">
-                                    <span class="label-text">لطفا تصویر پرسنلی خود را از کادر زیر انتخاب کرده و بر روی دکمه بارگذاری کلیک نمایید</span>
+                                    <span class="label-text">لطفا تصویر پرسنلی خود را از کادر زیر انتخاب کرده و بر روی دکمه بارگذاری کلیک نمایید. (دکمه بارگذاری پس از انتخاب عکس نمایش داده می‌شود)</span>
                                 </label>
                                 <br><br>
                                 <input type="file" name="file" ref="fileInput" accept=".jpg,.jpeg,.bmp,.png" @change="this.showButton=true"
-                                       class="file-input file-input-bordered w-full max-w-xs"/>
+                                       class="file-input file-input-bordered w-full max-w-xs mb-3"/>
 
-                                <label class="label">
+                                <label class="label mb-3">
                                     <span class="label-text-alt">حداکثر حجم فایل: 2 مگابایت</span>
                                     <br>
                                     <span class="label-text-alt">با پسوندهای: png-jpg-jpeg-bmp</span>
                                     <br>
-                                    <span class="label-text-alt">حداقل عرض و ارتفاع عکس: 128px*128px</span>
+                                    <span class="label-text-alt ">حداقل عرض و ارتفاع عکس: 128px*128px</span>
                                 </label>
                                 <br>
                                 <button type="submit" v-if="showButton"
