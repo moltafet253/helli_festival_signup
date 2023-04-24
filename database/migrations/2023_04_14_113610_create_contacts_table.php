@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('mobile')->nullable();
             $table->text('address')->nullable();
             $table->integer('postal_code')->nullable();
+            $table->boolean('approved')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

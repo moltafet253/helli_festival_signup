@@ -46,6 +46,7 @@ Route::post('/contact/save/{nationCode}', function (Request $request, $nationCod
         'mobile' => $mobile,
         'address' => $address,
         'postal_code' => $postal_code,
+        'approved'=>1,
     ]);
 });
 
