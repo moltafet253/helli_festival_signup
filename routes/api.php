@@ -204,7 +204,7 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nation
 
     $file = $request->file('file');
     $hashName = uniqid('', true) . '.' . $request->file('file')->getClientOriginalName();
-    $path = $file->storeAs('public/asar', $hashName);
+    $path = $file->storeAs('public/asarFiles/'.$hashName.'/', $hashName);
 
 
     $post = Post::create([

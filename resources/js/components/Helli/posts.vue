@@ -503,7 +503,7 @@
                                         جشنواره
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        قالب اثر
+                                        قالب
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         نام اثر
@@ -527,19 +527,19 @@
                                     <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-10">
                                         {{ post.festival_title }}
                                     </td>
-                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
+                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-fit">
                                         {{ post.research_format }}
                                     </td>
-                                    <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
+                                    <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-fit">
                                         {{ post.title }}
                                     </td>
-                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
+                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-fit">
                                         {{ post.scientific_group }}
                                     </td>
-                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium">
+                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-fit">
                                         {{ post.research_type }}
                                     </td>
-                                    <td class="px-6 py-4 text-right border-l border-gray-d1d1">
+                                    <td class="px-6 py-4 text-right border-l border-gray-d1d1 w-2">
                                         <a
                                             @click="downloadFile(post.file_src)"
                                             class="font-medium cursor-pointer">
@@ -547,11 +547,11 @@
                                                  src="build/assets/icons/Download.svg" alt="">
                                         </a>
                                     </td>
-                                    <td class="px-6 py-4 text-right border-l-0">
+                                    <td class="px-6 py-4 text-right border-l border-gray-d1d1 w-10">
                                         <a
                                             @click="reportRate(post.id)"
                                             class="font-medium cursor-pointer">
-                                            <img class="bg-white rounded-md border border-colorborder p-1"
+                                            <img class="bg-white rounded-md border border-colorborder p-1 "
                                                  src="build/assets/icons/Download.svg" alt="">
                                         </a>
                                     </td>
@@ -628,32 +628,6 @@
                             </div>
                         </transition>
 
-                        <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
-                            <div v-if="showModal" class="fixed z-30 inset-0 overflow-y-auto">
-                                <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                                    </div>
-                                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                                        <div class="px-6 py-4">
-                                            <img class="mx-auto my-8" src="build/assets/Warning.png" alt="Image">
-                                        </div>
-                                        <div class="px-6 py-4 text-center">
-                                            <p class="mb-14 font-bold">{{ message }}</p>
-                                            <div class="flex justify-center pb-8">
-                                                <button @click="confirm3" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
-                                                    بله
-                                                </button>
-                                                <button @click="cancel" class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
-                                                    خیر
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </transition>
                         <!-- show modal 2 -->
                         <transition enter-active-class="3 transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
                             <div v-if="showModal2" class="fixed z-40 inset-0 overflow-y-auto">
@@ -947,7 +921,7 @@ export default {
 
         },
         downloadFile(fileSrc) {
-            window.open(fileSrc, '_blank');
+            window.open('storage/' + fileSrc.slice(7), '_blank');
         },
         handleSubmit() {
             const fileInput = this.$refs.fileInput;
