@@ -12,4 +12,9 @@ class Post extends Model
 
     protected $table = 'posts';
     protected $guarded = [];
+
+    public function moshtarakan()
+    {
+        return $this->hasMany(Participant::class, 'post_id', 'id');
+    }
 }

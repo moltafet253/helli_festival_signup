@@ -548,7 +548,7 @@
                                             <img class="bg-white rounded-md border border-colorborder p-1 cursor-pointer" @click="reportRate(post.id)"
                                                  src="build/assets/icons/Document.svg" alt="" title="وضعیت ارزیابی">
 
-                                            <img class="bg-white rounded-md border border-colorborder p-1 cursor-pointer" @click="reportRate(post.id)"
+                                            <img class="bg-white rounded-md border border-colorborder p-1 cursor-pointer" @click="deletePost(post.id)"
                                                  src="build/assets/icons/delete.png" alt="" title="حذف اثر">
                                         </div>
 
@@ -827,7 +827,7 @@ export default {
         };
     },
     mounted() {
-        axios.get(`/api/users/getuserinfo/${this.nationalcode}/`)
+         axios.get(`/api/users/getuserinfo/${this.nationalcode}/`)
             .then(response => {
                 this.personalInfo = response.data;
             })
@@ -903,6 +903,20 @@ export default {
 
     },
     methods: {
+        deletePost(id){
+             if (confirm('این عملیات قابل بازگشت نمی باشد' +
+                 '\n' +
+                 'آیا مطمئن هستید؟')){
+                 axios.post(`/api/posts/delete/this/${id}`)
+                     .then(function (response) {
+                         console.log(response.data);
+                     })
+                     .catch(function (error) {
+                         console.log(error);
+                     });
+                 // location.reload();
+             }
+        },
         lastSendFunction(){
             axios.post(`/api/posts/approve/last/send/${this.nationalcode}/`, {
                 approved: '1'
@@ -1081,7 +1095,6 @@ export default {
             this.showModal3 = false;
         },
         reportRate(id){
-            console.log(id);
             this.showModalArzyabi=true;
         }
     }

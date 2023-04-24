@@ -188,9 +188,14 @@ Route::middleware('CheckSession')->get('/posts/allposts/user/{nationalcode}', fu
     return response()->json(['posts' => $posts]);
 });
 
+
+//For Posts.vue
+
+//New Post
 Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nationalcode) {
     $user_id = DB::table('users')->where('national_code', $nationalcode)->value('id');
     $festival_title = DB::table('festivals')->where('active', 1)->value('title');
+    $decrementBy=1;
 
     $name = $request->input('name');
     $research_format = $request->input('research_format');
@@ -204,7 +209,7 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nation
 
     $file = $request->file('file');
     $hashName = uniqid('', true) . '.' . $request->file('file')->getClientOriginalName();
-    $path = $file->storeAs('public/asarFiles/'.$hashName.'/', $hashName);
+    $path = $file->storeAs('public/asarFiles/' . $hashName . '/', $hashName);
 
 
     $post = Post::create([
@@ -220,7 +225,11 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nation
         'activity_type' => $activityType,
         'file_src' => $path
     ]);
-    if ($activityType === 'common') {
+
+
+    HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->decrement('numbers', $decrementBy);
+
+    if ($activityType === 'moshtarak') {
         $myCooperation = $request->input('myCooperation');
         Post::where('id', $post->id)->update([
             'participation_percentage' => $myCooperation
@@ -243,6 +252,9 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nation
             'participation_percentage' => $cooperators[$e]['Cooperation'],
             'mobile' => $cooperators[$f]['phonenumber'],
         ]);
+        HelliUserMaxUploadPost::firstorcreate([
+            'national_code' => $cooperators[$c]['codemeli']
+        ]);
         $count = count($cooperators) / 6;
         for ($i = 2; $i <= $count; $i++) {
             Participant::create([
@@ -255,11 +267,37 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nation
                 'mobile' => $cooperators[$f += 6]['phonenumber'],
             ]);
         }
+        $c = 2;
+        for ($i = 2; $i <= $count; $i++) {
+            HelliUserMaxUploadPost::firstorcreate([
+                'national_code' => $cooperators[$c += 6]['codemeli']
+            ]);
+        }
+        $c = 2;
+        for ($i = 2; $i <= $count; $i++) {
+            HelliUserMaxUploadPost::where('national_code', '=', $cooperators[$c += 6]['codemeli'])->decrement('numbers', $decrementBy);
+        }
+
     }
 
 
 });
 
+//Delete Post
+Route::post('/posts/delete/this/{id}', function ($id) {
+    if ($id) {
+        $incrementBy = 1;
+        $post = Post::find($id);
+        if ($post['activity_type'] == 'moshtarak') {
+            $participants = $post->moshtarakan;
+            foreach ($participants as $items) {
+                HelliUserMaxUploadPost::where('national_code', '=', $items->national_code)->increment('numbers', $incrementBy);
+            }
+        }
+        $mainUser = User::find($post['user_id'])->value('national_code');
+        HelliUserMaxUploadPost::where('national_code', '=', $mainUser)->increment('numbers', $incrementBy);
+    }
+});
 Route::post('/posts/approve/last/send/{nationCode}', function (Request $request, $nationCode) {
 //    return $nationCode;
     if ($request->input('approved') == 1) {
@@ -270,7 +308,7 @@ Route::post('/posts/approve/last/send/{nationCode}', function (Request $request,
     }
 
     if (!$maxUpload) {
-        return response()->json(['errors' => 'this is error'], 422);
+        return response()->json(['errors' => 'Empty File'], 422);
     }
 });
 
@@ -346,7 +384,6 @@ Route::prefix('defaults')->group(function () {
         return response()->json($provinces);
     });
     Route::get('/cities/{province}', function ($province) {
-        return $province;
         $cities = Provinces::select('shahr')
             ->where('ostan', '=', $province)
             ->distinct()
