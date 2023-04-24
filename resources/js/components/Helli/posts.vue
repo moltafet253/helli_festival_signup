@@ -515,9 +515,6 @@
                                         نوع پژوهش
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        فایل اثر
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
                                         عملیات
                                     </th>
                                 </tr>
@@ -527,33 +524,34 @@
                                     <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-10">
                                         {{ post.festival_title }}
                                     </td>
-                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-fit">
+                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-32">
                                         {{ post.research_format }}
                                     </td>
                                     <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-fit">
                                         {{ post.title }}
                                     </td>
-                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-fit">
+                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-44">
                                         {{ post.scientific_group }}
                                     </td>
-                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-fit">
+                                    <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-36">
                                         {{ post.research_type }}
                                     </td>
-                                    <td class="px-6 py-4 text-right border-l border-gray-d1d1 w-2">
-                                        <a
-                                            @click="downloadFile(post.file_src)"
-                                            class="font-medium cursor-pointer">
-                                            <img class="bg-white rounded-md border border-colorborder p-1"
-                                                 src="build/assets/icons/Download.svg" alt="">
-                                        </a>
-                                    </td>
-                                    <td class="px-6 py-4 text-right border-l border-gray-d1d1 w-10">
-                                        <a
-                                            @click="reportRate(post.id)"
-                                            class="font-medium cursor-pointer">
-                                            <img class="bg-white rounded-md border border-colorborder p-1 "
-                                                 src="build/assets/icons/Download.svg" alt="">
-                                        </a>
+                                    <td class="px-6 py-4 text-right border-l border-gray-d1d1 w-36">
+                                        <div class="flex justify-center">
+                                            <img class="bg-white rounded-md border border-colorborder p-1 cursor-pointer"
+                                                 @click="downloadFile(post.file_src)"
+                                                 src="build/assets/icons/Download.svg" alt="" title="دانلود فایل اثر">
+
+                                            <img class="bg-white rounded-md border border-colorborder p-1 cursor-pointer" @click="reportRate(post.id)"
+                                                 src="build/assets/icons/Edit Square.png" alt="">
+
+                                            <img class="bg-white rounded-md border border-colorborder p-1 cursor-pointer" @click="reportRate(post.id)"
+                                                 src="build/assets/icons/Document.svg" alt="" title="وضعیت ارزیابی">
+
+                                            <img class="bg-white rounded-md border border-colorborder p-1 cursor-pointer" @click="reportRate(post.id)"
+                                                 src="build/assets/icons/delete.png" alt="" title="حذف اثر">
+                                        </div>
+
                                     </td>
                                 </tr>
 
@@ -656,8 +654,6 @@
                             </div>
                         </transition>
 
-                        <button @click="showModalArzyabi = true" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
-                            نمایش ارزیابی </button>
                         <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
                             <div v-if="showModalArzyabi" class="fixed z-30 inset-0 overflow-y-auto">
                                 <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
