@@ -256,6 +256,7 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nation
         HelliUserMaxUploadPost::firstorcreate([
             'national_code' => $cooperators[$c]['codemeli']
         ]);
+        HelliUserMaxUploadPost::where('national_code', '=', $cooperators[$c]['codemeli'])->decrement('numbers', $decrementBy);
         $count = count($cooperators) / 6;
         for ($i = 2; $i <= $count; $i++) {
             Participant::create([

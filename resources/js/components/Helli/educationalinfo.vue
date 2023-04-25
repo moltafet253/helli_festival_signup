@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form v-if="!showButton" class="mt-8" @submit.prevent="handleSubmit({nationalcode} )">
+        <form v-if="showButton" class="mt-8" @submit.prevent="handleSubmit({nationalcode} )">
             <div class="flex items-center ">
                 <span class="text-orange-500 pl-1">◼</span>
                 <h2 class="text-base font-bold">اطلاعات ‌تحصیلی</h2>
@@ -191,6 +191,9 @@
                         <select :disabled="!showButton" v-for="(item, index) in edu" :key="index" v-model="item.tahsilatghhozavi"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option value="زیر دیپلم" v-for="(item, index) in edu" :key="index"
+                                    v-bind:selected="item.tahsilatghhozavi==='زیر دیپلم'">زیر دیپلم
+                            </option>
                             <option value="دیپلم" v-for="(item, index) in edu" :key="index"
                                     v-bind:selected="item.tahsilatghhozavi==='دیپلم'">دیپلم
                             </option>

@@ -13,7 +13,8 @@
 
                         <div class="flex items-center mt-4 gap-16">
 
-                            <div class="w-full lg:w-3/12 flex-row bg-white  rounded-lg shadow">
+                            <div v-if="max_uploads.numbers!==0 && max_uploads.sent_status!==1"
+                                 class="w-full lg:w-3/12 flex-row bg-white  rounded-lg shadow">
                                 <!-- click open modal -->
                                 <div @click="showModal3 = true"
                                      class=" cursor-pointer flex justify-center items-center rounded-t-lg  border-dashed border-4 border-colorborder border-b-0"
@@ -31,9 +32,30 @@
                                 </div>
                             </div>
 
+                            <div v-if="max_uploads.numbers===0 && max_uploads.sent_status!==1">
+                                <div class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">
+                                    <div class=" flex-row ">
+                                        <div class="relative w-full">
+                                            <img class="bg-red-500 rounded-md p-1"
+                                                 src="build/assets/icons/Info Square.svg" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="w-full flex-row">
+                                        <div class="relative w-full mr-3">
+                                            <p class="mb-0">کاربر گرامی؛ تعداد سه اثر در جشنواره با کد ملی شما ثبت شده
+                                                است. در فهرست زیر می توانید تمامی آثار ثبت شده با کد ملی خود را مشاهده
+                                                کرده و آثاری که وارد کرده اید را حذف کنید.
+                                            </p>
+                                            <br>
+                                            <p class="mb-0">چنانچه اثری به نام شما ثبت شده و متعلق به شما نیست، لطفا
+                                                درخواست خود را به دبیرخانه جشنواره استان یا مدرسه خود ارجاع دهید.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <!-- modal -->
-
+                            <!-- مودال ثبت اثر -->
                             <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0"
                                         enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75"
                                         leave-class="opacity-100" leave-to-class="opacity-0">
@@ -66,17 +88,19 @@
 
                                                 <div
                                                     class="mt-8 px-8 w-full lg:w-5/12 flex py-3   ">
-                                                        <div class=" flex bg-blue-100 p-3 rounded-xl border border-colorborder">
+                                                    <div
+                                                        class=" flex bg-blue-100 p-3 rounded-xl border border-colorborder">
 
-                                                            <div class="pl-2">
-                                                                <img class="bg-blue-500 md:w-6 w-9 rounded-md p-1"
-                                                                     src="build/assets/icons/Info Square.svg" alt="">
-                                                            </div>
-                                                            <div>
-                                                                <p class="mb-0 pt-1">کاربر گرامی؛ لطفا اطلاعات مربوط به اثر خود
-                                                                    را تکمیل
-                                                                    نمائید</p>
-                                                            </div>
+                                                        <div class="pl-2">
+                                                            <img class="bg-blue-500 md:w-6 w-9 rounded-md p-1"
+                                                                 src="build/assets/icons/Info Square.svg" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <p class="mb-0 pt-1">کاربر گرامی؛ لطفا اطلاعات مربوط به اثر
+                                                                خود
+                                                                را تکمیل
+                                                                نمائید</p>
+                                                        </div>
 
                                                     </div>
                                                 </div>
@@ -426,7 +450,7 @@
                                                         <button
 
                                                             @click="handleButtonClick"
-                                                            :class="[handleButtonClick ? ' bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl cursor-pointer' : 'bg-red-500 opacity-50  hover:bg-red-700 cursor-not-allowed text-white font-bold py-2 px-10 ml-8 rounded-xl']" >
+                                                            :class="[handleButtonClick ? ' bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl cursor-pointer' : 'bg-red-500 opacity-50  hover:bg-red-700 cursor-not-allowed text-white font-bold py-2 px-10 ml-8 rounded-xl']">
                                                             <span :class="[checkFile ? ' text-white' : 'text-black']">ثبت اولیه اطلاعات</span>
                                                         </button>
 
@@ -454,26 +478,40 @@
                                                 </section>
                                                 <!-- show modal -->
 
-                                                <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
-                                                    <div v-if="showModal" class="fixed  mt-0 z-30 inset-0 overflow-y-auto">
-                                                        <div class="flex items-end pb-48 justify-center min-h-full text-center ">
-                                                            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                                                                <div class="absolute inset-0 bg-gray-500 opacity-75" @click="cancel"></div>
+                                                <transition enter-active-class="transition ease-out duration-100"
+                                                            enter-class="opacity-0" enter-to-class="opacity-100"
+                                                            leave-active-class="transition ease-in duration-75"
+                                                            leave-class="opacity-100" leave-to-class="opacity-0">
+                                                    <div v-if="showModal"
+                                                         class="fixed  mt-0 z-30 inset-0 overflow-y-auto">
+                                                        <div
+                                                            class="flex items-end pb-48 justify-center min-h-full text-center ">
+                                                            <div class="fixed inset-0 transition-opacity"
+                                                                 aria-hidden="true">
+                                                                <div class="absolute inset-0 bg-gray-500 opacity-75"
+                                                                     @click="cancel"></div>
                                                             </div>
-                                                            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                                                            <div class=" bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                                            <span
+                                                                class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                                                                aria-hidden="true">&#8203;</span>
+                                                            <div
+                                                                class=" bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                                                 <div class="px-6 py-4">
-                                                                    <img class="mx-auto my-8" src="build/assets/icons/Warning.png" alt="Image">
+                                                                    <img class="mx-auto my-8"
+                                                                         src="build/assets/icons/Warning.png"
+                                                                         alt="Image">
                                                                 </div>
                                                                 <div class="px-6 py-4 text-center">
                                                                     <p class="mb-14 font-bold">{{ message }}</p>
                                                                     <div class="flex justify-center pb-8">
                                                                         <form @submit.prevent="handleSubmit">
-                                                                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
+                                                                            <button
+                                                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
                                                                                 بله
                                                                             </button>
                                                                         </form>
-                                                                        <button @click="cancel" class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
+                                                                        <button @click="cancel"
+                                                                                class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
                                                                             خیر
                                                                         </button>
                                                                     </div>
@@ -518,7 +556,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr  v-for="(post, index) in allPosts" :key="index" class="bg-gray-eee border-b border-gray-d1d1">
+                                <tr v-for="(post, index) in allPosts" :key="index"
+                                    class="bg-gray-eee border-b border-gray-d1d1">
                                     <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-10">
                                         {{ post.festival_title }}
                                     </td>
@@ -536,18 +575,25 @@
                                     </td>
                                     <td class="px-6 py-4 text-right border-l border-gray-d1d1 w-36">
                                         <div class="flex justify-center">
-                                            <img class="bg-white rounded-md border border-colorborder p-1 cursor-pointer"
-                                                 @click="downloadFile(post.file_src)"
-                                                 src="build/assets/icons/Download.svg" alt="" title="دانلود فایل اثر">
+                                            <img
+                                                class="bg-white rounded-md border border-colorborder p-1 cursor-pointer"
+                                                @click="downloadFile(post.file_src)"
+                                                src="build/assets/icons/Download.svg" alt="" title="دانلود فایل اثر">
 
-                                            <img class="bg-white rounded-md border border-colorborder p-1 cursor-pointer" @click="reportRate(post.id)"
-                                                 src="build/assets/icons/Edit Square.png" alt="">
+<!--                                            <img-->
+<!--                                                class="bg-white rounded-md border border-colorborder p-1 cursor-pointer"-->
+<!--                                                @click="reportRate(post.id)"-->
+<!--                                                src="build/assets/icons/Edit Square.png" alt="">-->
 
-                                            <img class="bg-white rounded-md border border-colorborder p-1 cursor-pointer" @click="reportRate(post.id)"
-                                                 src="build/assets/icons/Document.svg" alt="" title="وضعیت ارزیابی">
+                                            <img
+                                                class="bg-white rounded-md border border-colorborder p-1 cursor-pointer"
+                                                @click="reportRate(post.id)"
+                                                src="build/assets/icons/Document.svg" alt="" title="وضعیت ارزیابی">
 
-                                            <img class="bg-white rounded-md border border-colorborder p-1 cursor-pointer" @click="deletePost(post.id)"
-                                                 src="build/assets/icons/delete.png" alt="" title="حذف اثر">
+                                            <img
+                                                class="bg-white rounded-md border border-colorborder p-1 cursor-pointer"
+                                                @click="deletePost(post.id)"
+                                                src="build/assets/icons/delete.png" alt="" title="حذف اثر">
                                         </div>
 
                                     </td>
@@ -556,21 +602,42 @@
                                 </tbody>
                             </table>
                         </div>
-<!--                        v-if="max_uploads.numbers!==0"-->
-                        <button  @click="showModalLastSend = true"
+                        <button v-if="max_uploads.sent_status===0" @click="showModalLastSend = true"
                                 class="bg-green-600 text-white font-bold py-2 px-4 mt-14 rounded-lg mx-auto block"
                         >
                             ارسال نهایی آثار به جشنواره
                         </button>
 
-                        <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
+                        <div v-if="max_uploads.sent_status===1" class="pt-5 flex justify-center ">
+                            <div
+                                class=" mx-4 p-3 flex bg-green-200 rounded-xl border border-colorborder w-9/12 items-center">
+                                <div class=" flex-row ">
+                                    <div class="relative w-full">
+                                        <img class="bg-green-500 rounded-md p-1"
+                                             src="build/assets/icons/Info Square.svg" alt="">
+                                    </div>
+                                </div>
+                                <div class="w-full flex-row">
+                                    <div class="relative w-full mr-3">
+                                        <p class="mb-0">کاربر گرامی؛ آثار شما با موفقیت به جشنواره ارسال شده است. برای
+                                            اطلاع از وضعیت ارزیابی، بر روی دکمه نمایش وضعیت کلیک کنید.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0"
+                                    enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75"
+                                    leave-class="opacity-100" leave-to-class="opacity-0">
                             <div v-if="showModalLastSend" class="fixed z-10 inset-0 overflow-y-auto">
-                                <div @click="cancelshowModalLastSend" class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
+                                <div @click="cancelshowModalLastSend"
+                                     class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
                                     <div class="fixed inset-0 transition-opacity" aria-hidden="true">
                                         <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
                                     </div>
                                     <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                    <div
+                                        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                         <div class="px-6 py-4">
                                             <img class="mx-auto my-8" src="build/assets/icons/Warning.png" alt="Image">
                                         </div>
@@ -581,10 +648,12 @@
                                                 پس از تایید، امکان ویرایش یا ارسال اثر دیگر وجود ندارد.
                                                 آیا تایید می‌کنید؟</p>
                                             <div class="flex justify-center pb-8">
-                                                <button @click="showModalsuccess = true" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
+                                                <button @click="confirm"
+                                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
                                                     بله
                                                 </button>
-                                                <button @click="cancelshowModalLastSend" class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
+                                                <button @click="cancelshowModalLastSend"
+                                                        class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
                                                     خیر
                                                 </button>
                                             </div>
@@ -596,15 +665,17 @@
 
                         <!-- show modal 2 -->
 
-
-                        <transition enter-active-class="3 transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
+                        <transition enter-active-class="3 transition ease-out duration-100" enter-class="opacity-0"
+                                    enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75"
+                                    leave-class="opacity-100" leave-to-class="opacity-0">
                             <div v-if="showModalsuccess" class="fixed z-40 inset-0 overflow-y-auto">
                                 <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
                                     <div class="fixed inset-0 transition-opacity" aria-hidden="true">
                                         <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
                                     </div>
                                     <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                    <div
+                                        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                         <div class="px-6 pt-4">
                                             <img class="mx-auto mt-8" src="build/assets/icons/success.png" alt="Image">
                                         </div>
@@ -614,7 +685,8 @@
                                             </p>
                                             <div class="flex justify-center pb-8">
 
-                                                <button @click="confirm" class="bg-white hover:bg-slate-200 border border-colorborder text-black py-2 px-10 rounded-xl">
+                                                <button @click="reloadPage"
+                                                        class="bg-white hover:bg-slate-200 border border-colorborder text-black py-2 px-10 rounded-xl">
                                                     بستن
                                                 </button>
                                             </div>
@@ -625,14 +697,18 @@
                         </transition>
 
                         <!-- show modal 2 -->
-                        <transition enter-active-class="3 transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
+                        <transition enter-active-class="3 transition ease-out duration-100" enter-class="opacity-0"
+                                    enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75"
+                                    leave-class="opacity-100" leave-to-class="opacity-0">
                             <div v-if="showModal2" class="fixed z-40 inset-0 overflow-y-auto">
-                                <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                <div
+                                    class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                                     <div class="fixed inset-0 transition-opacity" aria-hidden="true">
                                         <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
                                     </div>
                                     <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                    <div
+                                        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                         <div class="px-6 pt-4">
                                             <img class="mx-auto mt-8" src="build/assets/success.png" alt="Image">
                                         </div>
@@ -642,7 +718,8 @@
                                             </p>
                                             <div class="flex justify-center pb-8">
 
-                                                <button @click="confirm" class="bg-white hover:bg-slate-200 border border-colorborder text-black py-2 px-10 rounded-xl">
+                                                <button @click="confirm"
+                                                        class="bg-white hover:bg-slate-200 border border-colorborder text-black py-2 px-10 rounded-xl">
                                                     بستن
                                                 </button>
                                             </div>
@@ -652,25 +729,31 @@
                             </div>
                         </transition>
 
-                        <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75" leave-class="opacity-100" leave-to-class="opacity-0">
+                        <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0"
+                                    enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75"
+                                    leave-class="opacity-100" leave-to-class="opacity-0">
                             <div v-if="showModalArzyabi" class="fixed z-30 inset-0 overflow-y-auto">
-                                <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                <div
+                                    class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                                     <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                                        <div class="absolute inset-0 bg-gray-500 opacity-75" @click="showModalArzyabi = false" ></div>
+                                        <div class="absolute inset-0 bg-gray-500 opacity-75"
+                                             @click="showModalArzyabi = false"></div>
                                     </div>
                                     <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl w-full">
+                                    <div
+                                        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl w-full">
 
                                         <div dir="rtl" class="text-right rounded-xl border border-colorborder p-5">
-                                            <div dir="rtl" class="px-8 flex items-center justify-between py-3 bg-white border-t border-r border-l  rounded-t-xl">
+                                            <div dir="rtl"
+                                                 class="px-8 flex items-center justify-between py-3 bg-white border-t border-r border-l  rounded-t-xl">
                                                 <div class="flex">
                                                 <span class="pl-1">
                                                     <img src="build/assets/icons/Edit Square.png" alt="">
                                                 </span>
-                                                    <h2 class="text-base font-bold  ">وضعیت ارزیابی اثر ارسالی به جشنواره</h2>
+                                                    <h2 class="text-base font-bold  ">وضعیت ارزیابی اثر ارسالی به
+                                                        جشنواره</h2>
                                                 </div>
                                             </div>
-
 
 
                                             <div class="border border-colorborder rounded-b-xl">
@@ -748,7 +831,9 @@
 
                                                 </div>
                                                 <div class="flex items-center justify-center gap-1  my-4">
-                                                    <button class="border-2 border-gray-300 p-2 px-4 rounded-lg" @click="cancelarzyabi">بستن</button>
+                                                    <button class="border-2 border-gray-300 p-2 px-4 rounded-lg"
+                                                            @click="cancelarzyabi">بستن
+                                                    </button>
 
                                                 </div>
                                             </div>
@@ -785,8 +870,8 @@ export default {
             showModal: false,
             showModal2: false,
             showModal3: false,
-            showModalsuccess:false,
-            showModalArzyabi:false,
+            showModalsuccess: false,
+            showModalArzyabi: false,
             activityType: 'fardi',
             fileSelected: false,
             fileName: "",
@@ -800,7 +885,7 @@ export default {
             scientific_groups: [],
             research_types: [],
             special_sections: [],
-            max_uploads:[],
+            max_uploads: [],
             showModalLastSend: false,
 
             //send items
@@ -820,12 +905,12 @@ export default {
             allPosts: [],
 
             //Rate Info
-            rate:[],
+            rate: [],
 
         };
     },
     mounted() {
-         axios.get(`/api/users/getuserinfo/${this.nationalcode}/`)
+        axios.get(`/api/users/getuserinfo/${this.nationalcode}/`)
             .then(response => {
                 this.personalInfo = response.data;
             })
@@ -901,21 +986,20 @@ export default {
 
     },
     methods: {
-        deletePost(id){
-             if (confirm('این عملیات قابل بازگشت نمی باشد' +
-                 '\n' +
-                 'آیا مطمئن هستید؟')){
-                 axios.post(`/api/posts/delete/this/${id}`)
-                     .then(function (response) {
-                         console.log(response.data);
-                     })
-                     .catch(function (error) {
-                         console.log(error);
-                     });
-                 // location.reload();
-             }
+        deletePost(id) {
+            if (confirm('این عملیات قابل بازگشت نمی باشد' +
+                '\n' +
+                'آیا مطمئن هستید؟')) {
+                axios.post(`/api/posts/delete/this/${id}`)
+                    .then(function (response) {
+                        console.log(response.data);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
         },
-        lastSendFunction(){
+        lastSendFunction() {
             axios.post(`/api/posts/approve/last/send/${this.nationalcode}/`, {
                 approved: '1'
             })
@@ -985,7 +1069,15 @@ export default {
                 // Check if total cooperation is valid
                 const total = this.rows.reduce((acc, row) => acc + (parseInt(row.Cooperation) || 0), 0) + (parseInt(this.Cooperation) || 0);
                 if (total === 100) {
-                    return true;
+                    if (this.rows.some(row => row.codemeli.length !== 10)) {
+                        alert ('کد ملی یک یا چند نفر از مشارکان اشتباه وارد شده است');
+                        return false;
+                    }else if (this.rows.some(row => row.phonenumber.length !== 11)) {
+                        alert ('تلفن همراه یک یا چند نفر از مشارکان اشتباه وارد شده است');
+                        return false;
+                    } else {
+                        return true;
+                    }
                 } else if (total > 100) {
                     alert('مجموع درصد مشارکت نمی‌تواند بیشتر از ۱۰۰ باشد.');
                 } else {
@@ -1052,22 +1144,21 @@ export default {
                 }
             }
         },
-
-
         addRow() {
-            const newRow = { name: '', lastname: '', codemeli: '', filenumber: '', Cooperation: '', phonenumber: '' };
-            this.rows.push({ ...newRow });
+            const newRow = {name: '', lastname: '', codemeli: '', filenumber: '', Cooperation: '', phonenumber: ''};
+            this.rows.push({...newRow});
         },
         deleteRow(index) {
             this.rows.splice(index, 1);
         },
         confirm() {
+            this.lastSendFunction();
             this.showModal = false;
             this.showModalsuccess = false;
             this.showModal2 = false;
             this.showModalLastSend = false;
             this.showModal3 = false;
-            location.reload();
+            this.showModalsuccess = true
         },
         showModalsend() {
             this.showModal = true;
@@ -1081,19 +1172,14 @@ export default {
         cancelarzyabi() {
             this.showModalArzyabi = false;
         },
-        confirm3() {
-            this.showModal3 = false;
-            this.showModal2 = false;
-            this.showModal = false;
-            this.nameFile = '';
-            this.showModalLastSend = false;
-            // location.reload();
-        },
         cancel3() {
             this.showModal3 = false;
         },
-        reportRate(id){
-            this.showModalArzyabi=true;
+        reportRate(id) {
+            this.showModalArzyabi = true;
+        },
+        reloadPage() {
+            location.reload();
         }
     }
 };
