@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form v-if="showButton" class="mt-8" @submit.prevent="handleSubmit({nationalcode} )">
+        <form class="mt-8" @submit.prevent="handleSubmit({nationalcode} )">
             <div class="flex items-center ">
                 <span class="text-orange-500 pl-1">◼</span>
                 <h2 class="text-base font-bold">اطلاعات ‌تحصیلی</h2>

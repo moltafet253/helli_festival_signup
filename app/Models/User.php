@@ -47,11 +47,17 @@ class User extends Authenticatable
     protected $guarded=[];
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasOne(Post::class);
+    }
+
+    public function allPosts()
+    {
+        return $this->hasMany(Post::class,'user_id','id');
     }
 
     public function image()
     {
         return $this->hasOne('App\Helli\Image');
     }
+
 }

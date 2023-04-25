@@ -31,7 +31,19 @@
                                     </div>
                                 </div>
                             </div>
-
+<!--                            <div class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">-->
+<!--                                <div class=" flex-row ">-->
+<!--                                    <div class="relative w-full">-->
+<!--                                        <img class="bg-red-500 rounded-md p-1"-->
+<!--                                             src="build/assets/icons/Info Square.svg" alt="">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="w-full flex-row">-->
+<!--                                    <div class="relative w-full mr-3">-->
+<!--                                        <p class="mb-0">کاربر گرامی؛ اطلاعات شما در سامانه ثبت نشده است. لطفا برای ثبت اثر جدید، در ابتدا اطلاعات خود را تکمیل نمایید.</p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <div v-if="max_uploads.numbers===0 && max_uploads.sent_status!==1">
                                 <div class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">
                                     <div class=" flex-row ">
@@ -54,8 +66,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- مودال ثبت اثر -->
                             <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0"
                                         enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75"
                                         leave-class="opacity-100" leave-to-class="opacity-0">
@@ -521,8 +531,6 @@
                                                     </div>
                                                 </transition>
 
-
-                                                <!--                                                </form>-->
                                             </div>
 
                                         </div>
@@ -592,7 +600,7 @@
 
                                             <img
                                                 class="bg-white rounded-md border border-colorborder p-1 cursor-pointer"
-                                                @click="deletePost(post.id)"
+                                                @click="deletePost(post.id)" v-if="post.sent===0"
                                                 src="build/assets/icons/delete.png" alt="" title="حذف اثر">
                                         </div>
 
@@ -663,8 +671,6 @@
                             </div>
                         </transition>
 
-                        <!-- show modal 2 -->
-
                         <transition enter-active-class="3 transition ease-out duration-100" enter-class="opacity-0"
                                     enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75"
                                     leave-class="opacity-100" leave-to-class="opacity-0">
@@ -710,7 +716,7 @@
                                     <div
                                         class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                         <div class="px-6 pt-4">
-                                            <img class="mx-auto mt-8" src="build/assets/success.png" alt="Image">
+                                            <img class="mx-auto mt-8" src="build/assets/icons/success.png" alt="Image">
                                         </div>
                                         <div class="px-6 pb-4 text-center ">
                                             <p class="mb-14 font-bold w-1/2 mx-auto">آثار انتخاب شده با موفقیت
@@ -837,9 +843,6 @@
 
                                                 </div>
                                             </div>
-
-                                            <!-- show modal -->
-
 
                                         </div>
 

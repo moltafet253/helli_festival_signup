@@ -46,7 +46,7 @@ Route::post('/contact/save/{nationCode}', function (Request $request, $nationCod
         'mobile' => $mobile,
         'address' => $address,
         'postal_code' => $postal_code,
-        'approved'=>1,
+        'approved' => 1,
     ]);
 });
 
@@ -60,7 +60,6 @@ Route::get('/edu/{nationalcode}', function (Request $request, $nationalcode) {
 });
 
 Route::post('/edu/save', function (Request $request) {
-//    return $request;
     $national_code = $request->input('edu.0.national_code');
     $namemarkaztahsili = $request->input('edu.0.namemarkaztahsili');
     $noetahsilhozavi = $request->input('edu.0.noetahsilhozavi');
@@ -196,7 +195,7 @@ Route::middleware('CheckSession')->get('/posts/allposts/user/{nationalcode}', fu
 Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nationalcode) {
     $user_id = DB::table('users')->where('national_code', $nationalcode)->value('id');
     $festival_title = DB::table('festivals')->where('active', 1)->value('title');
-    $decrementBy=1;
+    $decrementBy = 1;
 
     $name = $request->input('name');
     $research_format = $request->input('research_format');
@@ -256,7 +255,7 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nation
         HelliUserMaxUploadPost::firstorcreate([
             'national_code' => $cooperators[$c]['codemeli']
         ]);
-        HelliUserMaxUploadPost::where('national_code', '=', $cooperators[$c]['codemeli'])->decrement('numbers', $decrementBy);
+//        HelliUserMaxUploadPost::where('national_code', '=', $cooperators[$c]['codemeli'])->decrement('numbers', $decrementBy);
         $count = count($cooperators) / 6;
         for ($i = 2; $i <= $count; $i++) {
             Participant::create([
@@ -276,9 +275,9 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nation
             ]);
         }
         $c = 2;
-        for ($i = 2; $i <= $count; $i++) {
-            HelliUserMaxUploadPost::where('national_code', '=', $cooperators[$c += 6]['codemeli'])->decrement('numbers', $decrementBy);
-        }
+//        for ($i = 2; $i <= $count; $i++) {
+//            HelliUserMaxUploadPost::where('national_code', '=', $cooperators[$c += 6]['codemeli'])->decrement('numbers', $decrementBy);
+//        }
 
     }
 
@@ -287,28 +286,39 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nation
 
 //Delete Post
 Route::post('/posts/delete/this/{id}', function ($id) {
+
     if ($id) {
-        $incrementBy = 1;
         $post = Post::find($id);
-        if ($post['activity_type'] == 'moshtarak') {
-            $participants = $post->moshtarakan;
-            foreach ($participants as $items) {
-                HelliUserMaxUploadPost::where('national_code', '=', $items->national_code)->increment('numbers', $incrementBy);
-            }
-        }
         $mainUser = User::find($post['user_id'])->value('national_code');
-        HelliUserMaxUploadPost::where('national_code', '=', $mainUser)->increment('numbers', $incrementBy);
+        HelliUserMaxUploadPost::where('national_code', '=', $mainUser)->increment('numbers', 1);
+        $post->delete();
+        $post->save();
+
+//        if ($post['activity_type'] == 'moshtarak') {
+//            $participants = $post->moshtarakan;
+//            foreach ($participants as $items) {
+//                HelliUserMaxUploadPost::where('national_code', '=', $items->national_code)->increment('numbers', $incrementBy);
+//            }
+//        }
+
     }
 });
 Route::post('/posts/approve/last/send/{nationCode}', function (Request $request, $nationCode) {
-//    return $nationCode;
     if ($request->input('approved') == 1) {
+        $user = User::where('national_code', '=', $nationCode)->value('id');
+        $user_id = User::find($user);
+        $posts = $user_id->allPosts;
+        foreach ($posts as $post){
+            if ($post['sent']===0){
+                $post->sent=1;
+                $post->save();
+            }
+        }
         $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationCode)->update([
             'sent_status' => 1,
             'numbers' => 0,
         ]);
     }
-
     if (!$maxUpload) {
         return response()->json(['errors' => 'Empty File'], 422);
     }
