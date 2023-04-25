@@ -34,8 +34,7 @@
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2">کدپستی (بدون خط فاصله یا هر علامت
-                            دیگر)</label>
+                        <label class="block uppercase  text-base font-bold mb-2">کدپستی (بدون خط فاصله)</label>
                         <input :disabled="!showButton" v-for="(item, index) in contact" :key="index" type="number"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                v-model="item.postal_code">
@@ -44,8 +43,8 @@
                 <div class="w-full px-4 flex-row">
                     <label class="block uppercase  text-base font-bold mb-2">آدرس</label>
                     <textarea :disabled="!showButton"
-                        class="border border-colorborder p-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
-                        rows="5" v-for="(item, index) in contact" :key="index" v-model="item.address"></textarea>
+                              class="border border-colorborder p-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
+                              rows="5" v-for="(item, index) in contact" :key="index" v-model="item.address"></textarea>
                 </div>
                 <div class="w-full mt-4">
                     <button v-if="showButton"
@@ -92,6 +91,7 @@ export default {
             let postal_code = this.contact[0]['postal_code'];
             let phone = this.contact[0]['phone'];
             let address = this.contact[0]['address'];
+            console.log(mobile.length);
             if (mobile === '' || mobile == null) {
                 alert('شماره همراه وارد نشده است.');
             } else if (phone === '' || phone === null) {
@@ -103,18 +103,23 @@ export default {
             } else if (address === '' || address === null) {
                 alert('آدرس وارد نشده است.');
                 return false;
+            } else if (mobile.length !== 11) {
+                alert('تلفن همراه با فرمت نامعتبر وارد شده است.');
+                return false;
             } else {
-                axios.post(`/api/contact/save/${this.nationalcode}/`, {
-                    contact: this.contact,
-                })
-                    .then(function (response) {
-                        alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.');
-                        location.reload();
-                        // console.log(response.data);
+                if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟ اطلاعات شما در صورت تایید دیگر قابل تغییر نیستند')) {
+
+                    axios.post(`/api/contact/save/${this.nationalcode}/`, {
+                        contact: this.contact,
                     })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                        .then(function (response) {
+                            alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.');
+                            location.reload();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
             }
         },
     }

@@ -276,7 +276,6 @@ export default {
             .then(response => {
                 this.edu = response.data.edu;
                 this.gender = response.data.gender;
-                console.log(response.data.edu);
                 if (response.data.edu[0]['approved'] === 1) {
                     this.showButton = false;
                 }
@@ -376,8 +375,8 @@ export default {
                         gender: gender,
                     })
                         .then(function (response) {
-                            alert('اطلاعات تحصیلی شما با موفقیت در سامانه ثبت شد.')
-                            console.log(response.data);
+                            alert('اطلاعات تحصیلی شما با موفقیت در سامانه ثبت شد.');
+                            location.reload();
                         })
                         .catch(function (error) {
                             // console.log(error);
