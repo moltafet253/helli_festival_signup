@@ -7,7 +7,7 @@
                 <h2 class="text-base font-bold ">اطلاعات‌ شخصی</h2>
                 <hr class="flex-grow border-t-2 border-b-orange mr-4 mt-3">
             </div>
-            <div class="flex flex-wrap mt-2">
+            <div class="flex flex-wrap mt-3">
                 <div class="w-full lg:w-4/12 px-4">
                     <div class="relative flex items-center justify-center mx-auto mb-2 ">
 

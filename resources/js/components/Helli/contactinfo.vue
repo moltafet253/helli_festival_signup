@@ -13,7 +13,7 @@
                 <p>در صورت نیاز به تغییر اطلاعات تماس فیلدهای زیر را تکمیل نمائید. (توجه داشته باشید که اطلاعات وارد شده
                     توسط شما در سامانه پیشخوان ثبت نخواهد شد.)</p>
             </div>
-            <div class="flex flex-wrap mt-5">
+            <div class="flex flex-wrap mt-3">
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">تلفن ثابت (به

@@ -1,6 +1,4 @@
 <template>
-
-
     <section dir="rtl" class="py-1">
         <div class="w-full mt-6">
             <div class="relative flex flex-col min-w-0 break-words w-full mb-6 rounded-lg  border-0">
@@ -13,7 +11,7 @@
                             <hr class="flex-grow border-t-2 border-b-orange mr-4 mt-3">
                         </div>
 
-                        <div class="flex items-center mt-5 gap-16">
+                        <div class="flex items-center mt-4 gap-16">
 
                             <div class="w-full lg:w-3/12 flex-row bg-white  rounded-lg shadow">
                                 <!-- click open modal -->

@@ -6,7 +6,7 @@
                 <h2 class="text-base font-bold">اطلاعات ‌تحصیلی</h2>
                 <hr class="flex-grow border-t-2 border-b-orange mr-4 mt-3">
             </div>
-            <div class="flex flex-wrap mt-5">
+            <div class="flex flex-wrap mt-3">
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">نام مرکز

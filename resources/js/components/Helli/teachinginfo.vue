@@ -6,15 +6,15 @@
                 <h2 class="text-base font-bold  ">اطلاعات ‌تدریس</h2>
                 <hr class="flex-grow border-t-2 border-b-orange mr-4 mt-3">
             </div>
-            <div class="w-full lg:w-4/12 px-4 flex-row">
+            <div class="w-full lg:w-4/12 px-4 flex-row mt-3">
                 <div class="relative w-full mb-3">
                     <label class="block uppercase  text-base font-bold mb-2">استاد می
                         باشید؟</label>
                     <select :disabled="disableSelection" v-model="item.isMaster" v-for="(item, index) in teaching"
                             @change="divStatus"
                             class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
-                        <option selected value="خیر" v-bind:selected="item.term=='خیر'">خیر</option>
-                        <option value="بله" v-bind:selected="item.term=='بله'">بله</option>
+                        <option selected value="خیر" v-bind:selected="item.term==='خیر'">خیر</option>
+                        <option value="بله" v-bind:selected="item.term==='بله'">بله</option>
                     </select>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                         <label class="block uppercase  text-base font-bold mb-2">کد
                             استادی<span
                                 style="color: red;">*</span></label>
-                        <input type="text" v-for="(item, index) in teaching" :key="index"
+                        <input :disabled="disableSelection" type="text" v-for="(item, index) in teaching" :key="index"
                                class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                v-model="item.masterCode">
                     </div>
@@ -35,7 +35,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">استان محل تدریس<span
                             style="color: red;">*</span></label>
-                        <select v-model="item.teachingProvince" v-for="(item, index) in teaching"
+                        <select :disabled="disableSelection" v-model="item.teachingProvince" v-for="(item, index) in teaching"
                                 @change="returnCity(item.teachingProvince)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
@@ -49,7 +49,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">شهر محل
                             تدریس<span style="color: red;">*</span></label>
-                        <select v-model="item.teachingCity" v-for="(item, index) in teaching"
+                        <select :disabled="disableSelection" v-model="item.teachingCity" v-for="(item, index) in teaching"
                                 @change="returnSchool(item.teachingCity)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
@@ -64,7 +64,7 @@
                         <label class="block uppercase  text-base font-bold mb-2">نام محل
                             تدریس<span
                             style="color: red;">*</span></label>
-                        <select v-model="item.teachingPlaceName" v-for="(item, index) in teaching"
+                        <select :disabled="disableSelection" v-model="item.teachingPlaceName" v-for="(item, index) in teaching"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option v-for="item in madrese" :value="item.madrese"
@@ -104,30 +104,39 @@ export default {
         }
     },
     mounted() {
-        axios.get(`/api/teaching/${this.nationalcode}/`)
-            .then(response => {
-                this.teaching = response.data;
-                const userData = response.data;
-                if (userData[0]['approved'] === 1) {
-                    this.showButton = false;
-                    this.disableSelection = true;
-                } else {
-                    this.disableSelection = false;
-                    this.showButton = true;
-                }
-            })
-            .catch(error => {
-                console.log(error)
-            });
-        axios.get(`/api/defaults/provinces`)
-            .then(response => {
-                this.ostan = response.data;
-            })
-            .catch(error => {
-                console.log(error)
-            });
+        this.getDataFromEduTable(this.nationalcode);
+        this.getDataFromProvincesTable();
+
     },
     methods: {
+        getDataFromProvincesTable(){
+            axios.get(`/api/defaults/provinces`)
+                .then(response => {
+                    this.ostan = response.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        },
+        getDataFromEduTable(nationalCode){
+            axios.get('/api/teaching/'+nationalCode)
+                .then(response => {
+                    this.teaching = response.data;
+                    const userData = response.data;
+                    if (userData[0]['approved'] === 1) {
+                        this.showButton = false;
+                        this.disableSelection = true;
+                        this.returnCity(this.teaching[0]['teachingProvince']);
+                        this.returnSchool(this.teaching[0]['teachingCity']);
+                    } else {
+                        this.disableSelection = false;
+                        this.showButton = true;
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        },
         returnCity(province) {
             this.shahr=[];
             this.madrese=[];
@@ -162,19 +171,19 @@ export default {
             let teachingProvince = this.teaching[0]['teachingProvince'];
             let teachingCity = this.teaching[0]['teachingCity'];
             let teachingPlaceName = this.teaching[0]['teachingPlaceName'];
-            if (isMaster == '' || isMaster == null) {
+            if (isMaster === '' || isMaster === null) {
                 alert('استاد می باشید؟');
-            } else if (isMaster == 'بله' && ((masterCode == null || masterCode == '') || (teachingProvince == null || teachingProvince == '') || (teachingCity == null || teachingCity == '') || (teachingPlaceName == null || teachingPlaceName == ''))) {
-                if (masterCode == null || masterCode == '') {
+            } else if (isMaster === 'بله' && ((masterCode === null || masterCode === '') || (teachingProvince === null || teachingProvince === '') || (teachingCity === null || teachingCity === '') || (teachingPlaceName === null || teachingPlaceName === ''))) {
+                if (masterCode === null || masterCode === '') {
                     alert('کد استادی وارد نشده است.');
                     return false;
-                } else if (teachingProvince == null || teachingProvince == '' || teachingProvince == 'انتخاب کنید') {
+                } else if (teachingProvince === null || teachingProvince === '' || teachingProvince === 'انتخاب کنید') {
                     alert('استان محل تدریس انتخاب نشده است.');
                     return false;
-                }else if (teachingCity == null || teachingCity == '' || teachingCity == 'انتخاب کنید') {
+                }else if (teachingCity === null || teachingCity === '' || teachingCity === 'انتخاب کنید') {
                     alert('شهر محل تدریس انتخاب نشده است.');
                     return false;
-                } else if (teachingPlaceName == null || teachingPlaceName == '' || teachingPlaceName == 'انتخاب کنید') {
+                } else if (teachingPlaceName === null || teachingPlaceName === '' || teachingPlaceName === 'انتخاب کنید') {
                     alert('نام محل تدریس انتخاب نشده است.');
                     return false;
                 }
@@ -186,10 +195,9 @@ export default {
                     axios.post(`/api/teaching/save/${this.nationalcode}/`, {
                         teaching: this.teaching,
                     })
-                        .then(function (response) {
+                        .then(function () {
                             alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.');
                             location.reload();
-                            // console.log(response.data);
                         })
                         .catch(function (error) {
                             // console.log(error);
