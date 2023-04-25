@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form class="mt-8" @submit.prevent="handleSubmit">
+        <form v-if="!showButton" class="mt-8" @submit.prevent="handleSubmit">
             <div class="flex items-center ">
                 <span class="text-orange-500 pl-1">◼</span>
                 <h2 class="text-base font-bold">اطلاعات ‌تماس</h2>
@@ -91,7 +91,6 @@ export default {
             let postal_code = this.contact[0]['postal_code'];
             let phone = this.contact[0]['phone'];
             let address = this.contact[0]['address'];
-            console.log(mobile.length);
             if (mobile === '' || mobile == null) {
                 alert('شماره همراه وارد نشده است.');
             } else if (phone === '' || phone === null) {
@@ -105,9 +104,10 @@ export default {
                 return false;
             } else if (mobile.length !== 11) {
                 alert('تلفن همراه با فرمت نامعتبر وارد شده است.');
-                return false;
             } else {
-                if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟ اطلاعات شما در صورت تایید دیگر قابل تغییر نیستند')) {
+                if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟' +
+                    '\n' +
+                    ' اطلاعات شما در صورت تایید دیگر قابل تغییر نیست.')) {
 
                     axios.post(`/api/contact/save/${this.nationalcode}/`, {
                         contact: this.contact,

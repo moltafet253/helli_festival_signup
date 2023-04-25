@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form class="mt-8" @submit.prevent="handleSubmit({nationalcode} )">
+        <form v-if="!showButton" class="mt-8" @submit.prevent="handleSubmit({nationalcode} )">
             <div class="flex items-center ">
                 <span class="text-orange-500 pl-1">◼</span>
                 <h2 class="text-base font-bold">اطلاعات ‌تحصیلی</h2>
@@ -30,15 +30,15 @@
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option value="آزاد" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.noetahsilhozavi=='آزاد'">آزاد
+                                    v-bind:selected="item.noetahsilhozavi==='آزاد'">آزاد
                             </option>
                             <option value="تحت برنامه" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.noetahsilhozavi=='تحت برنامه'">تحت برنامه
+                                    v-bind:selected="item.noetahsilhozavi==='تحت برنامه'">تحت برنامه
                             </option>
                         </select>
                     </div>
                 </div>
-                <div class="w-full lg:w-2/12 px-4 flex-row" v-if="nationalcode['gender']=='مرد'">
+                <div class="w-full lg:w-2/12 px-4 flex-row" v-if="nationalcode['gender']==='مرد'">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">پایه<span
                             style="color: red;">*</span></label>
@@ -46,45 +46,45 @@
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option value="1" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye=='1'">1
+                                    v-bind:selected="item.paye==='1'">1
                             </option>
                             <option value="2" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye=='2'">2
+                                    v-bind:selected="item.paye==='2'">2
                             </option>
                             <option value="3" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye=='3'">3
+                                    v-bind:selected="item.paye==='3'">3
                             </option>
                             <option value="4" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye=='4'">4
+                                    v-bind:selected="item.paye==='4'">4
                             </option>
                             <option value="5" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye=='5'">5
+                                    v-bind:selected="item.paye==='5'">5
                             </option>
                             <option value="6" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye=='6'">6
+                                    v-bind:selected="item.paye==='6'">6
                             </option>
                             <option value="7" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye=='7'">7
+                                    v-bind:selected="item.paye==='7'">7
                             </option>
                             <option value="8" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye=='8'">8
+                                    v-bind:selected="item.paye==='8'">8
                             </option>
                             <option value="9" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye=='9'">9
+                                    v-bind:selected="item.paye==='9'">9
                             </option>
                             <option value="10" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye=='10'">10
+                                    v-bind:selected="item.paye==='10'">10
                             </option>
                             <option value="11" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye=='11'">11
+                                    v-bind:selected="item.paye==='11'">11
                             </option>
                             <option value="12" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye=='12'">12
+                                    v-bind:selected="item.paye==='12'">12
                             </option>
                         </select>
                     </div>
                 </div>
-                <div class="w-full lg:w-2/12 px-4 flex-row" v-if="nationalcode['gender']=='زن'">
+                <div class="w-full lg:w-2/12 px-4 flex-row" v-if="nationalcode['gender']==='زن'">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">سطح<span
                             style="color: red;">*</span></label>
@@ -92,43 +92,43 @@
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option value="2" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.sath=='2'">2
+                                    v-bind:selected="item.sath==='2'">2
                             </option>
                             <option value="3" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.sath=='3'">3
+                                    v-bind:selected="item.sath==='3'">3
                             </option>
                             <option value="4" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.sath=='4'">4
+                                    v-bind:selected="item.sath==='4'">4
                             </option>
                         </select>
                     </div>
                 </div>
-                <div class="w-full lg:w-2/12 px-4 flex-row" v-if="nationalcode['gender']=='زن'">
+                <div class="w-full lg:w-2/12 px-4 flex-row" v-if="nationalcode['gender']==='زن'">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">ترم<span
                             style="color: red;">*</span></label>
                         <select :disabled="!showButton" v-model="item.term" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
-                            <option value="1" v-if="item.sath==2 || item.sath==3 || item.sath==4"
+                            <option value="1" v-if="item.sath===2 || item.sath===3 || item.sath===4"
                                     v-for="(item, index) in edu"
-                                    :key="index" v-bind:selected="item.term=='1'">1
+                                    :key="index" v-bind:selected="item.term==='1'">1
                             </option>
-                            <option value="2" v-if="item.sath==2 || item.sath==3 || item.sath==4"
+                            <option value="2" v-if="item.sath===2 || item.sath===3 || item.sath===4"
                                     v-for="(item, index) in edu"
-                                    :key="index" v-bind:selected="item.term=='2'">2
+                                    :key="index" v-bind:selected="item.term==='2'">2
                             </option>
-                            <option value="3" v-if="item.sath==2 || item.sath==3 || item.sath==4"
+                            <option value="3" v-if="item.sath===2 || item.sath===3 || item.sath===4"
                                     v-for="(item, index) in edu"
-                                    :key="index" v-bind:selected="item.term=='3'">3
+                                    :key="index" v-bind:selected="item.term==='3'">3
                             </option>
-                            <option value="4" v-if="item.sath==2 || item.sath==4" v-for="(item, index) in edu"
+                            <option value="4" v-if="item.sath===2 || item.sath===4" v-for="(item, index) in edu"
                                     :key="index"
-                                    v-bind:selected="item.term=='4'">4
+                                    v-bind:selected="item.term==='4'">4
                             </option>
-                            <option value="5" v-if="item.sath==2 || item.sath==4" v-for="(item, index) in edu"
+                            <option value="5" v-if="item.sath===2 || item.sath===4" v-for="(item, index) in edu"
                                     :key="index"
-                                    v-bind:selected="item.term=='5'">5
+                                    v-bind:selected="item.term==='5'">5
                             </option>
                         </select>
                     </div>
@@ -137,7 +137,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">استان محل تحصیل<span
                             style="color: red;">*</span></label>
-                        <select v-model="item.ostantahsili" v-for="(item, index) in edu"
+                        <select :disabled="!showButton" v-model="item.ostantahsili" v-for="(item, index) in edu"
                                 @change="returnCity(item.ostantahsili,this.gender)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
@@ -151,7 +151,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">شهر محل
                             تحصیل<span style="color: red;">*</span></label>
-                        <select v-model="item.shahrtahsili" v-for="(item, index) in edu"
+                        <select :disabled="!showButton" v-model="item.shahrtahsili" v-for="(item, index) in edu"
                                 @change="returnSchool(item.shahrtahsili)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
@@ -165,7 +165,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">مدرسه<span
                             style="color: red;">*</span></label>
-                        <select v-model="item.madresetahsili" v-for="(item, index) in edu"
+                        <select :disabled="!showButton" v-model="item.madresetahsili" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option v-for="item in madrese" :value="item.madrese"
@@ -178,7 +178,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">شماره پرونده
                             حوزوی<span style="color: red;">*</span></label>
-                        <input v-for="(item, index) in edu" :key="index" type="text"
+                        <input :disabled="!showButton" v-for="(item, index) in edu" :key="index" type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                v-model="item.shparvandetahsili"
                                placeholder="شماره پرونده تحصیلی حوزوی خود را وارد نمایید">
@@ -188,27 +188,27 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">مدرک تحصیلی غیر
                             حوزوی</label>
-                        <select v-for="(item, index) in edu" :key="index" v-model="item.tahsilatghhozavi"
+                        <select :disabled="!showButton" v-for="(item, index) in edu" :key="index" v-model="item.tahsilatghhozavi"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option value="دیپلم" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.tahsilatghhozavi=='دیپلم'">دیپلم
+                                    v-bind:selected="item.tahsilatghhozavi==='دیپلم'">دیپلم
                             </option>
                             <option value="فوق دیپلم/کاردانی" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.tahsilatghhozavi=='فوق دیپلم/کاردانی'">فوق دیپلم/کاردانی
+                                    v-bind:selected="item.tahsilatghhozavi==='فوق دیپلم/کاردانی'">فوق دیپلم/کاردانی
                             </option>
                             <option value="لیسانس/کارشناسی" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.tahsilatghhozavi=='لیسانس/کارشناسی'">لیسانس/کارشناسی
+                                    v-bind:selected="item.tahsilatghhozavi==='لیسانس/کارشناسی'">لیسانس/کارشناسی
                             </option>
                             <option value="فوق لیسانس/کارشناسی ارشد" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.tahsilatghhozavi=='فوق لیسانس/کارشناسی ارشد'">فوق
+                                    v-bind:selected="item.tahsilatghhozavi==='فوق لیسانس/کارشناسی ارشد'">فوق
                                 لیسانس/کارشناسی ارشد
                             </option>
                             <option value="دکتری" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.tahsilatghhozavi=='دکتری'">دکتری
+                                    v-bind:selected="item.tahsilatghhozavi==='دکتری'">دکتری
                             </option>
                             <option value="فوق دکتری" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.tahsilatghhozavi=='فوق دکتری'">فوق دکتری
+                                    v-bind:selected="item.tahsilatghhozavi==='فوق دکتری'">فوق دکتری
                             </option>
                         </select>
                     </div>
@@ -217,7 +217,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">رشته تحصیلی غیر
                             حوزوی</label>
-                        <input v-for="(item, index) in edu" :key="index" type="text"
+                        <input :disabled="!showButton" v-for="(item, index) in edu" :key="index" type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                v-model="item.reshtedaneshgahi" placeholder="رشته تحصیلی غیر حوزوی را وارد نمایید">
                     </div>
@@ -226,7 +226,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">مرکز تخصصی
                             حوزوی</label>
-                        <input v-for="(item, index) in edu" :key="index" type="text"
+                        <input :disabled="!showButton" v-for="(item, index) in edu" :key="index" type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                v-model="item.markaztakhasosihozavi" placeholder="مرکز تخصصی حوزوی خود را وارد نمایید">
                     </div>
@@ -272,28 +272,36 @@ export default {
         }
     },
     mounted() {
-        axios.get(`/api/edu/${this.nationalcode.nationalcode}/`)
-            .then(response => {
-                this.edu = response.data.edu;
-                this.gender = response.data.gender;
-                if (response.data.edu[0]['approved'] === 1) {
-                    this.showButton = false;
-                }
-            })
-            .catch(error => {
-                console.log(error)
-            });
+        this.getDataFromEduTable(this.nationalcode.nationalcode);
 
-        axios.get(`/api/defaults/centers/${this.nationalcode.gender}`)
-            .then(response => {
-                this.markaz = response.data;
-            })
-            .catch(error => {
-                console.log(error)
-            });
-
+        this.getDataFromProvincesTable(this.nationalcode.gender);
     },
     methods: {
+        getDataFromProvincesTable(gender){
+            axios.get('/api/defaults/centers/'+gender)
+                .then(response => {
+                    this.markaz = response.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        },
+        getDataFromEduTable(nationalCode){
+            axios.get('/api/edu/'+nationalCode)
+                .then(response => {
+                    this.edu = response.data.edu;
+                    this.gender = response.data.gender;
+                    if (response.data.edu[0]['approved'] === 1) {
+                        this.showButton = false;
+                        this.returnProvince(this.edu[0]['namemarkaztahsili']);
+                        this.returnCity(this.edu[0]['ostantahsili']);
+                        this.returnSchool(this.edu[0]['shahrtahsili']);
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        },
         returnProvince(center) {
             this.ostan = [];
             this.shahr = [];
@@ -342,34 +350,36 @@ export default {
             let tahsilatghhozavi = this.edu[0]['tahsilatghhozavi'];
             let reshtedaneshgahi = this.edu[0]['reshtedaneshgahi'];
 
-            if (namemarkaztahsili == '' || namemarkaztahsili == null || namemarkaztahsili == 'انتخاب کنید') {
+            if (namemarkaztahsili === '' || namemarkaztahsili === null || namemarkaztahsili === 'انتخاب کنید') {
                 alert('نام مرکز حوزوی انتخاب نشده است.');
-            } else if (noetahsilhozavi == '' || noetahsilhozavi == null || noetahsilhozavi == 'انتخاب کنید') {
+            } else if (noetahsilhozavi === '' || noetahsilhozavi === null || noetahsilhozavi === 'انتخاب کنید') {
                 alert('نوع تحصیل حوزوی انتخاب نشده است.');
-            } else if (ostantahsili == '' || ostantahsili == null) {
+            } else if (ostantahsili === '' || ostantahsili === null) {
                 alert('استان محل تحصیل انتخاب نشده است.');
-            } else if (shahrtahsili == '' || shahrtahsili == null) {
+            } else if (shahrtahsili === '' || shahrtahsili === null) {
                 alert('شهر محل تحصیل انتخاب نشده است.');
-            } else if (madresetahsili == '' || madresetahsili == null) {
+            } else if (madresetahsili === '' || madresetahsili === null) {
                 alert('مدرسه انتخاب نشده است.');
-            } else if (shparvandetahsili == '' || shparvandetahsili == null) {
+            } else if (shparvandetahsili === '' || shparvandetahsili === null) {
                 alert('شماره پرونده حوزوی وارد نشده است.');
-            } else if (gender == 'زن' && (sath == '' || sath == null || sath == 'انتخاب کنید')) {
+            } else if (gender === 'زن' && (sath === '' || sath === null || sath === 'انتخاب کنید')) {
                 paye = null;
                 alert('سطح انتخاب نشده است.');
-            } else if (gender == 'زن' && (term == '' || term == null || term == 'انتخاب کنید')) {
+            } else if (gender === 'زن' && (term === '' || term === null || term === 'انتخاب کنید')) {
                 paye = null;
                 alert('ترم انتخاب نشده است.');
-            } else if (gender == 'مرد' && (paye == '' || paye == null || paye == 'انتخاب کنید')) {
+            } else if (gender === 'مرد' && (paye === '' || paye === null || paye === 'انتخاب کنید')) {
                 sath = null;
                 term = null;
                 alert('پایه انتخاب نشده است.');
-            } else if ((reshtedaneshgahi != null || reshtedaneshgahi != '') && (tahsilatghhozavi == '' || tahsilatghhozavi == null || tahsilatghhozavi == 'انتخاب کنید')) {
+            } else if ((reshtedaneshgahi !== null || reshtedaneshgahi !== '') && (tahsilatghhozavi === '' || tahsilatghhozavi === null || tahsilatghhozavi === 'انتخاب کنید')) {
                 alert('مدرک تحصیلی غیر حوزوی انتخاب نشده است.');
-            } else if ((reshtedaneshgahi == null || reshtedaneshgahi == '') && (tahsilatghhozavi != '' || tahsilatghhozavi != null || tahsilatghhozavi != 'انتخاب کنید')) {
+            } else if ((reshtedaneshgahi === null || reshtedaneshgahi === '') && (tahsilatghhozavi !== '' || tahsilatghhozavi !== null || tahsilatghhozavi !== 'انتخاب کنید')) {
                 alert('رشته تحصیلی غیر حوزوی وارد نشده است.');
             } else {
-                if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟ اطلاعات شما در صورت تایید دیگر قابل تغییر نیستند')) {
+                if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟ ' +
+                    '\n' +
+                    'اطلاعات شما در صورت تایید دیگر قابل تغییر نیست.')) {
                     axios.post(`/api/edu/save/`, {
                         edu: this.edu,
                         gender: gender,
