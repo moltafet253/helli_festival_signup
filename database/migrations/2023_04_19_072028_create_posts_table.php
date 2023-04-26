@@ -31,6 +31,7 @@ return new class extends Migration
             $table->integer('participation_percentage')->default(100);
             $table->text('file_src');
             $table->boolean('sent')->default(0);
+            $table->timestamp('sent_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

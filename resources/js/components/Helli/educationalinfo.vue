@@ -1,4 +1,15 @@
 <template>
+    <div v-if="requestsCount>0" class="loading-modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="spinner"></div>
+            <div class="loading-text">
+                <p class="typewriter">
+                    دریافت اطلاعات تحصیلی...
+                </p>
+            </div>
+        </div>
+    </div>
     <div>
         <form class="mt-8" @submit.prevent="handleSubmit({nationalcode} )">
             <div class="flex items-center ">
@@ -188,7 +199,8 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">مدرک تحصیلی غیر
                             حوزوی</label>
-                        <select :disabled="!showButton" v-for="(item, index) in edu" :key="index" v-model="item.tahsilatghhozavi"
+                        <select :disabled="!showButton" v-for="(item, index) in edu" :key="index"
+                                v-model="item.tahsilatghhozavi"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option value="زیر دیپلم" v-for="(item, index) in edu" :key="index"
@@ -252,6 +264,7 @@ export default {
 
     data() {
         return {
+            requestsCount: 0,
             edu: [],
             gender: '',
             paye: '',
@@ -280,17 +293,21 @@ export default {
         this.getDataFromProvincesTable(this.nationalcode.gender);
     },
     methods: {
-        getDataFromProvincesTable(gender){
-            axios.get('/api/defaults/centers/'+gender)
+        getDataFromProvincesTable(gender) {
+            this.requestsCount++;
+            axios.get('/api/defaults/centers/' + gender)
                 .then(response => {
                     this.markaz = response.data;
                 })
                 .catch(error => {
                     console.log(error)
-                });
+                }).finally(() => {
+                this.requestsCount--;
+            });
         },
-        getDataFromEduTable(nationalCode){
-            axios.get('/api/edu/'+nationalCode)
+        getDataFromEduTable(nationalCode) {
+            this.requestsCount++;
+            axios.get('/api/edu/' + nationalCode)
                 .then(response => {
                     this.edu = response.data.edu;
                     this.gender = response.data.gender;
@@ -303,7 +320,9 @@ export default {
                 })
                 .catch(error => {
                     console.log(error)
-                });
+                }).finally(() => {
+                this.requestsCount--;
+            });
         },
         returnProvince(center) {
             this.ostan = [];

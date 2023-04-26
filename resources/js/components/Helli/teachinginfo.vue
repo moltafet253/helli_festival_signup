@@ -1,4 +1,15 @@
 <template>
+    <div v-if="requestsCount>0" class="loading-modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="spinner"></div>
+            <div class="loading-text">
+                <p class="typewriter">
+                    دریافت اطلاعات تدریس...
+                </p>
+            </div>
+        </div>
+    </div>
     <div>
         <form class="mt-8" @submit.prevent="handleSubmit">
             <div class="flex items-center ">
@@ -35,7 +46,8 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">استان محل تدریس<span
                             style="color: red;">*</span></label>
-                        <select :disabled="disableSelection" v-model="item.teachingProvince" v-for="(item, index) in teaching"
+                        <select :disabled="disableSelection" v-model="item.teachingProvince"
+                                v-for="(item, index) in teaching"
                                 @change="returnCity(item.teachingProvince)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
@@ -49,7 +61,8 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">شهر محل
                             تدریس<span style="color: red;">*</span></label>
-                        <select :disabled="disableSelection" v-model="item.teachingCity" v-for="(item, index) in teaching"
+                        <select :disabled="disableSelection" v-model="item.teachingCity"
+                                v-for="(item, index) in teaching"
                                 @change="returnSchool(item.teachingCity)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
@@ -63,8 +76,9 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">نام محل
                             تدریس<span
-                            style="color: red;">*</span></label>
-                        <select :disabled="disableSelection" v-model="item.teachingPlaceName" v-for="(item, index) in teaching"
+                                style="color: red;">*</span></label>
+                        <select :disabled="disableSelection" v-model="item.teachingPlaceName"
+                                v-for="(item, index) in teaching"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option v-for="item in madrese" :value="item.madrese"
@@ -89,6 +103,7 @@ export default {
     props: ['nationalcode'],
     data() {
         return {
+            requestsCount: 0,
             teaching: [],
             provinces: [],
             showDiv: false,
@@ -97,9 +112,9 @@ export default {
             ostan: [],
             shahr: [],
             madrese: [],
-            teachingProvince:[],
-            teachingCity:[],
-            teachingPlaceName:[],
+            teachingProvince: [],
+            teachingCity: [],
+            teachingPlaceName: [],
 
         }
     },
@@ -109,17 +124,21 @@ export default {
 
     },
     methods: {
-        getDataFromProvincesTable(){
+        getDataFromProvincesTable() {
+            this.requestsCount++;
             axios.get(`/api/defaults/provinces`)
                 .then(response => {
                     this.ostan = response.data;
                 })
                 .catch(error => {
                     console.log(error)
-                });
+                }).finally(() => {
+                this.requestsCount--;
+            });
         },
-        getDataFromEduTable(nationalCode){
-            axios.get('/api/teaching/'+nationalCode)
+        getDataFromEduTable(nationalCode) {
+            this.requestsCount++;
+            axios.get('/api/teaching/' + nationalCode)
                 .then(response => {
                     this.teaching = response.data;
                     const userData = response.data;
@@ -135,28 +154,36 @@ export default {
                 })
                 .catch(error => {
                     console.log(error)
-                });
+                }).finally(() => {
+                this.requestsCount--;
+            });
         },
         returnCity(province) {
-            this.shahr=[];
-            this.madrese=[];
-            this.provinceSend=province;
+            this.shahr = [];
+            this.madrese = [];
+            this.provinceSend = province;
+            this.requestsCount++;
             axios.get(`/api/defaults/cities/${province}`)
                 .then(response => {
                     this.shahr = response.data;
                 })
                 .catch(error => {
                     console.log(error)
-                })
+                }).finally(() => {
+                this.requestsCount--;
+            })
         },
         returnSchool(city) {
+            this.requestsCount++;
             axios.get(`/api/defaults/schools/${city}`)
                 .then(response => {
                     this.madrese = response.data;
                 })
                 .catch(error => {
                     console.log(error)
-                })
+                }).finally(() => {
+                this.requestsCount--;
+            })
         },
         divStatus(event) {
             if (event.target.value === 'بله') {
@@ -180,7 +207,7 @@ export default {
                 } else if (teachingProvince === null || teachingProvince === '' || teachingProvince === 'انتخاب کنید') {
                     alert('استان محل تدریس انتخاب نشده است.');
                     return false;
-                }else if (teachingCity === null || teachingCity === '' || teachingCity === 'انتخاب کنید') {
+                } else if (teachingCity === null || teachingCity === '' || teachingCity === 'انتخاب کنید') {
                     alert('شهر محل تدریس انتخاب نشده است.');
                     return false;
                 } else if (teachingPlaceName === null || teachingPlaceName === '' || teachingPlaceName === 'انتخاب کنید') {

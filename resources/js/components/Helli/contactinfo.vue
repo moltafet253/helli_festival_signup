@@ -1,4 +1,15 @@
 <template>
+    <div v-if="requestsCount>0" class="loading-modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="spinner"></div>
+            <div class="loading-text">
+                <p class="typewriter">
+                    دریافت اطلاعات تماس...
+                </p>
+            </div>
+        </div>
+    </div>
     <div>
         <form class="mt-8" @submit.prevent="handleSubmit">
             <div class="flex items-center ">
@@ -64,6 +75,7 @@ export default {
     props: ['nationalcode'],
     data() {
         return {
+            requestsCount: 0,
             contact: [],
             address: '',
             phone: '',
@@ -73,6 +85,7 @@ export default {
         }
     },
     mounted() {
+        this.requestsCount++;
         axios.get(`/api/contact/${this.nationalcode}/`)
             .then(response => {
                 this.contact = response.data;
@@ -82,7 +95,9 @@ export default {
             })
             .catch(error => {
                 console.log(error)
-            });
+            }).finally(() => {
+            this.requestsCount--;
+        });
 
     },
     methods: {

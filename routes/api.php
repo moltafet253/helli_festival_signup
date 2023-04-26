@@ -223,7 +223,7 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nation
         'publish_status' => $publish_status,
         'special_section' => $special_section,
         'activity_type' => $activityType,
-        'file_src' => $path
+        'file_src' => $path,
     ]);
 
 
@@ -274,7 +274,7 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nation
                 'national_code' => $cooperators[$c += 6]['codemeli']
             ]);
         }
-        $c = 2;
+//        $c = 2;
 //        for ($i = 2; $i <= $count; $i++) {
 //            HelliUserMaxUploadPost::where('national_code', '=', $cooperators[$c += 6]['codemeli'])->decrement('numbers', $decrementBy);
 //        }
@@ -284,9 +284,15 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nation
 
 });
 
+//Get Post Info
+Route::get('/posts/getPostInfo/{id}', function ($id) {
+    $post = Post::select('id', 'title', 'research_format','scientific_group','research_type','special_section','festival_title','sent_at')->find($id);
+
+    return json_encode(array($post));
+});
+
 //Delete Post
 Route::post('/posts/delete/this/{id}', function ($id) {
-
     if ($id) {
         $post = Post::find($id);
         $mainUser = User::find($post['user_id'])->value('national_code');
@@ -311,6 +317,7 @@ Route::post('/posts/approve/last/send/{nationCode}', function (Request $request,
         foreach ($posts as $post){
             if ($post['sent']===0){
                 $post->sent=1;
+                $post->sent_at=now();
                 $post->save();
             }
         }

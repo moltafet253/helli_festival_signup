@@ -24,6 +24,8 @@
         "webpack-cli": "^5.0.1"
     },
     "dependencies": {
+        "axios-retry": "^3.4.0",
+        "jalaali-js": "^1.2.6",
         "vee-validate": "^4.8.6"
     }
 }

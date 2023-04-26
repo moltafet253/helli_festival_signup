@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @font-face {
-    font-family:'IRANSansX';
+    font-family: 'IRANSansX';
     /*src: URL('Fonts/IRANSansX-Black') format('truetype');*/
     /*src: URL('Fonts/IRANSansX-Bold.ttf') format('truetype');*/
     /*src: URL('Fonts/IRANSansX-DemiBold.ttf') format('truetype');*/
@@ -14,7 +14,8 @@
     /*src: URL('Fonts/IRANSansX-Thin.ttf') format('truetype');*/
     /*src: URL('Fonts/IRANSansX-UltraLight.ttf') format('truetype');*/
 }
-body{
+
+body {
     font-family: 'IRANSansX';
 }
 
@@ -33,4 +34,76 @@ body{
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
+}
+
+.loading-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 4px;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #7986cb;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-text {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: blue;
+}
+
+.typewriter {
+    overflow: hidden; /* پنهان کردن متن اضافه */
+    border-right: .15em solid orange; /* اضافه کردن خط عمودی */
+    white-space: nowrap; /* جلوگیری از شکسته شدن خط */
+    margin: 0 auto; /* قرار دادن متن در مرکز صفحه */
+    /*letter-spacing: .15em; !* فاصله بین حروف *!*/
+    animation: typing 1s steps(20, end), blink-caret .75s step-end infinite;
+}
+/* انیمیشن حالت تایپ متن */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+/* انیمیشن نشانگر مکان کرت */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange }
 }

@@ -1,4 +1,15 @@
 <template>
+    <div v-if="requestsCount>0" class="loading-modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="spinner"></div>
+            <div class="loading-text">
+                <p class="typewriter">
+                    دریافت اطلاعات شخصی...
+                </p>
+            </div>
+        </div>
+    </div>
     <div class=" pt-3">
         <h1></h1>
         <form>
@@ -19,7 +30,8 @@
                                     <span class="label-text">لطفا تصویر پرسنلی خود را از کادر زیر انتخاب کرده و بر روی دکمه بارگذاری کلیک نمایید. (دکمه بارگذاری پس از انتخاب عکس نمایش داده می‌شود)</span>
                                 </label>
                                 <br><br>
-                                <input type="file" name="file" ref="fileInput" accept=".jpg,.jpeg,.bmp,.png" @change="this.showButton=true"
+                                <input type="file" name="file" ref="fileInput" accept=".jpg,.jpeg,.bmp,.png"
+                                       @change="this.showButton=true"
                                        class="file-input file-input-bordered w-full max-w-xs mb-3"/>
 
                                 <label class="label mb-3">
@@ -106,6 +118,7 @@ export default {
     props: ['datapersonal'],
     data() {
         return {
+            requestsCount: 0,
             imageSrc: '',
             datapersonals: [],
             confirm: false,
@@ -145,12 +158,13 @@ export default {
                             console.clear();
                         });
                 }
-            }else{
+            } else {
                 alert('فایل انتخاب نشده است.');
             }
         },
     },
     mounted() {
+        this.requestsCount++;
         axios.get(`/api/getprofileimage/this/${this.datapersonal.SocialID}`)
             .then(response => {
                 if (response.data.imageSrc) {
@@ -159,7 +173,9 @@ export default {
             })
             .catch(error => {
                 console.log('error')
-            });
+            }).finally(() => {
+            this.requestsCount--;
+        });
     }
 }
 </script>

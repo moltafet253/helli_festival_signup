@@ -1,6 +1,17 @@
 <template>
     <section dir="rtl" class="py-1">
-        <div class="w-full mt-6">
+        <div v-if="requestsCount>0" class="loading-modal">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <div class="spinner"></div>
+                <div class="loading-text">
+                    <p class="typewriter">
+                        دریافت اطلاعات آثار...
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div v-else class="w-full mt-6">
             <div class="relative flex flex-col min-w-0 break-words w-full mb-6 rounded-lg  border-0">
                 <div class="flex-auto  py-10 pt-0">
 
@@ -31,19 +42,19 @@
                                     </div>
                                 </div>
                             </div>
-<!--                            <div class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">-->
-<!--                                <div class=" flex-row ">-->
-<!--                                    <div class="relative w-full">-->
-<!--                                        <img class="bg-red-500 rounded-md p-1"-->
-<!--                                             src="build/assets/icons/Info Square.svg" alt="">-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="w-full flex-row">-->
-<!--                                    <div class="relative w-full mr-3">-->
-<!--                                        <p class="mb-0">کاربر گرامی؛ اطلاعات شما در سامانه ثبت نشده است. لطفا برای ثبت اثر جدید، در ابتدا اطلاعات خود را تکمیل نمایید.</p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                            <!--                            <div class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">-->
+                            <!--                                <div class=" flex-row ">-->
+                            <!--                                    <div class="relative w-full">-->
+                            <!--                                        <img class="bg-red-500 rounded-md p-1"-->
+                            <!--                                             src="build/assets/icons/Info Square.svg" alt="">-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="w-full flex-row">-->
+                            <!--                                    <div class="relative w-full mr-3">-->
+                            <!--                                        <p class="mb-0">کاربر گرامی؛ اطلاعات شما در سامانه ثبت نشده است. لطفا برای ثبت اثر جدید، در ابتدا اطلاعات خود را تکمیل نمایید.</p>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
                             <div v-if="max_uploads.numbers===0 && max_uploads.sent_status!==1">
                                 <div class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">
                                     <div class=" flex-row ">
@@ -55,12 +66,13 @@
                                     <div class="w-full flex-row">
                                         <div class="relative w-full mr-3">
                                             <p class="mb-0">کاربر گرامی؛ تعداد سه اثر در جشنواره با کد ملی شما ثبت شده
-                                                است. در فهرست زیر می توانید تمامی آثار ثبت شده با کد ملی خود را مشاهده
-                                                کرده و آثاری که وارد کرده اید را حذف کنید.
+                                                است. در فهرست زیر می توانید تمامی آثار ثبت شده خود را مشاهده
+                                                کرده و آثاری که وارد کرده اید را حذف یا ویرایش کنید.
                                             </p>
                                             <br>
                                             <p class="mb-0">چنانچه اثری به نام شما ثبت شده و متعلق به شما نیست، لطفا
-                                                درخواست خود را به دبیرخانه جشنواره استان یا مدرسه خود ارجاع دهید.
+                                                به هیچ وجه آثار خود را ارسال نهایی نکرده و درخواست خود را به دبیرخانه
+                                                جشنواره استان یا مدرسه خود ارجاع دهید.
                                             </p>
                                         </div>
                                     </div>
@@ -115,8 +127,6 @@
                                                     </div>
                                                 </div>
 
-
-                                                <!--                                                <form class="mt-8" >-->
                                                 <div class="px-8 mt-4 flex items-center"><span
                                                     class="text-orange-500 pl-1">◼</span>
                                                     <h2 class="text-base font-bold">اطلاعات‌ اثر</h2>
@@ -547,7 +557,7 @@
                                         جشنواره
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        قالب
+                                        قالب علمی
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         نام اثر
@@ -588,15 +598,15 @@
                                                 @click="downloadFile(post.file_src)"
                                                 src="build/assets/icons/Download.svg" alt="" title="دانلود فایل اثر">
 
-<!--                                            <img-->
-<!--                                                class="bg-white rounded-md border border-colorborder p-1 cursor-pointer"-->
-<!--                                                @click="reportRate(post.id)"-->
-<!--                                                src="build/assets/icons/Edit Square.png" alt="">-->
+                                            <!--                                            <img-->
+                                            <!--                                                class="bg-white rounded-md border border-colorborder p-1 cursor-pointer"-->
+                                            <!--                                                @click="editPost(post.id)"-->
+                                            <!--                                                src="build/assets/icons/Edit Square.png" alt="">-->
 
                                             <img
                                                 class="bg-white rounded-md border border-colorborder p-1 cursor-pointer"
-                                                @click="reportRate(post.id)"
-                                                src="build/assets/icons/Document.svg" alt="" title="وضعیت ارزیابی">
+                                                @click="reportRate(post.id)" v-if="post.sent===1"
+                                                src="build/assets/icons/Document.svg" alt="" title="نمایش وضعیت">
 
                                             <img
                                                 class="bg-white rounded-md border border-colorborder p-1 cursor-pointer"
@@ -756,7 +766,7 @@
                                                 <span class="pl-1">
                                                     <img src="build/assets/icons/Edit Square.png" alt="">
                                                 </span>
-                                                    <h2 class="text-base font-bold  ">وضعیت ارزیابی اثر ارسالی به
+                                                    <h2 class="text-base font-bold">وضعیت ارزیابی اثر ارسالی به
                                                         جشنواره</h2>
                                                 </div>
                                             </div>
@@ -774,25 +784,32 @@
                                                 <div class="flex flex-wrap mx-4">
 
                                                     <div class="w-full lg:w-full px-4 flex-row py-3">
-                                                        <span class="pl-1">نام اثر:</span> <span>اقدامات لازم جهت پیاده سازی نظریه دین در همایش ها</span>
+                                                        <span class="pl-1">نام اثر:</span>
+                                                        <span>{{ this.postName }}</span>
                                                     </div>
                                                     <div class="w-full lg:w-4/12 px-4 flex-row py-3">
-                                                        <span class="pl-1">گروه علمی:</span><span>فقه واصول</span>
+                                                        <span class="pl-1">گروه علمی:</span>
+                                                        <span>{{ this.postScientificGroup }}</span>
                                                     </div>
                                                     <div class="w-full lg:w-4/12 px-4 flex-row py-3">
-                                                        <span class="pl-1">نوع پژوهش:</span> <span>تحقیق و تالیف</span>
+                                                        <span class="pl-1">نوع پژوهش:</span>
+                                                        <span>{{ this.postResearchType }}</span>
                                                     </div>
                                                     <div class="w-full lg:w-4/12 px-4 flex-row py-3">
-                                                        <span class="pl-1">بخش ویژه:  الگوی ایرانی اسلامی پیشرفت</span>
+                                                        <span class="pl-1">بخش ویژه:</span>
+                                                        <span class="pl-1">{{ this.postSpecialSection }}</span>
                                                     </div>
                                                     <div class="w-full lg:w-4/12 px-4 flex-row py-3">
-                                                        <span class="pl-1">دوره شرکت:</span><span>چهاردهم</span>
+                                                        <span class="pl-1">دوره شرکت:</span>
+                                                        <span>{{ this.postFestivalTitle }}</span>
                                                     </div>
                                                     <div class="w-full lg:w-4/12 px-4 flex-row py-3">
-                                                        <span class="pl-3">تاریخ ارسال به جشنواره:</span><span>1401/10/18</span>
+                                                        <span class="pl-3">تاریخ ارسال به جشنواره:</span>
+                                                        <span>{{ this.postSendDate }}</span>
                                                     </div>
                                                     <div class="w-full lg:w-full px-4 flex-row py-3">
-                                                        <span class="pl-1">وضعیت فعلی:</span><span>مرحله کشوری - در حال ارزیابی</span>
+                                                        <span class="pl-1">وضعیت فعلی:</span>
+                                                        <span>{{ this.postCurrentStatus }}</span>
                                                     </div>
 
                                                 </div>
@@ -862,10 +879,14 @@
 
 
 <script>
+import jalaali from 'jalaali-js';
+
 export default {
     props: ['nationalcode'],
     data() {
         return {
+            showLoading: false,
+            requestsCount: 0,
             rows: [
                 {name: '', lastname: '', codemeli: '', filenumber: '', Cooperation: '', phonenumber: '',},
             ],
@@ -910,72 +931,19 @@ export default {
             //Rate Info
             rate: [],
 
+            //Status Variables
+            postName: '',
+            postScientificGroup: '',
+            postResearchType: '',
+            postSpecialSection: '',
+            postFestivalTitle: '',
+            postSendDate: '',
+            postCurrentStatus: '',
+            postSchoolRateStatus: [],
+            postProvinceRateStatus: [],
+            postCenterRateStatus: [],
+
         };
-    },
-    mounted() {
-        axios.get(`/api/users/getuserinfo/${this.nationalcode}/`)
-            .then(response => {
-                this.personalInfo = response.data;
-            })
-            .catch(error => {
-                console.log(error)
-            });
-        axios.get(`/api/contact/${this.nationalcode}/`)
-            .then(response => {
-                this.contactInfo = response.data;
-            })
-            .catch(error => {
-                console.log(error)
-            });
-        axios.get(`/api/edu/geteduinfo/${this.nationalcode}/`)
-            .then(response => {
-                this.eduInfo = response.data;
-            })
-            .catch(error => {
-                console.log(error)
-            });
-        axios.get(`/api/posts/allposts/user/${this.nationalcode}/`)
-            .then(response => {
-                this.allPosts = response.data.posts;
-            })
-            .catch(error => {
-                console.log(error)
-            });
-        axios.get('/api/defaults/research_formats')
-            .then(response => {
-                this.research_formats = response.data;
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        axios.get('/api/defaults/scientific_groups')
-            .then(response => {
-                this.scientific_groups = response.data;
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        axios.get('/api/defaults/research_types')
-            .then(response => {
-                this.research_types = response.data;
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        axios.get('/api/defaults/special_sections')
-            .then(response => {
-                this.special_sections = response.data;
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        axios.get(`/api/defaults/maxUploads/${this.nationalcode}/`)
-            .then(response => {
-                this.max_uploads = response.data[0];
-            })
-            .catch(error => {
-                console.log(error);
-            });
     },
     computed: {
         isSubmitButtonDisabled() {
@@ -988,7 +956,154 @@ export default {
         }
 
     },
+    mounted() {
+        this.axiosReq();
+    },
     methods: {
+        reportRate(id) {
+            this.showModalArzyabi = true;
+            axios.get(`/api/posts/getPostInfo/${id}/`)
+                .then(response => {
+                    console.log(response.data);
+                    this.postName = response.data[0]['title'];
+                    this.postScientificGroup = response.data[0]['scientific_group'];
+                    this.postResearchType = response.data[0]['research_type'];
+                    this.postSpecialSection = response.data[0]['special_section'];
+                    this.postFestivalTitle = response.data[0]['festival_title'];
+                    this.postSendDate = this.convertToJalaali(response.data[0]['sent_at']);
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+            this.postName = '';
+
+        },
+        convertToJalaali(reqDate) {
+            const date = new Date(reqDate);
+            const jalaaliDate = jalaali.toJalaali(date.getFullYear(), date.getMonth() + 1, date.getDate());
+            return `${jalaaliDate.jy}/${jalaaliDate.jm}/${jalaaliDate.jd}`;
+        },
+        axiosReq() {
+            this.getUserInfo(this.nationalcode);
+            this.getContactInfo(this.nationalcode);
+            this.getEduInfo(this.nationalcode);
+            this.getAllPosts(this.nationalcode);
+            this.getResearchFormat();
+            this.getScientificGroup();
+            this.getResearchType();
+            this.getSpecialSection();
+            this.getMaxUploads(this.nationalcode);
+        },
+        getUserInfo(nationalcode) {
+            this.requestsCount++;
+            axios.get(`/api/users/getuserinfo/${nationalcode}/`)
+                .then(response => {
+                    this.personalInfo = response.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                }).finally(() => {
+                this.showLoading = false;
+            }).finally(() => {
+                this.requestsCount--;
+            });
+        },
+        getContactInfo(nationalcode) {
+            this.requestsCount++;
+            axios.get(`/api/contact/${nationalcode}/`)
+                .then(response => {
+                    this.contactInfo = response.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                }).finally(() => {
+                this.requestsCount--;
+            });
+        },
+        getEduInfo(nationalcode) {
+            this.requestsCount++;
+            axios.get(`/api/edu/geteduinfo/${nationalcode}/`)
+                .then(response => {
+                    this.eduInfo = response.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                }).finally(() => {
+                this.requestsCount--;
+            });
+        },
+        getAllPosts(nationalcode) {
+            this.requestsCount++;
+            axios.get(`/api/posts/allposts/user/${nationalcode}/`)
+                .then(response => {
+                    this.allPosts = response.data.posts;
+                })
+                .catch(error => {
+                    console.log(error)
+                }).finally(() => {
+                this.requestsCount--;
+            });
+        },
+        getResearchFormat() {
+            this.requestsCount++;
+            axios.get('/api/defaults/research_formats')
+                .then(response => {
+                    this.research_formats = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                }).finally(() => {
+                this.requestsCount--;
+            });
+        },
+        getScientificGroup() {
+            this.requestsCount++;
+            axios.get('/api/defaults/scientific_groups')
+                .then(response => {
+                    this.scientific_groups = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                }).finally(() => {
+                this.requestsCount--;
+            });
+        },
+        getResearchType() {
+            this.requestsCount++;
+            axios.get('/api/defaults/research_types')
+                .then(response => {
+                    this.research_types = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                }).finally(() => {
+                this.requestsCount--;
+            });
+        },
+        getSpecialSection() {
+            this.requestsCount++;
+            axios.get('/api/defaults/special_sections')
+                .then(response => {
+                    this.special_sections = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                }).finally(() => {
+                this.requestsCount--;
+            });
+        },
+        getMaxUploads(nationalcode) {
+            this.requestsCount++;
+            axios.get(`/api/defaults/maxUploads/${nationalcode}/`)
+                .then(response => {
+                    this.max_uploads = response.data[0];
+                })
+                .catch(error => {
+                    console.log(error);
+                }).finally(() => {
+                this.requestsCount--;
+            });
+        },
         deletePost(id) {
             if (confirm('این عملیات قابل بازگشت نمی باشد' +
                 '\n' +
@@ -999,7 +1114,9 @@ export default {
                     })
                     .catch(function (error) {
                         console.log(error);
-                    });
+                    }).finally(() => {
+                    location.reload();
+                });
             }
         },
         lastSendFunction() {
@@ -1073,10 +1190,10 @@ export default {
                 const total = this.rows.reduce((acc, row) => acc + (parseInt(row.Cooperation) || 0), 0) + (parseInt(this.Cooperation) || 0);
                 if (total === 100) {
                     if (this.rows.some(row => row.codemeli.length !== 10)) {
-                        alert ('کد ملی یک یا چند نفر از مشارکان اشتباه وارد شده است');
+                        alert('کد ملی یک یا چند نفر از مشارکان اشتباه وارد شده است');
                         return false;
-                    }else if (this.rows.some(row => row.phonenumber.length !== 11)) {
-                        alert ('تلفن همراه یک یا چند نفر از مشارکان اشتباه وارد شده است');
+                    } else if (this.rows.some(row => row.phonenumber.length !== 11)) {
+                        alert('تلفن همراه یک یا چند نفر از مشارکان اشتباه وارد شده است');
                         return false;
                     } else {
                         return true;
@@ -1178,9 +1295,7 @@ export default {
         cancel3() {
             this.showModal3 = false;
         },
-        reportRate(id) {
-            this.showModalArzyabi = true;
-        },
+
         reloadPage() {
             location.reload();
         }
