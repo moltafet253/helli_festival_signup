@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('mobile')->nullable();
             $table->text('address')->nullable();
-            $table->integer('postal_code')->nullable();
+            $table->string('postal_code',10)->nullable();
             $table->boolean('approved')->default(0);
             $table->timestamps();
             $table->softDeletes();

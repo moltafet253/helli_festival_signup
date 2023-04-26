@@ -103,9 +103,10 @@ export default {
     methods: {
         handleSubmit() {
             let mobile = this.contact[0]['mobile'];
-            let postal_code = this.contact[0]['postal_code'];
             let phone = this.contact[0]['phone'];
             let address = this.contact[0]['address'];
+            let postal_code = this.contact[0]['postal_code'];
+
             if (mobile === '' || mobile == null) {
                 alert('شماره همراه وارد نشده است.');
             } else if (phone === '' || phone === null) {
@@ -119,6 +120,8 @@ export default {
                 return false;
             } else if (mobile.length !== 11) {
                 alert('تلفن همراه با فرمت نامعتبر وارد شده است.');
+            } else if (postal_code.length !== 10) {
+                alert('کدپستی با فرمت نامعتبر وارد شده است.');
             } else {
                 if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟' +
                     '\n' +
