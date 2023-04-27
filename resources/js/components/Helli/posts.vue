@@ -906,6 +906,7 @@ export default {
             personalInfo: [],
             contactInfo: [],
             eduInfo: [],
+            teachingInfo: [],
             research_formats: [],
             scientific_groups: [],
             research_types: [],
@@ -988,6 +989,7 @@ export default {
         axiosReq() {
             this.getUserInfo(this.nationalcode);
             this.getContactInfo(this.nationalcode);
+            this.getTeachingInfo(this.nationalcode);
             this.getEduInfo(this.nationalcode);
             this.getAllPosts(this.nationalcode);
             this.getResearchFormat();
@@ -1001,6 +1003,9 @@ export default {
             axios.get(`/api/users/getuserinfo/${nationalcode}/`)
                 .then(response => {
                     this.personalInfo = response.data;
+                    if(response.data[0]['personalImageSrc']===null){
+                        this.showErrorNotSubmittedInfos=true;
+                    }
                 })
                 .catch(error => {
                     console.log(error)
@@ -1030,6 +1035,24 @@ export default {
             axios.get(`/api/edu/geteduinfo/${nationalcode}/`)
                 .then(response => {
                     this.eduInfo = response.data;
+                    if(response.data[0]['approved']===0){
+                        this.showErrorNotSubmittedInfos=true;
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                }).finally(() => {
+                this.requestsCount--;
+            });
+        },
+        getTeachingInfo(nationalcode) {
+            this.requestsCount++;
+            axios.get(`/api/teaching/${nationalcode}/`)
+                .then(response => {
+                    this.teachingInfo = response.data;
+                    if(response.data[0]['approved']===0){
+                        this.showErrorNotSubmittedInfos=true;
+                    }
                 })
                 .catch(error => {
                     console.log(error)
