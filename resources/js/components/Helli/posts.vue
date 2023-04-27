@@ -24,7 +24,7 @@
 
                         <div class="flex items-center mt-4 gap-16">
 
-                            <div v-if="max_uploads.numbers!==0 && max_uploads.sent_status!==1 && !showErrorNotSubmittedInfos"
+                            <div v-if="max_uploads.numbers!==0 && max_uploads.sent_status!==1"
                                  class="w-full lg:w-3/12 flex-row bg-white  rounded-lg shadow">
                                 <!-- click open modal -->
                                 <div @click="showModal3 = true"
@@ -42,20 +42,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-else-if="showErrorNotSubmittedInfos" class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">
-                                <div class=" flex-row ">
-                                    <div class="relative w-full">
-                                        <img class="bg-red-500 rounded-md p-1"
-                                             src="build/assets/icons/Info Square.svg" alt="">
-                                    </div>
-                                </div>
-                                <div class="w-full flex-row">
-                                    <div class="relative w-full mr-3">
-                                        <p class="mb-0">کاربر گرامی؛ اطلاعات شما در سامانه ثبت نشده است. لطفا برای ثبت
-                                            اثر جدید، در ابتدا اطلاعات خود را تکمیل نمایید.</p>
-                                    </div>
-                                </div>
-                            </div>
+                            <!--                            <div class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">-->
+                            <!--                                <div class=" flex-row ">-->
+                            <!--                                    <div class="relative w-full">-->
+                            <!--                                        <img class="bg-red-500 rounded-md p-1"-->
+                            <!--                                             src="build/assets/icons/Info Square.svg" alt="">-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="w-full flex-row">-->
+                            <!--                                    <div class="relative w-full mr-3">-->
+                            <!--                                        <p class="mb-0">کاربر گرامی؛ اطلاعات شما در سامانه ثبت نشده است. لطفا برای ثبت اثر جدید، در ابتدا اطلاعات خود را تکمیل نمایید.</p>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
                             <div v-if="max_uploads.numbers===0 && max_uploads.sent_status!==1">
                                 <div class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">
                                     <div class=" flex-row ">
@@ -926,7 +925,6 @@ export default {
 
             //errors
             emptyErrors: '',
-            showErrorNotSubmittedInfos:false,
 
             //get all this user posts
             allPosts: [],
@@ -1020,9 +1018,6 @@ export default {
             axios.get(`/api/contact/${nationalcode}/`)
                 .then(response => {
                     this.contactInfo = response.data;
-                    if(response.data[0]['approved']===0){
-                        this.showErrorNotSubmittedInfos=true;
-                    }
                 })
                 .catch(error => {
                     console.log(error)

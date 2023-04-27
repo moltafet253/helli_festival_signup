@@ -37,12 +37,11 @@ Route::middleware('CheckSession')->get('/contact/{nationalcode}', function ($nat
 });
 
 Route::post('/contact/save/{nationCode}', function (Request $request, $nationCode) {
-
     $phone = $request->input('contact.0.phone');
     $mobile = $request->input('contact.0.mobile');
     $address = $request->input('contact.0.address');
     $postal_code = $request->input('contact.0.postal_code');
-    Contact::where('national_code', '=', $nationCode)->update([
+    $contact = Contact::where('national_code', '=', $nationCode)->update([
         'phone' => $phone,
         'mobile' => $mobile,
         'address' => $address,
