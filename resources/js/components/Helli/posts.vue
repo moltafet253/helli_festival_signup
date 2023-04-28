@@ -24,8 +24,9 @@
 
                         <div class="flex items-center mt-4 gap-16">
 
-                            <div v-if="max_uploads.numbers!==0 && max_uploads.sent_status!==1 && showErrorNotSubmittedInfos===false"
-                                 class="w-full lg:w-3/12 flex-row bg-white  rounded-lg shadow">
+                            <div
+                                v-if="max_uploads.numbers!==0 && max_uploads.sent_status!==1 && showErrorNotSubmittedInfos===false"
+                                class="w-full lg:w-3/12 flex-row bg-white  rounded-lg shadow">
                                 <!-- click open modal -->
                                 <div @click="showModal3 = true"
                                      class=" cursor-pointer flex justify-center items-center rounded-t-lg  border-dashed border-4 border-colorborder border-b-0"
@@ -42,7 +43,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-else-if="showErrorNotSubmittedInfos===true" class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">
+                            <div v-else-if="showErrorNotSubmittedInfos===true"
+                                 class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">
                                 <div class=" flex-row ">
                                     <div class="relative w-full">
                                         <img class="bg-red-500 rounded-md p-1"
@@ -599,10 +601,11 @@
                                                 @click="downloadFile(post.file_src)"
                                                 src="build/assets/icons/Download.svg" alt="" title="دانلود فایل اثر">
 
-                                            <!--                                            <img-->
-                                            <!--                                                class="bg-white rounded-md border border-colorborder p-1 cursor-pointer"-->
-                                            <!--                                                @click="editPost(post.id)"-->
-                                            <!--                                                src="build/assets/icons/Edit Square.png" alt="">-->
+                                            <img
+                                                class="bg-white rounded-md border border-colorborder p-1 cursor-pointer"
+                                                @click="editPost(post.id)"
+                                                src="build/assets/icons/Edit Square.png"
+                                                alt="">
 
                                             <img
                                                 class="bg-white rounded-md border border-colorborder p-1 cursor-pointer"
@@ -868,6 +871,489 @@
                                 </div>
                             </div>
                         </transition>
+
+                        <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0"
+                                    enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75"
+                                    leave-class="opacity-100" leave-to-class="opacity-0">
+                            <div v-if="showModalEdit" class="fixed z-30 inset-0 overflow-y-auto">
+                                <div
+                                    class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                                        <div class="absolute inset-0 bg-gray-500 opacity-75" @click="hideModalEdit"></div>
+                                    </div>
+                                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                                          aria-hidden="true">&#8203;</span>
+                                    <div
+                                        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl w-full">
+
+                                        <div dir="rtl" class="text-right rounded-xl border border-colorborder">
+                                            <div dir="rtl"
+                                                 class="px-8 flex items-center justify-between py-3 bg-white border  rounded-xl">
+                                                <div class="flex">
+                                                        <span class="pl-1"><img src="build/assets/icons/Edit Square.png"
+                                                                                alt=""></span>
+                                                    <h2 class="text-base font-bold ">ویرایش اثر ثبت شده در جشنواره
+                                                        {{ this.postFestivalTitle }}
+                                                    </h2>
+                                                </div>
+                                                <div
+                                                    class="flex items-center gap-1 border-2 border-gray-300 p-2 rounded-lg">
+                                                    <button @click="hideModalEdit">بازگشت</button>
+                                                    <span>🡠</span>
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                class="mt-8 px-8 w-full lg:w-6/12 flex py-3   ">
+                                                <div
+                                                    class=" flex bg-blue-100 p-3 rounded-xl border border-colorborder">
+
+                                                    <div class="pl-2">
+                                                        <img class="bg-blue-500 md:w-6 w-9 rounded-md p-1"
+                                                             src="build/assets/icons/Info Square.svg" alt="">
+                                                    </div>
+                                                    <div>
+                                                        <p class="mb-0 pt-1">کاربر گرامی؛ در صورت نیاز می توانید اطلاعات ثبت شده اثر خود را ویرایش نمایید.</p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="px-8 mt-4 flex items-center"><span
+                                                class="text-orange-500 pl-1">◼</span>
+                                                <h2 class="text-base font-bold">اطلاعات‌ اثر</h2>
+                                                <hr class="flex-grow border-t-2 border-b-orange mr-4 mt-3">
+                                            </div>
+                                            <div class="flex flex-wrap mt-2 px-4">
+
+                                                <div class="w-full lg:w-8/12 px-4 flex-row">
+                                                    <div class="relative w-full mb-3">
+                                                        <label class="block uppercase  text-base font-bold mb-2"
+                                                        >نام اثر<span
+                                                            style="color: red;">*</span></label>
+                                                        <input type="text" id="name" name="name" v-model="this.postName"
+                                                               class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
+                                                    </div>
+                                                </div>
+                                                <div class="w-full lg:w-4/12 px-4 flex-row">
+                                                    <div class="relative w-full mb-3">
+                                                        <label class="block uppercase  text-base font-bold mb-2"
+                                                        >قالب پژوهش<span
+                                                            style="color: red;">*</span></label>
+                                                        <select v-model="this.postResearchFormat"
+                                                                class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
+                                                            <option disabled>انتخاب کنید
+                                                            </option>
+                                                            <option v-for="formats in research_formats" :selected="formats.title===this.postResearchFormat"
+                                                                    :value="formats.title">{{ formats.title }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="w-full lg:w-4/12 px-4 flex-row">
+                                                    <div class="relative w-full mb-3">
+                                                        <label class="block uppercase  text-base font-bold mb-2"
+                                                        >گروه علمی<span
+                                                            style="color: red;">*</span></label>
+                                                        <select v-model="this.postScientificGroup"
+                                                                class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
+                                                            <option disabled>انتخاب کنید
+                                                            </option>
+                                                            <option v-for="groups in scientific_groups" :selected="groups.title===this.postScientificGroup"
+                                                                    :value="groups.title">{{ groups.title }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="w-full lg:w-4/12 px-4 flex-row">
+                                                    <div class="relative w-full mb-3">
+                                                        <label class="block uppercase  text-base font-bold mb-2"
+                                                        >نوع پژوهش<span
+                                                            style="color: red;">*</span></label>
+                                                        <select v-model="this.postResearchType"
+                                                                class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
+                                                            <option disabled selected value="">انتخاب کنید
+                                                            </option>
+                                                            <option v-for="researchs in research_types" :selected="researchs.title===this.postResearchType"
+                                                                    :value="researchs.title">
+                                                                {{ researchs.title }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="w-full lg:w-4/12 px-4 flex-row">
+                                                    <div class="relative w-full mb-3">
+                                                        <label class="block uppercase  text-base font-bold mb-2"
+                                                        >تعداد صفحات
+                                                            <span v-if="research_format==='مقاله'"
+                                                                  style="color: red;">*</span>
+                                                        </label>
+                                                        <input type="number" v-model="this.postPagesNumber"
+                                                               class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
+                                                    </div>
+                                                </div>
+                                                <div class="w-full lg:w-4/12 px-4 flex-row">
+                                                    <div class="relative w-full mb-3">
+                                                        <label class="block uppercase  text-base font-bold mb-2"
+                                                        >وضعیت نشر<span
+                                                            style="color: red;">*</span></label>
+                                                        <select v-model="this.postPublishStatus"
+                                                                class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
+                                                            <option disabled selected value="">انتخاب کنید
+                                                            </option>
+                                                            <option :selected="'منتشر نشده'===this.postResearchType" value="منتشر نشده">منتشر نشده</option>
+                                                            <option :selected="'منتشر شده'===this.postResearchType">منتشر شده</option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="w-full lg:w-4/12 px-4 flex-row">
+                                                    <div class="relative w-full mb-3">
+                                                        <label class="block uppercase  text-base font-bold mb-2"
+                                                        >بخش ویژه</label>
+                                                        <select v-model="this.postSpecialSection"
+                                                                class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
+                                                            <option disabled value="" :selected="null===this.postSpecialSection">انتخاب کنید
+                                                            </option>
+                                                            <option v-for="specials in special_sections" :selected="specials.title===this.postSpecialSection"
+                                                                    :value="specials.title">
+                                                                {{ specials.title }}
+                                                            </option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-8 px-8">
+                                                <div class="flex items-center ">
+                                                    <span class="text-orange-500 pl-1">◼</span>
+                                                    <h2 class="text-base font-bold  ">اطلاعات‌مشارکان</h2>
+                                                    <hr class="w-full border-t-2 border-b-orange mr-4 mt-3">
+                                                </div>
+
+                                                <div class="w-full mt-6 mx-3 ">
+                                                    <div>
+                                                        <div class="flex items-center">
+                                                            <span>نوع فعالیت: </span>
+                                                            <div class="flex items-center">
+                                                                <select v-model="activityType"
+                                                                        class="border border-colorborder px-3 py-1 mr-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
+                                                                    <option value="fardi">فردی
+                                                                    </option>
+                                                                    <option value="moshtarak"> مشترک
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div v-if="activityType === 'moshtarak'"
+                                                         class="mt-6  w-full lg:w-5/12 px-4 flex py-3 bg-blue-100 rounded-xl border border-colorborder">
+                                                        <div class=" flex-row ">
+                                                            <div class="relative w-full ">
+                                                                <img class="bg-blue-500 rounded-md p-1"
+                                                                     src="build/assets/icons/Info Square.svg"
+                                                                     alt="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="w-full flex-row">
+                                                            <div class="relative w-full mr-3">
+                                                                <p class="mb-0">کاربر گرامی؛ لطفا اطلاعات مربوط به
+                                                                    مشارکان اثر را
+                                                                    وارد نمائید</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div v-if="activityType === 'moshtarak'"
+                                                     class="relative overflow-x-auto shadow-md sm:rounded-lg mt-8">
+                                                    <table class="w-full text-sm text-right">
+                                                        <thead class="text-base text-black-3d bg-orange-fce ">
+                                                        <tr class="text-center">
+                                                            <th scope="col" class="px-6 py-3">
+                                                                ردیف
+                                                            </th>
+                                                            <th scope="col" class="px-6 py-3">
+                                                                نام
+                                                            </th>
+                                                            <th scope="col" class="px-6 py-3">
+                                                                نام خانوادگی
+                                                            </th>
+                                                            <th scope="col" class="px-6 py-3">
+                                                                کد ملی/شماره گذرنامه
+                                                            </th>
+                                                            <th scope="col" class="px-6 py-3">
+                                                                شماره پرونده حوزوی
+                                                            </th>
+                                                            <th scope="col" class="px-6 py-3">
+                                                                درصد مشارکت
+                                                            </th>
+                                                            <th scope="col" class="px-6 py-3">
+                                                                تلفن همراه
+                                                            </th>
+                                                            <th scope="col" class="px-6 py-3">
+                                                                حذف
+                                                            </th>
+
+                                                        </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                        <tr class="bg-gray-d1d1 border-b border-gray-d1d1">
+                                                            <th class=" text-center  px-6 py-4 font-medium text-gray-8484 whitespace-nowrap ">
+                                                                1
+                                                            </th>
+                                                            <th class=" text-center  px-6 py-4 font-medium text-black-8484 whitespace-nowrap ">
+                                                                {{ this.personalInfo[0]['name'] }}
+                                                            </th>
+                                                            <td class="px-6 py-4 text-center text-black-3d font-medium">
+                                                                {{ this.personalInfo[0]['family'] }}
+                                                            </td>
+                                                            <td class="px-6 py-4 text-center text-black-3d font-medium">
+                                                                {{ this.personalInfo[0]['national_code'] }}
+                                                            </td>
+                                                            <td class="px-6 py-4 text-center text-black-3d font-medium">
+                                                                {{ this.eduInfo[0]['shparvandetahsili'] }}
+                                                            </td>
+                                                            <td class="px-6 py-4 text-center border-l-0 text-black-3d font-medium">
+                                                                <input v-model="Cooperation" type="text"
+                                                                       name="column_1"
+                                                                       class="w-12 py-2 shadow-sm rounded-md bg-white text-center border border-colorborder"
+                                                                       placeholder="درصد">
+                                                            </td>
+                                                            <td class="px-6 py-4 text-center text-black-3d font-medium">
+                                                                {{ this.contactInfo[0]['mobile'] }}
+                                                            </td>
+                                                            <td class="px-6 py-4 text-center text-black-3d font-medium">
+
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr v-for="(row, index) in rows" :key="index"
+                                                            :class="rowClass(index) + ' border-b border-gray-d1d1'">
+
+                                                            <th scope="row"
+                                                                class=" text-center font-medium text-gray-8484 whitespace-nowrap "
+                                                                rowspan="1">
+                                                                {{ index + 2 }}
+                                                            </th>
+                                                            <td class="text-center border-l-0 text-black-3d font-medium">
+                                                                <input v-model="row.name" type="text"
+                                                                       name="column_1"
+                                                                       class="w-32 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                       placeholder="نام">
+                                                            </td>
+                                                            <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
+                                                                <input v-model="row.lastname" type="text"
+                                                                       name="column_1"
+                                                                       class="w-40 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                       placeholder="نام خانوادگی">
+                                                            </td>
+                                                            <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
+                                                                <input v-model="row.codemeli" type="text"
+                                                                       name="column_1"
+                                                                       class="w-40 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                       placeholder="کد ملی">
+                                                            </td>
+                                                            <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
+                                                                <input v-model="row.filenumber" type="text"
+                                                                       name="column_1"
+                                                                       class="w-24 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                       placeholder="شماره پرونده">
+                                                            </td>
+                                                            <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
+                                                                <input v-model="row.Cooperation" type="text"
+                                                                       name="column_1"
+                                                                       class="w-12 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                       placeholder="درصد">
+
+                                                            </td>
+                                                            <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
+                                                                <input v-model="row.phonenumber" type="text"
+                                                                       name="column_1"
+                                                                       class="w-32 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                       placeholder="شماره همراه">
+                                                            </td>
+                                                            <td class="text-center px-6 py-4 text-right border-l-0">
+                                                                <button @click="deleteRow(index)">
+                                                                    <img class="bg-white rounded-md p-1"
+                                                                         src="build/assets/icons/delete.png" alt="">
+                                                                </button>
+
+                                                            </td>
+                                                        </tr>
+
+                                                        </tbody>
+                                                    </table>
+
+                                                    <div class="flex justify-center items-center my-5">
+                                                        <!--  :disabled="rows.length >= 10" if limit click btn to 10 -->
+                                                        <button @click="addRow"
+                                                                class=" bg-br-f0e flex py-2 px-3 rounded-xl border border-colorborder">
+                                                                <span><img class="w-7"
+                                                                           src="build/assets/icons/Down Button.png"
+                                                                           alt="down"></span>
+                                                            <p class=" mb-0 font-bold px-4">افزودن مشارک</p>
+                                                        </button>
+                                                    </div>
+
+
+                                                </div>
+                                                <section>
+
+                                                    <div class="my-4">
+                                                        <div class="flex items-center ">
+                                                            <span class="text-orange-500 pl-1">◼</span>
+                                                            <h2 class="text-base font-bold">افزودن‌فایل‌اثر</h2>
+                                                            <hr class="w-full border-t-2 border-b-orange mr-4 mt-3">
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="mt-3 px-8 w-full lg:w-10/12 flex py-3   ">
+                                                        <div
+                                                            class=" flex bg-blue-100 p-3 rounded-xl border border-colorborder">
+
+                                                            <div class="pl-2">
+                                                                <img class="bg-blue-500 md:w-6 w-9 rounded-md p-1"
+                                                                     src="build/assets/icons/Info Square.svg" alt="">
+                                                            </div>
+                                                            <div>
+                                                                <p class="mb-0 pt-1">کاربر گرامی؛ در صورت نیاز به تغییر فایل اثر، فایل خود را با گزینه زیر انتخاب نمایید. در غیر این صورت هیچ فایلی انتخاب نکنید.</p>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="w-full lg:w-3/12 mx-3 flex-row bg-white rounded-lg shadow">
+                                                        <label for="fileInput"
+                                                               class="cursor-pointer flex justify-center items-center rounded-t-lg border-dashed border-4 border-colorborder border-b-0">
+                                                            <img class="p-8 py-8 rounded-t-lg"
+                                                                 src="build/assets/icons/Paper Upload.png"
+                                                                 alt="product image"/>
+                                                        </label>
+                                                        <input id="fileInput" name="fileInput" type="file"
+                                                               ref="fileInput"
+                                                               class="hidden" accept=".pdf,.doc,.docx"
+                                                               v-on:change="checkFile"/>
+                                                        <div
+                                                            class="bg-slate-200 border border-colorborder rounded-b-lg ">
+                                                            <div
+                                                                class="flex items-center justify-start px-5 py-3">
+                                                                <p>آپلود فایل اثر <br>(با پسوند PDF, Doc, Docx )
+                                                                </p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div v-if="error"
+                                                             class="mt-2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                                                             role="alert">
+                                                            <strong class="font-bold">{{ error }}</strong>
+                                                        </div>
+                                                        <div v-if="nameFile"
+                                                             class="mt-2 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                                                             role="alert">
+                                                            <strong class="font-bold">
+                                                                نام فایل انتخاب شده:
+                                                                {{ nameFile }}</strong>
+                                                        </div>
+                                                        <div v-if="emptyErrors"
+                                                             class="mt-2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                                                             role="alert">
+                                                            <strong class="font-bold">{{ emptyErrors }}</strong>
+                                                        </div>
+                                                    </div>
+
+                                                </section>
+                                            </div>
+
+                                            <section v-if="activityType === 'moshtarak'">
+                                                <div class="flex justify-center mb-8 mt-14">
+
+
+                                                    <button
+
+                                                        @click="handleButtonClick"
+                                                        :class="[handleButtonClick ? ' bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl cursor-pointer' : 'bg-red-500 opacity-50  hover:bg-red-700 cursor-not-allowed text-white font-bold py-2 px-10 ml-8 rounded-xl']">
+                                                        <span :class="[checkFile ? ' text-white' : 'text-black']">ثبت اولیه اطلاعات</span>
+                                                    </button>
+
+                                                    <button @click="cancel3"
+                                                            class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
+                                                        انصراف
+                                                    </button>
+                                                </div>
+                                            </section>
+
+                                            <section v-else class="fardi">
+                                                <div class="flex justify-center mb-8 mt-24">
+
+                                                    <button
+                                                        @click="handleButtonClick2"
+                                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
+                                                        <span class="text-white">ثبت اولیه اطلاعات</span>
+                                                    </button>
+
+                                                    <button @click="cancel3"
+                                                            class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
+                                                        انصراف
+                                                    </button>
+                                                </div>
+                                            </section>
+                                            <!-- show modal -->
+
+                                            <transition enter-active-class="transition ease-out duration-100"
+                                                        enter-class="opacity-0" enter-to-class="opacity-100"
+                                                        leave-active-class="transition ease-in duration-75"
+                                                        leave-class="opacity-100" leave-to-class="opacity-0">
+                                                <div v-if="showModal"
+                                                     class="fixed  mt-0 z-30 inset-0 overflow-y-auto">
+                                                    <div
+                                                        class="flex items-end pb-48 justify-center min-h-full text-center ">
+                                                        <div class="fixed inset-0 transition-opacity"
+                                                             aria-hidden="true">
+                                                            <div class="absolute inset-0 bg-gray-500 opacity-75"
+                                                                 @click="cancel"></div>
+                                                        </div>
+                                                        <span
+                                                            class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                                                            aria-hidden="true">&#8203;</span>
+                                                        <div
+                                                            class=" bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                                            <div class="px-6 py-4">
+                                                                <img class="mx-auto my-8"
+                                                                     src="build/assets/icons/Warning.png"
+                                                                     alt="Image">
+                                                            </div>
+                                                            <div class="px-6 py-4 text-center">
+                                                                <p class="mb-14 font-bold">{{ message }}</p>
+                                                                <div class="flex justify-center pb-8">
+                                                                    <form @submit.prevent="handleSubmit">
+                                                                        <button
+                                                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
+                                                                            بله
+                                                                        </button>
+                                                                    </form>
+                                                                    <button @click="cancel"
+                                                                            class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
+                                                                        خیر
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </transition>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
                     </div>
 
                 </div>
@@ -936,15 +1422,23 @@ export default {
 
             //Status Variables
             postName: '',
+            postResearchFormat:'',
             postScientificGroup: '',
             postResearchType: '',
             postSpecialSection: '',
+            postPagesNumber: '',
+            postPublishStatus:'',
             postFestivalTitle: '',
             postSendDate: '',
             postCurrentStatus: '',
             postSchoolRateStatus: [],
             postProvinceRateStatus: [],
             postCenterRateStatus: [],
+
+            //Edit
+            showModalEdit:false,
+            editPostInfo:[],
+
 
         };
     },
@@ -963,6 +1457,28 @@ export default {
         this.axiosReq();
     },
     methods: {
+        editPost(id){
+            this.showModalEdit=true;
+            axios.get(`/api/posts/getPostInfo/${id}/`)
+                .then(response => {
+                    console.log(response.data);
+                    this.postName = response.data[0]['title'];
+                    this.postResearchFormat = response.data[0]['research_format'];
+                    this.postScientificGroup = response.data[0]['scientific_group'];
+                    this.postResearchType = response.data[0]['research_type'];
+                    this.postPagesNumber = response.data[0]['pages_number'];
+                    this.postPublishStatus = response.data[0]['publish_status'];
+                    this.postSpecialSection = response.data[0]['special_section'];
+                    this.postFestivalTitle = response.data[0]['festival_title'];
+                    this.postSendDate = this.convertToJalaali(response.data[0]['sent_at']);
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        },
+        hideModalEdit(){
+            this.showModalEdit=false;
+        },
         reportRate(id) {
             this.showModalArzyabi = true;
             axios.get(`/api/posts/getPostInfo/${id}/`)

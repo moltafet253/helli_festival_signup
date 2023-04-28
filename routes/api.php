@@ -286,7 +286,7 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nation
 
 //Get Post Info
 Route::get('/posts/getPostInfo/{id}', function ($id) {
-    $post = Post::select('id', 'title', 'research_format','scientific_group','research_type','special_section','festival_title','sent_at')->find($id);
+    $post = Post::select('id', 'title', 'research_format','scientific_group','research_type','special_section','festival_title','pages_number','publish_status','sent_at')->find($id);
 
     return json_encode(array($post));
 });
