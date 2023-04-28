@@ -286,7 +286,7 @@ Route::post('/sendpost/this/{nationalcode}', function (Request $request, $nation
 
 //Get Post Info
 Route::get('/posts/getPostInfo/{id}', function ($id) {
-    $post = Post::select('id', 'title', 'research_format','scientific_group','research_type','special_section','festival_title','pages_number','publish_status','sent_at')->find($id);
+    $post = Post::select('id', 'title', 'research_format', 'scientific_group', 'research_type', 'special_section', 'festival_title', 'pages_number', 'publish_status', 'activity_type', 'participation_percentage', 'sent_at')->find($id);
 
     return json_encode(array($post));
 });
@@ -314,10 +314,10 @@ Route::post('/posts/approve/last/send/{nationCode}', function (Request $request,
         $user = User::where('national_code', '=', $nationCode)->value('id');
         $user_id = User::find($user);
         $posts = $user_id->allPosts;
-        foreach ($posts as $post){
-            if ($post['sent']===0){
-                $post->sent=1;
-                $post->sent_at=now();
+        foreach ($posts as $post) {
+            if ($post['sent'] === 0) {
+                $post->sent = 1;
+                $post->sent_at = now();
                 $post->save();
             }
         }
@@ -330,6 +330,21 @@ Route::post('/posts/approve/last/send/{nationCode}', function (Request $request,
         return response()->json(['errors' => 'Empty File'], 422);
     }
 });
+
+//Update Post
+Route::get('/posts/getPostParticipants/this/{id}', function ($id) {
+    $post = Post::find($id);
+    $participants = $post->moshtarakan;
+    return $participants;
+});
+
+//Delete Participant
+Route::post('/participant/delete/this/{id}', function ($id) {
+    if ($id) {
+        $participant_info=Participant::where('id', '=', $id)->delete();
+    }
+});
+
 
 Route::prefix('defaults')->group(function () {
     Route::get('/centers/{gender}', function ($gender) {

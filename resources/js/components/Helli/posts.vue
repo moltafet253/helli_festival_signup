@@ -603,7 +603,7 @@
 
                                             <img
                                                 class="bg-white rounded-md border border-colorborder p-1 cursor-pointer"
-                                                @click="editPost(post.id)"
+                                                @click="editPostShow(post.id)"
                                                 src="build/assets/icons/Edit Square.png"
                                                 alt="">
 
@@ -879,7 +879,8 @@
                                 <div
                                     class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                                     <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                                        <div class="absolute inset-0 bg-gray-500 opacity-75" @click="hideModalEdit"></div>
+                                        <div class="absolute inset-0 bg-gray-500 opacity-75"
+                                             @click="hideModalEdit"></div>
                                     </div>
                                     <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
                                           aria-hidden="true">&#8203;</span>
@@ -913,7 +914,8 @@
                                                              src="build/assets/icons/Info Square.svg" alt="">
                                                     </div>
                                                     <div>
-                                                        <p class="mb-0 pt-1">کاربر گرامی؛ در صورت نیاز می توانید اطلاعات ثبت شده اثر خود را ویرایش نمایید.</p>
+                                                        <p class="mb-0 pt-1">کاربر گرامی؛ در صورت نیاز می توانید اطلاعات
+                                                            ثبت شده اثر خود را ویرایش نمایید.</p>
                                                     </div>
 
                                                 </div>
@@ -944,7 +946,8 @@
                                                                 class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
                                                             <option disabled>انتخاب کنید
                                                             </option>
-                                                            <option v-for="formats in research_formats" :selected="formats.title===this.postResearchFormat"
+                                                            <option v-for="formats in research_formats"
+                                                                    :selected="formats.title===this.postResearchFormat"
                                                                     :value="formats.title">{{ formats.title }}
                                                             </option>
                                                         </select>
@@ -959,7 +962,8 @@
                                                                 class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
                                                             <option disabled>انتخاب کنید
                                                             </option>
-                                                            <option v-for="groups in scientific_groups" :selected="groups.title===this.postScientificGroup"
+                                                            <option v-for="groups in scientific_groups"
+                                                                    :selected="groups.title===this.postScientificGroup"
                                                                     :value="groups.title">{{ groups.title }}
                                                             </option>
                                                         </select>
@@ -974,7 +978,8 @@
                                                                 class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
                                                             <option disabled selected value="">انتخاب کنید
                                                             </option>
-                                                            <option v-for="researchs in research_types" :selected="researchs.title===this.postResearchType"
+                                                            <option v-for="researchs in research_types"
+                                                                    :selected="researchs.title===this.postResearchType"
                                                                     :value="researchs.title">
                                                                 {{ researchs.title }}
                                                             </option>
@@ -1001,8 +1006,12 @@
                                                                 class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
                                                             <option disabled selected value="">انتخاب کنید
                                                             </option>
-                                                            <option :selected="'منتشر نشده'===this.postResearchType" value="منتشر نشده">منتشر نشده</option>
-                                                            <option :selected="'منتشر شده'===this.postResearchType">منتشر شده</option>
+                                                            <option :selected="'منتشر نشده'===this.postResearchType"
+                                                                    value="منتشر نشده">منتشر نشده
+                                                            </option>
+                                                            <option :selected="'منتشر شده'===this.postResearchType">
+                                                                منتشر شده
+                                                            </option>
                                                         </select>
 
                                                     </div>
@@ -1013,9 +1022,12 @@
                                                         >بخش ویژه</label>
                                                         <select v-model="this.postSpecialSection"
                                                                 class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
-                                                            <option disabled value="" :selected="null===this.postSpecialSection">انتخاب کنید
+                                                            <option disabled value=""
+                                                                    :selected="null===this.postSpecialSection">انتخاب
+                                                                کنید
                                                             </option>
-                                                            <option v-for="specials in special_sections" :selected="specials.title===this.postSpecialSection"
+                                                            <option v-for="specials in special_sections"
+                                                                    :selected="specials.title===this.postSpecialSection"
                                                                     :value="specials.title">
                                                                 {{ specials.title }}
                                                             </option>
@@ -1037,11 +1049,14 @@
                                                         <div class="flex items-center">
                                                             <span>نوع فعالیت: </span>
                                                             <div class="flex items-center">
-                                                                <select v-model="activityType"
+                                                                <select v-model="this.postActivityType"
                                                                         class="border border-colorborder px-3 py-1 mr-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
-                                                                    <option value="fardi">فردی
+                                                                    <option :selected="this.postActivityType==='fardi'"
+                                                                            value="fardi">فردی
                                                                     </option>
-                                                                    <option value="moshtarak"> مشترک
+                                                                    <option
+                                                                        :selected="this.postActivityType==='moshtarak'"
+                                                                        value="moshtarak"> مشترک
                                                                     </option>
                                                                 </select>
                                                             </div>
@@ -1049,7 +1064,7 @@
 
                                                     </div>
 
-                                                    <div v-if="activityType === 'moshtarak'"
+                                                    <div v-if="this.postActivityType === 'moshtarak'"
                                                          class="mt-6  w-full lg:w-5/12 px-4 flex py-3 bg-blue-100 rounded-xl border border-colorborder">
                                                         <div class=" flex-row ">
                                                             <div class="relative w-full ">
@@ -1069,7 +1084,7 @@
 
                                                 </div>
 
-                                                <div v-if="activityType === 'moshtarak'"
+                                                <div v-if="this.postActivityType === 'moshtarak'"
                                                      class="relative overflow-x-auto shadow-md sm:rounded-lg mt-8">
                                                     <table class="w-full text-sm text-right">
                                                         <thead class="text-base text-black-3d bg-orange-fce ">
@@ -1105,7 +1120,7 @@
                                                         <tbody>
                                                         <tr class="bg-gray-d1d1 border-b border-gray-d1d1">
                                                             <th class=" text-center  px-6 py-4 font-medium text-gray-8484 whitespace-nowrap ">
-                                                                1
+                                                                *
                                                             </th>
                                                             <th class=" text-center  px-6 py-4 font-medium text-black-8484 whitespace-nowrap ">
                                                                 {{ this.personalInfo[0]['name'] }}
@@ -1120,7 +1135,8 @@
                                                                 {{ this.eduInfo[0]['shparvandetahsili'] }}
                                                             </td>
                                                             <td class="px-6 py-4 text-center border-l-0 text-black-3d font-medium">
-                                                                <input v-model="Cooperation" type="text"
+                                                                <input v-model="this.postParticipationPercentage"
+                                                                       type="text"
                                                                        name="column_1"
                                                                        class="w-12 py-2 shadow-sm rounded-md bg-white text-center border border-colorborder"
                                                                        placeholder="درصد">
@@ -1133,13 +1149,61 @@
                                                             </td>
 
                                                         </tr>
+                                                        <tr v-for="(row, index) in postParticipants" :key="index"
+                                                            class="bg-gray-d1d1 border-b border-gray-d1d1">
+                                                            <th scope="row"
+                                                                class=" text-center font-medium text-gray-8484 whitespace-nowrap "
+                                                                rowspan="1">
+                                                                *
+                                                            </th>
+                                                            <td class="text-center border-l-0 text-black-3d font-medium">
+                                                                <input disabled type="text" v-model="row.name"
+                                                                       class="w-32 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                       placeholder="نام">
+                                                            </td>
+                                                            <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
+                                                                <input disabled type="text" v-model="row.family"
+                                                                       class="w-40 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                       placeholder="نام خانوادگی">
+                                                            </td>
+                                                            <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
+                                                                <input disabled type="text" v-model="row.national_code"
+                                                                       class="w-40 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                       placeholder="کد ملی">
+                                                            </td>
+                                                            <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
+                                                                <input disabled type="text" v-model="row.case_number"
+                                                                       class="w-24 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                       placeholder="شماره پرونده">
+                                                            </td>
+                                                            <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
+                                                                <input disabled type="text"
+                                                                       v-model="row.participation_percentage"
+                                                                       class="w-12 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                       placeholder="درصد">
+
+                                                            </td>
+                                                            <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
+                                                                <input disabled type="text" v-model="row.mobile"
+                                                                       class="w-32 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
+                                                                       placeholder="شماره همراه">
+                                                            </td>
+                                                            <td class="text-center px-6 py-4 text-right border-l-0">
+                                                                <button @click="deleteParticipant(row.id,index)">
+                                                                    <img class="bg-white rounded-md p-1"
+                                                                         src="build/assets/icons/delete.png" alt="">
+                                                                </button>
+
+                                                            </td>
+
+                                                        </tr>
                                                         <tr v-for="(row, index) in rows" :key="index"
                                                             :class="rowClass(index) + ' border-b border-gray-d1d1'">
 
                                                             <th scope="row"
                                                                 class=" text-center font-medium text-gray-8484 whitespace-nowrap "
                                                                 rowspan="1">
-                                                                {{ index + 2 }}
+                                                                {{ index + 1 }}
                                                             </th>
                                                             <td class="text-center border-l-0 text-black-3d font-medium">
                                                                 <input v-model="row.name" type="text"
@@ -1222,7 +1286,9 @@
                                                                      src="build/assets/icons/Info Square.svg" alt="">
                                                             </div>
                                                             <div>
-                                                                <p class="mb-0 pt-1">کاربر گرامی؛ در صورت نیاز به تغییر فایل اثر، فایل خود را با گزینه زیر انتخاب نمایید. در غیر این صورت هیچ فایلی انتخاب نکنید.</p>
+                                                                <p class="mb-0 pt-1">کاربر گرامی؛ در صورت نیاز به تغییر
+                                                                    فایل اثر، از طریق کادر زیر فایل خود را انتخاب
+                                                                    نمایید. در غیر این صورت هیچ فایلی انتخاب نکنید.</p>
                                                             </div>
 
                                                         </div>
@@ -1422,22 +1488,27 @@ export default {
 
             //Status Variables
             postName: '',
-            postResearchFormat:'',
+            postResearchFormat: '',
             postScientificGroup: '',
             postResearchType: '',
             postSpecialSection: '',
             postPagesNumber: '',
-            postPublishStatus:'',
+            postPublishStatus: '',
             postFestivalTitle: '',
+            postActivityType: '',
             postSendDate: '',
             postCurrentStatus: '',
             postSchoolRateStatus: [],
             postProvinceRateStatus: [],
             postCenterRateStatus: [],
 
+
             //Edit
-            showModalEdit:false,
-            editPostInfo:[],
+            showModalEdit: false,
+            editPostInfo: [],
+            postID: '',
+            postParticipationPercentage: '',
+            postParticipants: [],
 
 
         };
@@ -1457,11 +1528,11 @@ export default {
         this.axiosReq();
     },
     methods: {
-        editPost(id){
-            this.showModalEdit=true;
+        editPostShow(id) {
+            this.showModalEdit = true;
             axios.get(`/api/posts/getPostInfo/${id}/`)
                 .then(response => {
-                    console.log(response.data);
+                    this.postID = response.data[0]['id'];
                     this.postName = response.data[0]['title'];
                     this.postResearchFormat = response.data[0]['research_format'];
                     this.postScientificGroup = response.data[0]['scientific_group'];
@@ -1470,14 +1541,81 @@ export default {
                     this.postPublishStatus = response.data[0]['publish_status'];
                     this.postSpecialSection = response.data[0]['special_section'];
                     this.postFestivalTitle = response.data[0]['festival_title'];
-                    this.postSendDate = this.convertToJalaali(response.data[0]['sent_at']);
+                    this.postActivityType = response.data[0]['activity_type'];
+                    if (response.data[0]['activity_type'] === 'moshtarak') {
+                        this.postParticipationPercentage = response.data[0]['participation_percentage'];
+                        axios.get(`/api/posts/getPostParticipants/this/${id}/`)
+                            .then(response => {
+                                console.log(response.data);
+                                this.postParticipants = response.data;
+                            })
+                            .catch(error => {
+                                console.log(error)
+                            });
+                    }
                 })
                 .catch(error => {
                     console.log(error)
                 });
+
         },
-        hideModalEdit(){
-            this.showModalEdit=false;
+        deleteParticipant(id,index){
+            if (confirm('این عملیات قابل بازگشت نمی باشد' +
+                '\n' +
+                'آیا برای پاک کردن مشارک مطمئن هستید؟')) {
+                axios.post(`/api/participant/delete/this/${id}`)
+                    .then(function () {
+
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    }).finally(() => {
+                    this.postParticipants.splice(index, 1);
+                });
+            }
+        },
+        editPostSend() {
+            const fileInput = this.$refs.fileInput;
+            const file = fileInput.files[0];
+
+            const formData = new FormData();
+
+            formData.append('id', this.postID);
+            formData.append('name', this.postName);
+            formData.append('research_format', this.postResearchFormat);
+            formData.append('scientific_group', this.postScientificGroup);
+            formData.append('research_type', this.postResearchType);
+            formData.append('page_number', this.postPagesNumber);
+            formData.append('publish_status', this.postPublishStatus);
+            formData.append('special_section', this.postSpecialSection);
+            formData.append('activityType', this.activityType);
+            if (this.activityType === 'moshtarak') {
+                formData.append('myCooperation', this.Cooperation);
+                this.rows.forEach(row => {
+                    formData.append('rows[][name]', row.name);
+                    formData.append('rows[][lastname]', row.lastname);
+                    formData.append('rows[][codemeli]', row.codemeli);
+                    formData.append('rows[][filenumber]', row.filenumber);
+                    formData.append('rows[][Cooperation]', row.Cooperation);
+                    formData.append('rows[][phonenumber]', row.phonenumber);
+                });
+            }
+
+            formData.append('file', file);
+            axios.post(`/api/updatepost/this/${this.nationalcode}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then(function (response) {
+                    location.reload();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        hideModalEdit() {
+            this.showModalEdit = false;
         },
         reportRate(id) {
             this.showModalArzyabi = true;
@@ -1685,6 +1823,7 @@ export default {
 
             const formData = new FormData();
 
+            formData.append('id', this.postID);
             formData.append('name', this.name);
             formData.append('research_format', this.research_format);
             formData.append('scientific_group', this.scientific_group);
@@ -1706,7 +1845,7 @@ export default {
             }
 
             formData.append('file', file);
-            axios.post(`/api/sendpost/this/${this.nationalcode}`, formData, {
+            axios.post(`/api/updatepost/this/${this.nationalcode}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -1839,7 +1978,6 @@ export default {
         cancel3() {
             this.showModal3 = false;
         },
-
         reloadPage() {
             location.reload();
         }
