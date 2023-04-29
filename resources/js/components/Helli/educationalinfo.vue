@@ -293,9 +293,9 @@ export default {
         this.getDataFromProvincesTable(this.nationalcode.gender);
     },
     methods: {
-        getDataFromProvincesTable(gender) {
+        async getDataFromProvincesTable(gender) {
             this.requestsCount++;
-            axios.get('/api/defaults/centers/' + gender)
+            await axios.get('/api/defaults/centers/' + gender)
                 .then(response => {
                     this.markaz = response.data;
                 })
@@ -305,9 +305,9 @@ export default {
                 this.requestsCount--;
             });
         },
-        getDataFromEduTable(nationalCode) {
+        async getDataFromEduTable(nationalCode) {
             this.requestsCount++;
-            axios.get('/api/edu/' + nationalCode)
+            await axios.get('/api/edu/' + nationalCode)
                 .then(response => {
                     this.edu = response.data.edu;
                     this.gender = response.data.gender;
@@ -324,12 +324,12 @@ export default {
                 this.requestsCount--;
             });
         },
-        returnProvince(center) {
+        async returnProvince(center) {
             this.ostan = [];
             this.shahr = [];
             this.madrese = [];
             this.centerSend = center;
-            axios.get(`/api/defaults/provinces/${center}/${this.nationalcode.gender}`)
+            await axios.get(`/api/defaults/provinces/${center}/${this.nationalcode.gender}`)
                 .then(response => {
                     this.ostan = response.data;
                 })
@@ -337,11 +337,11 @@ export default {
                     console.log(error)
                 })
         },
-        returnCity(province) {
+        async returnCity(province) {
             this.shahr = [];
             this.madrese = [];
             this.provinceSend = province;
-            axios.get(`/api/defaults/cities/${this.centerSend}/${province}/${this.nationalcode.gender}`)
+            await axios.get(`/api/defaults/cities/${this.centerSend}/${province}/${this.nationalcode.gender}`)
                 .then(response => {
                     this.shahr = response.data;
                 })
@@ -349,8 +349,8 @@ export default {
                     console.log(error)
                 })
         },
-        returnSchool(city) {
-            axios.get(`/api/defaults/schools/${this.centerSend}/${this.provinceSend}/${city}/${this.nationalcode.gender}`)
+        async returnSchool(city) {
+            await axios.get(`/api/defaults/schools/${this.centerSend}/${this.provinceSend}/${city}/${this.nationalcode.gender}`)
                 .then(response => {
                     this.madrese = response.data;
                 })
@@ -396,7 +396,7 @@ export default {
                 alert('پایه انتخاب نشده است.');
             } else if ((reshtedaneshgahi !== null || reshtedaneshgahi !== '') && (tahsilatghhozavi === '' || tahsilatghhozavi === null || tahsilatghhozavi === 'انتخاب کنید')) {
                 alert('مدرک تحصیلی غیر حوزوی انتخاب نشده است.');
-            } else if ((reshtedaneshgahi === null || reshtedaneshgahi === '') && (tahsilatghhozavi !== '' || tahsilatghhozavi !== null || tahsilatghhozavi !== 'انتخاب کنید')) {
+            } else if ((reshtedaneshgahi === null || reshtedaneshgahi === '') && (tahsilatghhozavi !== '' || tahsilatghhozavi !== null || tahsilatghhozavi !== 'انتخاب کنید') && tahsilatghhozavi !== 'زیر دیپلم') {
                 alert('رشته تحصیلی غیر حوزوی وارد نشده است.');
             } else {
                 if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟ ' +
@@ -407,12 +407,14 @@ export default {
                         gender: gender,
                     })
                         .then(function (response) {
-                            alert('اطلاعات تحصیلی شما با موفقیت در سامانه ثبت شد.');
-                            location.reload();
+
                         })
                         .catch(function (error) {
                             // console.log(error);
-                        });
+                        }).finally(function () {
+                        alert('اطلاعات تحصیلی شما با موفقیت در سامانه ثبت شد.');
+                        location.reload();
+                    });
                 }
             }
         },

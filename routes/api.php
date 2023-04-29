@@ -27,6 +27,7 @@ use App\Http\Controllers\api\GetUserInfo;
 use App\Http\Controllers\api\LastSendPosts;
 use App\Http\Controllers\api\NewPost;
 use App\Http\Controllers\api\PostContactInfo;
+use App\Http\Controllers\api\PostEducationInfo;
 use App\Http\Controllers\api\PostPersonalImage;
 use App\Http\Controllers\api\PostTeachingInfo;
 use App\Http\Controllers\api\UpdatePost;
@@ -102,7 +103,7 @@ Route::prefix('defaults')->group(function () {
 
 //Post's
 Route::post('/contact/save/{nationCode}', [PostContactInfo::class , 'postContact']);
-Route::post('/edu/save', [PostContactInfo::class , 'postEducation']);
+Route::post('/edu/save', [PostEducationInfo::class , 'postEducation']);
 Route::post('/teaching/save/{nationCode}', [PostTeachingInfo::class , 'postTeaching']);
 Route::post('/upload/{nationCode}', [PostPersonalImage::class , 'postPersonalImage']);
 Route::post('/sendpost/this/{nationalcode}', [NewPost::class , 'newPost']);

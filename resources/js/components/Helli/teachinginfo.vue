@@ -124,9 +124,9 @@ export default {
 
     },
     methods: {
-        getDataFromProvincesTable() {
+        async getDataFromProvincesTable() {
             this.requestsCount++;
-            axios.get(`/api/defaults/provinces_without_gender`)
+            await axios.get(`/api/defaults/provinces_without_gender`)
                 .then(response => {
                     this.ostan = response.data;
                 })
@@ -136,9 +136,9 @@ export default {
                 this.requestsCount--;
             });
         },
-        getDataFromEduTable(nationalCode) {
+        async getDataFromEduTable(nationalCode) {
             this.requestsCount++;
-            axios.get('/api/teaching/' + nationalCode)
+            await axios.get('/api/teaching/' + nationalCode)
                 .then(response => {
                     this.teaching = response.data;
                     const userData = response.data;

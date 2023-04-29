@@ -7,7 +7,9 @@ use App\Models\Helli\EducationalInfo;
 use App\Models\Helli\HelliUserMaxUploadPost;
 use App\Models\Helli\TeachingInfo;
 use App\Models\User;
+use App\Models\UserActivityLog;
 use GuzzleHttp\Client;
+use Jenssegers\Agent\Agent;
 
 class VueController extends Controller
 {
@@ -26,7 +28,7 @@ class VueController extends Controller
                 session()->put(['nationalcode' => $socialID]);
                 session()->put(['gender' => $Gender]);
 
-                $user=User::firstOrCreate([
+                $user = User::firstOrCreate([
                     'national_code' => $socialID
                 ], [
                     'national_code' => $socialID,
@@ -75,13 +77,29 @@ class VueController extends Controller
                     'national_code' => $socialID,
                 ]);
 
+                $agent = new Agent();
+                UserActivityLog::firstorcreate([
+                    'user_id' => $user['id'],
+                    'activity' => 'Login With Token => ' . $token,
+                    'ip_address' => request()->ip(),
+                    'user_agent' => request()->userAgent(),
+                    'device' => $agent->device(),
+                ]);
+
                 return view('helli', compact('dataPersonal'));
-//                Route::get('/helli', [HelliController::class , 'index']);
 
             } else {
+                UserActivityLog::firstorcreate([
+                    'activity' => 'Lack Of Access To Information',
+                    'ip_address' => request()->ip(),
+                ]);
                 return redirect('http://login.ismc.ir/?refurl=http://ssmp.ismc.ir', 302);
             }
         } else {
+            UserActivityLog::firstorcreate([
+                'activity' => 'Login Without Token',
+                'ip_address' => request()->ip(),
+            ]);
             return redirect('http://login.ismc.ir/?refurl=http://ssmp.ismc.ir', 302);
         }
 //        $client = new Client();

@@ -1660,9 +1660,9 @@ export default {
             this.getSpecialSection();
             this.getMaxUploads(this.nationalcode);
         },
-        getUserInfo(nationalcode) {
+        async getUserInfo(nationalcode) {
             this.requestsCount++;
-            axios.get(`/api/users/getuserinfo/${nationalcode}/`)
+            await axios.get(`/api/users/getuserinfo/${nationalcode}/`)
                 .then(response => {
                     this.personalInfo = response.data;
                     if (response.data[0]['personalImageSrc'] === null) {
@@ -1677,9 +1677,9 @@ export default {
                 this.requestsCount--;
             });
         },
-        getContactInfo(nationalcode) {
+        async getContactInfo(nationalcode) {
             this.requestsCount++;
-            axios.get(`/api/contact/${nationalcode}/`)
+            await axios.get(`/api/contact/${nationalcode}/`)
                 .then(response => {
                     this.contactInfo = response.data;
                     if (response.data[0]['approved'] === 0) {
@@ -1692,9 +1692,9 @@ export default {
                 this.requestsCount--;
             });
         },
-        getEduInfo(nationalcode) {
+        async getEduInfo(nationalcode) {
             this.requestsCount++;
-            axios.get(`/api/edu/geteduinfo/${nationalcode}/`)
+            await axios.get(`/api/edu/geteduinfo/${nationalcode}/`)
                 .then(response => {
                     this.eduInfo = response.data;
                     if (response.data[0]['approved'] === 0) {
@@ -1707,9 +1707,9 @@ export default {
                 this.requestsCount--;
             });
         },
-        getTeachingInfo(nationalcode) {
+        async getTeachingInfo(nationalcode) {
             this.requestsCount++;
-            axios.get(`/api/teaching/${nationalcode}/`)
+            await axios.get(`/api/teaching/${nationalcode}/`)
                 .then(response => {
                     this.teachingInfo = response.data;
                     if (response.data[0]['approved'] === 0) {
@@ -1722,8 +1722,8 @@ export default {
                 this.requestsCount--;
             });
         },
-        getAllPosts(nationalcode) {
-            this.requestsCount++;
+        async getAllPosts(nationalcode) {
+            await this.requestsCount++;
             axios.get(`/api/posts/allposts/user/${nationalcode}/`)
                 .then(response => {
                     this.allPosts = response.data.posts;
@@ -1734,8 +1734,8 @@ export default {
                 this.requestsCount--;
             });
         },
-        getResearchFormat() {
-            this.requestsCount++;
+        async getResearchFormat() {
+            await this.requestsCount++;
             axios.get('/api/defaults/research_formats')
                 .then(response => {
                     this.research_formats = response.data;
@@ -1746,9 +1746,9 @@ export default {
                 this.requestsCount--;
             });
         },
-        getScientificGroup() {
+        async getScientificGroup() {
             this.requestsCount++;
-            axios.get('/api/defaults/scientific_groups')
+            await axios.get('/api/defaults/scientific_groups')
                 .then(response => {
                     this.scientific_groups = response.data;
                 })
@@ -1758,9 +1758,9 @@ export default {
                 this.requestsCount--;
             });
         },
-        getResearchType() {
+        async getResearchType() {
             this.requestsCount++;
-            axios.get('/api/defaults/research_types')
+            await axios.get('/api/defaults/research_types')
                 .then(response => {
                     this.research_types = response.data;
                 })
@@ -1770,9 +1770,9 @@ export default {
                 this.requestsCount--;
             });
         },
-        getSpecialSection() {
+        async getSpecialSection() {
             this.requestsCount++;
-            axios.get('/api/defaults/special_sections')
+            await axios.get('/api/defaults/special_sections')
                 .then(response => {
                     this.special_sections = response.data;
                 })
@@ -1782,9 +1782,9 @@ export default {
                 this.requestsCount--;
             });
         },
-        getMaxUploads(nationalcode) {
+        async getMaxUploads(nationalcode) {
             this.requestsCount++;
-            axios.get(`/api/defaults/maxUploads/${nationalcode}/`)
+            await axios.get(`/api/defaults/maxUploads/${nationalcode}/`)
                 .then(response => {
                     this.max_uploads = response.data[0];
                 })
@@ -1794,7 +1794,7 @@ export default {
                 this.requestsCount--;
             });
         },
-        deletePost(id) {
+         deletePost(id) {
             if (confirm('این عملیات قابل بازگشت نمی باشد' +
                 '\n' +
                 'آیا مطمئن هستید؟')) {
@@ -1809,7 +1809,7 @@ export default {
                 });
             }
         },
-        lastSendFunction() {
+         lastSendFunction() {
             axios.post(`/api/posts/approve/last/send/${this.nationalcode}/`, {
                 approved: '1'
             })
@@ -1822,10 +1822,10 @@ export default {
             this.showModal2 = true;
 
         },
-        downloadFile(fileSrc) {
+         downloadFile(fileSrc) {
             window.open('storage/' + fileSrc.slice(7), '_blank');
         },
-        handleSubmit() {
+         handleSubmit() {
             const fileInput = this.$refs.fileInput;
             const file = fileInput.files[0];
 

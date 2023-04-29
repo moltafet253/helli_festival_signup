@@ -163,9 +163,9 @@ export default {
             }
         },
     },
-    mounted() {
+    async mounted() {
         this.requestsCount++;
-        axios.get(`/api/getprofileimage/this/${this.datapersonal.SocialID}`)
+        await axios.get(`/api/getprofileimage/this/${this.datapersonal.SocialID}`)
             .then(response => {
                 if (response.data.imageSrc) {
                     this.imageSrc = response.data.imageSrc;
