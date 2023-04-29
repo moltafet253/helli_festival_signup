@@ -603,7 +603,7 @@
 
                                             <img
                                                 class="bg-white rounded-md border border-colorborder p-1 cursor-pointer"
-                                                @click="editPostShow(post.id)"
+                                                @click="editPostShow(post.id)" v-if="post.sent===0"
                                                 src="build/assets/icons/Edit Square.png"
                                                 alt="">
 
@@ -1189,7 +1189,8 @@
                                                                        placeholder="شماره همراه">
                                                             </td>
                                                             <td class="text-center px-6 py-4 text-right border-l-0">
-                                                                <button @click="deleteParticipant(row.id,index)">
+                                                                <button
+                                                                    @click="deleteParticipant(row.id,index)">
                                                                     <img class="bg-white rounded-md p-1"
                                                                          src="build/assets/icons/delete.png" alt="">
                                                                 </button>
@@ -1197,7 +1198,7 @@
                                                             </td>
 
                                                         </tr>
-                                                        <tr v-for="(row, index) in rows" :key="index"
+                                                        <tr v-for="(newrow, index) in rowsedited" :key="index"
                                                             :class="rowClass(index) + ' border-b border-gray-d1d1'">
 
                                                             <th scope="row"
@@ -1206,38 +1207,38 @@
                                                                 {{ index + 1 }}
                                                             </th>
                                                             <td class="text-center border-l-0 text-black-3d font-medium">
-                                                                <input v-model="row.name" type="text"
+                                                                <input v-model="newrow.name" type="text"
                                                                        name="column_1"
                                                                        class="w-32 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
                                                                        placeholder="نام">
                                                             </td>
                                                             <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
-                                                                <input v-model="row.lastname" type="text"
+                                                                <input v-model="newrow.lastname" type="text"
                                                                        name="column_1"
                                                                        class="w-40 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
                                                                        placeholder="نام خانوادگی">
                                                             </td>
                                                             <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
-                                                                <input v-model="row.codemeli" type="text"
+                                                                <input v-model="newrow.codemeli" type="text"
                                                                        name="column_1"
                                                                        class="w-40 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
                                                                        placeholder="کد ملی">
                                                             </td>
                                                             <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
-                                                                <input v-model="row.filenumber" type="text"
+                                                                <input v-model="newrow.filenumber" type="text"
                                                                        name="column_1"
                                                                        class="w-24 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
                                                                        placeholder="شماره پرونده">
                                                             </td>
                                                             <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
-                                                                <input v-model="row.Cooperation" type="text"
+                                                                <input v-model="newrow.Cooperation" type="text"
                                                                        name="column_1"
                                                                        class="w-12 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
                                                                        placeholder="درصد">
 
                                                             </td>
                                                             <td class="text-center px-6 py-4 border-l-0 text-black-3d font-medium">
-                                                                <input v-model="row.phonenumber" type="text"
+                                                                <input v-model="newrow.phonenumber" type="text"
                                                                        name="column_1"
                                                                        class="w-32 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
                                                                        placeholder="شماره همراه">
@@ -1256,7 +1257,7 @@
 
                                                     <div class="flex justify-center items-center my-5">
                                                         <!--  :disabled="rows.length >= 10" if limit click btn to 10 -->
-                                                        <button @click="addRow"
+                                                        <button @click="addEditedRow"
                                                                 class=" bg-br-f0e flex py-2 px-3 rounded-xl border border-colorborder">
                                                                 <span><img class="w-7"
                                                                            src="build/assets/icons/Down Button.png"
@@ -1304,7 +1305,7 @@
                                                         <input id="fileInput" name="fileInput" type="file"
                                                                ref="fileInput"
                                                                class="hidden" accept=".pdf,.doc,.docx"
-                                                               v-on:change="checkFile"/>
+                                                               v-on:change="checkEditedFile"/>
                                                         <div
                                                             class="bg-slate-200 border border-colorborder rounded-b-lg ">
                                                             <div
@@ -1342,12 +1343,12 @@
 
                                                     <button
 
-                                                        @click="handleButtonClick"
+                                                        @click="editPostSend"
                                                         :class="[handleButtonClick ? ' bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl cursor-pointer' : 'bg-red-500 opacity-50  hover:bg-red-700 cursor-not-allowed text-white font-bold py-2 px-10 ml-8 rounded-xl']">
                                                         <span :class="[checkFile ? ' text-white' : 'text-black']">ثبت اولیه اطلاعات</span>
                                                     </button>
 
-                                                    <button @click="cancel3"
+                                                    <button @click="hideModalEdit"
                                                             class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
                                                         انصراف
                                                     </button>
@@ -1358,12 +1359,12 @@
                                                 <div class="flex justify-center mb-8 mt-24">
 
                                                     <button
-                                                        @click="handleButtonClick2"
+                                                        @click="editPostSend"
                                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
                                                         <span class="text-white">ثبت اولیه اطلاعات</span>
                                                     </button>
 
-                                                    <button @click="cancel3"
+                                                    <button @click="hideModalEdit"
                                                             class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
                                                         انصراف
                                                     </button>
@@ -1441,6 +1442,9 @@ export default {
             showLoading: false,
             requestsCount: 0,
             rows: [
+                {name: '', lastname: '', codemeli: '', filenumber: '', Cooperation: '', phonenumber: '',},
+            ],
+            rowsedited: [
                 {name: '', lastname: '', codemeli: '', filenumber: '', Cooperation: '', phonenumber: '',},
             ],
             Cooperation: '',
@@ -1546,7 +1550,6 @@ export default {
                         this.postParticipationPercentage = response.data[0]['participation_percentage'];
                         axios.get(`/api/posts/getPostParticipants/this/${id}/`)
                             .then(response => {
-                                console.log(response.data);
                                 this.postParticipants = response.data;
                             })
                             .catch(error => {
@@ -1559,11 +1562,11 @@ export default {
                 });
 
         },
-        deleteParticipant(id,index){
+        deleteParticipant(id, index) {
             if (confirm('این عملیات قابل بازگشت نمی باشد' +
                 '\n' +
                 'آیا برای پاک کردن مشارک مطمئن هستید؟')) {
-                axios.post(`/api/participant/delete/this/${id}`)
+                axios.post(`/api/posts/participant/delete/this/${id}/${national_code}`)
                     .then(function () {
 
                     })
@@ -1575,44 +1578,49 @@ export default {
             }
         },
         editPostSend() {
-            const fileInput = this.$refs.fileInput;
-            const file = fileInput.files[0];
+            if (confirm('آیا مطمئن هستید؟')) {
 
-            const formData = new FormData();
+                const fileInput = this.$refs.fileInput;
+                const file = fileInput.files[0];
 
-            formData.append('id', this.postID);
-            formData.append('name', this.postName);
-            formData.append('research_format', this.postResearchFormat);
-            formData.append('scientific_group', this.postScientificGroup);
-            formData.append('research_type', this.postResearchType);
-            formData.append('page_number', this.postPagesNumber);
-            formData.append('publish_status', this.postPublishStatus);
-            formData.append('special_section', this.postSpecialSection);
-            formData.append('activityType', this.activityType);
-            if (this.activityType === 'moshtarak') {
-                formData.append('myCooperation', this.Cooperation);
-                this.rows.forEach(row => {
-                    formData.append('rows[][name]', row.name);
-                    formData.append('rows[][lastname]', row.lastname);
-                    formData.append('rows[][codemeli]', row.codemeli);
-                    formData.append('rows[][filenumber]', row.filenumber);
-                    formData.append('rows[][Cooperation]', row.Cooperation);
-                    formData.append('rows[][phonenumber]', row.phonenumber);
+                const formData = new FormData();
+
+                formData.append('id', this.postID);
+                formData.append('name', this.postName);
+                formData.append('research_format', this.postResearchFormat);
+                formData.append('scientific_group', this.postScientificGroup);
+                formData.append('research_type', this.postResearchType);
+                formData.append('page_number', this.postPagesNumber);
+                formData.append('publish_status', this.postPublishStatus);
+                formData.append('special_section', this.postSpecialSection);
+                formData.append('activityType', this.postActivityType);
+                if (this.postActivityType === 'moshtarak') {
+                    formData.append('myCooperation', this.postParticipationPercentage);
+                    this.rowsedited.forEach(rowsedited => {
+                        formData.append('rows[][name]', rowsedited.name);
+                        formData.append('rows[][lastname]', rowsedited.lastname);
+                        formData.append('rows[][codemeli]', rowsedited.codemeli);
+                        formData.append('rows[][filenumber]', rowsedited.filenumber);
+                        formData.append('rows[][Cooperation]', rowsedited.Cooperation);
+                        formData.append('rows[][phonenumber]', rowsedited.phonenumber);
+                    });
+                }
+
+                formData.append('file', file);
+                axios.post(`/api/posts/updatepost/this`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                    .then(function (response) {
+
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    }).finally(() => {
+                    location.reload();
                 });
             }
-
-            formData.append('file', file);
-            axios.post(`/api/updatepost/this/${this.nationalcode}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-                .then(function (response) {
-                    location.reload();
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
         },
         hideModalEdit() {
             this.showModalEdit = false;
@@ -1845,7 +1853,7 @@ export default {
             }
 
             formData.append('file', file);
-            axios.post(`/api/updatepost/this/${this.nationalcode}`, formData, {
+            axios.post(`/api/sendpost/this/${this.nationalcode}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -1889,6 +1897,20 @@ export default {
                 }
             }
 
+        },
+        checkEditedFile(event) {
+            this.nameFile = '';
+            const file = event.target.files[0];
+            const allowedExtensions = /(\.pdf|\.doc|\.docx)$/i;
+            if (!allowedExtensions.test(file.name)) {
+                this.fileSelected = false;
+                this.fileName = "";
+                this.error = 'خطا: پسوند فایل مجاز نیست!';
+            } else {
+                this.fileSelected = true;
+                this.error = false;
+                this.nameFile = event.target.files[0].name;
+            }
         },
         checkFile(event) {
             this.nameFile = '';
@@ -1950,6 +1972,10 @@ export default {
         addRow() {
             const newRow = {name: '', lastname: '', codemeli: '', filenumber: '', Cooperation: '', phonenumber: ''};
             this.rows.push({...newRow});
+        },
+        addEditedRow() {
+            const newRow = {name: '', lastname: '', codemeli: '', filenumber: '', Cooperation: '', phonenumber: ''};
+            this.rowsedited.push({...newRow});
         },
         deleteRow(index) {
             this.rows.splice(index, 1);

@@ -29,6 +29,7 @@ use App\Http\Controllers\api\NewPost;
 use App\Http\Controllers\api\PostContactInfo;
 use App\Http\Controllers\api\PostPersonalImage;
 use App\Http\Controllers\api\PostTeachingInfo;
+use App\Http\Controllers\api\UpdatePost;
 use App\Http\Controllers\ImageController;
 use App\Models\File;
 use App\Models\Helli\Contact;
@@ -66,12 +67,20 @@ Route::middleware('CheckSession')->get('/contact/{nationalcode}', [GetContacts::
 Route::middleware('CheckSession')->get('/edu/{nationalcode}', [GetEducationInfo::class , 'education']);
 Route::middleware('CheckSession')->get('/teaching/{nationalcode}', [GetTeachingInfo::class , 'teaching']);
 Route::middleware('CheckSession')->get('/getprofileimage/this/{nationalcode}', [GetPersonalImage::class , 'getPersonalImage']);
-Route::middleware('CheckSession')->get('/posts/getpost/{nationalcode}', [GetPost::class , 'getPost']);
 Route::middleware('CheckSession')->get('/users/getuserinfo/{nationalcode}', [GetUserInfo::class , 'getUserInfo']);
-Route::middleware('CheckSession')->get('/posts/allposts/user/{nationalcode}', [GetAllPosts::class , 'getAllPosts']);
-Route::middleware('CheckSession')->get('/posts/getPostInfo/{id}', [GetPostInfo::class , 'getPostInfo']);
-Route::middleware('CheckSession')->get('/posts/getPostParticipants/this/{id}', [GetPostParticipants::class , 'postParticipants']);
 Route::middleware('CheckSession')->get('/edu/geteduinfo/{nationalcode}', [GetEduInfoForPosts::class , 'edu']);
+
+Route::prefix('posts')->group(function () {
+    Route::middleware('CheckSession')->get('/allposts/user/{nationalcode}', [GetAllPosts::class , 'getAllPosts']);
+    Route::middleware('CheckSession')->get('/getPostInfo/{id}', [GetPostInfo::class , 'getPostInfo']);
+    Route::middleware('CheckSession')->get('/getPostParticipants/this/{id}', [GetPostParticipants::class , 'postParticipants']);
+    Route::middleware('CheckSession')->get('/getpost/{nationalcode}', [GetPost::class , 'getPost']);
+    Route::post('/updatepost/this', [UpdatePost::class , 'updatePost']);
+    Route::post('/delete/this/{id}', [DeletePost::class , 'deletePost']);
+    Route::post('/approve/last/send/{nationCode}', [LastSendPosts::class , 'lastSendPosts']);
+    Route::post('/participant/delete/this/{id}', [DeleteParticipant::class , 'deleteParticipant']);
+
+});
 
 Route::prefix('defaults')->group(function () {
     Route::get('/centers/{gender}', [centers::class , 'centers']);
@@ -97,9 +106,6 @@ Route::post('/edu/save', [PostContactInfo::class , 'postEducation']);
 Route::post('/teaching/save/{nationCode}', [PostTeachingInfo::class , 'postTeaching']);
 Route::post('/upload/{nationCode}', [PostPersonalImage::class , 'postPersonalImage']);
 Route::post('/sendpost/this/{nationalcode}', [NewPost::class , 'newPost']);
-Route::post('/posts/delete/this/{id}', [DeletePost::class , 'deletePost']);
-Route::post('/posts/approve/last/send/{nationCode}', [LastSendPosts::class , 'lastSendPosts']);
-Route::post('/participant/delete/this/{id}', [DeleteParticipant::class , 'deleteParticipant']);
 
 
 
