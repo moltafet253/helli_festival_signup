@@ -11,7 +11,7 @@ use Jenssegers\Agent\Agent;
 
 class DeleteParticipant extends Controller
 {
-    public function deleteParticipant($id,$national_code=1) {
+    public function deleteParticipant($id) {
         $increment_by=1;
         if ($id) {
             $participant_info=Participant::where('id', '=', $id)->delete();
@@ -20,7 +20,7 @@ class DeleteParticipant extends Controller
             $agent = new Agent();
             UserActivityLog::firstorcreate([
                 'user_id' => session()->get('nationalcode'),
-                'activity' => ' Delete Participant with This ID => ' . $id,
+                'activity' => 'Delete Participant With This ID => ' . $id,
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->userAgent(),
                 'device' => $agent->device(),

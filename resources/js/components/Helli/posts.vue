@@ -28,13 +28,13 @@
                                 v-if="max_uploads.numbers!==0 && max_uploads.sent_status!==1 && showErrorNotSubmittedInfos===false"
                                 class="w-full lg:w-3/12 flex-row bg-white  rounded-lg shadow">
                                 <!-- click open modal -->
-                                <div @click="showModal3 = true"
+                                <div @click="showNewPostModal"
                                      class=" cursor-pointer flex justify-center items-center rounded-t-lg  border-dashed border-4 border-colorborder border-b-0"
                                      href="#">
                                     <img class="p-8 py-8 rounded-t-lg" src="build/assets/icons/Paper Upload.png"
                                          alt="product image"/>
                                 </div>
-                                <div @click="showModal3 = true"
+                                <div @click="showNewPostModal"
                                      class="bg-slate-200 border border-colorborder rounded-b-lg">
                                     <div class="cursor-pointer flex items-center justify-start px-5 py-3 ">
                                         <img class="w-8 ml-2" src="build/assets/icons/miniCircle 37181.png"
@@ -624,7 +624,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <button v-if="max_uploads.sent_status===0" @click="showModalLastSend = true"
+                        <button v-if="max_uploads.sent_status===0 && showErrorNotSubmittedInfos===false" @click="showModalLastSend = true"
                                 class="bg-green-600 text-white font-bold py-2 px-4 mt-14 rounded-lg mx-auto block"
                         >
                             ارسال نهایی آثار به جشنواره
@@ -1471,6 +1471,7 @@ export default {
             max_uploads: [],
             showModalLastSend: false,
 
+
             //send items
             name: '',
             research_format: '',
@@ -1533,9 +1534,20 @@ export default {
         this.axiosReq();
     },
     methods: {
+        showNewPostModal(){
+            this.getResearchFormat();
+            this.getScientificGroup();
+            this.getResearchType();
+            this.getSpecialSection();
+            this.showModal3 = true
+        },
         editPostShow(id) {
+            this.getResearchFormat();
+            this.getScientificGroup();
+            this.getResearchType();
+            this.getSpecialSection();
             this.showModalEdit = true;
-            axios.get(`/api/posts/getPostInfo/${id}/`)
+            axios.get(`/posts/getPostInfo/${id}/`)
                 .then(response => {
                     this.postID = response.data[0]['id'];
                     this.postName = response.data[0]['title'];
@@ -1549,7 +1561,7 @@ export default {
                     this.postActivityType = response.data[0]['activity_type'];
                     if (response.data[0]['activity_type'] === 'moshtarak') {
                         this.postParticipationPercentage = response.data[0]['participation_percentage'];
-                        axios.get(`/api/posts/getPostParticipants/this/${id}/`)
+                        axios.get(`/posts/getPostParticipants/this/${id}/`)
                             .then(response => {
                                 this.postParticipants = response.data;
                             })
@@ -1567,7 +1579,7 @@ export default {
             if (confirm('این عملیات قابل بازگشت نمی باشد' +
                 '\n' +
                 'آیا برای پاک کردن مشارک مطمئن هستید؟')) {
-                axios.post(`/api/posts/participant/delete/this/${id}/${national_code}`)
+                axios.post(`/api/posts/participant/delete/this/${id}`)
                     .then(function () {
 
                     })
@@ -1628,7 +1640,7 @@ export default {
         },
         reportRate(id) {
             this.showModalArzyabi = true;
-            axios.get(`/api/posts/getPostInfo/${id}/`)
+            axios.get(`/posts/getPostInfo/${id}/`)
                 .then(response => {
                     console.log(response.data);
                     this.postName = response.data[0]['title'];
@@ -1655,15 +1667,11 @@ export default {
             this.getTeachingInfo(this.nationalcode);
             this.getEduInfo(this.nationalcode);
             this.getAllPosts(this.nationalcode);
-            this.getResearchFormat();
-            this.getScientificGroup();
-            this.getResearchType();
-            this.getSpecialSection();
             this.getMaxUploads(this.nationalcode);
         },
         async getUserInfo(nationalcode) {
             this.requestsCount++;
-            await axios.get(`/api/users/getuserinfo/${nationalcode}/`)
+            await axios.get(`/users/getuserinfo/${nationalcode}/`)
                 .then(response => {
                     this.personalInfo = response.data;
                     if (response.data[0]['personalImageSrc'] === null) {
@@ -1680,7 +1688,7 @@ export default {
         },
         async getContactInfo(nationalcode) {
             this.requestsCount++;
-            await axios.get(`/api/contact/${nationalcode}/`)
+            await axios.get(`/contact/${nationalcode}/`)
                 .then(response => {
                     this.contactInfo = response.data;
                     if (response.data[0]['approved'] === 0) {
@@ -1695,7 +1703,7 @@ export default {
         },
         async getEduInfo(nationalcode) {
             this.requestsCount++;
-            await axios.get(`/api/edu/geteduinfo/${nationalcode}/`)
+            await axios.get(`/edu/geteduinfo/${nationalcode}/`)
                 .then(response => {
                     this.eduInfo = response.data;
                     if (response.data[0]['approved'] === 0) {
@@ -1710,7 +1718,7 @@ export default {
         },
         async getTeachingInfo(nationalcode) {
             this.requestsCount++;
-            await axios.get(`/api/teaching/${nationalcode}/`)
+            await axios.get(`/teaching/${nationalcode}/`)
                 .then(response => {
                     this.teachingInfo = response.data;
                     if (response.data[0]['approved'] === 0) {
@@ -1725,7 +1733,7 @@ export default {
         },
         async getAllPosts(nationalcode) {
             await this.requestsCount++;
-            axios.get(`/api/posts/allposts/user/${nationalcode}/`)
+            axios.get(`/posts/allposts/user/${nationalcode}/`)
                 .then(response => {
                     this.allPosts = response.data.posts;
                 })
@@ -1737,7 +1745,7 @@ export default {
         },
         async getResearchFormat() {
             await this.requestsCount++;
-            axios.get('/api/defaults/research_formats')
+            axios.get('/defaults/research_formats')
                 .then(response => {
                     this.research_formats = response.data;
                 })
@@ -1749,7 +1757,7 @@ export default {
         },
         async getScientificGroup() {
             this.requestsCount++;
-            await axios.get('/api/defaults/scientific_groups')
+            await axios.get('/defaults/scientific_groups')
                 .then(response => {
                     this.scientific_groups = response.data;
                 })
@@ -1761,7 +1769,7 @@ export default {
         },
         async getResearchType() {
             this.requestsCount++;
-            await axios.get('/api/defaults/research_types')
+            await axios.get('/defaults/research_types')
                 .then(response => {
                     this.research_types = response.data;
                 })
@@ -1773,7 +1781,7 @@ export default {
         },
         async getSpecialSection() {
             this.requestsCount++;
-            await axios.get('/api/defaults/special_sections')
+            await axios.get('/defaults/special_sections')
                 .then(response => {
                     this.special_sections = response.data;
                 })
@@ -1785,7 +1793,7 @@ export default {
         },
         async getMaxUploads(nationalcode) {
             this.requestsCount++;
-            await axios.get(`/api/defaults/maxUploads/${nationalcode}/`)
+            await axios.get(`/defaults/maxUploads/${nationalcode}/`)
                 .then(response => {
                     this.max_uploads = response.data[0];
                 })

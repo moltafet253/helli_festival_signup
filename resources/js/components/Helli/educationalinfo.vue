@@ -295,7 +295,7 @@ export default {
     methods: {
         async getDataFromProvincesTable(gender) {
             this.requestsCount++;
-            await axios.get('/api/defaults/centers/' + gender)
+            await axios.get('/defaults/centers/' + gender)
                 .then(response => {
                     this.markaz = response.data;
                 })
@@ -307,7 +307,7 @@ export default {
         },
         async getDataFromEduTable(nationalCode) {
             this.requestsCount++;
-            await axios.get('/api/edu/' + nationalCode)
+            await axios.get('/edu/' + nationalCode)
                 .then(response => {
                     this.edu = response.data.edu;
                     this.gender = response.data.gender;
@@ -329,7 +329,7 @@ export default {
             this.shahr = [];
             this.madrese = [];
             this.centerSend = center;
-            await axios.get(`/api/defaults/provinces/${center}/${this.nationalcode.gender}`)
+            await axios.get(`/defaults/provinces/${center}/${this.nationalcode.gender}`)
                 .then(response => {
                     this.ostan = response.data;
                 })
@@ -341,7 +341,7 @@ export default {
             this.shahr = [];
             this.madrese = [];
             this.provinceSend = province;
-            await axios.get(`/api/defaults/cities/${this.centerSend}/${province}/${this.nationalcode.gender}`)
+            await axios.get(`/defaults/cities/${this.centerSend}/${province}/${this.nationalcode.gender}`)
                 .then(response => {
                     this.shahr = response.data;
                 })
@@ -350,7 +350,7 @@ export default {
                 })
         },
         async returnSchool(city) {
-            await axios.get(`/api/defaults/schools/${this.centerSend}/${this.provinceSend}/${city}/${this.nationalcode.gender}`)
+            await axios.get(`/defaults/schools/${this.centerSend}/${this.provinceSend}/${city}/${this.nationalcode.gender}`)
                 .then(response => {
                     this.madrese = response.data;
                 })

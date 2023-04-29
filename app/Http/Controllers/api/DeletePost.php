@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Helli\HelliUserMaxUploadPost;
 use App\Models\Helli\Post;
 use App\Models\User;
+use App\Models\UserActivityLog;
 use Illuminate\Http\Request;
+use Jenssegers\Agent\Agent;
 
 class DeletePost extends Controller
 {
@@ -25,7 +27,14 @@ class DeletePost extends Controller
 //                HelliUserMaxUploadPost::where('national_code', '=', $items->national_code)->increment('numbers', $incrementBy);
 //            }
 //        }
-
+            $agent = new Agent();
+            UserActivityLog::firstorcreate([
+                'user_id' => session()->get('nationalcode'),
+                'activity' => 'Delete Post With This ID => ' . $id,
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'device' => $agent->device(),
+            ]);
         }
     }
 }

@@ -86,7 +86,7 @@ export default {
     },
     async mounted() {
         this.requestsCount++;
-        await axios.get(`/api/contact/${this.nationalcode}/`)
+        await axios.get(`/contact/${this.nationalcode}/`)
             .then(response => {
                 this.contact = response.data;
                 if (this.contact[0]['approved'] === 1) {

@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Helli\HelliUserMaxUploadPost;
 use App\Models\Helli\Participant;
 use App\Models\Helli\Post;
+use App\Models\UserActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Jenssegers\Agent\Agent;
 
 class UpdatePost extends Controller
 {
@@ -32,7 +34,7 @@ class UpdatePost extends Controller
             ]);
         }
 
-        $post = Post::where('id', $id)->update([
+        $post2 = Post::where('id', $id)->update([
             'title' => $name,
             'research_format' => $research_format,
             'scientific_group' => $scientific_group,
@@ -85,5 +87,13 @@ class UpdatePost extends Controller
             }
 
         }
+        $agent = new Agent();
+        UserActivityLog::firstorcreate([
+            'user_id' => session()->get('nationalcode'),
+            'activity' => 'Update Post With This ID => ' . $id,
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+            'device' => $agent->device(),
+        ]);
     }
 }

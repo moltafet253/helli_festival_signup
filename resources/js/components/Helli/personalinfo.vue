@@ -165,14 +165,14 @@ export default {
     },
     async mounted() {
         this.requestsCount++;
-        await axios.get(`/api/getprofileimage/this/${this.datapersonal.SocialID}`)
+        await axios.get(`/getprofileimage/this/${this.datapersonal.SocialID}`)
             .then(response => {
                 if (response.data.imageSrc) {
                     this.imageSrc = response.data.imageSrc;
                 }
             })
             .catch(error => {
-                console.log('error')
+
             }).finally(() => {
             this.requestsCount--;
         });

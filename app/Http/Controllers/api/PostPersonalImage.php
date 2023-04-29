@@ -5,8 +5,10 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Helli\Image;
 use App\Models\User;
+use App\Models\UserActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Jenssegers\Agent\Agent;
 
 class PostPersonalImage extends Controller
 {
@@ -37,6 +39,16 @@ class PostPersonalImage extends Controller
                     'personalImageSrc' => $imageTable->id,
                 ]);
             }
+
+            $agent = new Agent();
+            UserActivityLog::firstorcreate([
+                'user_id' => session()->get('nationalcode'),
+                'activity' => 'Post Personal Image With This NationalCode => ' . $nationCode,
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'device' => $agent->device(),
+            ]);
+
             return response()->json(['message' => 'فایل با موفقیت ارسال شد.']);
         }
     }

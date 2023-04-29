@@ -30,7 +30,8 @@
                 </div>
             </div>
             <div class="flex flex-wrap mt-5" v-for="(item, index) in teaching"
-                 v-show="item.isMaster === 'بله' ||showDiv">
+                 v-show="item.isMaster === 'بله' ||showDiv"
+            >
 
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
@@ -120,25 +121,27 @@ export default {
     },
     mounted() {
         this.getDataFromEduTable(this.nationalcode);
-        this.getDataFromProvincesTable();
 
     },
     methods: {
+        catchProvinces() {
+            this.getDataFromProvincesTable();
+        },
         async getDataFromProvincesTable() {
             this.requestsCount++;
-            await axios.get(`/api/defaults/provinces_without_gender`)
+            await axios.get(`/defaults/provinces_without_gender`)
                 .then(response => {
                     this.ostan = response.data;
                 })
                 .catch(error => {
                     console.log(error)
                 }).finally(() => {
-                this.requestsCount--;
-            });
+                    this.requestsCount--;
+                });
         },
         async getDataFromEduTable(nationalCode) {
             this.requestsCount++;
-            await axios.get('/api/teaching/' + nationalCode)
+            await axios.get('/teaching/' + nationalCode)
                 .then(response => {
                     this.teaching = response.data;
                     const userData = response.data;
@@ -155,15 +158,15 @@ export default {
                 .catch(error => {
                     console.log(error)
                 }).finally(() => {
-                this.requestsCount--;
-            });
+                    this.requestsCount--;
+                });
         },
         returnCity(province) {
             this.shahr = [];
             this.madrese = [];
             this.provinceSend = province;
             this.requestsCount++;
-            axios.get(`/api/defaults/cities_without_gender/${province}`)
+            axios.get(`/defaults/cities_without_gender/${province}`)
                 .then(response => {
                     this.shahr = response.data;
                 })
@@ -175,7 +178,7 @@ export default {
         },
         returnSchool(city) {
             this.requestsCount++;
-            axios.get(`/api/defaults/schools_without_gender/${city}`)
+            axios.get(`/defaults/schools_without_gender/${city}`)
                 .then(response => {
                     this.madrese = response.data;
                 })
@@ -188,6 +191,7 @@ export default {
         divStatus(event) {
             if (event.target.value === 'بله') {
                 this.showDiv = true;
+                this.catchProvinces();
             } else {
                 this.showDiv = false;
             }

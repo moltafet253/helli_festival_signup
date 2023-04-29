@@ -16,11 +16,9 @@ class CheckSession
      */
     public function handle(Request $request, Closure $next): Response
     {
-//        if (auth()->guest()) {
+//        if ($request->session()->get('nationalcode')){
             return $next($request);
-//        }else{
-//            return response('Unauthorized.', 401);
 //        }
-
+//        return '';
     }
 }

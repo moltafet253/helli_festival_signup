@@ -4,7 +4,9 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Helli\EducationalInfo;
+use App\Models\UserActivityLog;
 use Illuminate\Http\Request;
+use Jenssegers\Agent\Agent;
 
 class PostEducationInfo extends Controller
 {
@@ -47,6 +49,14 @@ class PostEducationInfo extends Controller
             'tahsilatghhozavi' => $tahsilatghhozavi,
             'reshtedaneshgahi' => $reshtedaneshgahi,
             'approved' => 1
+        ]);
+        $agent = new Agent();
+        UserActivityLog::firstorcreate([
+            'user_id' => session()->get('nationalcode'),
+            'activity' => 'Post Education Info With This NationalCode => ' . $national_code,
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+            'device' => $agent->device(),
         ]);
     }
 }
