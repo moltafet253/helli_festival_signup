@@ -1434,6 +1434,7 @@
 
 <script>
 import jalaali from 'jalaali-js';
+import _ from 'lodash'
 
 export default {
     props: ['nationalcode'],
