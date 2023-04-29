@@ -126,7 +126,7 @@ export default {
     methods: {
         getDataFromProvincesTable() {
             this.requestsCount++;
-            axios.get(`/api/defaults/provinces`)
+            axios.get(`/api/defaults/provinces_without_gender`)
                 .then(response => {
                     this.ostan = response.data;
                 })
@@ -163,7 +163,7 @@ export default {
             this.madrese = [];
             this.provinceSend = province;
             this.requestsCount++;
-            axios.get(`/api/defaults/cities/${province}`)
+            axios.get(`/api/defaults/cities_without_gender/${province}`)
                 .then(response => {
                     this.shahr = response.data;
                 })
@@ -175,7 +175,7 @@ export default {
         },
         returnSchool(city) {
             this.requestsCount++;
-            axios.get(`/api/defaults/schools/${city}`)
+            axios.get(`/api/defaults/schools_without_gender/${city}`)
                 .then(response => {
                     this.madrese = response.data;
                 })
