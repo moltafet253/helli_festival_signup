@@ -9,6 +9,7 @@ use App\Models\Helli\TeachingInfo;
 use App\Models\User;
 use App\Models\UserActivityLog;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
 
 class VueController extends Controller
@@ -19,7 +20,7 @@ class VueController extends Controller
             $token = $_GET['token']; // دریافت توکن از پارامتر token در کوئری استرینگ
             $url = "http://api-base.ismc.ir/Redirect/GetTokenInfo?key=" . $token; // تشکیل لینک با پارامتر توکن
             $client = new Client();
-            $response = $client->request('GET', 'http://api-base.ismc.ir/Redirect/GetTokenInfo?key=' . $token);
+            $response = $client->request('GET', $url);
             $data = json_decode($response->getBody(), true);
             if (isset($data['data']['person'])) {
                 $dataPersonal = $data['data']['person'];
@@ -34,6 +35,8 @@ class VueController extends Controller
                 ], [
                     'national_code' => $socialID,
                 ]);
+                session(['user_id' => $user->id]);
+
 
 
                 User::where('national_code', '=', $socialID)->update([
@@ -90,23 +93,24 @@ class VueController extends Controller
                 return view('helli', compact('dataPersonal'));
 
             } else {
+                $agent = new Agent();
                 UserActivityLog::firstorcreate([
                     'activity' => 'Lack Of Access To Information',
                     'ip_address' => request()->ip(),
+                    'user_agent' => request()->userAgent(),
+                    'device' => $agent->device(),
                 ]);
                 return redirect('http://login.ismc.ir/?refurl=http://ssmp.ismc.ir', 302);
             }
         } else {
+            $agent = new Agent();
             UserActivityLog::firstorcreate([
                 'activity' => 'Login Without Token',
                 'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'device' => $agent->device(),
             ]);
             return redirect('http://login.ismc.ir/?refurl=http://ssmp.ismc.ir', 302);
         }
-//        $client = new Client();
-//        $response = $client->request('GET', 'http://api-base.ismc.ir/Redirect/GetTokenInfo?key=77985308-E13F-4DC1-9648-9740345177C7');
-//        $data = json_decode($response->getBody(), true);
-//        $dataPersonal=$data['data']['person'];
-//        return view('index',compact('dataPersonal'));
     }
 }

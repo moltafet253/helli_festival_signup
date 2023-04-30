@@ -23,8 +23,8 @@ class PostContactInfo extends Controller
             'approved' => 1,
         ]);
         $agent = new Agent();
-        UserActivityLog::firstorcreate([
-            'user_id' => session()->get('nationalcode'),
+        UserActivityLog::create([
+            'user_id' => session('user_id'),
             'activity' => 'Post Contact Info With This NationalCode => ' . $nationCode,
             'ip_address' => request()->ip(),
             'user_agent' => request()->userAgent(),

@@ -25,6 +25,11 @@ use App\Http\Controllers\api\GetPostParticipants;
 use App\Http\Controllers\api\GetTeachingInfo;
 use App\Http\Controllers\api\GetUserInfo;
 use App\Http\Controllers\api\LastSendPosts;
+use App\Http\Controllers\api\NewPost;
+use App\Http\Controllers\api\PostContactInfo;
+use App\Http\Controllers\api\PostEducationInfo;
+use App\Http\Controllers\api\PostPersonalImage;
+use App\Http\Controllers\api\PostTeachingInfo;
 use App\Http\Controllers\api\UpdatePost;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VueController;
@@ -42,33 +47,47 @@ use App\Http\Controllers\VueController;
 Route::get('/', [VueController::class, 'index']);
 
 //Get's
-Route::get('/contact/{nationalcode}', [GetContacts::class, 'contacts']);
-Route::get('/edu/{nationalcode}', [GetEducationInfo::class, 'education']);
-Route::get('/teaching/{nationalcode}', [GetTeachingInfo::class, 'teaching']);
-Route::get('/getprofileimage/this/{nationalcode}', [GetPersonalImage::class, 'getPersonalImage']);
-Route::get('/users/getuserinfo/{nationalcode}', [GetUserInfo::class, 'getUserInfo']);
-Route::get('/edu/geteduinfo/{nationalcode}', [GetEduInfoForPosts::class, 'edu']);
+Route::middleware('CheckSession')->get('/contact/{nationalcode}', [GetContacts::class, 'contacts']);
+Route::middleware('CheckSession')->get('/edu/{nationalcode}', [GetEducationInfo::class, 'education']);
+Route::middleware('CheckSession')->get('/teaching/{nationalcode}', [GetTeachingInfo::class, 'teaching']);
+Route::middleware('CheckSession')->get('/getprofileimage/this/{nationalcode}', [GetPersonalImage::class, 'getPersonalImage']);
+Route::middleware('CheckSession')->get('/users/getuserinfo/{nationalcode}', [GetUserInfo::class, 'getUserInfo']);
+Route::middleware('CheckSession')->get('/edu/geteduinfo/{nationalcode}', [GetEduInfoForPosts::class, 'edu']);
 
 Route::prefix('posts')->group(function () {
-    Route::get('/allposts/user/{nationalcode}', [GetAllPosts::class, 'getAllPosts']);
-    Route::get('/getPostInfo/{id}', [GetPostInfo::class, 'getPostInfo']);
-    Route::get('/getPostParticipants/this/{id}', [GetPostParticipants::class, 'postParticipants']);
-    Route::get('/getpost/{nationalcode}', [GetPost::class, 'getPost']);
+    Route::middleware('CheckSession')->get('/allposts/user/{nationalcode}', [GetAllPosts::class, 'getAllPosts']);
+    Route::middleware('CheckSession')->get('/getPostInfo/{id}', [GetPostInfo::class, 'getPostInfo']);
+    Route::middleware('CheckSession')->get('/getPostParticipants/this/{id}', [GetPostParticipants::class, 'postParticipants']);
+    Route::middleware('CheckSession')->get('/getpost/{nationalcode}', [GetPost::class, 'getPost']);
 });
 
 Route::prefix('defaults')->group(function () {
-    Route::get('/centers/{gender}', [centers::class, 'centers']);
-    Route::get('/provinces/{center}/{gender}', [provinces_with_gender::class, 'provinces']);
-    Route::get('/cities/{center}/{province}/{gender}', [cities_with_gender::class, 'cities']);
-    Route::get('/schools/{center}/{province}/{city}/{gender}', [schools_with_gender::class, 'schools']);
-    Route::get('/research_formats', [research_formats::class, 'researchFormats']);
-    Route::get('/scientific_groups', [scientific_groups::class, 'scientificGroups']);
-    Route::get('/research_types', [research_types::class, 'researchTypes']);
-    Route::get('/special_sections', [special_sections::class, 'specialSections']);
-    Route::get('/maxUploads/{nationCode}', [max_uploads::class, 'maxUploads']);
+    Route::middleware('CheckSession')->get('/centers/{gender}', [centers::class, 'centers']);
+    Route::middleware('CheckSession')->get('/provinces/{center}/{gender}', [provinces_with_gender::class, 'provinces']);
+    Route::middleware('CheckSession')->get('/cities/{center}/{province}/{gender}', [cities_with_gender::class, 'cities']);
+    Route::middleware('CheckSession')->get('/schools/{center}/{province}/{city}/{gender}', [schools_with_gender::class, 'schools']);
+    Route::middleware('CheckSession')->get('/research_formats', [research_formats::class, 'researchFormats']);
+    Route::middleware('CheckSession')->get('/scientific_groups', [scientific_groups::class, 'scientificGroups']);
+    Route::middleware('CheckSession')->get('/research_types', [research_types::class, 'researchTypes']);
+    Route::middleware('CheckSession')->get('/special_sections', [special_sections::class, 'specialSections']);
+    Route::middleware('CheckSession')->get('/maxUploads/{nationCode}', [max_uploads::class, 'maxUploads']);
 
     //For TeachingInfo
-    Route::get('/provinces_without_gender/', [provinces_without_gender::class, 'provinces']);
-    Route::get('/cities_without_gender/{province}', [cities_without_gender::class, 'cities']);
-    Route::get('/schools_without_gender/{city}', [schools_without_gender::class, 'schools']);
+    Route::middleware('CheckSession')->get('/provinces_without_gender/', [provinces_without_gender::class, 'provinces']);
+    Route::middleware('CheckSession')->get('/cities_without_gender/{province}', [cities_without_gender::class, 'cities']);
+    Route::middleware('CheckSession')->get('/schools_without_gender/{city}', [schools_without_gender::class, 'schools']);
 });
+
+//Post's
+Route::prefix('posts')->group(function () {
+    Route::middleware('CheckSession')->post('/updatepost/this', [UpdatePost::class, 'updatePost']);
+    Route::middleware('CheckSession')->post('/delete/this/{id}', [DeletePost::class, 'deletePost']);
+    Route::middleware('CheckSession')->post('/approve/last/send/{nationCode}', [LastSendPosts::class, 'lastSendPosts']);
+    Route::middleware('CheckSession')->post('/participant/delete/this/{id}', [DeleteParticipant::class, 'deleteParticipant']);
+});
+
+Route::middleware('CheckSession')->post('/contact/save/{nationCode}', [PostContactInfo::class , 'postContact']);
+Route::middleware('CheckSession')->post('/edu/save', [PostEducationInfo::class , 'postEducation']);
+Route::middleware('CheckSession')->post('/teaching/save/{nationCode}', [PostTeachingInfo::class , 'postTeaching']);
+Route::middleware('CheckSession')->post('/upload/{nationCode}', [PostPersonalImage::class , 'postPersonalImage']);
+Route::middleware('CheckSession')->post('/sendpost/this/{nationalcode}', [NewPost::class , 'newPost']);

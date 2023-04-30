@@ -402,7 +402,7 @@ export default {
                 if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟ ' +
                     '\n' +
                     'اطلاعات شما در صورت تایید دیگر قابل تغییر نیست.')) {
-                    axios.post(`/api/edu/save/`, {
+                    axios.post(`/edu/save/`, {
                         edu: this.edu,
                         gender: gender,
                     })

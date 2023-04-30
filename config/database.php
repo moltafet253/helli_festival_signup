@@ -63,6 +63,25 @@ return [
             ]) : [],
         ],
 
+        'helli' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST_HELLI','127.0.0.1'),
+            'port' => env('DB_PORT_HELLI','3306'),
+            'database' => env('DB_DATABASE_HELLI','helli_helli-info'),
+            'username' => env('DB_USERNAME_HELLI','root'),
+            'password' => env('DB_PASSWORD_HELLI',''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

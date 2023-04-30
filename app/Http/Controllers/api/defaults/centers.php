@@ -15,6 +15,5 @@ class centers extends Controller
             ->orderBy('markaz', 'asc')
             ->get();
         return response()->json($centers);
-
     }
 }

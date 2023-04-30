@@ -27,8 +27,8 @@ class GetPersonalImage extends Controller
 
             $sesion=session('nationalcode');
             $agent = new Agent();
-            UserActivityLog::firstorcreate([
-                'user_id' => session('national_code'),
+            UserActivityLog::create([
+                'user_id' => session('user_id'),
                 'activity' => 'Get Personal Image With This NationalCode => ' . $sesion,
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->userAgent(),

@@ -121,12 +121,9 @@ export default {
     },
     mounted() {
         this.getDataFromEduTable(this.nationalcode);
-
+        this.getDataFromProvincesTable(this.nationalcode);
     },
     methods: {
-        catchProvinces() {
-            this.getDataFromProvincesTable();
-        },
         async getDataFromProvincesTable() {
             this.requestsCount++;
             await axios.get(`/defaults/provinces_without_gender`)
@@ -223,7 +220,7 @@ export default {
                 if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟ ' +
                     '\n' +
                     'پس از تایید دیگر قابل ویرایش نیست.')) {
-                    axios.post(`/api/teaching/save/${this.nationalcode}/`, {
+                    axios.post(`/teaching/save/${this.nationalcode}/`, {
                         teaching: this.teaching,
                     })
                         .then(function () {

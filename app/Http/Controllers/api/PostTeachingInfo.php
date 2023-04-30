@@ -27,8 +27,8 @@ class PostTeachingInfo extends Controller
             'approved' => 1,
         ]);
         $agent = new Agent();
-        UserActivityLog::firstorcreate([
-            'user_id' => session()->get('nationalcode'),
+        UserActivityLog::create([
+            'user_id' => session('user_id'),
             'activity' => 'Post Teaching Info With This NationalCode => ' . $national_code,
             'ip_address' => request()->ip(),
             'user_agent' => request()->userAgent(),

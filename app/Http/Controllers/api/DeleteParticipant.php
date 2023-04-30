@@ -12,14 +12,13 @@ use Jenssegers\Agent\Agent;
 class DeleteParticipant extends Controller
 {
     public function deleteParticipant($id) {
-        $increment_by=1;
         if ($id) {
             $participant_info=Participant::where('id', '=', $id)->delete();
-//            $max_upload=HelliUserMaxUploadPost::where('national_code',$national_code)->increment('numbers',$increment_by)->update();
+//            $max_upload=HelliUserMaxUploadPost::where('national_code',$national_code)->increment('numbers',1)->update();
 
             $agent = new Agent();
-            UserActivityLog::firstorcreate([
-                'user_id' => session()->get('nationalcode'),
+            UserActivityLog::create([
+                'user_id' => session('user_id'),
                 'activity' => 'Delete Participant With This ID => ' . $id,
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->userAgent(),

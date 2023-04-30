@@ -88,8 +88,8 @@ class UpdatePost extends Controller
 
         }
         $agent = new Agent();
-        UserActivityLog::firstorcreate([
-            'user_id' => session()->get('nationalcode'),
+        UserActivityLog::create([
+            'user_id' => session('user_id'),
             'activity' => 'Update Post With This ID => ' . $id,
             'ip_address' => request()->ip(),
             'user_agent' => request()->userAgent(),

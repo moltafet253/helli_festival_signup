@@ -469,9 +469,7 @@
                                                 <section v-if="activityType === 'moshtarak'">
                                                     <div class="flex justify-center mb-8 mt-14">
 
-
                                                         <button
-
                                                             @click="handleButtonClick"
                                                             :class="[handleButtonClick ? ' bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl cursor-pointer' : 'bg-red-500 opacity-50  hover:bg-red-700 cursor-not-allowed text-white font-bold py-2 px-10 ml-8 rounded-xl']">
                                                             <span :class="[checkFile ? ' text-white' : 'text-black']">ثبت اولیه اطلاعات</span>
@@ -829,31 +827,31 @@
                                                 <div class="flex flex-wrap w-8/12 mx-4">
 
                                                     <div class="w-full lg:w-4/12 px-4 flex-row py-3">
-                                                        <span class="pl-1">مدرسه‌ای:</span><span>اتمام ارزیابی</span>
+                                                        <span class="pl-1">مدرسه‌ای:</span><span></span>
                                                     </div>
                                                     <div class="w-full lg:w-4/12 px-4 flex-row py-3">
-                                                        <span class="pl-1">امتیاز:</span> <span>80</span>
+                                                        <span class="pl-1">امتیاز:</span> <span></span>
                                                     </div>
                                                     <div class="w-full lg:w-4/12 px-4 flex-row py-3">
-                                                        <span>برگزیده:</span><span>می‌باشد</span>
+                                                        <span>برگزیده:</span><span></span>
                                                     </div>
                                                     <div class="w-full lg:w-4/12 px-4 flex-row py-3">
-                                                        <span>استانی:</span><span>اتمام ارزیابی</span>
+                                                        <span>استانی:</span><span></span>
                                                     </div>
                                                     <div class="w-full lg:w-4/12 px-4 flex-row py-3">
-                                                        <span>امتیاز:</span><span>83</span>
+                                                        <span>امتیاز:</span><span></span>
                                                     </div>
                                                     <div class="w-full lg:w-4/12 px-4 flex-row py-3">
-                                                        <span>برگزیده:</span><span>می‌باشد</span>
+                                                        <span>برگزیده:</span><span></span>
                                                     </div>
                                                     <div class="w-full lg:w-4/12 px-4 flex-row py-3">
-                                                        <span>کشوری:</span><span>در حال ارزیابی</span>
+                                                        <span>کشوری:</span><span></span>
                                                     </div>
                                                     <div class="w-full lg:w-4/12 px-4 flex-row py-3">
-                                                        <span>امتیاز:</span><span>ثبت نشده</span>
+                                                        <span>امتیاز:</span><span></span>
                                                     </div>
                                                     <div class="w-full lg:w-4/12 px-4 flex-row py-3">
-                                                        <span>برگزیده:</span><span>-</span>
+                                                        <span>برگزیده:</span><span></span>
                                                     </div>
 
                                                 </div>
@@ -1243,7 +1241,7 @@
                                                                        class="w-32 py-2 shadow-sm  rounded-md bg-white text-center border border-colorborder"
                                                                        placeholder="شماره همراه">
                                                             </td>
-                                                            <td class="text-center px-6 py-4 text-right border-l-0">
+                                                            <td class="text-center px-6 py-4 border-l-0">
                                                                 <button @click="deleteRow(index)">
                                                                     <img class="bg-white rounded-md p-1"
                                                                          src="build/assets/icons/delete.png" alt="">
@@ -1471,7 +1469,6 @@ export default {
             max_uploads: [],
             showModalLastSend: false,
 
-
             //send items
             name: '',
             research_format: '',
@@ -1507,7 +1504,6 @@ export default {
             postSchoolRateStatus: [],
             postProvinceRateStatus: [],
             postCenterRateStatus: [],
-
 
             //Edit
             showModalEdit: false,
@@ -1579,7 +1575,7 @@ export default {
             if (confirm('این عملیات قابل بازگشت نمی باشد' +
                 '\n' +
                 'آیا برای پاک کردن مشارک مطمئن هستید؟')) {
-                axios.post(`/api/posts/participant/delete/this/${id}`)
+                axios.post(`/posts/participant/delete/this/${id}`)
                     .then(function () {
 
                     })
@@ -1592,12 +1588,14 @@ export default {
         },
         editPostSend() {
             if (confirm('آیا مطمئن هستید؟')) {
-
+                if (this.postPagesNumber<0){
+                    alert('تعداد صفحات اشتباه وارد شده است.');
+                    return false;
+                }
                 const fileInput = this.$refs.fileInput;
                 const file = fileInput.files[0];
 
                 const formData = new FormData();
-
                 formData.append('id', this.postID);
                 formData.append('name', this.postName);
                 formData.append('research_format', this.postResearchFormat);
@@ -1620,7 +1618,7 @@ export default {
                 }
 
                 formData.append('file', file);
-                axios.post(`/api/posts/updatepost/this`, formData, {
+                axios.post(`/posts/updatepost/this`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -1807,7 +1805,7 @@ export default {
             if (confirm('این عملیات قابل بازگشت نمی باشد' +
                 '\n' +
                 'آیا مطمئن هستید؟')) {
-                axios.post(`/api/posts/delete/this/${id}`)
+                axios.post(`/posts/delete/this/${id}`)
                     .then(function (response) {
                         console.log(response.data);
                     })
@@ -1819,7 +1817,7 @@ export default {
             }
         },
          lastSendFunction() {
-            axios.post(`/api/posts/approve/last/send/${this.nationalcode}/`, {
+            axios.post(`/posts/approve/last/send/${this.nationalcode}/`, {
                 approved: '1'
             })
                 .then(function (response) {
@@ -1828,7 +1826,7 @@ export default {
                 .catch(function (error) {
                     console.log(error);
                 });
-            this.showModal2 = true;
+            // this.showModal2 = true;
 
         },
          downloadFile(fileSrc) {
@@ -1862,7 +1860,7 @@ export default {
             }
 
             formData.append('file', file);
-            axios.post(`/api/sendpost/this/${this.nationalcode}`, formData, {
+            axios.post(`/sendpost/this/${this.nationalcode}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -1967,6 +1965,8 @@ export default {
                 this.emptyErrors = 'نوع پژوهش انتخاب نشده است.';
             } else if (!this.page_number && this.research_format === 'مقاله') {
                 this.emptyErrors = 'تعداد صفحات وارد نشده است.';
+            } else if (this.page_number<0) {
+                this.emptyErrors = 'تعداد صفحات اشتباه وارد شده است.';
             } else if (!this.publish_status) {
                 this.emptyErrors = 'وضعیت نشر انتخاب نشده است.';
             } else {
@@ -1991,12 +1991,12 @@ export default {
         },
         confirm() {
             this.lastSendFunction();
-            this.showModal = false;
-            this.showModalsuccess = false;
-            this.showModal2 = false;
-            this.showModalLastSend = false;
-            this.showModal3 = false;
-            this.showModalsuccess = true
+            // this.showModal = false;
+            // this.showModalsuccess = false;
+            // this.showModal2 = false;
+            // this.showModalLastSend = false;
+            // this.showModal3 = false;
+            // this.showModalsuccess = true
         },
         showModalsend() {
             this.showModal = true;

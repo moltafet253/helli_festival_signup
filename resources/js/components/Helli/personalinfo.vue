@@ -135,7 +135,7 @@ export default {
                 const nationalID = this.datapersonal['SocialID'];
                 if (confirm('آیا از بارگذاری عکس انتخاب شده مطمئن هستید؟ \n این عملیات قابل بازگشت نیست!')) {
 
-                    axios.post(`/api/upload/${nationalID}`, formData)
+                    axios.post(`/upload/${nationalID}`, formData)
                         .then(response => {
                             location.reload();
                         })

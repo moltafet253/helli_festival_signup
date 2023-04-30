@@ -98,8 +98,8 @@ class NewPost extends Controller
 //            HelliUserMaxUploadPost::where('national_code', '=', $cooperators[$c += 6]['codemeli'])->decrement('numbers', $decrementBy);
 //        }
             $agent = new Agent();
-            UserActivityLog::firstorcreate([
-                'user_id' => session()->get('nationalcode'),
+            UserActivityLog::create([
+                'user_id' => session('user_id'),
                 'activity' => 'Post New Post With This ID => ' . $post->id,
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->userAgent(),

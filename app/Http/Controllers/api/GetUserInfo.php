@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\UserActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,8 +14,8 @@ class GetUserInfo extends Controller
     public function getUserInfo($nationalcode)
     {
         $agent = new Agent();
-        UserActivityLog::firstorcreate([
-            'user_id' => session()->get('nationalcode'),
+        UserActivityLog::create([
+            'user_id' => session('user_id'),
             'activity' => 'Get User Info With This NationalCode => ' . $nationalcode,
             'ip_address' => request()->ip(),
             'user_agent' => request()->userAgent(),

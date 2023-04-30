@@ -12,8 +12,8 @@ class GetPost extends Controller
 {
     public function getPost($nationalcode) {
         $agent = new Agent();
-        UserActivityLog::firstorcreate([
-            'user_id' => session()->get('nationalcode'),
+        UserActivityLog::create([
+            'user_id' => session('user_id'),
             'activity' => 'Get Post With This NationalCode => ' . $nationalcode,
             'ip_address' => request()->ip(),
             'user_agent' => request()->userAgent(),

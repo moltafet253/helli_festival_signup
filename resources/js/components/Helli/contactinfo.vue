@@ -124,7 +124,7 @@ export default {
                     '\n' +
                     ' اطلاعات شما در صورت تایید دیگر قابل تغییر نیست.')) {
 
-                    axios.post(`/api/contact/save/${this.nationalcode}/`, {
+                    axios.post(`/contact/save/${this.nationalcode}/`, {
                         contact: this.contact,
                     })
                         .then(function (response) {
