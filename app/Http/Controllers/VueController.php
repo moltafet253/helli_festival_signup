@@ -39,7 +39,14 @@ class VueController extends Controller
 
                 $salt = random_bytes(32);
                 $hash = password_hash($salt, PASSWORD_ARGON2ID);
-
+                $pos = strpos($hash, "/");
+                if ($pos !== false) {
+                    $hash = str_replace("/", "", $hash);
+                }
+                $pos = strpos($hash, "\\");
+                if ($pos !== false) {
+                    $hash = str_replace("\\", "", $hash);
+                }
                 User::where('national_code', '=', $socialID)->update([
                     'name' => $data['data']['person']['FirstName'],
                     'family' => $data['data']['person']['LastName'],

@@ -22,6 +22,6 @@ class GetContacts extends Controller
             'user_agent' => request()->userAgent(),
             'device' => $agent->device(),
         ]);
-        return DB::table('contacts')->select('phone','mobile','address','postal_code')->where('national_code', '=', $nationalcode)->get();
+        return DB::table('contacts')->select('phone','mobile','address','postal_code','approved')->where('national_code', '=', $nationalcode)->get();
     }
 }
