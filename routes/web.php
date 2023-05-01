@@ -19,6 +19,7 @@ use App\Http\Controllers\api\GetContacts;
 use App\Http\Controllers\api\GetEducationInfo;
 use App\Http\Controllers\api\GetEduInfoForPosts;
 use App\Http\Controllers\api\GetPersonalImage;
+use App\Http\Controllers\api\GetPersonalInfo;
 use App\Http\Controllers\api\GetPost;
 use App\Http\Controllers\api\GetPostInfo;
 use App\Http\Controllers\api\GetPostParticipants;
@@ -47,15 +48,16 @@ use App\Http\Controllers\VueController;
 Route::get('/', [VueController::class, 'index']);
 
 //Get's
-Route::middleware('CheckSession')->get('/contact/{nationalcode}', [GetContacts::class, 'contacts']);
-Route::middleware('CheckSession')->get('/edu/{nationalcode}', [GetEducationInfo::class, 'education']);
-Route::middleware('CheckSession')->get('/teaching/{nationalcode}', [GetTeachingInfo::class, 'teaching']);
-Route::middleware('CheckSession')->get('/getprofileimage/this/{nationalcode}', [GetPersonalImage::class, 'getPersonalImage']);
-Route::middleware('CheckSession')->get('/users/getuserinfo/{nationalcode}', [GetUserInfo::class, 'getUserInfo']);
-Route::middleware('CheckSession')->get('/edu/geteduinfo/{nationalcode}', [GetEduInfoForPosts::class, 'edu']);
+Route::middleware('CheckSession')->get('/getpersonalinfo/this/{token}', [GetPersonalInfo::class, 'getpersonalinfo']);
+Route::middleware('CheckSession')->get('/contact/{token}', [GetContacts::class, 'contacts']);
+Route::middleware('CheckSession')->get('/edu/{token}', [GetEducationInfo::class, 'education']);
+Route::middleware('CheckSession')->get('/teaching/{token}', [GetTeachingInfo::class, 'teaching']);
+Route::middleware('CheckSession')->get('/getprofileimage/this/{token}', [GetPersonalImage::class, 'getPersonalImage']);
+Route::middleware('CheckSession')->get('/users/getuserinfo/{token}', [GetUserInfo::class, 'getUserInfo']);
+Route::middleware('CheckSession')->get('/edu/geteduinfo/{token}', [GetEduInfoForPosts::class, 'edu']);
 
 Route::prefix('posts')->group(function () {
-    Route::middleware('CheckSession')->get('/allposts/user/{nationalcode}', [GetAllPosts::class, 'getAllPosts']);
+    Route::middleware('CheckSession')->get('/allposts/user/{token}', [GetAllPosts::class, 'getAllPosts']);
     Route::middleware('CheckSession')->get('/getPostInfo/{id}', [GetPostInfo::class, 'getPostInfo']);
     Route::middleware('CheckSession')->get('/getPostParticipants/this/{id}', [GetPostParticipants::class, 'postParticipants']);
     Route::middleware('CheckSession')->get('/getpost/{nationalcode}', [GetPost::class, 'getPost']);
@@ -70,7 +72,7 @@ Route::prefix('defaults')->group(function () {
     Route::middleware('CheckSession')->get('/scientific_groups', [scientific_groups::class, 'scientificGroups']);
     Route::middleware('CheckSession')->get('/research_types', [research_types::class, 'researchTypes']);
     Route::middleware('CheckSession')->get('/special_sections', [special_sections::class, 'specialSections']);
-    Route::middleware('CheckSession')->get('/maxUploads/{nationCode}', [max_uploads::class, 'maxUploads']);
+    Route::middleware('CheckSession')->get('/maxUploads/{token}', [max_uploads::class, 'maxUploads']);
 
     //For TeachingInfo
     Route::middleware('CheckSession')->get('/provinces_without_gender/', [provinces_without_gender::class, 'provinces']);
@@ -82,12 +84,12 @@ Route::prefix('defaults')->group(function () {
 Route::prefix('posts')->group(function () {
     Route::middleware('CheckSession')->post('/updatepost/this', [UpdatePost::class, 'updatePost']);
     Route::middleware('CheckSession')->post('/delete/this/{id}', [DeletePost::class, 'deletePost']);
-    Route::middleware('CheckSession')->post('/approve/last/send/{nationCode}', [LastSendPosts::class, 'lastSendPosts']);
+    Route::middleware('CheckSession')->post('/approve/last/send/{token}', [LastSendPosts::class, 'lastSendPosts']);
     Route::middleware('CheckSession')->post('/participant/delete/this/{id}', [DeleteParticipant::class, 'deleteParticipant']);
 });
 
-Route::middleware('CheckSession')->post('/contact/save/{nationCode}', [PostContactInfo::class , 'postContact']);
+Route::middleware('CheckSession')->post('/contact/save/{token}', [PostContactInfo::class , 'postContact']);
 Route::middleware('CheckSession')->post('/edu/save', [PostEducationInfo::class , 'postEducation']);
-Route::middleware('CheckSession')->post('/teaching/save/{nationCode}', [PostTeachingInfo::class , 'postTeaching']);
-Route::middleware('CheckSession')->post('/upload/{nationCode}', [PostPersonalImage::class , 'postPersonalImage']);
-Route::middleware('CheckSession')->post('/sendpost/this/{nationalcode}', [NewPost::class , 'newPost']);
+Route::middleware('CheckSession')->post('/teaching/save/{token}', [PostTeachingInfo::class , 'postTeaching']);
+Route::middleware('CheckSession')->post('/upload/{token}', [PostPersonalImage::class , 'postPersonalImage']);
+Route::middleware('CheckSession')->post('/sendpost/this/{token}', [NewPost::class , 'newPost']);

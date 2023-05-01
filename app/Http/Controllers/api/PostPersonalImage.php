@@ -12,18 +12,18 @@ use Jenssegers\Agent\Agent;
 
 class PostPersonalImage extends Controller
 {
-    public function postPersonalImage(Request $request, $nationCode)
+    public function postPersonalImage(Request $request, $token)
     {
+
         $file = $request->file('file');
-        if ($file and $nationCode) {
-            $validator = Validator::make($request->all(), [
-                'file' => 'required|image|mimes:jpeg,png,jpg,bmp|max:2048|dimensions:min_width=128,min_height=128',
+        if ($file and $token) {
+            $validator = Validator::make($request->file(), [
+                'file' => 'required|image|mimes:jpeg,png,jpg,bmp|max:2048|dimensions:min_height=128,min_width=128,max_height=600,max_width=600',
             ]);
 
             if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 422);
+                return response()->json($validator->errors()->first());
             }
-
             $filename = $file->getClientOriginalName();
             $hashName = uniqid('', true) . '.' . $request->file('file')->getClientOriginalName();
             $path = $file->storeAs('public/profile_images', $hashName);
@@ -35,7 +35,7 @@ class PostPersonalImage extends Controller
             ]);
 
             if ($imageTable) {
-                User::where('national_code', '=', $nationCode)->update([
+                User::where('remember_token', '=', $token)->update([
                     'personalImageSrc' => $imageTable->id,
                 ]);
             }
@@ -43,7 +43,7 @@ class PostPersonalImage extends Controller
             $agent = new Agent();
             UserActivityLog::create([
                 'user_id' => session('user_id'),
-                'activity' => 'Post Personal Image With This NationalCode => ' . $nationCode,
+                'activity' => 'Post Personal Image For This NationalCode => ' . session('nationalcode'),
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->userAgent(),
                 'device' => $agent->device(),

@@ -11,8 +11,10 @@ use Jenssegers\Agent\Agent;
 
 class GetAllPosts extends Controller
 {
-    public function getAllPosts($nationalcode)
+    public function getAllPosts($token)
     {
+        $nationalcode = User::where('remember_token', $token)->value('national_code');
+
         $user_id = DB::table('users')->where('national_code', $nationalcode)->value('id');
         $user = User::findOrFail($user_id);
         $posts = $user->posts()->orderBy('id', 'desc')->get();

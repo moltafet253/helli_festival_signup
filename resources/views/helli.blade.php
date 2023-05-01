@@ -12,15 +12,12 @@
     <appheader></appheader>
     <underheader></underheader>
     <div class="px-16">
-        <personalinfo :datapersonal="{{json_encode($dataPersonal)}}"></personalinfo>
-        <contactinfo :nationalcode="{{ json_encode(session('nationalcode')) }}"></contactinfo>
-        @php
-            $edudata = array('nationalcode' => session('nationalcode'), 'gender' => session('gender'));
-        @endphp
-        <educationalinfo :nationalcode="{{ json_encode($edudata) }}"></educationalinfo>
-        <teachinginfo :nationalcode="{{ json_encode(session('nationalcode')) }}"></teachinginfo>
+        <personalinfo :token="{{json_encode(session('token'))}}"></personalinfo>
+        <contactinfo :token="{{ json_encode(session('token')) }}"></contactinfo>
+        <educationalinfo :token="{{ json_encode(session('token')) }}"></educationalinfo>
+        <teachinginfo :token="{{ json_encode(session('token')) }}"></teachinginfo>
         <bluewarn></bluewarn>
-        <posts :nationalcode="{{ json_encode(session('nationalcode')) }}"></posts>
+        <posts :token="{{ json_encode(session('token')) }}"></posts>
     </div>
 </div>
 </body>

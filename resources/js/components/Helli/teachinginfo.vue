@@ -101,7 +101,7 @@
 <script>
 export default {
     name: "teachinginfo",
-    props: ['nationalcode'],
+    props: ['token'],
     data() {
         return {
             requestsCount: 0,
@@ -116,29 +116,26 @@ export default {
             teachingProvince: [],
             teachingCity: [],
             teachingPlaceName: [],
+            nationalcode:'',
 
         }
     },
-    mounted() {
-        this.getDataFromEduTable(this.nationalcode);
-        this.getDataFromProvincesTable(this.nationalcode);
+    async mounted() {
+        await this.getDataFromEduTable(this.token);
+        await this.getDataFromProvincesTable(this.nationalcode);
     },
     methods: {
-        async getDataFromProvincesTable() {
-            this.requestsCount++;
-            await axios.get(`/defaults/provinces_without_gender`)
+        getDataFromProvincesTable() {
+            axios.get(`/defaults/provinces_without_gender`)
                 .then(response => {
                     this.ostan = response.data;
                 })
                 .catch(error => {
                     console.log(error)
-                }).finally(() => {
-                    this.requestsCount--;
-                });
+                })
         },
-        async getDataFromEduTable(nationalCode) {
-            this.requestsCount++;
-            await axios.get('/teaching/' + nationalCode)
+        getDataFromEduTable(token) {
+            axios.get('/teaching/' + token)
                 .then(response => {
                     this.teaching = response.data;
                     const userData = response.data;
@@ -154,41 +151,32 @@ export default {
                 })
                 .catch(error => {
                     console.log(error)
-                }).finally(() => {
-                    this.requestsCount--;
-                });
+                })
         },
         returnCity(province) {
             this.shahr = [];
             this.madrese = [];
             this.provinceSend = province;
-            this.requestsCount++;
             axios.get(`/defaults/cities_without_gender/${province}`)
                 .then(response => {
                     this.shahr = response.data;
                 })
                 .catch(error => {
                     console.log(error)
-                }).finally(() => {
-                this.requestsCount--;
-            })
+                })
         },
         returnSchool(city) {
-            this.requestsCount++;
             axios.get(`/defaults/schools_without_gender/${city}`)
                 .then(response => {
                     this.madrese = response.data;
                 })
                 .catch(error => {
                     console.log(error)
-                }).finally(() => {
-                this.requestsCount--;
-            })
+                })
         },
         divStatus(event) {
             if (event.target.value === 'بله') {
                 this.showDiv = true;
-                this.catchProvinces();
             } else {
                 this.showDiv = false;
             }
@@ -220,7 +208,7 @@ export default {
                 if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟ ' +
                     '\n' +
                     'پس از تایید دیگر قابل ویرایش نیست.')) {
-                    axios.post(`/teaching/save/${this.nationalcode}/`, {
+                    axios.post(`/teaching/save/${this.teaching[0]['national_code']}/`, {
                         teaching: this.teaching,
                     })
                         .then(function () {

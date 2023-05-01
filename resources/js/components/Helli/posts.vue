@@ -1435,7 +1435,7 @@ import jalaali from 'jalaali-js';
 import _ from 'lodash'
 
 export default {
-    props: ['nationalcode'],
+    props: ['token'],
     data() {
         return {
             showLoading: false,
@@ -1660,16 +1660,15 @@ export default {
             return `${jalaaliDate.jy}/${jalaaliDate.jm}/${jalaaliDate.jd}`;
         },
         axiosReq() {
-            this.getUserInfo(this.nationalcode);
-            this.getContactInfo(this.nationalcode);
-            this.getTeachingInfo(this.nationalcode);
-            this.getEduInfo(this.nationalcode);
-            this.getAllPosts(this.nationalcode);
-            this.getMaxUploads(this.nationalcode);
+            this.getUserInfo(this.token);
+            this.getContactInfo(this.token);
+            this.getTeachingInfo(this.token);
+            this.getEduInfo(this.token);
+            this.getAllPosts(this.token);
+            this.getMaxUploads(this.token);
         },
-        async getUserInfo(nationalcode) {
-            this.requestsCount++;
-            await axios.get(`/users/getuserinfo/${nationalcode}/`)
+        async getUserInfo(token) {
+            await axios.get(`/users/getuserinfo/${token}/`)
                 .then(response => {
                     this.personalInfo = response.data;
                     if (response.data[0]['personalImageSrc'] === null) {
@@ -1680,13 +1679,10 @@ export default {
                     console.log(error)
                 }).finally(() => {
                 this.showLoading = false;
-            }).finally(() => {
-                this.requestsCount--;
-            });
+            })
         },
-        async getContactInfo(nationalcode) {
-            this.requestsCount++;
-            await axios.get(`/contact/${nationalcode}/`)
+        async getContactInfo(token) {
+            await axios.get(`/contact/${token}/`)
                 .then(response => {
                     this.contactInfo = response.data;
                     if (response.data[0]['approved'] === 0) {
@@ -1695,13 +1691,10 @@ export default {
                 })
                 .catch(error => {
                     console.log(error)
-                }).finally(() => {
-                this.requestsCount--;
-            });
+                })
         },
-        async getEduInfo(nationalcode) {
-            this.requestsCount++;
-            await axios.get(`/edu/geteduinfo/${nationalcode}/`)
+        async getEduInfo(token) {
+            await axios.get(`/edu/geteduinfo/${token}/`)
                 .then(response => {
                     this.eduInfo = response.data;
                     if (response.data[0]['approved'] === 0) {
@@ -1710,13 +1703,10 @@ export default {
                 })
                 .catch(error => {
                     console.log(error)
-                }).finally(() => {
-                this.requestsCount--;
-            });
+                })
         },
-        async getTeachingInfo(nationalcode) {
-            this.requestsCount++;
-            await axios.get(`/teaching/${nationalcode}/`)
+        async getTeachingInfo(token) {
+            await axios.get(`/teaching/${token}/`)
                 .then(response => {
                     this.teachingInfo = response.data;
                     if (response.data[0]['approved'] === 0) {
@@ -1725,81 +1715,61 @@ export default {
                 })
                 .catch(error => {
                     console.log(error)
-                }).finally(() => {
-                this.requestsCount--;
-            });
+                })
         },
-        async getAllPosts(nationalcode) {
-            await this.requestsCount++;
-            axios.get(`/posts/allposts/user/${nationalcode}/`)
+        async getAllPosts(token) {
+            axios.get(`/posts/allposts/user/${token}/`)
                 .then(response => {
                     this.allPosts = response.data.posts;
                 })
                 .catch(error => {
                     console.log(error)
-                }).finally(() => {
-                this.requestsCount--;
-            });
+                })
         },
         async getResearchFormat() {
-            await this.requestsCount++;
             axios.get('/defaults/research_formats')
                 .then(response => {
                     this.research_formats = response.data;
                 })
                 .catch(error => {
                     console.log(error);
-                }).finally(() => {
-                this.requestsCount--;
-            });
+                })
         },
         async getScientificGroup() {
-            this.requestsCount++;
             await axios.get('/defaults/scientific_groups')
                 .then(response => {
                     this.scientific_groups = response.data;
                 })
                 .catch(error => {
                     console.log(error);
-                }).finally(() => {
-                this.requestsCount--;
-            });
+                })
         },
         async getResearchType() {
-            this.requestsCount++;
             await axios.get('/defaults/research_types')
                 .then(response => {
                     this.research_types = response.data;
                 })
                 .catch(error => {
                     console.log(error);
-                }).finally(() => {
-                this.requestsCount--;
-            });
+                })
         },
         async getSpecialSection() {
-            this.requestsCount++;
             await axios.get('/defaults/special_sections')
                 .then(response => {
                     this.special_sections = response.data;
                 })
                 .catch(error => {
                     console.log(error);
-                }).finally(() => {
-                this.requestsCount--;
-            });
+                })
         },
-        async getMaxUploads(nationalcode) {
-            this.requestsCount++;
-            await axios.get(`/defaults/maxUploads/${nationalcode}/`)
+        async getMaxUploads() {
+            await axios.get(`/defaults/maxUploads/${this.token}/`)
                 .then(response => {
                     this.max_uploads = response.data[0];
                 })
                 .catch(error => {
                     console.log(error);
-                }).finally(() => {
-                this.requestsCount--;
-            });
+                })
         },
          deletePost(id) {
             if (confirm('این عملیات قابل بازگشت نمی باشد' +
@@ -1817,7 +1787,7 @@ export default {
             }
         },
          lastSendFunction() {
-            axios.post(`/posts/approve/last/send/${this.nationalcode}/`, {
+            axios.post(`/posts/approve/last/send/${this.token}/`, {
                 approved: '1'
             })
                 .then(function (response) {
@@ -1860,7 +1830,7 @@ export default {
             }
 
             formData.append('file', file);
-            axios.post(`/sendpost/this/${this.nationalcode}`, formData, {
+            axios.post(`/sendpost/this/${this.token}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -1991,12 +1961,12 @@ export default {
         },
         confirm() {
             this.lastSendFunction();
-            // this.showModal = false;
-            // this.showModalsuccess = false;
-            // this.showModal2 = false;
-            // this.showModalLastSend = false;
-            // this.showModal3 = false;
-            // this.showModalsuccess = true
+            this.showModal = false;
+            this.showModalsuccess = false;
+            this.showModal2 = false;
+            this.showModalLastSend = false;
+            this.showModal3 = false;
+            this.showModalsuccess = true
         },
         showModalsend() {
             this.showModal = true;

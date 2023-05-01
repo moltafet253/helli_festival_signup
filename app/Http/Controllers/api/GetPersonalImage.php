@@ -14,9 +14,9 @@ use Jenssegers\Agent\Agent;
 use Illuminate\Session\Store;
 class GetPersonalImage extends Controller
 {
-    public function getPersonalImage($nationalcode , Request $request)
+    public function getPersonalImage($token , Request $request)
     {
-        $id = DB::table('users')->where('national_code', $nationalcode)->value('personalImageSrc');
+        $id = DB::table('users')->where('remember_token', $token)->value('personalImageSrc');
         if ($id) {
             $path = Image::find($id);
             $src = $path->src;

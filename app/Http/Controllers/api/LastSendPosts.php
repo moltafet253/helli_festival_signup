@@ -11,10 +11,12 @@ use Jenssegers\Agent\Agent;
 
 class LastSendPosts extends Controller
 {
-    public function lastSendPosts(Request $request, $nationCode)
+    public function lastSendPosts(Request $request, $token)
     {
+        $nationalcode = User::where('remember_token', $token)->value('national_code');
+
         if ($request->input('approved') == 1) {
-            $user = User::where('national_code', '=', $nationCode)->value('id');
+            $user = User::where('national_code', '=', $nationalcode)->value('id');
             $user_id = User::find($user);
             $posts = $user_id->allPosts;
             foreach ($posts as $post) {
@@ -24,7 +26,7 @@ class LastSendPosts extends Controller
                     $post->save();
                 }
             }
-            $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationCode)->update([
+            $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->update([
                 'sent_status' => 1,
                 'numbers' => 0,
             ]);
@@ -32,7 +34,7 @@ class LastSendPosts extends Controller
             $agent = new Agent();
             UserActivityLog::create([
                 'user_id' => session('user_id'),
-                'activity' => 'Post Last Send With This NationalCode => ' . $nationCode,
+                'activity' => 'Post Last Send With This NationalCode => ' . $nationalcode,
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->userAgent(),
                 'device' => $agent->device(),

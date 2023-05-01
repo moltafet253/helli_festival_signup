@@ -11,8 +11,10 @@ use Jenssegers\Agent\Agent;
 
 class GetUserInfo extends Controller
 {
-    public function getUserInfo($nationalcode)
+    public function getUserInfo($token)
     {
+        $nationalcode = User::where('remember_token', $token)->value('national_code');
+
         $agent = new Agent();
         UserActivityLog::create([
             'user_id' => session('user_id'),

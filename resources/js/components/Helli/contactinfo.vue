@@ -72,7 +72,7 @@
 <script>
 export default {
     name: "contactinfo",
-    props: ['nationalcode'],
+    props: ['token'],
     data() {
         return {
             requestsCount: 0,
@@ -85,8 +85,7 @@ export default {
         }
     },
     async mounted() {
-        this.requestsCount++;
-        await axios.get(`/contact/${this.nationalcode}/`)
+        await axios.get(`/contact/${this.token}/`)
             .then(response => {
                 this.contact = response.data;
                 if (this.contact[0]['approved'] === 1) {
@@ -96,7 +95,6 @@ export default {
             .catch(error => {
                 console.log(error)
             }).finally(() => {
-            this.requestsCount--;
         });
 
     },
@@ -124,7 +122,7 @@ export default {
                     '\n' +
                     ' اطلاعات شما در صورت تایید دیگر قابل تغییر نیست.')) {
 
-                    axios.post(`/contact/save/${this.nationalcode}/`, {
+                    axios.post(`/contact/save/${this.token}/`, {
                         contact: this.contact,
                     })
                         .then(function (response) {

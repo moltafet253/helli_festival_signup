@@ -11,7 +11,9 @@ use Jenssegers\Agent\Agent;
 
 class GetContacts extends Controller
 {
-    public function contacts($nationalcode) {
+    public function contacts($token) {
+        $nationalcode=User::where('remember_token',$token)->value('national_code');
+
         $agent = new Agent();
         UserActivityLog::create([
             'user_id' => session('user_id'),
@@ -20,6 +22,6 @@ class GetContacts extends Controller
             'user_agent' => request()->userAgent(),
             'device' => $agent->device(),
         ]);
-        return DB::table('contacts')->where('national_code', '=', $nationalcode)->get();
+        return DB::table('contacts')->select('phone','mobile','address','postal_code')->where('national_code', '=', $nationalcode)->get();
     }
 }

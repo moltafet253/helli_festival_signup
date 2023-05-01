@@ -40,6 +40,9 @@
                                     <span class="label-text-alt">با پسوندهای: png-jpg-jpeg-bmp</span>
                                     <br>
                                     <span class="label-text-alt ">حداقل عرض و ارتفاع عکس: 128px*128px</span>
+                                    <br>
+                                    <span class="label-text-alt ">حداکثر عرض و ارتفاع عکس: 600px*600px</span>
+
                                 </label>
                                 <br>
                                 <button type="submit" v-if="showButton"
@@ -60,14 +63,14 @@
                         <label class="block uppercase  text-xs font-bold mb-2">نام</label>
                         <label
                             class="cursor-not-allowed border border-colorborder px-3 py-3 bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{
-                                datapersonal.FirstName
+                                personalInfo['name']
                             }}</label>
                     </div>
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-xs font-bold mb-2">نام پدر</label>
                         <label
                             class="cursor-not-allowed border border-colorborder px-3 py-3 bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{
-                                datapersonal.FatherName
+                                personalInfo['father_name']
                             }}</label>
                     </div>
                 </div>
@@ -77,14 +80,14 @@
                             خانوادگی</label>
                         <label
                             class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{
-                                datapersonal.LastName
+                                personalInfo['family']
                             }}</label>
                     </div>
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-xs font-bold mb-2">کد ملی</label>
                         <label
                             class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{
-                                datapersonal.SocialID
+                                personalInfo['national_code']
                             }}</label>
                     </div>
                 </div>
@@ -94,7 +97,7 @@
                             تولد</label>
                         <label
                             class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{
-                                datapersonal.Birthdate
+                                personalInfo['birthdate']
                             }}</label>
                     </div>
                 </div>
@@ -103,7 +106,7 @@
                         <label class="block uppercase  text-xs font-bold mb-2">جنسیت</label>
                         <label
                             class="cursor-not-allowed border border-colorborder px-3 py-3   bg-c-gray rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">{{
-                                datapersonal.Gender
+                                personalInfo['gender']
                             }}</label>
                     </div>
                 </div>
@@ -115,12 +118,12 @@
 <script>
 export default {
     name: "personalinfo",
-    props: ['datapersonal'],
+    props: ['token'],
     data() {
         return {
+            personalInfo: [],
             requestsCount: 0,
             imageSrc: '',
-            datapersonals: [],
             confirm: false,
             showButton: false
         };
@@ -132,30 +135,35 @@ export default {
                 const file = fileInput.files[0];
                 const formData = new FormData();
                 formData.append('file', file);
-                const nationalID = this.datapersonal['SocialID'];
+                const token = this.token;
                 if (confirm('آیا از بارگذاری عکس انتخاب شده مطمئن هستید؟ \n این عملیات قابل بازگشت نیست!')) {
 
-                    axios.post(`/upload/${nationalID}`, formData)
+                    axios.post(`/upload/${token}`, formData)
                         .then(response => {
-                            location.reload();
-                        })
-                        .catch(error => {
-                            // console.log(error.response.data['errors']['file']);
-                            switch (error.response.data['errors']['file'][0]) {
+                            switch (response.data) {
                                 case "The file field has invalid image dimensions.":
                                     alert('سایز تصویر اشتباه است.');
+                                    return false;
                                     break;
                                 case 'The file field must not be greater than 2048 kilobytes.':
                                     alert('حجم فایل تصویر بزرگتر از 2 مگابایت است.');
+                                    return false;
                                     break;
                                 case 'The file field must be an image.':
                                     alert('فایل تصویر نامعتبر است.');
+                                    return false;
                                     break;
                                 case 'The file field must be a file of type: jpeg, png, jpg, bmp.':
                                     alert('فرمت فایل تصویر نامعتبر است.');
+                                    return false;
                                     break;
+                                default:
+                                    location.reload();
                             }
-                            console.clear();
+                        })
+                        .catch(error => {
+                            console.log(error.response.data);
+
                         });
                 }
             } else {
@@ -163,9 +171,16 @@ export default {
             }
         },
     },
-    async mounted() {
-        this.requestsCount++;
-        await axios.get(`/getprofileimage/this/${this.datapersonal.SocialID}`)
+    mounted() {
+        axios.get(`/getpersonalinfo/this/${this.token}`)
+            .then(response => {
+                this.personalInfo = response.data[0];
+            })
+            .catch(error => {
+
+            });
+
+        axios.get(`/getprofileimage/this/${this.token}`)
             .then(response => {
                 if (response.data.imageSrc) {
                     this.imageSrc = response.data.imageSrc;
@@ -174,8 +189,10 @@ export default {
             .catch(error => {
 
             }).finally(() => {
-            this.requestsCount--;
         });
+
+
+
     }
 }
 </script>

@@ -18,7 +18,7 @@ class CheckSession extends \App\Http\Controllers\VueController
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->session()->get('nationalcode')){
+        if ($request->session()->get('token') and $request->session()->get('nationalcode')){
             return $next($request);
         } else {
             $agent = new Agent();

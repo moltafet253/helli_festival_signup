@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Helli\HelliUserMaxUploadPost;
 use App\Models\Helli\Participant;
 use App\Models\Helli\Post;
+use App\Models\User;
 use App\Models\UserActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,8 +14,10 @@ use Jenssegers\Agent\Agent;
 
 class NewPost extends Controller
 {
-    public function newPost(Request $request, $nationalcode)
+    public function newPost(Request $request, $token)
     {
+        $nationalcode = User::where('remember_token', $token)->value('national_code');
+
         $user_id = DB::table('users')->where('national_code', $nationalcode)->value('id');
         $festival_title = DB::table('festivals')->where('active', 1)->value('title');
         $decrementBy = 1;

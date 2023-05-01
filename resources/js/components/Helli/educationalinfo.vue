@@ -11,7 +11,7 @@
         </div>
     </div>
     <div>
-        <form class="mt-8" @submit.prevent="handleSubmit({nationalcode} )">
+        <form class="mt-8" @submit.prevent="handleSubmit(this.nationalcode )">
             <div class="flex items-center ">
                 <span class="text-orange-500 pl-1">◼</span>
                 <h2 class="text-base font-bold">اطلاعات ‌تحصیلی</h2>
@@ -49,7 +49,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="w-full lg:w-2/12 px-4 flex-row" v-if="nationalcode['gender']==='مرد'">
+                <div class="w-full lg:w-2/12 px-4 flex-row" v-if="this.gender==='مرد'">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">پایه<span
                             style="color: red;">*</span></label>
@@ -95,7 +95,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="w-full lg:w-2/12 px-4 flex-row" v-if="nationalcode['gender']==='زن'">
+                <div class="w-full lg:w-2/12 px-4 flex-row" v-if="this.gender==='زن'">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">سطح<span
                             style="color: red;">*</span></label>
@@ -114,7 +114,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="w-full lg:w-2/12 px-4 flex-row" v-if="nationalcode['gender']==='زن'">
+                <div class="w-full lg:w-2/12 px-4 flex-row" v-if="this.gender==='زن'">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">ترم<span
                             style="color: red;">*</span></label>
@@ -260,10 +260,11 @@
 <script>
 export default {
     name: "educationalinfo",
-    props: ['nationalcode'],
+    props: ['token'],
 
     data() {
         return {
+            nationalcode:'',
             requestsCount: 0,
             edu: [],
             gender: '',
@@ -276,6 +277,7 @@ export default {
             madresetahsili: [],
             noetahsilhozavi: '',
 
+
             markaz: [],
             ostan: [],
             shahr: [],
@@ -287,27 +289,14 @@ export default {
 
         }
     },
-    mounted() {
-        this.getDataFromEduTable(this.nationalcode.nationalcode);
+    async mounted() {
+       await this.getDataFromEduTable(this.token);
 
-        this.getDataFromProvincesTable(this.nationalcode.gender);
+        await this.getDataFromProvincesTable(this.gender);
     },
     methods: {
-        async getDataFromProvincesTable(gender) {
-            this.requestsCount++;
-            await axios.get('/defaults/centers/' + gender)
-                .then(response => {
-                    this.markaz = response.data;
-                })
-                .catch(error => {
-                    console.log(error)
-                }).finally(() => {
-                this.requestsCount--;
-            });
-        },
-        async getDataFromEduTable(nationalCode) {
-            this.requestsCount++;
-            await axios.get('/edu/' + nationalCode)
+        async getDataFromEduTable(token) {
+            await axios.get('/edu/' + token)
                 .then(response => {
                     this.edu = response.data.edu;
                     this.gender = response.data.gender;
@@ -320,16 +309,24 @@ export default {
                 })
                 .catch(error => {
                     console.log(error)
-                }).finally(() => {
-                this.requestsCount--;
-            });
+                });
         },
+        async getDataFromProvincesTable(gender) {
+            await axios.get('/defaults/centers/' + gender)
+                .then(response => {
+                    this.markaz = response.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        },
+
         async returnProvince(center) {
             this.ostan = [];
             this.shahr = [];
             this.madrese = [];
             this.centerSend = center;
-            await axios.get(`/defaults/provinces/${center}/${this.nationalcode.gender}`)
+            await axios.get(`/defaults/provinces/${center}/${this.gender}`)
                 .then(response => {
                     this.ostan = response.data;
                 })
@@ -341,7 +338,7 @@ export default {
             this.shahr = [];
             this.madrese = [];
             this.provinceSend = province;
-            await axios.get(`/defaults/cities/${this.centerSend}/${province}/${this.nationalcode.gender}`)
+            await axios.get(`/defaults/cities/${this.centerSend}/${province}/${this.gender}`)
                 .then(response => {
                     this.shahr = response.data;
                 })
@@ -350,7 +347,7 @@ export default {
                 })
         },
         async returnSchool(city) {
-            await axios.get(`/defaults/schools/${this.centerSend}/${this.provinceSend}/${city}/${this.nationalcode.gender}`)
+            await axios.get(`/defaults/schools/${this.centerSend}/${this.provinceSend}/${city}/${this.gender}`)
                 .then(response => {
                     this.madrese = response.data;
                 })
@@ -368,7 +365,7 @@ export default {
             let paye = this.edu[0]['paye'];
             let sath = this.edu[0]['sath'];
             let term = this.edu[0]['term'];
-            let gender = a.nationalcode.gender;
+            let gender = this.gender;
             let tahsilatghhozavi = this.edu[0]['tahsilatghhozavi'];
             let reshtedaneshgahi = this.edu[0]['reshtedaneshgahi'];
 

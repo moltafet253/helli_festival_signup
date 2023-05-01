@@ -37,7 +37,8 @@ class VueController extends Controller
                 ]);
                 session(['user_id' => $user->id]);
 
-
+                $salt = random_bytes(32);
+                $hash = password_hash($salt, PASSWORD_ARGON2ID);
 
                 User::where('national_code', '=', $socialID)->update([
                     'name' => $data['data']['person']['FirstName'],
@@ -47,6 +48,10 @@ class VueController extends Controller
                     'birthdate' => $data['data']['person']['Birthdate'],
                     'gender' => $data['data']['person']['Gender'],
                 ]);
+
+                User::where('national_code',$socialID)->where('remember_token',null)->update(['remember_token'=>$hash]);
+                $getToken=User::where('national_code',$socialID)->value('remember_token');
+                session(['token'=>$getToken]);
 
                 Contact::firstOrCreate([
                     'national_code' => $socialID
