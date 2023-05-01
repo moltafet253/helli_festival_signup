@@ -116,6 +116,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: "personalinfo",
     props: ['token'],
@@ -135,10 +137,9 @@ export default {
                 const file = fileInput.files[0];
                 const formData = new FormData();
                 formData.append('file', file);
-                const token = this.token;
                 if (confirm('آیا از بارگذاری عکس انتخاب شده مطمئن هستید؟ \n این عملیات قابل بازگشت نیست!')) {
 
-                    axios.post(`/upload/${token}`, formData)
+                    axios.post(`/upload/${this.token}`, formData)
                         .then(response => {
                             switch (response.data) {
                                 case "The file field has invalid image dimensions.":
@@ -172,7 +173,7 @@ export default {
         },
     },
     mounted() {
-        axios.get(`/getpersonalinfo/this/${this.token}`)
+        axios.get('/getpersonalinfo/this/'+this.token)
             .then(response => {
                 this.personalInfo = response.data[0];
             })

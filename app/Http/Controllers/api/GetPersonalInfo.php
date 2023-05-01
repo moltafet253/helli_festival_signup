@@ -13,10 +13,11 @@ class GetPersonalInfo extends Controller
 {
     public function getpersonalinfo($token)
     {
+        $nationalcode=User::where('remember_token',$token)->value('national_code');
         $agent = new Agent();
         UserActivityLog::create([
             'user_id' => session('user_id'),
-            'activity' => 'Get Personal Image With This NationalCode => ' . session('nationalcode'),
+            'activity' => 'Get Personal Info With This NationalCode => ' . $nationalcode,
             'ip_address' => request()->ip(),
             'user_agent' => request()->userAgent(),
             'device' => $agent->device(),

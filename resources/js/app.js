@@ -7,7 +7,6 @@
 import './bootstrap';
 import { createApp } from 'vue';
 import axios from 'axios';
-import axiosRetry from 'axios-retry';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -42,20 +41,6 @@ import posts from './components/Helli/posts.vue';
 app.component('posts', posts);
 
 
-// axiosRetry(axios, { retries: 3, retryDelay: axiosRetry.exponentialDelay });
-
-axios.interceptors.response.use(
-    (response) => {
-        return response;
-    },
-    (error) => {
-        // if (error.response && error.response.status === 429) {
-        //     alert('تعداد درخواست ها بیش از حد شده است. لطفا 5 ثانیه صبر نمایید.');
-        // }
-        // return Promise.reject(error);
-
-    }
-);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
