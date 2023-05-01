@@ -95,7 +95,7 @@ class VueController extends Controller
                     'device' => $agent->device(),
                 ]);
 
-                return view('helli', compact('dataPersonal'));
+                return view('helli');
 
             } else {
                 $agent = new Agent();
