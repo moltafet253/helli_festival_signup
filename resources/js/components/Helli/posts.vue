@@ -1557,7 +1557,11 @@ export default {
                     this.postActivityType = response.data[0]['activity_type'];
                     if (response.data[0]['activity_type'] === 'moshtarak') {
                         this.postParticipationPercentage = response.data[0]['participation_percentage'];
-                        axios.get(`/posts/getPostParticipants/this/${id}/`)
+                        axios.get(`/posts/getPostParticipants/this/${id}/`,{
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        })
                             .then(response => {
                                 this.postParticipants = response.data;
                             })
@@ -1575,7 +1579,11 @@ export default {
             if (confirm('این عملیات قابل بازگشت نمی باشد' +
                 '\n' +
                 'آیا برای پاک کردن مشارک مطمئن هستید؟')) {
-                axios.post(`/posts/participant/delete/this/${id}`)
+                axios.post(`/posts/participant/delete/this/${id}`,{
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
                     .then(function () {
 
                     })
@@ -1620,7 +1628,8 @@ export default {
                 formData.append('file', file);
                 axios.post(`/posts/updatepost/this`, formData, {
                     headers: {
-                        'Content-Type': 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data',
+                        'X-Requested-With': 'XMLHttpRequest'
                     }
                 })
                     .then(function (response) {
@@ -1668,7 +1677,11 @@ export default {
             this.getMaxUploads(this.token);
         },
         async getUserInfo(token) {
-            await axios.get(`/users/getuserinfo/${token}/`)
+            await axios.get(`/users/getuserinfo/${token}/`,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.personalInfo = response.data;
                     if (response.data[0]['personalImageSrc'] === null) {
@@ -1682,7 +1695,11 @@ export default {
             })
         },
         async getContactInfo(token) {
-            await axios.get(`/contact/${token}/`)
+            await axios.get(`/contact/${token}/`,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.contactInfo = response.data;
                     if (response.data[0]['approved'] === 0) {
@@ -1694,7 +1711,11 @@ export default {
                 })
         },
         async getEduInfo(token) {
-            await axios.get(`/edu/geteduinfo/${token}/`)
+            await axios.get(`/edu/geteduinfo/${token}/`,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.eduInfo = response.data;
                     if (response.data[0]['approved'] === 0) {
@@ -1706,7 +1727,11 @@ export default {
                 })
         },
         async getTeachingInfo(token) {
-            await axios.get(`/teaching/${token}/`)
+            await axios.get(`/teaching/${token}/`,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.teachingInfo = response.data;
                     if (response.data[0]['approved'] === 0) {
@@ -1718,7 +1743,11 @@ export default {
                 })
         },
         async getAllPosts(token) {
-            axios.get(`/posts/allposts/user/${token}/`)
+            axios.get(`/posts/allposts/user/${token}/`,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.allPosts = response.data.posts;
                 })
@@ -1727,7 +1756,11 @@ export default {
                 })
         },
         async getResearchFormat() {
-            axios.get('/defaults/research_formats')
+            axios.get('/defaults/research_formats',{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.research_formats = response.data;
                 })
@@ -1736,7 +1769,11 @@ export default {
                 })
         },
         async getScientificGroup() {
-            await axios.get('/defaults/scientific_groups')
+            await axios.get('/defaults/scientific_groups',{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.scientific_groups = response.data;
                 })
@@ -1745,7 +1782,11 @@ export default {
                 })
         },
         async getResearchType() {
-            await axios.get('/defaults/research_types')
+            await axios.get('/defaults/research_types',{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.research_types = response.data;
                 })
@@ -1754,7 +1795,11 @@ export default {
                 })
         },
         async getSpecialSection() {
-            await axios.get('/defaults/special_sections')
+            await axios.get('/defaults/special_sections',{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.special_sections = response.data;
                 })
@@ -1763,7 +1808,11 @@ export default {
                 })
         },
         async getMaxUploads() {
-            await axios.get(`/defaults/maxUploads/${this.token}/`)
+            await axios.get(`/defaults/maxUploads/${this.token}/`,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.max_uploads = response.data[0];
                 })
@@ -1775,7 +1824,11 @@ export default {
             if (confirm('این عملیات قابل بازگشت نمی باشد' +
                 '\n' +
                 'آیا مطمئن هستید؟')) {
-                axios.post(`/posts/delete/this/${id}`)
+                axios.post(`/posts/delete/this/${id}`,{
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
                     .then(function (response) {
                         console.log(response.data);
                     })
@@ -1789,6 +1842,10 @@ export default {
          lastSendFunction() {
             axios.post(`/posts/approve/last/send/${this.token}/`, {
                 approved: '1'
+            },{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
             })
                 .then(function (response) {
                     console.log(response.data);
@@ -1828,11 +1885,11 @@ export default {
                     formData.append('rows[][phonenumber]', row.phonenumber);
                 });
             }
-
             formData.append('file', file);
             axios.post(`/sendpost/this/${this.token}`, formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    'X-Requested-With': 'XMLHttpRequest'
                 }
             })
                 .then(function (response) {

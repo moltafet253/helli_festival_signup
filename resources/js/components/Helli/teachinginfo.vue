@@ -126,7 +126,11 @@ export default {
     },
     methods: {
         getDataFromProvincesTable() {
-            axios.get(`/defaults/provinces_without_gender`)
+            axios.get(`/defaults/provinces_without_gender`,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.ostan = response.data;
                 })
@@ -135,7 +139,11 @@ export default {
                 })
         },
         getDataFromEduTable(token) {
-            axios.get('/teaching/' + token)
+            axios.get('/teaching/' + token,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.teaching = response.data;
                     const userData = response.data;
@@ -157,7 +165,11 @@ export default {
             this.shahr = [];
             this.madrese = [];
             this.provinceSend = province;
-            axios.get(`/defaults/cities_without_gender/${province}`)
+            axios.get(`/defaults/cities_without_gender/${province}`,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.shahr = response.data;
                 })
@@ -166,7 +178,11 @@ export default {
                 })
         },
         returnSchool(city) {
-            axios.get(`/defaults/schools_without_gender/${city}`)
+            axios.get(`/defaults/schools_without_gender/${city}`,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.madrese = response.data;
                 })
@@ -210,6 +226,10 @@ export default {
                     'پس از تایید دیگر قابل ویرایش نیست.')) {
                     axios.post(`/teaching/save/${this.teaching[0]['national_code']}/`, {
                         teaching: this.teaching,
+                    },{
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
                     })
                         .then(function () {
                             alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.');

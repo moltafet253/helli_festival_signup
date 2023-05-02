@@ -85,7 +85,11 @@ export default {
         }
     },
     async mounted() {
-        await axios.get(`/contact/${this.token}/`)
+        await axios.get(`/contact/${this.token}/`,{
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
             .then(response => {
                 this.contact = response.data;
                 if (this.contact[0]['approved'] === 1) {
@@ -124,13 +128,18 @@ export default {
 
                     axios.post(`/contact/save/${this.token}/`, {
                         contact: this.contact,
+                    },{
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
                     })
                         .then(function (response) {
-                            alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.');
-                            location.reload();
+                                alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.');
+                                location.reload();
                         })
                         .catch(function (error) {
-                            console.log(error);
+                            console.clear();
+                            alert(error.response.data);
                         });
                 }
             }

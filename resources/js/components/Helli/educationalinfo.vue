@@ -296,7 +296,11 @@ export default {
     },
     methods: {
         async getDataFromEduTable(token) {
-            await axios.get('/edu/' + token)
+            await axios.get('/edu/' + token,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.edu = response.data.edu;
                     this.gender = response.data.gender;
@@ -312,7 +316,11 @@ export default {
                 });
         },
         async getDataFromProvincesTable(gender) {
-            await axios.get('/defaults/centers/' + gender)
+            await axios.get('/defaults/centers/' + gender,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.markaz = response.data;
                 })
@@ -326,7 +334,11 @@ export default {
             this.shahr = [];
             this.madrese = [];
             this.centerSend = center;
-            await axios.get(`/defaults/provinces/${center}/${this.gender}`)
+            await axios.get(`/defaults/provinces/${center}/${this.gender}`,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.ostan = response.data;
                 })
@@ -338,7 +350,11 @@ export default {
             this.shahr = [];
             this.madrese = [];
             this.provinceSend = province;
-            await axios.get(`/defaults/cities/${this.centerSend}/${province}/${this.gender}`)
+            await axios.get(`/defaults/cities/${this.centerSend}/${province}/${this.gender}`,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.shahr = response.data;
                 })
@@ -347,7 +363,11 @@ export default {
                 })
         },
         async returnSchool(city) {
-            await axios.get(`/defaults/schools/${this.centerSend}/${this.provinceSend}/${city}/${this.gender}`)
+            await axios.get(`/defaults/schools/${this.centerSend}/${this.provinceSend}/${city}/${this.gender}`,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
                 .then(response => {
                     this.madrese = response.data;
                 })
@@ -402,6 +422,10 @@ export default {
                     axios.post(`/edu/save/`, {
                         edu: this.edu,
                         gender: gender,
+                    },{
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
                     })
                         .then(function (response) {
 

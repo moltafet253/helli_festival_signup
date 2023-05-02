@@ -139,7 +139,11 @@ export default {
                 formData.append('file', file);
                 if (confirm('آیا از بارگذاری عکس انتخاب شده مطمئن هستید؟ \n این عملیات قابل بازگشت نیست!')) {
 
-                    axios.post(`/upload/${this.token}`, formData)
+                    axios.post(`/upload/${this.token}`, formData,{
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
                         .then(response => {
                             switch (response.data) {
                                 case "The file field has invalid image dimensions.":
@@ -173,7 +177,11 @@ export default {
         },
     },
     mounted() {
-        axios.get('/getpersonalinfo/this/'+this.token)
+        axios.get('/getpersonalinfo/this/'+this.token,{
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
             .then(response => {
                 this.personalInfo = response.data[0];
             })
@@ -181,7 +189,11 @@ export default {
 
             });
 
-        axios.get(`/getprofileimage/this/${this.token}`)
+        axios.get(`/getprofileimage/this/${this.token}`,{
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
             .then(response => {
                 if (response.data.imageSrc) {
                     this.imageSrc = response.data.imageSrc;
