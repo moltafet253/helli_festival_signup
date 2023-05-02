@@ -10,6 +10,6 @@ class Festival extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'posts';
+    protected $table = 'festivals';
     protected $guarded = [];
 }
