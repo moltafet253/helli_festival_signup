@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('user_activity_logs', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('activity');
             $table->string('ip_address');
             $table->string('user_agent');
             $table->string('device');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

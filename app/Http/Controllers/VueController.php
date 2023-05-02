@@ -56,7 +56,17 @@ class VueController extends Controller
                     'gender' => $data['data']['person']['Gender'],
                 ]);
 
-                User::where('national_code',$socialID)->where('remember_token',null)->update(['remember_token'=>$hash]);
+                $setToken=User::where('national_code',$socialID)->where('remember_token',null)->update(['remember_token'=>$hash]);
+                if ($setToken){
+                    $agent = new Agent();
+                    UserActivityLog::firstorcreate([
+                        'user_id' => $user['id'],
+                        'activity' => 'Set Our Token => ' . $hash,
+                        'ip_address' => request()->ip(),
+                        'user_agent' => request()->userAgent(),
+                        'device' => $agent->device(),
+                    ]);
+                }
                 $getToken=User::where('national_code',$socialID)->value('remember_token');
                 session(['token'=>$getToken]);
 
