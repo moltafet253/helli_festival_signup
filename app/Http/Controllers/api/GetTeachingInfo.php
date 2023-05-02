@@ -22,6 +22,8 @@ class GetTeachingInfo extends Controller
             'user_agent' => request()->userAgent(),
             'device' => $agent->device(),
         ]);
-        return DB::table('teaching_infos')->where('national_code', '=', $nationalcode)->get();
+        return DB::table('teaching_infos')
+            ->select('national_code','isMaster','masterCode','teachingProvince','teachingCity','teachingPlaceName','approved')
+            ->where('national_code', '=', $nationalcode)->get();
     }
 }

@@ -15,7 +15,10 @@ class GetEducationInfo extends Controller
     {
         $nationalcode = User::where('remember_token', $token)->value('national_code');
 
-        $edu = DB::table('educational_infos')->where('national_code', '=', $nationalcode)->get();
+        $edu = DB::table('educational_infos')
+            ->select('national_code','namemarkaztahsili','noetahsilhozavi','paye','sath','term','ostantahsili','shahrtahsili','madresetahsili','shparvandetahsili','tahsilatghhozavi','reshtedaneshgahi','markaztakhasosihozavi','approved')
+            ->where('national_code', '=', $nationalcode)
+            ->get();
         $gender = session()->get('gender');
 
         $agent = new Agent();
