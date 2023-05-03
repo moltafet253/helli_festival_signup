@@ -74,8 +74,8 @@
                                             </p>
                                             <br>
                                             <p class="mb-0">چنانچه اثری به نام شما ثبت شده و متعلق به شما نیست، لطفا
-                                                به هیچ وجه آثار خود را ارسال نهایی نکرده و درخواست خود را به دبیرخانه
-                                                جشنواره استان یا مدرسه خود ارجاع دهید.
+                                                به هیچ وجه آثار خود را ارسال نهایی نکرده و به دبیرخانه
+                                                جشنواره استان یا مدرسه خود گزارش دهید.
                                             </p>
                                         </div>
                                     </div>
@@ -622,8 +622,10 @@
                                 </tbody>
                             </table>
                         </div>
-                        <button v-if="max_uploads.sent_status===0 && showErrorNotSubmittedInfos===false" @click="showModalLastSend = true"
-                                class="bg-green-600 text-white font-bold py-2 px-4 mt-14 rounded-lg mx-auto block"
+                        <button
+                            v-if="max_uploads.sent_status===0 && showErrorNotSubmittedInfos===false && showLastSendButton===true"
+                            @click="showModalLastSend = true"
+                            class="bg-green-600 text-white font-bold py-2 px-4 mt-14 rounded-lg mx-auto block"
                         >
                             ارسال نهایی آثار به جشنواره
                         </button>
@@ -1482,6 +1484,7 @@ export default {
             //errors
             emptyErrors: '',
             showErrorNotSubmittedInfos: false,
+            showLastSendButton: false,
 
             //get all this user posts
             allPosts: [],
@@ -1530,7 +1533,7 @@ export default {
         this.axiosReq();
     },
     methods: {
-        showNewPostModal(){
+        showNewPostModal() {
             this.getResearchFormat();
             this.getScientificGroup();
             this.getResearchType();
@@ -1557,7 +1560,7 @@ export default {
                     this.postActivityType = response.data[0]['activity_type'];
                     if (response.data[0]['activity_type'] === 'moshtarak') {
                         this.postParticipationPercentage = response.data[0]['participation_percentage'];
-                        axios.get(`/posts/getPostParticipants/this/${id}/`,{
+                        axios.get(`/posts/getPostParticipants/this/${id}/`, {
                             headers: {
                                 'X-Requested-With': 'XMLHttpRequest'
                             }
@@ -1579,7 +1582,7 @@ export default {
             if (confirm('این عملیات قابل بازگشت نمی باشد' +
                 '\n' +
                 'آیا برای پاک کردن مشارک مطمئن هستید؟')) {
-                axios.post(`/posts/participant/delete/this/${id}`,{
+                axios.post(`/posts/participant/delete/this/${id}`, {
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest'
                     }
@@ -1596,7 +1599,7 @@ export default {
         },
         editPostSend() {
             if (confirm('آیا مطمئن هستید؟')) {
-                if (this.postPagesNumber<0){
+                if (this.postPagesNumber < 0) {
                     alert('تعداد صفحات اشتباه وارد شده است.');
                     return false;
                 }
@@ -1677,7 +1680,7 @@ export default {
             this.getMaxUploads(this.token);
         },
         async getUserInfo(token) {
-            await axios.get(`/users/getuserinfo/${token}/`,{
+            await axios.get(`/users/getuserinfo/${token}/`, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -1691,11 +1694,11 @@ export default {
                 .catch(error => {
                     console.log(error)
                 }).finally(() => {
-                this.showLoading = false;
-            })
+                    this.showLoading = false;
+                })
         },
         async getContactInfo(token) {
-            await axios.get(`/contact/${token}/`,{
+            await axios.get(`/contact/${token}/`, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -1711,7 +1714,7 @@ export default {
                 })
         },
         async getEduInfo(token) {
-            await axios.get(`/edu/geteduinfo/${token}/`,{
+            await axios.get(`/edu/geteduinfo/${token}/`, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -1727,7 +1730,7 @@ export default {
                 })
         },
         async getTeachingInfo(token) {
-            await axios.get(`/teaching/${token}/`,{
+            await axios.get(`/teaching/${token}/`, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -1743,20 +1746,23 @@ export default {
                 })
         },
         async getAllPosts(token) {
-            axios.get(`/posts/allposts/user/${token}/`,{
+            axios.get(`/posts/allposts/user/${token}/`, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             })
                 .then(response => {
                     this.allPosts = response.data.posts;
+                    if (Array.isArray(response.data.posts) && response.data.posts.length !== 0) {
+                        this.showLastSendButton = true;
+                    }
                 })
                 .catch(error => {
                     console.log(error)
                 })
         },
         async getResearchFormat() {
-            axios.get('/defaults/research_formats',{
+            axios.get('/defaults/research_formats', {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -1769,7 +1775,7 @@ export default {
                 })
         },
         async getScientificGroup() {
-            await axios.get('/defaults/scientific_groups',{
+            await axios.get('/defaults/scientific_groups', {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -1782,7 +1788,7 @@ export default {
                 })
         },
         async getResearchType() {
-            await axios.get('/defaults/research_types',{
+            await axios.get('/defaults/research_types', {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -1795,7 +1801,7 @@ export default {
                 })
         },
         async getSpecialSection() {
-            await axios.get('/defaults/special_sections',{
+            await axios.get('/defaults/special_sections', {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -1808,7 +1814,7 @@ export default {
                 })
         },
         async getMaxUploads() {
-            await axios.get(`/defaults/maxUploads/${this.token}/`,{
+            await axios.get(`/defaults/maxUploads/${this.token}/`, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -1820,11 +1826,11 @@ export default {
                     console.log(error);
                 })
         },
-         deletePost(id) {
+        deletePost(id) {
             if (confirm('این عملیات قابل بازگشت نمی باشد' +
                 '\n' +
                 'آیا مطمئن هستید؟')) {
-                axios.post(`/posts/delete/this/${id}`,{
+                axios.post(`/posts/delete/this/${id}`, {
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest'
                     }
@@ -1839,8 +1845,10 @@ export default {
                 });
             }
         },
-         lastSendFunction() {
-            axios.post(`/posts/approve/last/send/${this.token}/`,{},{
+        lastSendFunction() {
+            axios.post(`/posts/approve/last/send/${this.token}/`, {
+                approved:1
+            }, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -1854,10 +1862,10 @@ export default {
             // this.showModal2 = true;
 
         },
-         downloadFile(fileSrc) {
+        downloadFile(fileSrc) {
             window.open('storage/' + fileSrc.slice(7), '_blank');
         },
-         handleSubmit() {
+        handleSubmit() {
             const fileInput = this.$refs.fileInput;
             const file = fileInput.files[0];
 
@@ -1962,8 +1970,6 @@ export default {
                     this.fileSelected = true;
                     this.error = false;
                     this.nameFile = event.target.files[0].name;
-
-                    // this.showModal = true;
                 }
             }
         },
@@ -1990,7 +1996,7 @@ export default {
                 this.emptyErrors = 'نوع پژوهش انتخاب نشده است.';
             } else if (!this.page_number && this.research_format === 'مقاله') {
                 this.emptyErrors = 'تعداد صفحات وارد نشده است.';
-            } else if (this.page_number<0) {
+            } else if (this.page_number < 0) {
                 this.emptyErrors = 'تعداد صفحات اشتباه وارد شده است.';
             } else if (!this.publish_status) {
                 this.emptyErrors = 'وضعیت نشر انتخاب نشده است.';
@@ -2016,12 +2022,12 @@ export default {
         },
         confirm() {
             this.lastSendFunction();
-            // this.showModal = false;
-            // this.showModalsuccess = false;
-            // this.showModal2 = false;
-            // this.showModalLastSend = false;
-            // this.showModal3 = false;
-            // this.showModalsuccess = true
+            this.showModal = false;
+            this.showModalsuccess = false;
+            this.showModal2 = false;
+            this.showModalLastSend = false;
+            this.showModal3 = false;
+            this.showModalsuccess = true
         },
         showModalsend() {
             this.showModal = true;

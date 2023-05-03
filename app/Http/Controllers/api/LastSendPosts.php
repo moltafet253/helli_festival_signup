@@ -26,9 +26,6 @@ class LastSendPosts extends Controller
         $posts = $userAllInfo->allPosts;
         foreach ($posts as $post) {
             if ($post['sent'] === 0) {
-                    $post->sent = 1;
-                    $post->sent_at = now();
-                    $post->save();
 
                 $festivalID = Festival::where('title', $post['festival_title'])->value('id');
                 $lastPostID = etelaat_a::orderBy('codeasar', 'desc')->first();
@@ -169,6 +166,11 @@ class LastSendPosts extends Controller
                 'sent_status' => 1,
                 'numbers' => 0,
             ]);
+
+            $post->sent = 1;
+            $post->sent_at = now();
+            $post->assigned_post_id = $lastPostID['codeasar'];
+            $post->save();
 
             $agent = new Agent();
             UserActivityLog::create([
