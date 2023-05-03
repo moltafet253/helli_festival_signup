@@ -232,7 +232,7 @@ export default {
                         }
                     })
                         .then(function () {
-                            alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.');
+                            alert('اطلاعات تدریس شما با موفقیت در سامانه ثبت شد.');
                             location.reload();
                         })
                         .catch(function (error) {

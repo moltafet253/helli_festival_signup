@@ -32,6 +32,7 @@ return new class extends Migration
             $table->text('file_src');
             $table->boolean('sent')->default(0);
             $table->timestamp('sent_at')->nullable();
+            $table->integer('assigned_post_code')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
