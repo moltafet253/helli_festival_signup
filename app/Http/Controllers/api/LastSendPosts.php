@@ -178,27 +178,27 @@ class LastSendPosts extends Controller
                 }
             }
 
-//            $post->sent = 1;
-//            $post->sent_at = now();
-//            $post->assigned_post_id = $lastPostID['codeasar'];
-//            $post->save();
+            $post->sent = 1;
+            $post->sent_at = now();
+            $post->assigned_post_id = $lastPostID['codeasar'];
+            $post->save();
 
 
-//            $agent = new Agent();
-//            UserActivityLog::create([
-//                'user_id' => session('user_id'),
-//                'activity' => 'Post Last Send With This NationalCode => ' . $nationalcode . ' And This Post ID=> ' . $post->id,
-//                'ip_address' => request()->ip(),
-//                'user_agent' => request()->userAgent(),
-//                'device' => $agent->device(),
-//            ]);
+            $agent = new Agent();
+            UserActivityLog::create([
+                'user_id' => session('user_id'),
+                'activity' => 'Post Last Send With This NationalCode => ' . $nationalcode . ' And This Post ID=> ' . $post->id,
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'device' => $agent->device(),
+            ]);
         }
-//        $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->update([
-//            'sent_status' => 1,
-//            'numbers' => 0,
-//        ]);
-//        if (!$maxUpload) {
-//            return response()->json(['errors' => 'Empty File'], 422);
-//        }
+        $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->update([
+            'sent_status' => 1,
+            'numbers' => 0,
+        ]);
+        if (!$maxUpload) {
+            return response()->json(['errors' => 'Empty File'], 422);
+        }
     }
 }
