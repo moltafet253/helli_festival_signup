@@ -8,6 +8,7 @@ use App\Models\Helli\EducationalInfo;
 use App\Models\Helli\etelaat_a;
 use App\Models\Helli\Festival;
 use App\Models\Helli\HelliUserMaxUploadPost;
+use App\Models\Helli\Post;
 use App\Models\Helli\TeachingInfo;
 use App\Models\User;
 use App\Models\UserActivityLog;
@@ -29,13 +30,17 @@ class LastSendPosts extends Controller
 
                 $festivalID = Festival::where('title', $post['festival_title'])->value('id');
                 $lastPostID = etelaat_a::orderBy('codeasar', 'desc')->first();
+                $contactInfo = Contact::select('mobile', 'national_code', 'phone', 'postal_code', 'address')->where('national_code', $nationalcode)->get();
+                $educationalInfo =
+                    EducationalInfo::select('namemarkaztahsili', 'noetahsilhozavi', 'paye', 'sath', 'term', 'ostantahsili', 'shahrtahsili', 'madresetahsili', 'shparvandetahsili', 'tahsilatghhozavi', 'reshtedaneshgahi', 'markaztakhasosihozavi')
+                        ->where('national_code', $nationalcode)->get();
+                $teachingInfo = TeachingInfo::select('masterCode', 'teachingProvince', 'teachingCity', 'teachingPlaceName', 'isMaster')->where('national_code', $nationalcode)->get();
 
                 if ($lastPostID !== null and $lastPostID !== '') {
                     $lastPostID['codeasar'] += 1;
                 } else {
                     $lastPostID['codeasar'] = $festivalID . '00001';
                 }
-
 
                 if ($post['activity_type'] == 'fardi') {
                     $activity_type = 'فردی';
@@ -80,10 +85,10 @@ class LastSendPosts extends Controller
                                 $rateLevel = 4;
                                 break;
                         }
-                    }elseif ($post['research_format'] != 'پایان‌نامه'){
-                        $rateLevel=3;
-                    }elseif ($post['research_format'] != 'تحقیق پایانی'){
-                        $rateLevel=2;
+                    } elseif ($post['research_format'] != 'پایان‌نامه') {
+                        $rateLevel = 3;
+                    } elseif ($post['research_format'] != 'تحقیق پایانی') {
+                        $rateLevel = 2;
                     }
                 }
 
@@ -111,11 +116,6 @@ class LastSendPosts extends Controller
                     'tedadsafahat250kalame' => $post['pages_number'],
                 ]);
 
-                $contactInfo = Contact::select('mobile', 'national_code', 'phone', 'postal_code', 'address')->where('national_code', $nationalcode)->get();
-                $educationalInfo =
-                    EducationalInfo::select('namemarkaztahsili', 'noetahsilhozavi', 'paye', 'sath', 'term', 'ostantahsili', 'shahrtahsili', 'madresetahsili', 'shparvandetahsili', 'tahsilatghhozavi', 'reshtedaneshgahi', 'markaztakhasosihozavi')
-                        ->where('national_code', $nationalcode)->get();
-                $teachingInfo = TeachingInfo::select('masterCode', 'teachingProvince', 'teachingCity', 'teachingPlaceName', 'isMaster')->where('national_code', $nationalcode)->get();
 
                 if ($teachingInfo[0]['isMaster'] == 'بله') {
                     $teachingInfo[0]['isMaster'] = 'هست';
@@ -124,7 +124,7 @@ class LastSendPosts extends Controller
                 }
 
                 $etelaat_p = DB::connection('helli')->table('etelaat_p')->insert([
-                    'jashnvareh'=>$festivalID . '-' . $post['festival_title'],
+                    'jashnvareh' => $festivalID . '-' . $post['festival_title'],
                     'codeasar' => $lastPostID['codeasar'],
                     'codemelli' => $nationalcode,
                     'fname' => $userAllInfo['name'],
@@ -159,30 +159,39 @@ class LastSendPosts extends Controller
                     'teachingCity' => $teachingInfo[0]['teachingCity'],
                     'teachingPlaceName' => $teachingInfo[0]['teachingPlaceName'],
                 ]);
+                if ($post->activity_type = 'moshtarak') {
+                    $id = $post->id;
+                    $post = Post::find($id);
+                    $participants = $post->moshtarakan;
+                    foreach ($participants as $participant) {
+                        DB::connection('helli')->table('participants')->insert([
 
+                        ]);
+                    }
+                }
             }
 
-            $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->update([
-                'sent_status' => 1,
-                'numbers' => 0,
-            ]);
+//            $post->sent = 1;
+//            $post->sent_at = now();
+//            $post->assigned_post_id = $lastPostID['codeasar'];
+//            $post->save();
 
-            $post->sent = 1;
-            $post->sent_at = now();
-            $post->assigned_post_id = $lastPostID['codeasar'];
-            $post->save();
 
-            $agent = new Agent();
-            UserActivityLog::create([
-                'user_id' => session('user_id'),
-                'activity' => 'Post Last Send With This NationalCode => ' . $nationalcode,
-                'ip_address' => request()->ip(),
-                'user_agent' => request()->userAgent(),
-                'device' => $agent->device(),
-            ]);
+//            $agent = new Agent();
+//            UserActivityLog::create([
+//                'user_id' => session('user_id'),
+//                'activity' => 'Post Last Send With This NationalCode => ' . $nationalcode . ' And This Post ID=> ' . $post->id,
+//                'ip_address' => request()->ip(),
+//                'user_agent' => request()->userAgent(),
+//                'device' => $agent->device(),
+//            ]);
         }
-        if (!$maxUpload) {
-            return response()->json(['errors' => 'Empty File'], 422);
-        }
+//        $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->update([
+//            'sent_status' => 1,
+//            'numbers' => 0,
+//        ]);
+//        if (!$maxUpload) {
+//            return response()->json(['errors' => 'Empty File'], 422);
+//        }
     }
 }

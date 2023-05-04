@@ -2022,12 +2022,12 @@ export default {
         },
         confirm() {
             this.lastSendFunction();
-            this.showModal = false;
-            this.showModalsuccess = false;
-            this.showModal2 = false;
-            this.showModalLastSend = false;
-            this.showModal3 = false;
-            this.showModalsuccess = true
+            // this.showModal = false;
+            // this.showModalsuccess = false;
+            // this.showModal2 = false;
+            // this.showModalLastSend = false;
+            // this.showModal3 = false;
+            // this.showModalsuccess = true
         },
         showModalsend() {
             this.showModal = true;

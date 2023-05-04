@@ -103,6 +103,8 @@ class VueController extends Controller
                     'national_code' => $socialID,
                 ]);
 
+
+
                 $agent = new Agent();
                 UserActivityLog::firstorcreate([
                     'user_id' => $user['id'],
