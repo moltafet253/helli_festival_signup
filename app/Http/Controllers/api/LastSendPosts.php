@@ -165,23 +165,22 @@ class LastSendPosts extends Controller
                     $participants = $post->moshtarakan;
                     foreach ($participants as $participant) {
                         DB::connection('helli')->table('participants')->insert([
-                            'jashnvareh'=>$festivalID . '-' . $post['festival_title'],
-                            'codeasar'=>$lastPostID['codeasar'],
-                            'name'=>$participant['name'],
-                            'family'=>$participant['family'],
-                            'national_code'=>$participant['national_code'],
-                            'participation_percentage'=>$participant['participation_percentage'],
-                            'mobile'=>$participant['mobile'],
-                            'created_at'=>now(),
+                            'jashnvareh' => $festivalID . '-' . $post['festival_title'],
+                            'codeasar' => $lastPostID['codeasar'],
+                            'name' => $participant['name'],
+                            'family' => $participant['family'],
+                            'national_code' => $participant['national_code'],
+                            'participation_percentage' => $participant['participation_percentage'],
+                            'mobile' => $participant['mobile'],
+                            'created_at' => now(),
                         ]);
                     }
                 }
+                $post->sent = 1;
+                $post->sent_at = now();
+                $post->assigned_post_id = $lastPostID['codeasar'];
+                $post->save();
             }
-
-            $post->sent = 1;
-            $post->sent_at = now();
-            $post->assigned_post_id = $lastPostID['codeasar'];
-            $post->save();
 
 
             $agent = new Agent();
