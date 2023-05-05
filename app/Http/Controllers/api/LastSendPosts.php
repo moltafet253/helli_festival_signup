@@ -100,6 +100,10 @@ class LastSendPosts extends Controller
                     $specialSection = null;
                 }
 
+                $url = $post['file_src'];
+                $word_to_remove = "public";
+                $AssignURL = env('APP_URL'). '/' . str_replace($word_to_remove, 'storage', $url);
+
                 $etelaat_a = DB::connection('helli')->table('etelaat_a')->insert([
                     'jashnvareh' => $festivalID . '-' . $post['festival_title'],
                     'codeasar' => $lastPostID['codeasar'],
@@ -114,6 +118,7 @@ class LastSendPosts extends Controller
                     'vaziatnashr' => $post['publish_status'],
                     'tedadsafhe' => $post['pages_number'],
                     'tedadsafahat250kalame' => $post['pages_number'],
+                    'fileasar' =>$AssignURL,
                 ]);
 
 
