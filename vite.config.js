@@ -29,6 +29,13 @@ export default defineConfig({
     },
     build: {
         target: 'modules',
-        mode: 'production'
+        mode: 'production',
+        copy: [
+            {
+                // کپی کردن پوشه icons در resources به public
+                from: 'resources/images/icons',
+                to: 'icons',
+            },
+        ],
     }
 });
