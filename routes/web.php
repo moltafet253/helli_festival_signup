@@ -14,6 +14,7 @@ use App\Http\Controllers\api\defaults\scientific_groups;
 use App\Http\Controllers\api\defaults\special_sections;
 use App\Http\Controllers\api\DeleteParticipant;
 use App\Http\Controllers\api\DeletePost;
+use App\Http\Controllers\api\GetActiveFestival;
 use App\Http\Controllers\api\GetAllPosts;
 use App\Http\Controllers\api\GetContacts;
 use App\Http\Controllers\api\GetEducationInfo;
@@ -55,13 +56,7 @@ Route::middleware('CheckSession')->get('/teaching/{token}', [GetTeachingInfo::cl
 Route::middleware('CheckSession')->get('/getprofileimage/this/{token}', [GetPersonalImage::class, 'getPersonalImage']);
 Route::middleware('CheckSession')->get('/users/getuserinfo/{token}', [GetUserInfo::class, 'getUserInfo']);
 Route::middleware('CheckSession')->get('/edu/geteduinfo/{token}', [GetEduInfoForPosts::class, 'edu']);
-
-Route::prefix('posts')->group(function () {
-    Route::middleware('CheckSession')->get('/allposts/user/{token}', [GetAllPosts::class, 'getAllPosts']);
-    Route::middleware('CheckSession')->get('/getPostInfo/{id}', [GetPostInfo::class, 'getPostInfo']);
-    Route::middleware('CheckSession')->get('/getPostParticipants/this/{id}', [GetPostParticipants::class, 'postParticipants']);
-    Route::middleware('CheckSession')->get('/getpost/{nationalcode}', [GetPost::class, 'getPost']);
-});
+Route::middleware('CheckSession')->get('/getactivefestival/{token}', [GetActiveFestival::class, 'festival']);
 
 Route::prefix('defaults')->group(function () {
     Route::middleware('CheckSession')->get('/centers/{gender}', [centers::class, 'centers']);
@@ -81,7 +76,12 @@ Route::prefix('defaults')->group(function () {
 });
 
 //Post's
+//posts group
 Route::prefix('posts')->group(function () {
+    Route::middleware('CheckSession')->get('/allposts/user/{token}', [GetAllPosts::class, 'getAllPosts']);
+    Route::middleware('CheckSession')->get('/getPostInfo/{id}', [GetPostInfo::class, 'getPostInfo']);
+    Route::middleware('CheckSession')->get('/getPostParticipants/this/{id}', [GetPostParticipants::class, 'postParticipants']);
+    Route::middleware('CheckSession')->get('/getpost/{nationalcode}', [GetPost::class, 'getPost']);
     Route::middleware('CheckSession')->post('/updatepost/this', [UpdatePost::class, 'updatePost']);
     Route::middleware('CheckSession')->post('/delete/this/{id}', [DeletePost::class, 'deletePost']);
     Route::middleware('CheckSession')->post('/approve/last/send/{token}', [LastSendPosts::class, 'lastSendPosts']);

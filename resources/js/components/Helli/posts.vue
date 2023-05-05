@@ -25,7 +25,7 @@
                         <div class="flex items-center mt-4 gap-16">
 
                             <div
-                                v-if="max_uploads.numbers!==0 && max_uploads.sent_status!==1 && showErrorNotSubmittedInfos===false"
+                                v-if="max_uploads.numbers!==0 && max_uploads.sent_status!==1 && showErrorNotSubmittedInfos===false && showErrorAgeRequirement!==true"
                                 class="w-full lg:w-3/12 flex-row bg-white  rounded-lg shadow">
                                 <!-- click open modal -->
                                 <div @click="showNewPostModal"
@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-else-if="showErrorNotSubmittedInfos===true"
+                            <div v-else-if="showErrorNotSubmittedInfos===true && showErrorAgeRequirement!==true"
                                  class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">
                                 <div class=" flex-row ">
                                     <div class="relative w-full">
@@ -58,7 +58,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="max_uploads.numbers===0 && max_uploads.sent_status!==1">
+                            <div v-else-if="showErrorAgeRequirement===true"
+                                 class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">
+                                <div class=" flex-row ">
+                                    <div class="relative w-full">
+                                        <img class="bg-red-500 rounded-md p-1"
+                                             src="build/assets/icons/Info Square.svg" alt="">
+                                    </div>
+                                </div>
+                                <div class="w-full flex-row">
+                                    <div class="relative w-full mr-3">
+                                        <p class="mb-0">کاربر گرامی؛ شرط سنی شما برای شرکت به جشنواره مجاز نمی باشد.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                v-if="max_uploads.numbers===0 && max_uploads.sent_status!==1 && showErrorAgeRequirement!==true">
                                 <div class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">
                                     <div class=" flex-row ">
                                         <div class="relative w-full">
@@ -623,7 +638,7 @@
                             </table>
                         </div>
                         <button
-                            v-if="max_uploads.sent_status===0 && showErrorNotSubmittedInfos===false && showLastSendButton===true"
+                            v-if="max_uploads.sent_status===0 && showErrorNotSubmittedInfos===false && showLastSendButton===true && showErrorAgeRequirement!==true"
                             @click="showModalLastSend = true"
                             class="bg-green-600 text-white font-bold py-2 px-4 mt-14 rounded-lg mx-auto block"
                         >
@@ -1460,6 +1475,7 @@ export default {
             error: null,
             nameFile: '',
             message: 'اطلاعات وارد شده را تایید می‌نمایید؟',
+            activeFestivalInfo: [],
             personalInfo: [],
             contactInfo: [],
             eduInfo: [],
@@ -1485,6 +1501,7 @@ export default {
             emptyErrors: '',
             showErrorNotSubmittedInfos: false,
             showLastSendButton: false,
+            showErrorAgeRequirement: '',
 
             //get all this user posts
             allPosts: [],
@@ -1672,12 +1689,25 @@ export default {
             return `${jalaaliDate.jy}/${jalaaliDate.jm}/${jalaaliDate.jd}`;
         },
         axiosReq() {
+            this.getTeachingInfo(this.token);
+            this.getActiveFestivalInfo(this.token);
             this.getUserInfo(this.token);
             this.getContactInfo(this.token);
-            this.getTeachingInfo(this.token);
             this.getEduInfo(this.token);
             this.getAllPosts(this.token);
             this.getMaxUploads(this.token);
+        },
+        async getActiveFestivalInfo(token) {
+            await axios.get(`/getactivefestival/${token}/`)
+                .then(response => {
+                        this.activeFestivalInfo = response.data;
+                    }
+                )
+                .catch(error => {
+                    console.log(error)
+                }).finally(() => {
+                    this.showLoading = false;
+                })
         },
         async getUserInfo(token) {
             await axios.get(`/users/getuserinfo/${token}/`, {
@@ -1689,6 +1719,35 @@ export default {
                     this.personalInfo = response.data;
                     if (response.data[0]['personalImageSrc'] === null) {
                         this.showErrorNotSubmittedInfos = true;
+                    } else {
+                        let myBirthDate = response.data[0]['birthdate'];
+                        let chunksmyBirthDate = [];
+                        for (let i = 0, len = myBirthDate.length; i < len; i += 4) {
+                            chunksmyBirthDate.push(myBirthDate.substring(i, i + 4));
+                        }
+
+                        let activeFestivalDate = this.activeFestivalInfo[0]['finish_date'];
+                        let chunksActiveFestivalDate = [];
+                        for (let i = 0, len = activeFestivalDate.length; i < len; i += 4) {
+                            chunksActiveFestivalDate.push(activeFestivalDate.substring(i, i + 4));
+                        }
+
+                        switch (this.teachingInfo[0]['isMaster']){
+                            case 'بله':
+                                if (chunksActiveFestivalDate[0]-chunksmyBirthDate[0]<=50){
+                                    this.showErrorAgeRequirement=false;
+                                }else{
+                                    this.showErrorAgeRequirement=true;
+                                }
+                                break;
+                            case 'خیر':
+                                if (chunksActiveFestivalDate[0]-chunksmyBirthDate[0]<=35){
+                                    this.showErrorAgeRequirement=false;
+                                }else{
+                                    this.showErrorAgeRequirement=true;
+                                }
+                                break;
+                        }
                     }
                 })
                 .catch(error => {
@@ -1696,7 +1755,8 @@ export default {
                 }).finally(() => {
                     this.showLoading = false;
                 })
-        },
+        }
+        ,
         async getContactInfo(token) {
             await axios.get(`/contact/${token}/`, {
                 headers: {
@@ -1712,7 +1772,8 @@ export default {
                 .catch(error => {
                     console.log(error)
                 })
-        },
+        }
+        ,
         async getEduInfo(token) {
             await axios.get(`/edu/geteduinfo/${token}/`, {
                 headers: {
@@ -1728,7 +1789,8 @@ export default {
                 .catch(error => {
                     console.log(error)
                 })
-        },
+        }
+        ,
         async getTeachingInfo(token) {
             await axios.get(`/teaching/${token}/`, {
                 headers: {
@@ -1744,7 +1806,8 @@ export default {
                 .catch(error => {
                     console.log(error)
                 })
-        },
+        }
+        ,
         async getAllPosts(token) {
             axios.get(`/posts/allposts/user/${token}/`, {
                 headers: {
@@ -1760,7 +1823,8 @@ export default {
                 .catch(error => {
                     console.log(error)
                 })
-        },
+        }
+        ,
         async getResearchFormat() {
             axios.get('/defaults/research_formats', {
                 headers: {
@@ -1773,7 +1837,8 @@ export default {
                 .catch(error => {
                     console.log(error);
                 })
-        },
+        }
+        ,
         async getScientificGroup() {
             await axios.get('/defaults/scientific_groups', {
                 headers: {
@@ -1786,7 +1851,8 @@ export default {
                 .catch(error => {
                     console.log(error);
                 })
-        },
+        }
+        ,
         async getResearchType() {
             await axios.get('/defaults/research_types', {
                 headers: {
@@ -1799,7 +1865,8 @@ export default {
                 .catch(error => {
                     console.log(error);
                 })
-        },
+        }
+        ,
         async getSpecialSection() {
             await axios.get('/defaults/special_sections', {
                 headers: {
@@ -1812,7 +1879,8 @@ export default {
                 .catch(error => {
                     console.log(error);
                 })
-        },
+        }
+        ,
         async getMaxUploads() {
             await axios.get(`/defaults/maxUploads/${this.token}/`, {
                 headers: {
@@ -1825,7 +1893,8 @@ export default {
                 .catch(error => {
                     console.log(error);
                 })
-        },
+        }
+        ,
         deletePost(id) {
             if (confirm('این عملیات قابل بازگشت نمی باشد' +
                 '\n' +
@@ -1844,7 +1913,8 @@ export default {
                     location.reload();
                 });
             }
-        },
+        }
+        ,
         lastSendFunction() {
             axios.post(`/posts/approve/last/send/${this.token}/`, {
                 approved: 1
@@ -1861,10 +1931,12 @@ export default {
                 });
             // this.showModal2 = true;
 
-        },
+        }
+        ,
         downloadFile(fileSrc) {
             window.open('storage/' + fileSrc.slice(7), '_blank');
-        },
+        }
+        ,
         handleSubmit() {
             const fileInput = this.$refs.fileInput;
             const file = fileInput.files[0];
@@ -1904,10 +1976,12 @@ export default {
                 .catch(function (error) {
                     console.log(error);
                 });
-        },
+        }
+        ,
         cancelshowModalLastSend() {
             this.showModalLastSend = false;
-        },
+        }
+        ,
         isTotalCooperationValid() {
             // Check if all required fields are filled
             const allFieldsFilled = this.rows.every(row => {
@@ -1937,7 +2011,8 @@ export default {
                 }
             }
 
-        },
+        }
+        ,
         checkEditedFile(event) {
             this.nameFile = '';
             const file = event.target.files[0];
@@ -1951,7 +2026,8 @@ export default {
                 this.error = false;
                 this.nameFile = event.target.files[0].name;
             }
-        },
+        }
+        ,
         checkFile(event) {
             this.nameFile = '';
             if (event.target.files.length === 0) {
@@ -1972,7 +2048,8 @@ export default {
                     this.nameFile = event.target.files[0].name;
                 }
             }
-        },
+        }
+        ,
         handleButtonClick(event) {
             if (this.isTotalCooperationValid()) {
                 if (this.fileSelected) { // چک کردن اینکه آیا فایلی انتخاب شده یا خیر
@@ -1984,7 +2061,8 @@ export default {
                 // انجام عملیات مورد نظر در صورت عدم برقراری شرط اعتبارسنجی
                 // مثلا نمایش پیغام خطا یا انجام عملیات جایگزین
             }
-        },
+        }
+        ,
         handleButtonClick2(event) {
             if (!this.name) {
                 this.emptyErrors = 'نام اثر وارد نشده است.';
@@ -2008,18 +2086,22 @@ export default {
                     this.error = 'خطا: فایلی انتخاب نشده است!'; // افزودن پیغام خطا در صورت عدم انتخاب فایل
                 }
             }
-        },
+        }
+        ,
         addRow() {
             const newRow = {name: '', lastname: '', codemeli: '', filenumber: '', Cooperation: '', phonenumber: ''};
             this.rows.push({...newRow});
-        },
+        }
+        ,
         addEditedRow() {
             const newRow = {name: '', lastname: '', codemeli: '', filenumber: '', Cooperation: '', phonenumber: ''};
             this.rowsedited.push({...newRow});
-        },
+        }
+        ,
         deleteRow(index) {
             this.rows.splice(index, 1);
-        },
+        }
+        ,
         confirm() {
             this.lastSendFunction();
             this.showModal = false;
@@ -2028,26 +2110,33 @@ export default {
             this.showModalLastSend = false;
             this.showModal3 = false;
             this.showModalsuccess = true
-        },
+        }
+        ,
         showModalsend() {
             this.showModal = true;
-        },
+        }
+        ,
         cancel() {
             this.showModal = false;
-        },
+        }
+        ,
         cancel2() {
             this.showModal2 = false;
-        },
+        }
+        ,
         cancelarzyabi() {
             this.showModalArzyabi = false;
-        },
+        }
+        ,
         cancel3() {
             this.showModal3 = false;
-        },
+        }
+        ,
         reloadPage() {
             location.reload();
         }
     }
-};
+}
+;
 </script>
 

@@ -5,15 +5,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 export default defineConfig({
     base: process.env.APP_URL || '/',
-    // server: {
-    //     proxy: {
-    //         '^/api': {
-    //             target: this.base, // آدرس سرور Laravel
-    //             changeOrigin: true,
-    //             rewrite: (path) => path.replace(/^\/api/, ''),
-    //         },
-    //     },
-    // },
     plugins: [
         laravel({
             input: [
