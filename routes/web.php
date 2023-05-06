@@ -46,7 +46,7 @@ use App\Http\Controllers\VueController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', [VueController::class, 'index']);
+Route::get('/helli', [VueController::class, 'index']);
 
 //Get's
 Route::middleware('CheckSession')->get('/getpersonalinfo/this/{token}', [GetPersonalInfo::class, 'getpersonalinfo']);
