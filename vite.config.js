@@ -8,8 +8,9 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/sass/app.scss',
                 'resources/js/app.js',
+                'resources/sass/app.scss',
+                'resources/css/app.css',
             ],
             refresh: true,
         }),
@@ -32,9 +33,12 @@ export default defineConfig({
         mode: 'production',
         copy: [
             {
-                // کپی کردن پوشه icons در resources به public
                 from: 'resources/images/icons',
                 to: 'icons',
+            },
+             {
+                from: 'resources/css/Fonts',
+                to: '',
             },
         ],
     }

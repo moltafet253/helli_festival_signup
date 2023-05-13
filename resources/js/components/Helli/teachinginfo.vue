@@ -224,12 +224,8 @@ export default {
                 if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟ ' +
                     '\n' +
                     'پس از تایید دیگر قابل ویرایش نیست.')) {
-                    axios.post(`/teaching/save/${this.teaching[0]['national_code']}/`, {
+                    axios.post(`/teaching/save/${this.token}`, {
                         teaching: this.teaching,
-                    },{
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
                     })
                         .then(function () {
                             alert('اطلاعات تدریس شما با موفقیت در سامانه ثبت شد.');

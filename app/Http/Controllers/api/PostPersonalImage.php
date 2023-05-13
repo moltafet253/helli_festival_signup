@@ -17,8 +17,11 @@ class PostPersonalImage extends Controller
 
         $file = $request->file('file');
         if ($file and $token) {
+            // $validator = Validator::make($request->file(), [
+            //     'file' => 'required|image|mimes:jpeg,png,jpg,bmp|max:2048|dimensions:min_height=128,min_width=128,max_height=600,max_width=600',
+            // ]);
             $validator = Validator::make($request->file(), [
-                'file' => 'required|image|mimes:jpeg,png,jpg,bmp|max:2048|dimensions:min_height=128,min_width=128,max_height=600,max_width=600',
+                'file' => 'required|image|mimes:jpeg,png,jpg,bmp|max:2048',
             ]);
 
             if ($validator->fails()) {

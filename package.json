@@ -2,17 +2,17 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-
-        "build": "npm-run-all build-app copy-assets",
+        "build": "npm-run-all build-app copy-icons copy-fonts",
         "build-app": "vite build",
-        "copy-assets": "mkdir public\\build\\assets\\icons && xcopy /s resources\\images\\icons public\\build\\assets\\icons",
+        "copy-icons": "mkdir -p public/build/assets/icons && cp -r resources/images/icons public/build/assets/",
+        "copy-fonts": "mkdir -p public/build/assets && cp -r resources/css/Fonts/ public/build/assets/",
         "build:prod": "cross-env NODE_ENV=production vite build"
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",
         "@vitejs/plugin-vue": "^4.0.0",
         "autoprefixer": "^10.4.14",
-        "axios": "^1.1.2",
+        "axios": "^1.4.0",
         "bootstrap": "^5.2.3",
         "cross-env": "^7.0.3",
         "dotenv": "^16.0.3",
@@ -43,4 +43,3 @@
         "vue-server-renderer": "^2.7.14"
     }
 }
-

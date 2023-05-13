@@ -1732,22 +1732,23 @@ export default {
                             chunksActiveFestivalDate.push(activeFestivalDate.substring(i, i + 4));
                         }
 
-                        switch (this.teachingInfo[0]['isMaster']){
-                            case 'بله':
-                                if (chunksActiveFestivalDate[0]-chunksmyBirthDate[0]<=50){
-                                    this.showErrorAgeRequirement=false;
-                                }else{
-                                    this.showErrorAgeRequirement=true;
-                                }
-                                break;
-                            case 'خیر':
-                                if (chunksActiveFestivalDate[0]-chunksmyBirthDate[0]<=35){
-                                    this.showErrorAgeRequirement=false;
-                                }else{
-                                    this.showErrorAgeRequirement=true;
-                                }
-                                break;
-                        }
+                        // switch (this.teachingInfo[0]['isMaster']){
+                        //     case 'بله':
+                        //         if (chunksActiveFestivalDate[0]-chunksmyBirthDate[0]<=50){
+                        //             this.showErrorAgeRequirement=false;
+                        //         }else{
+                        //             this.showErrorAgeRequirement=true;
+                        //         }
+                        //         break;
+                        //     case 'خیر':
+                        //         if (chunksActiveFestivalDate[0]-chunksmyBirthDate[0]<=35){
+                        //             this.showErrorAgeRequirement=false;
+                        //         }else{
+                        //             this.showErrorAgeRequirement=true;
+                        //         }
+                        //         break;
+                        // }
+                         this.showErrorAgeRequirement=false;
                     }
                 })
                 .catch(error => {
@@ -1916,7 +1917,7 @@ export default {
         }
         ,
         lastSendFunction() {
-            axios.post(`/posts/approve/last/send/${this.token}/`, {
+            axios.post(`/posts/approve/last/send/${this.token}`, {
                 approved: 1
             }, {
                 headers: {

@@ -4,15 +4,9 @@
 
 @font-face {
     font-family: 'IRANSansX';
-    src: URL('Fonts/IRANSansX-Black') format('truetype');
-    src: URL('Fonts/IRANSansX-Bold.ttf') format('truetype');
-    src: URL('Fonts/IRANSansX-DemiBold.ttf') format('truetype');
-    /*src: URL('Fonts/IRANSansX-ExtraBold.ttf') format('truetype');*/
-    /*src: URL('Fonts/IRANSansX-Light.ttf') format('truetype');*/
-    /*src: URL('Fonts/IRANSansX-Medium.ttf') format('truetype');*/
-    /*src: URL('Fonts/IRANSansX-Regular.ttf') format('truetype');*/
-    /*src: URL('Fonts/IRANSansX-Thin.ttf') format('truetype');*/
-    /*src: URL('Fonts/IRANSansX-UltraLight.ttf') format('truetype');*/
+    src: URL('IRANSansX-Black') format('truetype');
+    src: URL('IRANSansX-Bold.ttf') format('truetype');
+    src: URL('IRANSansX-DemiBold.ttf') format('truetype');
 }
 
 body {

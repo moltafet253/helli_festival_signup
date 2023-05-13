@@ -126,7 +126,7 @@ export default {
                     '\n' +
                     ' اطلاعات شما در صورت تایید دیگر قابل تغییر نیست.')) {
 
-                    axios.post(`/contact/save/${this.token}/`, {
+                    axios.post(`/contact/save/${this.token}`, {
                         contact: this.contact,
                     },{
                         headers: {
@@ -138,8 +138,9 @@ export default {
                                 location.reload();
                         })
                         .catch(function (error) {
-                            console.clear();
-                            alert(error.response.data);
+                            // console.clear();
+                            console.log(error.response.data);
+                            // alert(error.response.data);
                         });
                 }
             }

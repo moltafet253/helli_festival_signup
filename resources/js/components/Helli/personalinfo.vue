@@ -38,11 +38,6 @@
                                     <span class="label-text-alt">حداکثر حجم فایل: 2 مگابایت</span>
                                     <br>
                                     <span class="label-text-alt">با پسوندهای: png-jpg-jpeg-bmp</span>
-                                    <br>
-                                    <span class="label-text-alt ">حداقل عرض و ارتفاع عکس: 128px*128px</span>
-                                    <br>
-                                    <span class="label-text-alt ">حداکثر عرض و ارتفاع عکس: 600px*600px</span>
-
                                 </label>
                                 <br>
                                 <button type="submit" v-if="showButton"
@@ -181,11 +176,7 @@ export default {
         },
     },
     mounted() {
-        axios.get('/getpersonalinfo/this/'+this.token,{
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
+        axios.get('/getpersonalinfo/this/'+this.token)
             .then(response => {
                 this.personalInfo = response.data[0];
             })

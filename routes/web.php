@@ -46,10 +46,10 @@ use App\Http\Controllers\VueController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/helli', [VueController::class, 'index']);
+Route::get('/', [VueController::class, 'index']);
 
 //Get's
-Route::middleware('CheckSession')->get('/getpersonalinfo/this/{token}', [GetPersonalInfo::class, 'getpersonalinfo']);
+Route::get('/getpersonalinfo/this/{token}/', [GetPersonalInfo::class, 'getpersonalinfo']);
 Route::middleware('CheckSession')->get('/contact/{token}', [GetContacts::class, 'contacts']);
 Route::middleware('CheckSession')->get('/edu/{token}', [GetEducationInfo::class, 'education']);
 Route::middleware('CheckSession')->get('/teaching/{token}', [GetTeachingInfo::class, 'teaching']);
@@ -90,6 +90,6 @@ Route::prefix('posts')->group(function () {
 
 Route::middleware('CheckSession')->post('/contact/save/{token}', [PostContactInfo::class , 'postContact']);
 Route::middleware('CheckSession')->post('/edu/save', [PostEducationInfo::class , 'postEducation']);
-Route::middleware('CheckSession')->post('/teaching/save/{token}', [PostTeachingInfo::class , 'postTeaching']);
+Route::post('/teaching/save/{token}', [PostTeachingInfo::class , 'postTeaching']);
 Route::middleware('CheckSession')->post('/upload/{token}', [PostPersonalImage::class , 'postPersonalImage']);
 Route::middleware('CheckSession')->post('/sendpost/this/{token}', [NewPost::class , 'newPost']);

@@ -7,14 +7,11 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
-// Css
-@import "../css/app.css";
-
 @font-face {
     font-family: 'IRANSansX';
-    src: url('../css/fonts/IRANSansX-Black.ttf') format('truetype');
-    src: url('../css/fonts/IRANSansX-Bold.ttf') format('truetype');
-    src: url('../css/fonts/IRANSansX-DemiBold.ttf') format('truetype');
+    src: url('Fonts/IRANSansX-Black.ttf') format('truetype');
+    src: url('Fonts/IRANSansX-Bold.ttf') format('truetype');
+    src: url('Fonts/IRANSansX-DemiBold.ttf') format('truetype');
 }
 
 *{
