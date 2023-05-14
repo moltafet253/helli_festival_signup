@@ -28,7 +28,9 @@
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">تلفن ثابت (به
-                            همراه کد شهر)</label>
+                            همراه کد شهر)
+                            <span style="color: red;">*</span>
+                        </label>
                         <input :disabled="!showButton" v-for="(item, index) in contact" :key="index" type="number"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                v-model="item.phone">
@@ -112,12 +114,6 @@ export default {
                 alert('شماره همراه وارد نشده است.');
             } else if (phone === '' || phone === null) {
                 alert('تلفن ثابت وارد نشده است.');
-                return false;
-            } else if (postal_code === '' || postal_code === null) {
-                alert('کدپستی وارد نشده است.');
-                return false;
-            } else if (address === '' || address === null) {
-                alert('آدرس وارد نشده است.');
                 return false;
             } else if (mobile.length !== 11) {
                 alert('تلفن همراه با فرمت نامعتبر وارد شده است.');

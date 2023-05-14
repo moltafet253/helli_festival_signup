@@ -20,7 +20,7 @@ class PostContactInfo extends Controller
         $address = $request->input('contact.0.address');
         $postal_code = $request->input('contact.0.postal_code');
 
-        if (strlen($postal_code)!==10){
+        if (isset($postal_code) and strlen($postal_code)!==10){
             return response()->json(['تعداد کاراکترهای کدپستی باید 10 رقمی باشد.'],422);
         }
         $contact = Contact::where('national_code', '=', $nationalcode)->update([

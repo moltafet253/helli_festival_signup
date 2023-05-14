@@ -32,7 +32,7 @@ class LastSendPosts extends Controller
                 $lastPostID = etelaat_a::orderBy('codeasar', 'desc')->first();
                 $contactInfo = Contact::select('mobile', 'national_code', 'phone', 'postal_code', 'address')->where('national_code', $nationalcode)->get();
                 $educationalInfo =
-                    EducationalInfo::select('namemarkaztahsili', 'noetahsilhozavi', 'paye', 'sath', 'term', 'ostantahsili', 'shahrtahsili', 'madresetahsili', 'shparvandetahsili', 'tahsilatghhozavi', 'reshtedaneshgahi', 'markaztakhasosihozavi')
+                    EducationalInfo::select('namemarkaztahsili', 'noetahsilhozavi', 'paye', 'sath', 'term', 'ostantahsili', 'shahrtahsili', 'madresetahsili', 'shparvandetahsili', 'tahsilatghhozavi', 'reshtedaneshgahi', 'markaztakhasosihozavi','reshtetakhasosihozavi')
                         ->where('national_code', $nationalcode)->get();
                 $teachingInfo = TeachingInfo::select('masterCode', 'teachingProvince', 'teachingCity', 'teachingPlaceName', 'isMaster')->where('national_code', $nationalcode)->get();
 
@@ -157,6 +157,7 @@ class LastSendPosts extends Controller
                     'markaztakhasosihozavi' => $educationalInfo[0]['markaztakhasosihozavi'],
                     'namemarkaztahsili' => $educationalInfo[0]['namemarkaztahsili'],
                     'noetahsilathozavi' => $educationalInfo[0]['noetahsilhozavi'],
+                    'reshtetakhasosihozavi'=>$educationalInfo[0]['reshtetakhasosihozavi'],
 
                     'master' => $teachingInfo[0]['isMaster'],
                     'mastercode' => $teachingInfo[0]['mastercode'],

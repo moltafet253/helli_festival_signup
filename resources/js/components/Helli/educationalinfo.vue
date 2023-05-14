@@ -197,8 +197,8 @@
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2">مدرک تحصیلی غیر
-                            حوزوی</label>
+                        <label class="block uppercase  text-base font-bold mb-2">مدرک تحصیلی دانشگاهی<span
+                            style="color: red;">*</span></label>
                         <select :disabled="!showButton" v-for="(item, index) in edu" :key="index"
                                 v-model="item.tahsilatghhozavi"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
@@ -209,41 +209,51 @@
                             <option value="دیپلم" v-for="(item, index) in edu" :key="index"
                                     v-bind:selected="item.tahsilatghhozavi==='دیپلم'">دیپلم
                             </option>
-                            <option value="فوق دیپلم/کاردانی" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.tahsilatghhozavi==='فوق دیپلم/کاردانی'">فوق دیپلم/کاردانی
+                            <option value="فوق دیپلم" v-for="(item, index) in edu" :key="index"
+                                    v-bind:selected="item.tahsilatghhozavi==='فوق دیپلم/کاردانی'">فوق دیپلم
                             </option>
-                            <option value="لیسانس/کارشناسی" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.tahsilatghhozavi==='لیسانس/کارشناسی'">لیسانس/کارشناسی
+                            <option value="لیسانس" v-for="(item, index) in edu" :key="index"
+                                    v-bind:selected="item.tahsilatghhozavi==='لیسانس'">لیسانس
                             </option>
-                            <option value="فوق لیسانس/کارشناسی ارشد" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.tahsilatghhozavi==='فوق لیسانس/کارشناسی ارشد'">فوق
-                                لیسانس/کارشناسی ارشد
+                            <option value="فوق لیسانس" v-for="(item, index) in edu" :key="index"
+                                    v-bind:selected="item.tahsilatghhozavi==='فوق لیسانس'">فوق
+                                لیسانس
                             </option>
                             <option value="دکتری" v-for="(item, index) in edu" :key="index"
                                     v-bind:selected="item.tahsilatghhozavi==='دکتری'">دکتری
-                            </option>
-                            <option value="فوق دکتری" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.tahsilatghhozavi==='فوق دکتری'">فوق دکتری
                             </option>
                         </select>
                     </div>
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2">رشته تحصیلی غیر
-                            حوزوی</label>
+                        <label class="block uppercase  text-base font-bold mb-2">رشته تحصیلی دانشگاهی</label>
                         <input :disabled="!showButton" v-for="(item, index) in edu" :key="index" type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
-                               v-model="item.reshtedaneshgahi" placeholder="رشته تحصیلی غیر حوزوی را وارد نمایید">
+                               v-model="item.reshtedaneshgahi" placeholder="رشته تحصیلی دانشگاهی را وارد نمایید">
                     </div>
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">مرکز تخصصی
-                            حوزوی</label>
+                            حوزوی
+                            (در صورت اشتغال به تدریس)
+                        </label>
                         <input :disabled="!showButton" v-for="(item, index) in edu" :key="index" type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                v-model="item.markaztakhasosihozavi" placeholder="مرکز تخصصی حوزوی خود را وارد نمایید">
+                    </div>
+                </div>
+                <div class="w-full lg:w-4/12 px-4 flex-row">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase  text-base font-bold mb-2">رشته تخصصی
+                            حوزوی
+                            <span
+                                style="color: red;">*</span>
+                        </label>
+                        <input :disabled="!showButton" v-for="(item, index) in edu" :key="index" type="text"
+                               class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
+                               v-model="item.reshtetakhasosihozavi" placeholder="رشته تخصصی حوزوی خود را وارد نمایید">
                     </div>
                 </div>
                 <div class="w-full mt-4">
@@ -264,7 +274,7 @@ export default {
 
     data() {
         return {
-            nationalcode:'',
+            nationalcode: '',
             requestsCount: 0,
             edu: [],
             gender: '',
@@ -290,13 +300,12 @@ export default {
         }
     },
     async mounted() {
-       await this.getDataFromEduTable(this.token);
-
+        await this.getDataFromEduTable(this.token);
         await this.getDataFromProvincesTable(this.gender);
     },
     methods: {
         async getDataFromEduTable(token) {
-            await axios.get('/edu/' + token,{
+            await axios.get('/edu/' + token, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -316,7 +325,7 @@ export default {
                 });
         },
         async getDataFromProvincesTable(gender) {
-            await axios.get('/defaults/centers/' + gender,{
+            await axios.get('/defaults/centers/' + gender, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -328,13 +337,12 @@ export default {
                     console.log(error)
                 });
         },
-
         async returnProvince(center) {
             this.ostan = [];
             this.shahr = [];
             this.madrese = [];
             this.centerSend = center;
-            await axios.get(`/defaults/provinces/${center}/${this.gender}`,{
+            await axios.get(`/defaults/provinces/${center}/${this.gender}`, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -350,7 +358,7 @@ export default {
             this.shahr = [];
             this.madrese = [];
             this.provinceSend = province;
-            await axios.get(`/defaults/cities/${this.centerSend}/${province}/${this.gender}`,{
+            await axios.get(`/defaults/cities/${this.centerSend}/${province}/${this.gender}`, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -363,7 +371,7 @@ export default {
                 })
         },
         async returnSchool(city) {
-            await axios.get(`/defaults/schools/${this.centerSend}/${this.provinceSend}/${city}/${this.gender}`,{
+            await axios.get(`/defaults/schools/${this.centerSend}/${this.provinceSend}/${city}/${this.gender}`, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -388,6 +396,8 @@ export default {
             let gender = this.gender;
             let tahsilatghhozavi = this.edu[0]['tahsilatghhozavi'];
             let reshtedaneshgahi = this.edu[0]['reshtedaneshgahi'];
+            let markaztakhasosihozavi = this.edu[0]['markaztakhasosihozavi'];
+            let reshtetakhasosihozavi = this.edu[0]['reshtetakhasosihozavi'];
 
             if (namemarkaztahsili === '' || namemarkaztahsili === null || namemarkaztahsili === 'انتخاب کنید') {
                 alert('نام مرکز حوزوی انتخاب نشده است.');
@@ -412,9 +422,15 @@ export default {
                 term = null;
                 alert('پایه انتخاب نشده است.');
             } else if ((reshtedaneshgahi !== null || reshtedaneshgahi !== '') && (tahsilatghhozavi === '' || tahsilatghhozavi === null || tahsilatghhozavi === 'انتخاب کنید')) {
-                alert('مدرک تحصیلی غیر حوزوی انتخاب نشده است.');
-            } else if ((reshtedaneshgahi === null || reshtedaneshgahi === '') && (tahsilatghhozavi !== '' || tahsilatghhozavi !== null || tahsilatghhozavi !== 'انتخاب کنید') && tahsilatghhozavi !== 'زیر دیپلم') {
-                alert('رشته تحصیلی غیر حوزوی وارد نشده است.');
+                alert('مدرک تحصیلی دانشگاهی انتخاب نشده است.');
+            } else if ((reshtedaneshgahi === null || reshtedaneshgahi === '') && (tahsilatghhozavi !== '' || tahsilatghhozavi !== null || tahsilatghhozavi !== 'انتخاب کنید') && (tahsilatghhozavi !== 'زیر دیپلم' && tahsilatghhozavi !== 'دیپلم')) {
+                alert('رشته تحصیلی دانشگاهی وارد نشده است.');
+            } else if (markaztakhasosihozavi !== null && reshtetakhasosihozavi === null) {
+                this.edu[0]['markaztakhasosihozavi'] = null;
+                alert('رشته تخصصی حوزوی وارد نشده است.');
+            } else if (markaztakhasosihozavi === null && reshtetakhasosihozavi !== null) {
+                this.edu[0]['reshtetakhasosihozavi'] = null;
+                alert('مرکز تخصصی حوزوی وارد نشده است.');
             } else {
                 if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟ ' +
                     '\n' +
@@ -422,7 +438,7 @@ export default {
                     axios.post(`/edu/save`, {
                         edu: this.edu,
                         gender: gender,
-                    },{
+                    }, {
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest'
                         }

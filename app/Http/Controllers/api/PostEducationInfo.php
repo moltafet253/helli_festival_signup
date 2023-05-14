@@ -23,6 +23,7 @@ class PostEducationInfo extends Controller
         $sath = $request->input('edu.0.sath');
         $term = $request->input('edu.0.term');
         $markaztakhasosihozavi = $request->input('edu.0.markaztakhasosihozavi');
+        $reshtetakhasosihozavi = $request->input('edu.0.reshtetakhasosihozavi');
         $reshtedaneshgahi = $request->input('edu.0.reshtedaneshgahi');
         $tahsilatghhozavi = $request->input('edu.0.tahsilatghhozavi');
         $gender = $request->input('gender');
@@ -48,6 +49,7 @@ class PostEducationInfo extends Controller
             'markaztakhasosihozavi' => $markaztakhasosihozavi,
             'tahsilatghhozavi' => $tahsilatghhozavi,
             'reshtedaneshgahi' => $reshtedaneshgahi,
+            'reshtetakhasosihozavi'=>$reshtetakhasosihozavi,
             'approved' => 1
         ]);
         $agent = new Agent();

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->text('tahsilatghhozavi')->nullable();
             $table->text('reshtedaneshgahi')->nullable();
             $table->text('markaztakhasosihozavi')->nullable();
+            $table->text('reshtetakhasosihozavi')->nullable();
             $table->boolean('approved')->default(0);
 
             $table->timestamps();
