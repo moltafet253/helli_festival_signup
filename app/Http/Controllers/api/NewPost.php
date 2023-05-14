@@ -33,7 +33,7 @@ class NewPost extends Controller
 
         $file = $request->file('file');
         $hashName = uniqid('', true) . '.' . $request->file('file')->getClientOriginalName();
-        $path = $file->storeAs('public/asarFiles/' . $hashName . '/', $hashName);
+        $path = $file->storeAs('public/asarFiles/' . $hashName , $hashName);
 
         $post = Post::create([
             'user_id' => $user_id,
