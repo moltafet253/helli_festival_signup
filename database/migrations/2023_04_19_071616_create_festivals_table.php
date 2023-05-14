@@ -22,6 +22,9 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+        DB::table('festivals')->insert([
+            ['id'=>15,'title' => 'پانزدهم', 'start_date' => '1402/02/10', 'starter' => '0371714941', 'finish_date' => '1402/05/10', 'finisher' => '0371714941', 'created_at' => now(), 'updated_at' => now()]
+        ]);
     }
 
     /**

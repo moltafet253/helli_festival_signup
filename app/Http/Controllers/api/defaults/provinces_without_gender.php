@@ -12,6 +12,7 @@ class provinces_without_gender extends Controller
         $provinces = Provinces::select('ostan')
             ->distinct()
             ->orderBy('ostan', 'asc')
+            ->where('active',1)
             ->get();
         return response()->json($provinces);
     }

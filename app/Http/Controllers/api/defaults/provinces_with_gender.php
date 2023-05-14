@@ -13,6 +13,7 @@ class provinces_with_gender extends Controller
         $provinces = Provinces::select('ostan')
             ->where('markaz', '=', $center)
             ->where('gender', '=', $gender)
+            ->where('active',1)
             ->distinct()
             ->orderBy('ostan', 'asc')
             ->get();

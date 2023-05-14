@@ -160,7 +160,7 @@ class LastSendPosts extends Controller
                     'reshtetakhasosihozavi'=>$educationalInfo[0]['reshtetakhasosihozavi'],
 
                     'master' => $teachingInfo[0]['isMaster'],
-                    'mastercode' => $teachingInfo[0]['mastercode'],
+                    'mastercode' => $teachingInfo[0]['masterCode'],
                     'teachingProvince' => $teachingInfo[0]['teachingProvince'],
                     'teachingCity' => $teachingInfo[0]['teachingCity'],
                     'teachingPlaceName' => $teachingInfo[0]['teachingPlaceName'],

@@ -230,13 +230,13 @@
 
                                                             </div>
                                                         </div>
-                                                        <div class="w-full lg:w-4/12 px-4 flex-row">
+                                                        <div class="w-full lg:w-8/12 px-4 flex-row">
                                                             <div class="relative w-full mb-3">
                                                                 <label class="block uppercase  text-base font-bold mb-2"
                                                                 >بخش ویژه</label>
                                                                 <select v-model="special_section"
                                                                         class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
-                                                                    <option disabled selected value="">انتخاب کنید
+                                                                    <option selected value="">نمی باشد
                                                                     </option>
                                                                     <option v-for="specials in special_sections"
                                                                             :value="specials.title">
@@ -1043,16 +1043,15 @@
 
                                                         </div>
                                                     </div>
-                                                    <div class="w-full lg:w-4/12 px-4 flex-row">
+                                                    <div class="w-full lg:w-8/12 px-4 flex-row">
                                                         <div class="relative w-full mb-3">
                                                             <label class="block uppercase  text-base font-bold mb-2"
                                                             >بخش ویژه</label>
                                                             <select v-model="this.postSpecialSection"
                                                                     class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
-                                                                <option disabled value=""
+                                                                <option value=""
                                                                         :selected="null===this.postSpecialSection">
-                                                                    انتخاب
-                                                                    کنید
+                                                                    نمی باشد
                                                                 </option>
                                                                 <option v-for="specials in special_sections"
                                                                         :selected="specials.title===this.postSpecialSection"
@@ -1908,7 +1907,7 @@ export default {
                 }
             })
                 .then(response => {
-                    this.max_uploads = response.data;
+                    this.max_uploads = response.data[0];
                 })
                 .catch(error => {
                     console.log(error);
