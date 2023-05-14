@@ -12,6 +12,7 @@ use App\Http\Controllers\api\defaults\schools_with_gender;
 use App\Http\Controllers\api\defaults\schools_without_gender;
 use App\Http\Controllers\api\defaults\scientific_groups;
 use App\Http\Controllers\api\defaults\special_sections;
+use App\Http\Controllers\api\defaults\specialized_centers;
 use App\Http\Controllers\api\DeleteParticipant;
 use App\Http\Controllers\api\DeletePost;
 use App\Http\Controllers\api\GetActiveFestival;
@@ -49,7 +50,7 @@ use App\Http\Controllers\VueController;
 Route::get('/', [VueController::class, 'index']);
 
 //Get's
-Route::get('/getpersonalinfo/this/{token}/', [GetPersonalInfo::class, 'getpersonalinfo']);
+Route::middleware('CheckSession')->get('/getpersonalinfo/this/{token}/', [GetPersonalInfo::class, 'getpersonalinfo']);
 Route::middleware('CheckSession')->get('/contact/{token}', [GetContacts::class, 'contacts']);
 Route::middleware('CheckSession')->get('/edu/{token}', [GetEducationInfo::class, 'education']);
 Route::middleware('CheckSession')->get('/teaching/{token}', [GetTeachingInfo::class, 'teaching']);
@@ -67,6 +68,7 @@ Route::prefix('defaults')->group(function () {
     Route::middleware('CheckSession')->get('/scientific_groups', [scientific_groups::class, 'scientificGroups']);
     Route::middleware('CheckSession')->get('/research_types', [research_types::class, 'researchTypes']);
     Route::middleware('CheckSession')->get('/special_sections', [special_sections::class, 'specialSections']);
+    Route::middleware('CheckSession')->get('/specializedcenters', [specialized_centers::class, 'specialCenters']);
     Route::middleware('CheckSession')->get('/maxUploads/{token}', [max_uploads::class, 'maxUploads']);
 
     //For TeachingInfo

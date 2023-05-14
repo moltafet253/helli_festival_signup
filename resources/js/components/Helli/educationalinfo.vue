@@ -239,9 +239,13 @@
                             حوزوی
                             (در صورت اشتغال به تدریس)
                         </label>
-                        <input :disabled="!showButton" v-for="(item, index) in edu" :key="index" type="text"
-                               class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
-                               v-model="item.markaztakhasosihozavi" placeholder="مرکز تخصصی حوزوی خود را وارد نمایید">
+                        <select :disabled="!showButton" v-model="item.markaztakhasosihozavi" v-for="(item, index) in edu"
+                                class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
+                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option v-for="centers in spCenters" :value="item.markaztakhasosihozavi"
+                                    v-bind:selected="centers.title===item.markaztakhasosihozavi">{{ centers.title }}
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
@@ -292,6 +296,7 @@ export default {
             ostan: [],
             shahr: [],
             madrese: [],
+            spCenters: [],
 
             centerSend: '',
             provinceSend: '',
@@ -301,9 +306,24 @@ export default {
     },
     async mounted() {
         await this.getDataFromEduTable(this.token);
+        await this.getDataFromSpecializedCenters();
         await this.getDataFromProvincesTable(this.gender);
     },
     methods: {
+        getDataFromSpecializedCenters() {
+            axios.get('/defaults/specializedcenters', {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+                .then(response => {
+                    console.log(response.data);
+                    this.spCenters = response.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        },
         async getDataFromEduTable(token) {
             await axios.get('/edu/' + token, {
                 headers: {
