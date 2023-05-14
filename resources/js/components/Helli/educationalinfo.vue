@@ -239,16 +239,19 @@
                             حوزوی
                             (در صورت اشتغال به تدریس)
                         </label>
-                        <select :disabled="!showButton" v-model="item.markaztakhasosihozavi" v-for="(item, index) in edu"
-                                class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
+                        <select :disabled="!showButton" v-model="markaz.markaztakhasosihozavi" v-for="(markaz, index) in edu"
+                                class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
+                                @change="showReshteTakhasosiDiv=true"
+                        >
+
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
-                            <option v-for="centers in spCenters" :value="item.markaztakhasosihozavi"
-                                    v-bind:selected="centers.title===item.markaztakhasosihozavi">{{ centers.title }}
+                            <option v-for="centers in spCenters" :value="centers.title"
+                                    v-bind:selected="centers.title===markaz.markaztakhasosihozavi">{{ centers.title }}
                             </option>
                         </select>
                     </div>
                 </div>
-                <div class="w-full lg:w-4/12 px-4 flex-row">
+                <div v-if="this.showReshteTakhasosiDiv" class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">رشته تخصصی
                             حوزوی
@@ -290,6 +293,8 @@ export default {
             shahrtahsili: [],
             madresetahsili: [],
             noetahsilhozavi: '',
+            markaztakhasosihozavi:'',
+            showReshteTakhasosiDiv:false,
 
 
             markaz: [],
@@ -317,7 +322,6 @@ export default {
                 }
             })
                 .then(response => {
-                    console.log(response.data);
                     this.spCenters = response.data;
                 })
                 .catch(error => {
@@ -333,6 +337,9 @@ export default {
                 .then(response => {
                     this.edu = response.data.edu;
                     this.gender = response.data.gender;
+                    if (response.data.edu[0]['markaztakhasosihozavi']){
+                        this.showReshteTakhasosiDiv=true;
+                    }
                     if (response.data.edu[0]['approved'] === 1) {
                         this.showButton = false;
                         this.returnProvince(this.edu[0]['namemarkaztahsili']);
