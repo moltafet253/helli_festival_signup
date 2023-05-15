@@ -31,7 +31,7 @@
                             همراه کد شهر)
                             <span style="color: red;">*</span>
                         </label>
-                        <input :disabled="!showButton" v-for="(item, index) in contact" :key="index" type="number"
+                        <input placeholder="تلفن ثابت را به همراه کد شهر وارد کنید. (ضروری)" :disabled="!showButton" v-for="(item, index) in contact" :key="index" type="number"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                v-model="item.phone">
                     </div>
@@ -40,7 +40,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">تلفن
                             همراه<span style="color: red;">*</span></label>
-                        <input :disabled="!showButton" v-for="(item, index) in contact" :key="index" type="number"
+                        <input placeholder="تلفن همراه خود را وارد کنید. (ضروری)" :disabled="!showButton" v-for="(item, index) in contact" :key="index" type="number"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                v-model="item.mobile">
                     </div>
@@ -48,14 +48,14 @@
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">کدپستی (بدون خط فاصله)</label>
-                        <input :disabled="!showButton" v-for="(item, index) in contact" :key="index" type="number"
+                        <input placeholder="کدپستی خود را بدون خط فاصله وارد کنید. (غیر ضروری)" :disabled="!showButton" v-for="(item, index) in contact" :key="index" type="number"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                v-model="item.postal_code">
                     </div>
                 </div>
                 <div class="w-full px-4 flex-row">
                     <label class="block uppercase  text-base font-bold mb-2">آدرس</label>
-                    <textarea :disabled="!showButton"
+                    <textarea placeholder="آدرس پستی خود را به صورت کامل وارد کنید. (غیر ضروری)" :disabled="!showButton"
                               class="border border-colorborder p-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                               rows="5" v-for="(item, index) in contact" :key="index" v-model="item.address"></textarea>
                 </div>

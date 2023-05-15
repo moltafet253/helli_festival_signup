@@ -15,7 +15,7 @@
                             <div class="flex items-center mt-4 gap-16">
 
                                 <div
-                                    v-if="max_uploads.numbers!==0 && max_uploads.sent_status!==1 && showErrorNotSubmittedInfos===false && showErrorAgeRequirement!==true"
+                                    v-if="grantedSend===true && maxUploadFull===false"
                                     class="w-full lg:w-3/12 flex-row bg-white  rounded-lg shadow">
                                     <!-- click open modal -->
                                     <div @click="showNewPostModal"
@@ -33,7 +33,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div v-if="showErrorNotSubmittedInfos===true && showErrorAgeRequirement!==true"
+                                <div v-else-if="showErrorNotSubmittedInfos===true"
                                      class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">
                                     <div class=" flex-row ">
                                         <div class="relative w-full">
@@ -49,7 +49,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div v-if="showErrorAgeRequirement===true"
+                                <div v-else-if="showErrorAgeRequirement===true"
                                      class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">
                                     <div class=" flex-row ">
                                         <div class="relative w-full">
@@ -65,7 +65,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    v-if="max_uploads.numbers===0 && max_uploads.sent_status!==1 && showErrorAgeRequirement!==true">
+                                    v-else-if="maxUploadFull===true">
                                     <div class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">
                                         <div class=" flex-row ">
                                             <div class="relative w-full">
@@ -638,15 +638,14 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <button
-                                v-if="max_uploads.sent_status===0 && showErrorNotSubmittedInfos===false && showLastSendButton===true && showErrorAgeRequirement!==true"
+                            <button v-if="sentStatus===false"
                                 @click="showModalLastSend = true"
                                 class="bg-green-600 text-white font-bold py-2 px-4 mt-14 rounded-lg mx-auto block"
                             >
                                 ارسال نهایی آثار به جشنواره
                             </button>
 
-                            <div v-if="max_uploads.sent_status===1" class="pt-5 flex justify-center ">
+                            <div v-if="sentStatus===true" class="pt-5 flex justify-center ">
                                 <div
                                     class=" mx-4 p-3 flex bg-green-200 rounded-xl border border-colorborder w-9/12 items-center">
                                     <div class=" flex-row ">
@@ -1515,10 +1514,13 @@ export default {
             file: '',
 
             //errors
+            grantedSend: false,
             emptyErrors: '',
             showErrorNotSubmittedInfos: false,
             showLastSendButton: false,
             showErrorAgeRequirement: false,
+            maxUploadFull: false,
+            sentStatus:'',
 
             //get all this user posts
             allPosts: [],
@@ -1564,9 +1566,117 @@ export default {
 
     },
     mounted() {
-        this.axiosReq();
+        this.checkCondition(this.token);
+        this.getAllPosts(this.token);
     },
     methods: {
+        async checkCondition(token) {
+            await axios.get(`/getactivefestival/${token}`)
+                .then(response => {
+                        this.activeFestivalInfo = response.data;
+                    }
+                )
+                .catch(error => {
+                    console.log(error)
+                }).finally(() => {
+                    this.showLoading = false;
+                });
+
+            await axios.get(`/contact/${token}`)
+                .then(response => {
+                    this.contactInfo = response.data;
+                    if (response.data[0]['approved'] === 0) {
+                        this.showErrorNotSubmittedInfos = true;
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+
+            await axios.get(`/edu/geteduinfo/${token}`)
+                .then(response => {
+                    this.eduInfo = response.data;
+                    if (response.data[0]['approved'] === 0) {
+                        this.showErrorNotSubmittedInfos = true;
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+
+            await axios.get(`/teaching/${token}`)
+                .then(response => {
+                    this.teachingInfo = response.data[0];
+                    if (response.data[0]['approved'] === 0) {
+                        this.showErrorNotSubmittedInfos = true;
+                        this.grantedSend = false;
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+
+            await axios.get(`/users/getuserinfo/${token}`)
+                .then(response => {
+                    this.personalInfo = response.data;
+                    if (response.data[0]['personalImageSrc'] === null) {
+                        this.grantedSend = false;
+                        this.showErrorNotSubmittedInfos = true;
+                    } else {
+                        let myBirthDate = response.data[0]['birthdate'];
+                        let chunksmyBirthDate = myBirthDate.slice(0, 4);
+                        let ActiveFestivalDate = this.activeFestivalInfo[0]['finish_date'];
+                        let chunksActiveFestivalDate = ActiveFestivalDate.slice(0, 4);
+
+                        switch (this.teachingInfo['isMaster']) {
+                            case 'بله':
+                                if (parseInt(chunksActiveFestivalDate) - parseInt(chunksmyBirthDate) <= 50) {
+                                    this.showErrorAgeRequirement = false;
+                                    this.grantedSend = true;
+                                    this.showErrorNotSubmittedInfos = false;
+                                } else {
+                                    this.showErrorAgeRequirement = true;
+                                    this.grantedSend = false;
+                                    this.showErrorNotSubmittedInfos = false;
+                                }
+                                break;
+                            case 'خیر':
+                                if (parseInt(chunksActiveFestivalDate) - parseInt(chunksmyBirthDate) <= 35) {
+                                    this.showErrorAgeRequirement = false;
+                                    this.grantedSend = true;
+                                    this.showErrorNotSubmittedInfos = false;
+                                } else {
+                                    this.showErrorAgeRequirement = true;
+                                    this.grantedSend = false;
+                                    this.showErrorNotSubmittedInfos = false;
+                                }
+                                break;
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+
+            await axios.get(`/defaults/maxUploads/${token}`)
+                .then(response => {
+                    this.max_uploads = response.data;
+                    if (response.data[0]['numbers'] === 0 && response.data[0]['sent_status']!==1) {
+                        this.maxUploadFull = true;
+                        this.sentStatus=false;
+                    }
+                    if (response.data[0]['sent_status'] === 1) {
+                        this.maxUploadFull = false;
+                        this.sentStatus=true;
+                        this.grantedSend=false;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+
+        },
         showNewPostModal() {
             this.getResearchFormat();
             this.getScientificGroup();
@@ -1705,134 +1815,8 @@ export default {
             const jalaaliDate = jalaali.toJalaali(date.getFullYear(), date.getMonth() + 1, date.getDate());
             return `${jalaaliDate.jy}/${jalaaliDate.jm}/${jalaaliDate.jd}`;
         },
-        axiosReq() {
-            this.getTeachingInfo(this.token);
-
-            this.getActiveFestivalInfo(this.token);
-            this.getUserInfo(this.token);
-            this.getContactInfo(this.token);
-            this.getEduInfo(this.token);
-            this.getAllPosts(this.token);
-            this.getMaxUploads(this.token);
-
-        },
-        getActiveFestivalInfo(token) {
-            axios.get(`/getactivefestival/${token}`)
-                .then(response => {
-                        this.activeFestivalInfo = response.data;
-                    }
-                )
-                .catch(error => {
-                    console.log(error)
-                }).finally(() => {
-                    this.showLoading = false;
-                })
-        },
-        getUserInfo(token) {
-            axios.get(`/users/getuserinfo/${token}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-                .then(response => {
-                    this.personalInfo = response.data;
-                    if (response.data[0]['personalImageSrc'] === null) {
-                        this.showErrorNotSubmittedInfos = true;
-                    } else {
-                        let myBirthDate = response.data[0]['birthdate'];
-                        let chunksmyBirthDate = [];
-                        for (let i = 0, len = myBirthDate.length; i < len; i += 4) {
-                            chunksmyBirthDate.push(myBirthDate.substring(i, i + 4));
-                        }
-
-                        let activeFestivalDate = this.activeFestivalInfo[0]['finish_date'];
-                        let chunksActiveFestivalDate = [];
-                        for (let i = 0, len = activeFestivalDate.length; i < len; i += 4) {
-                            chunksActiveFestivalDate.push(activeFestivalDate.substring(i, i + 4));
-                        }
-
-                        switch (this.teachingInfo[0]['isMaster']) {
-                            case 'بله':
-                                if (chunksActiveFestivalDate[0] - chunksmyBirthDate[0] <= 50) {
-                                    this.showErrorAgeRequirement = false;
-                                } else {
-                                    this.showErrorAgeRequirement = true;
-                                }
-                                break;
-                            case 'خیر':
-                                if (chunksActiveFestivalDate[0] - chunksmyBirthDate[0] <= 35) {
-                                    this.showErrorAgeRequirement = false;
-                                } else {
-                                    this.showErrorAgeRequirement = true;
-                                }
-                                break;
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                }).finally(() => {
-                    this.showLoading = false;
-                })
-        }
-        ,
-        getContactInfo(token) {
-            axios.get(`/contact/${token}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-                .then(response => {
-                    this.contactInfo = response.data;
-                    if (response.data[0]['approved'] === 0) {
-                        this.showErrorNotSubmittedInfos = true;
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        }
-        ,
-        getEduInfo(token) {
-            axios.get(`/edu/geteduinfo/${token}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-                .then(response => {
-                    this.eduInfo = response.data;
-                    if (response.data[0]['approved'] === 0) {
-                        this.showErrorNotSubmittedInfos = true;
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        }
-        ,
-        getTeachingInfo(token) {
-            axios.get(`/teaching/${token}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-                .then(response => {
-                    this.teachingInfo = response.data;
-                    if (response.data[0]['approved'] === 0) {
-                        this.showErrorNotSubmittedInfos = true;
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        }
-        ,
         getAllPosts(token) {
-            axios.get(`/posts/allposts/user/${token}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
+            axios.get(`/posts/allposts/user/${token}`)
                 .then(response => {
                     this.allPosts = response.data.posts;
                     if (Array.isArray(response.data.posts) && response.data.posts.length !== 0) {
@@ -1845,11 +1829,7 @@ export default {
         }
         ,
         getResearchFormat() {
-            axios.get('/defaults/research_formats', {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
+            axios.get('/defaults/research_formats')
                 .then(response => {
                     this.research_formats = response.data;
                 })
@@ -1859,11 +1839,7 @@ export default {
         }
         ,
         getScientificGroup() {
-            axios.get('/defaults/scientific_groups', {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
+            axios.get('/defaults/scientific_groups')
                 .then(response => {
                     this.scientific_groups = response.data;
                 })
@@ -1873,11 +1849,7 @@ export default {
         }
         ,
         getResearchType() {
-            axios.get('/defaults/research_types', {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
+            axios.get('/defaults/research_types')
                 .then(response => {
                     this.research_types = response.data;
                 })
@@ -1887,27 +1859,9 @@ export default {
         }
         ,
         getSpecialSection() {
-            axios.get('/defaults/special_sections', {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
+            axios.get('/defaults/special_sections')
                 .then(response => {
                     this.special_sections = response.data;
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        }
-        ,
-        getMaxUploads(token) {
-            axios.get(`/defaults/maxUploads/${token}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-                .then(response => {
-                    this.max_uploads = response.data[0];
                 })
                 .catch(error => {
                     console.log(error);
@@ -1937,10 +1891,6 @@ export default {
         lastSendFunction() {
             axios.post(`/posts/approve/last/send/${this.token}`, {
                 approved: 1
-            }, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
             })
                 .then(function (response) {
                     console.log(response.data);

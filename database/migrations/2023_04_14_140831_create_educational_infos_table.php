@@ -17,12 +17,12 @@ return new class extends Migration
             $table->text('namemarkaztahsili')->nullable();
             $table->text('noetahsilhozavi')->nullable();
             $table->text('paye')->nullable();
-            $table->text('sath')->nullable();
-            $table->text('term')->nullable();
+            $table->integer('sath')->nullable();
+            $table->integer('term')->nullable();
             $table->text('ostantahsili')->nullable();
             $table->text('shahrtahsili')->nullable();
             $table->text('madresetahsili')->nullable();
-            $table->text('shparvandetahsili')->nullable();
+            $table->integer('shparvandetahsili')->nullable();
             $table->text('tahsilatghhozavi')->nullable();
             $table->text('reshtedaneshgahi')->nullable();
             $table->text('markaztakhasosihozavi')->nullable();

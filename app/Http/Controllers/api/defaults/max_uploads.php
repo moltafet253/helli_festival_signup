@@ -11,7 +11,7 @@ class max_uploads extends Controller
 {
     public function maxUploads($token) {
         $nationalcode = User::where('remember_token', $token)->value('national_code');
-        $max_upload = DB::table('helli_user_max_upload_posts')->get()->where('national_code', '=', $nationalcode);
+        $max_upload = DB::table('helli_user_max_upload_posts')->where('national_code', '=', $nationalcode)->get();
         return $max_upload;
     }
 }

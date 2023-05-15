@@ -26,7 +26,7 @@
                                 @change="returnProvince(item.namemarkaztahsili)"
                                 @loadeddata="returnProvince(item.namemarkaztahsili)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
-                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option v-for="item in markaz" :value="item.markaz"
                                     v-bind:selected="item.namemarkaztahsili===item.markaz">{{ item.markaz }}
                             </option>
@@ -39,7 +39,7 @@
                             <span style="color: red;">*</span></label>
                         <select :disabled="!showButton" v-model="item.noetahsilhozavi" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
-                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option value="آزاد" v-for="(item, index) in edu" :key="index"
                                     v-bind:selected="item.noetahsilhozavi==='آزاد'">آزاد
                             </option>
@@ -55,7 +55,7 @@
                             style="color: red;">*</span></label>
                         <select :disabled="!showButton" v-model="item.paye" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
-                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option value="1" v-for="(item, index) in edu" :key="index"
                                     v-bind:selected="item.paye==='1'">1
                             </option>
@@ -86,11 +86,8 @@
                             <option value="10" v-for="(item, index) in edu" :key="index"
                                     v-bind:selected="item.paye==='10'">10
                             </option>
-                            <option value="11" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye==='11'">11
-                            </option>
-                            <option value="12" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye==='12'">12
+                            <option value="خارج" v-for="(item, index) in edu" :key="index"
+                                    v-bind:selected="item.paye==='خارج'">خارج
                             </option>
                         </select>
                     </div>
@@ -101,7 +98,7 @@
                             style="color: red;">*</span></label>
                         <select :disabled="!showButton" v-model="item.sath" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
-                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option value="2" v-for="(item, index) in edu" :key="index"
                                     v-bind:selected="item.sath==='2'">2
                             </option>
@@ -120,7 +117,7 @@
                             style="color: red;">*</span></label>
                         <select :disabled="!showButton" v-model="item.term" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
-                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option value="1" v-if="item.sath===2 || item.sath===3 || item.sath===4"
                                     v-for="(item, index) in edu"
                                     :key="index" v-bind:selected="item.term==='1'">1
@@ -151,7 +148,7 @@
                         <select :disabled="!showButton" v-model="item.ostantahsili" v-for="(item, index) in edu"
                                 @change="returnCity(item.ostantahsili,this.gender)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
-                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option v-for="item in ostan" :value="item.ostan"
                                     v-bind:selected="item.ostantahsili===item.ostan">{{ item.ostan }}
                             </option>
@@ -162,10 +159,10 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">شهر محل
                             تحصیل<span style="color: red;">*</span></label>
-                        <select :disabled="!showButton" v-model="item.shahrtahsili" v-for="(item, index) in edu"
+                        <select :value="null" :disabled="!showButton" v-model="item.shahrtahsili" v-for="(item, index) in edu"
                                 @change="returnSchool(item.shahrtahsili)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
-                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option v-for="item in shahr" :value="item.shahr"
                                     v-bind:selected="item.shahrtahsili===item.shahr">{{ item.shahr }}
                             </option>
@@ -178,7 +175,7 @@
                             style="color: red;">*</span></label>
                         <select :disabled="!showButton" v-model="item.madresetahsili" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
-                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option v-for="item in madrese" :value="item.madrese"
                                     v-bind:selected="item.madresetahsili===item.madrese">{{ item.madrese }}
                             </option>
@@ -199,10 +196,10 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">مدرک تحصیلی دانشگاهی<span
                             style="color: red;">*</span></label>
-                        <select :disabled="!showButton" v-for="(item, index) in edu" :key="index"
+                        <select @change="this.ReshteDaneshgahiDiv(item.tahsilatghhozavi)" :disabled="!showButton" v-for="(item, index) in edu" :key="index"
                                 v-model="item.tahsilatghhozavi"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
-                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option selected :value="null" disabled style="color: #6c757d">انتخاب کنید</option>
                             <option value="زیر دیپلم" v-for="(item, index) in edu" :key="index"
                                     v-bind:selected="item.tahsilatghhozavi==='زیر دیپلم'">زیر دیپلم
                             </option>
@@ -225,9 +222,11 @@
                         </select>
                     </div>
                 </div>
-                <div class="w-full lg:w-4/12 px-4 flex-row">
+                <div v-if="showReshteDaneshgahiDiv" class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2">رشته تحصیلی دانشگاهی</label>
+                        <label class="block uppercase  text-base font-bold mb-2">رشته تحصیلی دانشگاهی
+                            <span style="color: red;">*</span>
+                        </label>
                         <input :disabled="!showButton" v-for="(item, index) in edu" :key="index" type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                v-model="item.reshtedaneshgahi" placeholder="رشته تحصیلی دانشگاهی را وارد نمایید">
@@ -237,14 +236,14 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">مرکز تخصصی
                             حوزوی
-                            (در صورت اشتغال به تدریس)
+                            (در صورت تحصیل)
                         </label>
                         <select :disabled="!showButton" v-model="markaz.markaztakhasosihozavi" v-for="(markaz, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
-                                @change="showReshteTakhasosiDiv=true"
+                                @change="this.ReshteTakhasosiDiv(markaz.markaztakhasosihozavi)"
                         >
 
-                            <option selected disabled style="color: #6c757d">انتخاب کنید</option>
+                            <option selected :value="null">اشتغال ندارم</option>
                             <option v-for="centers in spCenters" :value="centers.title"
                                     v-bind:selected="centers.title===markaz.markaztakhasosihozavi">{{ centers.title }}
                             </option>
@@ -295,6 +294,7 @@ export default {
             noetahsilhozavi: '',
             markaztakhasosihozavi:'',
             showReshteTakhasosiDiv:false,
+            showReshteDaneshgahiDiv:false,
 
 
             markaz: [],
@@ -315,6 +315,20 @@ export default {
         await this.getDataFromProvincesTable(this.gender);
     },
     methods: {
+        ReshteDaneshgahiDiv(value){
+            if (value!==null && value!=='دیپلم' && value!=='زیر دیپلم'){
+                this.showReshteDaneshgahiDiv=true;
+            }else {
+                this.showReshteDaneshgahiDiv=false;
+            }
+        },
+        ReshteTakhasosiDiv(value){
+            if (value!==null){
+                this.showReshteTakhasosiDiv=true;
+            }else {
+                this.showReshteTakhasosiDiv=false;
+            }
+        },
         getDataFromSpecializedCenters() {
             axios.get('/defaults/specializedcenters', {
                 headers: {
@@ -329,14 +343,13 @@ export default {
                 });
         },
         async getDataFromEduTable(token) {
-            await axios.get('/edu/' + token, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
+            await axios.get('/edu/' + token)
                 .then(response => {
                     this.edu = response.data.edu;
                     this.gender = response.data.gender;
+                    if (response.data.edu[0]['reshtedaneshgahi']){
+                        this.showReshteDaneshgahiDiv=true;
+                    }
                     if (response.data.edu[0]['markaztakhasosihozavi']){
                         this.showReshteTakhasosiDiv=true;
                     }
@@ -455,6 +468,7 @@ export default {
             } else if (markaztakhasosihozavi !== null && reshtetakhasosihozavi === null) {
                 this.edu[0]['markaztakhasosihozavi'] = null;
                 alert('رشته تخصصی حوزوی وارد نشده است.');
+                this.showReshteTakhasosiDiv=false;
             } else if (markaztakhasosihozavi === null && reshtetakhasosihozavi !== null) {
                 this.edu[0]['reshtetakhasosihozavi'] = null;
                 alert('مرکز تخصصی حوزوی وارد نشده است.');
