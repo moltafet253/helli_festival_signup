@@ -18,6 +18,7 @@ class DeletePost extends Controller
             $post = Post::find($id);
             $mainUser = User::find($post['user_id'])->value('national_code');
             HelliUserMaxUploadPost::where('national_code', '=', $mainUser)->increment('numbers', 1);
+            $post->assigned_post_id=null;
             $post->sent=2;
             $post->delete();
             $post->save();

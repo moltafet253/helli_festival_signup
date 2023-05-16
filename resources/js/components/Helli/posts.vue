@@ -1661,6 +1661,9 @@ export default {
             await axios.get(`/defaults/maxUploads/${token}`)
                 .then(response => {
                     this.max_uploads = response.data;
+                    if(response.data[0]['numbers']<3 && response.data[0]['sent_status']!==1){
+                        this.sentStatus=false;
+                    }
                     if (response.data[0]['numbers'] === 0 && response.data[0]['sent_status']!==1) {
                         this.maxUploadFull = true;
                         this.sentStatus=false;
