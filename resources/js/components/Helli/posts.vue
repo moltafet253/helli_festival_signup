@@ -677,17 +677,17 @@
                                               aria-hidden="true">&#8203;</span>
                                         <div
                                             class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                                            <div class="px-6 py-4">
-                                                <img class="mx-auto my-8" src="build/assets/icons/Warning.png"
-                                                     alt="Image">
-                                            </div>
-                                            <div class="px-6 py-4 text-center">
+<!--                                            <div class="px-6 py-4">-->
+<!--                                                <img class="mx-auto my-8" src="build/assets/icons/Warning.png"-->
+<!--                                                     alt="Image">-->
+<!--                                            </div>-->
+                                            <div class="px-6 py-8 text-center">
                                                 <p class="mb-14 font-bold">آثار وارد شده پس از تایید شما
                                                     به دبیرخانه جشنواره ارسال خواهد شد.
                                                     <br>
                                                     پس از تایید، امکان ویرایش یا ارسال اثر دیگر وجود ندارد.
                                                     آیا تایید می‌کنید؟</p>
-                                                <div class="flex justify-center pb-8">
+                                                <div class="flex justify-center">
                                                     <button @click="confirm"
                                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
                                                         بله
@@ -1899,7 +1899,7 @@ export default {
                     console.log(response.data);
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    // console.log(error);
                 });
             // this.showModal2 = true;
 
@@ -2081,7 +2081,8 @@ export default {
             this.showModal2 = false;
             this.showModalLastSend = false;
             this.showModal3 = false;
-            this.showModalsuccess = true
+            location.reload();
+            // this.showModalsuccess = true
         }
         ,
         showModalsend() {
