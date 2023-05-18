@@ -2087,7 +2087,7 @@ export default {
             this.showModal2 = false;
             this.showModalLastSend = false;
             this.showModal3 = false;
-            // location.reload();
+            location.reload();
             // this.showModalsuccess = true
         }
         ,
