@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section dir="rtl" class="py-1">
+        <section dir="rtl" class="py-1" id="posts">
             <div class="w-full mt-6">
                 <div class="relative flex flex-col min-w-0 break-words w-full mb-6 rounded-lg  border-0">
                     <div class="flex-auto  py-10 pt-0">
@@ -1798,6 +1798,7 @@ export default {
                         console.log(error);
                     }).finally(() => {
                     location.reload();
+
                 });
             }
         },

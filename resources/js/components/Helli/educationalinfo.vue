@@ -1,5 +1,5 @@
 <template>
-    <div v-if="requestsCount>0" class="loading-modal">
+    <div v-if="requestsCount>0" class="loading-modal" id="education">
         <div class="modal-background"></div>
         <div class="modal-content">
             <div class="spinner"></div>

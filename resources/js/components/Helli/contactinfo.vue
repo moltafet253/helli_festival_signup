@@ -11,7 +11,7 @@
         </div>
     </div>
     <div>
-        <form class="mt-8" @submit.prevent="handleSubmit">
+        <form class="mt-8" @submit.prevent="handleSubmit" id="contact">
             <div class="flex items-center ">
                 <span class="text-orange-500 pl-1">◼</span>
                 <h2 class="text-base font-bold">اطلاعات ‌تماس</h2>
@@ -87,25 +87,39 @@ export default {
         }
     },
     async mounted() {
-        await axios.get(`/contact/${this.token}/`,{
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-            .then(response => {
-                this.contact = response.data;
-                if (this.contact[0]['approved'] === 1) {
-                    this.showButton = false;
-                }
-            })
-            .catch(error => {
-                console.log(error)
-            }).finally(() => {
-        });
+        this.getContactInfo(this.token);
 
     },
     methods: {
-        handleSubmit() {
+        getContactInfo(token){
+            axios.get(`/contact/${token}`)
+                .then(response => {
+                    this.contact = response.data;
+                    if (this.contact[0]['approved'] === 1) {
+                        this.showButton = false;
+                    }
+                })
+                .catch(error => {
+                    console.log(error.response.data)
+                });
+        },
+        saveContactInfo(token){
+            axios.post(`/contact/save/${token}`, {
+                contact: this.contact,
+            })
+                .then(response => {
+                    this.getContactInfo(token);
+                    alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.');
+                    var element = document.getElementById("education");
+                    element.scrollIntoView();
+
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+
+        handleSubmit(token) {
             let mobile = this.contact[0]['mobile'];
             let postal_code = this.contact[0]['postal_code'];
             let phone = this.contact[0]['phone'];
@@ -122,23 +136,7 @@ export default {
                     '\n' +
                     ' اطلاعات شما در صورت تایید دیگر قابل تغییر نیست.' +
                     '')) {
-
-                    axios.post(`/contact/save/${this.token}`, {
-                        contact: this.contact,
-                    },{
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    })
-                        .then(function (response) {
-                                alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.');
-                                location.reload();
-                        })
-                        .catch(function (error) {
-                            // console.clear();
-                            console.log(error.response.data);
-                            // alert(error.response.data);
-                        });
+                    this.saveContactInfo(token);
                 }
             }
         },

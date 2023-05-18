@@ -10,7 +10,7 @@
             </div>
         </div>
     </div>
-    <div class=" pt-3">
+    <div class=" pt-3" id="personal">
         <h1></h1>
         <form>
             <div class="flex items-start ">
@@ -130,6 +130,18 @@ export default {
         };
     },
     methods: {
+        getPersonalImage(token){
+            axios.get(`/getprofileimage/this/${token}`)
+                .then(response => {
+
+                    if (response.data.imageSrc) {
+                        this.imageSrc = response.data.imageSrc;
+                    }
+                })
+                .catch(error => {
+
+                });
+        },
         submitForm() {
             const fileInput = this.$refs.fileInput;
             if (this.$refs.fileInput.files.length) {
@@ -138,11 +150,7 @@ export default {
                 formData.append('file', file);
                 if (confirm('آیا از بارگذاری عکس انتخاب شده مطمئن هستید؟ \n این عملیات قابل بازگشت نیست!')) {
 
-                    axios.post(`/upload/${this.token}`, formData,{
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    })
+                    axios.post(`/upload/${this.token}`, formData)
                         .then(response => {
                             switch (response.data) {
                                 case "The file field has invalid image dimensions.":
@@ -162,12 +170,14 @@ export default {
                                     return false;
                                     break;
                                 default:
-                                    location.reload();
+                                    this.getPersonalImage(this.token);
+                                    alert('تصویر پرسنلی شما با موفقیت بارگذاری شد.');
+                                    var element = document.getElementById("contact");
+                                    element.scrollIntoView();
                             }
                         })
                         .catch(error => {
                             console.log(error.response.data);
-
                         });
                 }
             } else {
@@ -183,25 +193,9 @@ export default {
             .catch(error => {
 
             });
+        this.getPersonalImage(this.token);
 
-        axios.get(`/getprofileimage/this/${this.token}`,{
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-            .then(response => {
-                if (response.data.imageSrc) {
-                    this.imageSrc = response.data.imageSrc;
-                }
-            })
-            .catch(error => {
-
-            }).finally(() => {
-        });
-
-
-
-    }
+    },
 }
 </script>
 
