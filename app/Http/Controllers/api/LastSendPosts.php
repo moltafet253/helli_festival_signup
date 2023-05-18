@@ -28,19 +28,24 @@ class LastSendPosts extends Controller
         foreach ($posts as $post) {
             if ($post['sent'] === 0) {
 
-                $festivalID = Festival::where('title', $post['festival_title'])->value('id');
+                $festivalID = Festival::where('active', '1')->value('id');
                 $lastPostID = etelaat_a::orderBy('codeasar', 'desc')->first();
                 $contactInfo = Contact::select('mobile', 'national_code', 'phone', 'postal_code', 'address')->where('national_code', $nationalcode)->get();
                 $educationalInfo =
-                    EducationalInfo::select('namemarkaztahsili', 'noetahsilhozavi', 'paye', 'sath', 'term', 'ostantahsili', 'shahrtahsili', 'madresetahsili', 'shparvandetahsili', 'tahsilatghhozavi', 'reshtedaneshgahi', 'markaztakhasosihozavi','reshtetakhasosihozavi')
+                    EducationalInfo::select('namemarkaztahsili', 'noetahsilhozavi', 'paye', 'sath', 'term', 'ostantahsili', 'shahrtahsili', 'madresetahsili', 'shparvandetahsili', 'tahsilatghhozavi', 'reshtedaneshgahi', 'markaztakhasosihozavi', 'reshtetakhasosihozavi')
                         ->where('national_code', $nationalcode)->get();
                 $teachingInfo = TeachingInfo::select('masterCode', 'teachingProvince', 'teachingCity', 'teachingPlaceName', 'isMaster')->where('national_code', $nationalcode)->get();
 
-                if ($lastPostID !== null and $lastPostID !== '') {
-                    $lastPostID['codeasar'] += 1;
+                if (substr($lastPostID['codeasar'], 0, 2) == $festivalID) {
+                    if ($lastPostID !== null and $lastPostID !== '') {
+                        $lastPostID['codeasar'] += 1;
+                    } else {
+                        $lastPostID['codeasar'] = $festivalID . '00001';
+                    }
                 } else {
                     $lastPostID['codeasar'] = $festivalID . '00001';
                 }
+
 
                 if ($post['activity_type'] == 'fardi') {
                     $activity_type = 'فردی';
@@ -102,7 +107,7 @@ class LastSendPosts extends Controller
 
                 $url = $post['file_src'];
                 $word_to_remove = "public";
-                $AssignURL = env('APP_URL'). '/' . str_replace($word_to_remove, 'storage', $url);
+                $AssignURL = env('APP_URL') . '/' . str_replace($word_to_remove, 'storage', $url);
 
                 $etelaat_a = DB::connection('helli')->table('etelaat_a')->insert([
                     'jashnvareh' => $festivalID . '-' . $post['festival_title'],
@@ -118,7 +123,7 @@ class LastSendPosts extends Controller
                     'vaziatnashr' => $post['publish_status'],
                     'tedadsafhe' => $post['pages_number'],
                     'tedadsafahat250kalame' => $post['pages_number'],
-                    'fileasar' =>$AssignURL,
+                    'fileasar' => $AssignURL,
                 ]);
 
 
@@ -157,7 +162,7 @@ class LastSendPosts extends Controller
                     'markaztakhasosihozavi' => $educationalInfo[0]['markaztakhasosihozavi'],
                     'namemarkaztahsili' => $educationalInfo[0]['namemarkaztahsili'],
                     'noetahsilathozavi' => $educationalInfo[0]['noetahsilhozavi'],
-                    'reshtetakhasosihozavi'=>$educationalInfo[0]['reshtetakhasosihozavi'],
+                    'reshtetakhasosihozavi' => $educationalInfo[0]['reshtetakhasosihozavi'],
 
                     'master' => $teachingInfo[0]['isMaster'],
                     'mastercode' => $teachingInfo[0]['masterCode'],

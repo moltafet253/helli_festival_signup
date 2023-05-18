@@ -570,6 +570,9 @@
                                     <thead class="text-base text-black-3d bg-orange-fce ">
                                     <tr class="text-center">
                                         <th scope="col" class="px-6 py-3">
+                                            کد اثر
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
                                             جشنواره
                                         </th>
                                         <th scope="col" class="px-6 py-3">
@@ -592,6 +595,9 @@
                                     <tbody>
                                     <tr v-for="(post, index) in allPosts" :key="index"
                                         class="bg-gray-eee border-b border-gray-d1d1">
+                                        <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-10">
+                                            {{ post.assigned_post_id }}
+                                        </td>
                                         <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-10">
                                             {{ post.festival_title }}
                                         </td>
@@ -2081,7 +2087,7 @@ export default {
             this.showModal2 = false;
             this.showModalLastSend = false;
             this.showModal3 = false;
-            location.reload();
+            // location.reload();
             // this.showModalsuccess = true
         }
         ,
