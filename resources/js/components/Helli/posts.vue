@@ -573,19 +573,19 @@
                                             کد اثر
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            جشنواره
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            قالب علمی
+                                            دوره
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             نام اثر
                                         </th>
                                         <th scope="col" class="px-6 py-3">
+                                            قالب اثر
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
                                             گروه علمی
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            نوع پژوهش
+                                            وضعیت ارزیابی
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             عملیات
@@ -595,23 +595,26 @@
                                     <tbody>
                                     <tr v-for="(post, index) in allPosts" :key="index"
                                         class="bg-gray-eee border-b border-gray-d1d1">
-                                        <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-10">
+                                        <td v-if="post.assigned_post_id" class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-10">
                                             {{ post.assigned_post_id }}
+                                        </td>
+                                        <td v-else class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-10">
+                                            ارسال نهایی نشده
                                         </td>
                                         <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-10">
                                             {{ post.festival_title }}
                                         </td>
-                                        <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-32">
-                                            {{ post.research_format }}
-                                        </td>
                                         <td class="px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-fit">
                                             {{ post.title }}
+                                        </td>
+                                        <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-32">
+                                            {{ post.research_format }}
                                         </td>
                                         <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-44">
                                             {{ post.scientific_group }}
                                         </td>
-                                        <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-36">
-                                            {{ post.research_type }}
+                                        <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-44">
+                                            در حال ارزیابی
                                         </td>
                                         <td class="px-6 py-4 text-right border-l border-gray-d1d1 w-36">
                                             <div class="flex justify-center">

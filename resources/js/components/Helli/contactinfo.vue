@@ -120,7 +120,8 @@ export default {
             } else {
                 if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟' +
                     '\n' +
-                    ' اطلاعات شما در صورت تایید دیگر قابل تغییر نیست.')) {
+                    ' اطلاعات شما در صورت تایید دیگر قابل تغییر نیست.' +
+                    '')) {
 
                     axios.post(`/contact/save/${this.token}`, {
                         contact: this.contact,
