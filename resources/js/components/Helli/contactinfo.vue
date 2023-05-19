@@ -1,17 +1,6 @@
 <template>
-    <div v-if="requestsCount>0" class="loading-modal">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="spinner"></div>
-            <div class="loading-text">
-                <p class="typewriter">
-                    دریافت اطلاعات تماس...
-                </p>
-            </div>
-        </div>
-    </div>
     <div>
-        <form class="mt-8" @submit.prevent="handleSubmit" id="contact">
+        <form class="mt-8" @submit.prevent="handleSubmit(this.token)" id="contact">
             <div class="flex items-center ">
                 <span class="text-orange-500 pl-1">◼</span>
                 <h2 class="text-base font-bold">اطلاعات ‌تماس</h2>
@@ -31,7 +20,7 @@
                             همراه کد شهر)
                             <span style="color: red;">*</span>
                         </label>
-                        <input placeholder="تلفن ثابت را به همراه کد شهر وارد کنید. (ضروری)" :disabled="!showButton" v-for="(item, index) in contact" :key="index" type="number"
+                        <input placeholder="تلفن ثابت را به همراه کد شهر وارد کنید. (ضروری)" :disabled="!showButton" v-for="(item, index) in contact" :key="index" type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                v-model="item.phone">
                     </div>
@@ -40,7 +29,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">تلفن
                             همراه<span style="color: red;">*</span></label>
-                        <input placeholder="تلفن همراه خود را وارد کنید. (ضروری)" :disabled="!showButton" v-for="(item, index) in contact" :key="index" type="number"
+                        <input placeholder="تلفن همراه خود را وارد کنید. (ضروری)" :disabled="!showButton" v-for="(item, index) in contact" :key="index" type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                v-model="item.mobile">
                     </div>
@@ -48,7 +37,7 @@
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">کدپستی (بدون خط فاصله)</label>
-                        <input placeholder="کدپستی خود را بدون خط فاصله وارد کنید. (غیر ضروری)" :disabled="!showButton" v-for="(item, index) in contact" :key="index" type="number"
+                        <input placeholder="کدپستی خود را بدون خط فاصله وارد کنید. (غیر ضروری)" :disabled="!showButton" v-for="(item, index) in contact" :key="index" type="text"
                                class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                v-model="item.postal_code">
                     </div>
@@ -86,7 +75,7 @@ export default {
             showButton: true,
         }
     },
-    async mounted() {
+    mounted() {
         this.getContactInfo(this.token);
 
     },
@@ -100,22 +89,7 @@ export default {
                     }
                 })
                 .catch(error => {
-                    console.log(error.response.data)
-                });
-        },
-        saveContactInfo(token){
-            axios.post(`/contact/save/${token}`, {
-                contact: this.contact,
-            })
-                .then(response => {
-                    this.getContactInfo(token);
-                    alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.');
-                    var element = document.getElementById("education");
-                    element.scrollIntoView();
-
-                })
-                .catch(error => {
-                    console.log(error);
+                    console.log(error)
                 });
         },
 
@@ -129,17 +103,35 @@ export default {
             } else if (phone === '' || phone === null) {
                 alert('تلفن ثابت وارد نشده است.');
                 return false;
+            } else if (phone.length !== 11) {
+                alert('تلفن ثابت با فرمت نامعتبر وارد شده است.');
             } else if (mobile.length !== 11) {
                 alert('تلفن همراه با فرمت نامعتبر وارد شده است.');
+            } else if (postal_code!==null && postal_code.length !== 10) {
+                alert('کد پستی با فرمت نامعتبر وارد شده است.');
             } else {
                 if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟' +
                     '\n' +
                     ' اطلاعات شما در صورت تایید دیگر قابل تغییر نیست.' +
                     '')) {
-                    this.saveContactInfo(token);
+
+                    axios.post(`/contact/save/${token}`, {
+                        contact: this.contact,
+                    })
+                        .then(response => {
+                            this.getContactInfo(token);
+                            alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.');
+                            let element = document.getElementById("education");
+                            element.scrollIntoView();
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+
                 }
             }
         },
+
     }
 
 }

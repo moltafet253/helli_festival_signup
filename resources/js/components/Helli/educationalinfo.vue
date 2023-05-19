@@ -1,17 +1,6 @@
 <template>
-    <div v-if="requestsCount>0" class="loading-modal" id="education">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="spinner"></div>
-            <div class="loading-text">
-                <p class="typewriter">
-                    دریافت اطلاعات تحصیلی...
-                </p>
-            </div>
-        </div>
-    </div>
-    <div>
-        <form class="mt-8" @submit.prevent="handleSubmit(this.nationalcode )">
+    <div id="education">
+        <form class="mt-8" @submit.prevent="handleSubmit(this.nationalcode,this.token )">
             <div class="flex items-center ">
                 <span class="text-orange-500 pl-1">◼</span>
                 <h2 class="text-base font-bold">اطلاعات ‌تحصیلی</h2>
@@ -159,7 +148,8 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">شهر محل
                             تحصیل<span style="color: red;">*</span></label>
-                        <select :value="null" :disabled="!showButton" v-model="item.shahrtahsili" v-for="(item, index) in edu"
+                        <select :value="null" :disabled="!showButton" v-model="item.shahrtahsili"
+                                v-for="(item, index) in edu"
                                 @change="returnSchool(item.shahrtahsili)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
@@ -196,7 +186,8 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">مدرک تحصیلی دانشگاهی<span
                             style="color: red;">*</span></label>
-                        <select @change="this.ReshteDaneshgahiDiv(item.tahsilatghhozavi)" :disabled="!showButton" v-for="(item, index) in edu" :key="index"
+                        <select @change="this.ReshteDaneshgahiDiv(item.tahsilatghhozavi)" :disabled="!showButton"
+                                v-for="(item, index) in edu" :key="index"
                                 v-model="item.tahsilatghhozavi"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected :value="null" disabled style="color: #6c757d">انتخاب کنید</option>
@@ -238,7 +229,8 @@
                             حوزوی
                             (در صورت تحصیل)
                         </label>
-                        <select :disabled="!showButton" v-model="markaz.markaztakhasosihozavi" v-for="(markaz, index) in edu"
+                        <select :disabled="!showButton" v-model="markaz.markaztakhasosihozavi"
+                                v-for="(markaz, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold"
                                 @change="this.ReshteTakhasosiDiv(markaz.markaztakhasosihozavi)"
                         >
@@ -292,9 +284,9 @@ export default {
             shahrtahsili: [],
             madresetahsili: [],
             noetahsilhozavi: '',
-            markaztakhasosihozavi:'',
-            showReshteTakhasosiDiv:false,
-            showReshteDaneshgahiDiv:false,
+            markaztakhasosihozavi: '',
+            showReshteTakhasosiDiv: false,
+            showReshteDaneshgahiDiv: false,
 
 
             markaz: [],
@@ -315,18 +307,18 @@ export default {
         await this.getDataFromProvincesTable(this.gender);
     },
     methods: {
-        ReshteDaneshgahiDiv(value){
-            if (value!==null && value!=='دیپلم' && value!=='زیر دیپلم'){
-                this.showReshteDaneshgahiDiv=true;
-            }else {
-                this.showReshteDaneshgahiDiv=false;
+        ReshteDaneshgahiDiv(value) {
+            if (value !== null && value !== 'دیپلم' && value !== 'زیر دیپلم') {
+                this.showReshteDaneshgahiDiv = true;
+            } else {
+                this.showReshteDaneshgahiDiv = false;
             }
         },
-        ReshteTakhasosiDiv(value){
-            if (value!==null){
-                this.showReshteTakhasosiDiv=true;
-            }else {
-                this.showReshteTakhasosiDiv=false;
+        ReshteTakhasosiDiv(value) {
+            if (value !== null) {
+                this.showReshteTakhasosiDiv = true;
+            } else {
+                this.showReshteTakhasosiDiv = false;
             }
         },
         getDataFromSpecializedCenters() {
@@ -347,11 +339,11 @@ export default {
                 .then(response => {
                     this.edu = response.data.edu;
                     this.gender = response.data.gender;
-                    if (response.data.edu[0]['reshtedaneshgahi']){
-                        this.showReshteDaneshgahiDiv=true;
+                    if (response.data.edu[0]['reshtedaneshgahi']) {
+                        this.showReshteDaneshgahiDiv = true;
                     }
-                    if (response.data.edu[0]['markaztakhasosihozavi']){
-                        this.showReshteTakhasosiDiv=true;
+                    if (response.data.edu[0]['markaztakhasosihozavi']) {
+                        this.showReshteTakhasosiDiv = true;
                     }
                     if (response.data.edu[0]['approved'] === 1) {
                         this.showButton = false;
@@ -423,7 +415,7 @@ export default {
                     console.log(error)
                 })
         },
-        handleSubmit(a) {
+        handleSubmit(a, token) {
             let namemarkaztahsili = this.edu[0]['namemarkaztahsili'];
             let noetahsilhozavi = this.edu[0]['noetahsilhozavi'];
             let ostantahsili = this.edu[0]['ostantahsili'];
@@ -468,7 +460,7 @@ export default {
             } else if (markaztakhasosihozavi !== null && reshtetakhasosihozavi === null) {
                 this.edu[0]['markaztakhasosihozavi'] = null;
                 alert('رشته تخصصی حوزوی وارد نشده است.');
-                this.showReshteTakhasosiDiv=false;
+                this.showReshteTakhasosiDiv = false;
             } else if (markaztakhasosihozavi === null && reshtetakhasosihozavi !== null) {
                 this.edu[0]['reshtetakhasosihozavi'] = null;
                 alert('مرکز تخصصی حوزوی وارد نشده است.');
@@ -479,20 +471,16 @@ export default {
                     axios.post(`/edu/save`, {
                         edu: this.edu,
                         gender: gender,
-                    }, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
                     })
-                        .then(function (response) {
-
+                        .then(response => {
+                            this.getDataFromEduTable(token);
+                            alert('اطلاعات تحصیلی شما با موفقیت در سامانه ثبت شد.');
+                            var element = document.getElementById("teaching");
+                            element.scrollIntoView();
                         })
-                        .catch(function (error) {
-                            // console.log(error);
-                        }).finally(function () {
-                        alert('اطلاعات تحصیلی شما با موفقیت در سامانه ثبت شد.');
-                        location.reload();
-                    });
+                        .catch(error => {
+                            console.log(error);
+                        });
                 }
             }
         },

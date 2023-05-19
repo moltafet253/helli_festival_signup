@@ -1,17 +1,6 @@
 <template>
-    <div v-if="requestsCount>0" class="loading-modal" id="teaching">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="spinner"></div>
-            <div class="loading-text">
-                <p class="typewriter">
-                    دریافت اطلاعات تدریس...
-                </p>
-            </div>
-        </div>
-    </div>
     <div>
-        <form class="mt-8" @submit.prevent="handleSubmit">
+        <form class="mt-8" @submit.prevent="handleSubmit(this.token)" id="teaching">
             <div class="flex items-center ">
                 <span class="text-orange-500 pl-1">◼</span>
                 <h2 class="text-base font-bold  ">اطلاعات ‌تدریس</h2>
@@ -121,7 +110,7 @@ export default {
         }
     },
     async mounted() {
-        await this.getDataFromEduTable(this.token);
+        await this.getDataFromTeachingTable(this.token);
         await this.getDataFromProvincesTable(this.nationalcode);
     },
     methods: {
@@ -138,7 +127,7 @@ export default {
                     console.log(error)
                 })
         },
-        getDataFromEduTable(token) {
+        getDataFromTeachingTable(token) {
             axios.get('/teaching/' + token,{
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
@@ -197,7 +186,7 @@ export default {
                 this.showDiv = false;
             }
         },
-        handleSubmit() {
+        handleSubmit(token) {
             let isMaster = this.teaching[0]['isMaster'];
             let masterCode = this.teaching[0]['masterCode'];
             let teachingProvince = this.teaching[0]['teachingProvince'];
@@ -224,15 +213,17 @@ export default {
                 if (confirm('آیا از صحت اطلاعات وارد شده مطمئن هستید؟ ' +
                     '\n' +
                     'پس از تایید دیگر قابل ویرایش نیست.')) {
-                    axios.post(`/teaching/save/${this.token}`, {
+                    axios.post(`/teaching/save/${token}`, {
                         teaching: this.teaching,
                     })
-                        .then(function () {
+                        .then(response => {
+                            this.getDataFromTeachingTable(token);
                             alert('اطلاعات تدریس شما با موفقیت در سامانه ثبت شد.');
-                            location.reload();
+                            var element = document.getElementById("posts");
+                            element.scrollIntoView();
                         })
-                        .catch(function (error) {
-                            // console.log(error);
+                        .catch(error => {
+                            console.log(error);
                         });
                 }
 

@@ -38,5 +38,6 @@ class PostContactInfo extends Controller
             'user_agent' => request()->userAgent(),
             'device' => $agent->device(),
         ]);
+        return $contact;
     }
 }

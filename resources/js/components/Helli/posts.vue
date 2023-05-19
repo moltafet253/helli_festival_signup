@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <section dir="rtl" class="py-1" id="posts">
+    <div id="posts">
+        <section dir="rtl" class="py-1">
             <div class="w-full mt-6">
                 <div class="relative flex flex-col min-w-0 break-words w-full mb-6 rounded-lg  border-0">
                     <div class="flex-auto  py-10 pt-0">
@@ -154,7 +154,7 @@
                                                                 <label class="block uppercase  text-base font-bold mb-2"
                                                                 >نام اثر<span
                                                                     style="color: red;">*</span></label>
-                                                                <input type="text" id="name" name="name" v-model="name"
+                                                                <input type="text" id="name" name="name" v-model="name" placeholder="نام اثر را به صورت کامل وارد نمایید"
                                                                        class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                                                             </div>
                                                         </div>
@@ -453,7 +453,7 @@
                                                                     class="bg-slate-200 border border-colorborder rounded-b-lg ">
                                                                     <div
                                                                         class="flex items-center justify-start px-5 py-3">
-                                                                        <p>آپلود فایل اثر <br>(با پسوند PDF, Doc, Docx )
+                                                                        <p>آپلود فایل اثر <br>(با پسوند PDF, Doc, Docx و حداکثر سایز 20 مگابایت)
                                                                         </p>
                                                                     </div>
 
@@ -533,19 +533,17 @@
                                                                 <div
                                                                     class=" bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                                                     <div class="px-6 py-4">
-                                                                        <img class="mx-auto my-8"
-                                                                             src="build/assets/icons/Warning.png"
-                                                                             alt="Image">
+                                                                        <!--                                                                        <img class="mx-auto my-8"-->
+                                                                        <!--                                                                             src="build/assets/icons/Warning.png"-->
+                                                                        <!--                                                                             alt="Image">-->
                                                                     </div>
                                                                     <div class="px-6 py-4 text-center">
                                                                         <p class="mb-14 font-bold">{{ message }}</p>
                                                                         <div class="flex justify-center pb-8">
-                                                                            <form @submit.prevent="handleSubmit">
-                                                                                <button
+                                                                            <button @click="handleSubmit(this.token)"
                                                                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
-                                                                                    بله
-                                                                                </button>
-                                                                            </form>
+                                                                                بله
+                                                                            </button>
                                                                             <button @click="cancel"
                                                                                     class="bg-white hover:bg-slate-200 border border-colorborder text-black font-bold py-2 px-10 rounded-xl">
                                                                                 خیر
@@ -595,10 +593,12 @@
                                     <tbody>
                                     <tr v-for="(post, index) in allPosts" :key="index"
                                         class="bg-gray-eee border-b border-gray-d1d1">
-                                        <td v-if="post.assigned_post_id" class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-10">
+                                        <td v-if="post.assigned_post_id"
+                                            class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-10">
                                             {{ post.assigned_post_id }}
                                         </td>
-                                        <td v-else class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-10">
+                                        <td v-else
+                                            class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-10">
                                             ارسال نهایی نشده
                                         </td>
                                         <td class="text-center px-6 py-4 border-l border-gray-d1d1 text-black-3d font-medium w-10">
@@ -648,8 +648,8 @@
                                 </table>
                             </div>
                             <button v-if="sentStatus===false"
-                                @click="showModalLastSend = true"
-                                class="bg-green-600 text-white font-bold py-2 px-4 mt-14 rounded-lg mx-auto block"
+                                    @click="showModalLastSend = true"
+                                    class="bg-green-600 text-white font-bold py-2 px-4 mt-14 rounded-lg mx-auto block"
                             >
                                 ارسال نهایی آثار به جشنواره
                             </button>
@@ -686,10 +686,10 @@
                                               aria-hidden="true">&#8203;</span>
                                         <div
                                             class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-<!--                                            <div class="px-6 py-4">-->
-<!--                                                <img class="mx-auto my-8" src="build/assets/icons/Warning.png"-->
-<!--                                                     alt="Image">-->
-<!--                                            </div>-->
+                                            <!--                                            <div class="px-6 py-4">-->
+                                            <!--                                                <img class="mx-auto my-8" src="build/assets/icons/Warning.png"-->
+                                            <!--                                                     alt="Image">-->
+                                            <!--                                            </div>-->
                                             <div class="px-6 py-8 text-center">
                                                 <p class="mb-14 font-bold">آثار وارد شده پس از تایید شما
                                                     به دبیرخانه جشنواره ارسال خواهد شد.
@@ -761,8 +761,8 @@
                                         <div
                                             class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                             <div class="px-6 pt-4">
-                                                <img class="mx-auto mt-8" src="build/assets/icons/success.png"
-                                                     alt="Image">
+<!--                                                <img class="mx-auto mt-8" src="build/assets/icons/success.png"-->
+<!--                                                     alt="Image">-->
                                             </div>
                                             <div class="px-6 pb-4 text-center ">
                                                 <p class="mb-14 font-bold w-1/2 mx-auto">آثار انتخاب شده با موفقیت
@@ -968,7 +968,7 @@
                                                             >نام اثر<span
                                                                 style="color: red;">*</span></label>
                                                             <input type="text" id="name" name="name"
-                                                                   v-model="this.postName"
+                                                                   v-model="this.postName" placeholder="نام اثر را به صورت کامل وارد نمایید"
                                                                    class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                                                         </div>
                                                     </div>
@@ -1351,7 +1351,7 @@
                                                                 class="bg-slate-200 border border-colorborder rounded-b-lg ">
                                                                 <div
                                                                     class="flex items-center justify-start px-5 py-3">
-                                                                    <p>آپلود فایل اثر <br>(با پسوند PDF, Doc, Docx )
+                                                                    <p>آپلود فایل اثر <br>(با پسوند PDF, Doc, Docx و حداکثر سایز 20 مگابایت)
                                                                     </p>
                                                                 </div>
 
@@ -1529,7 +1529,7 @@ export default {
             showLastSendButton: false,
             showErrorAgeRequirement: false,
             maxUploadFull: false,
-            sentStatus:'',
+            sentStatus: '',
 
             //get all this user posts
             allPosts: [],
@@ -1575,7 +1575,6 @@ export default {
 
     },
     mounted() {
-        this.checkCondition(this.token);
         this.getAllPosts(this.token);
     },
     methods: {
@@ -1670,17 +1669,17 @@ export default {
             await axios.get(`/defaults/maxUploads/${token}`)
                 .then(response => {
                     this.max_uploads = response.data;
-                    if(response.data[0]['numbers']<3 && response.data[0]['sent_status']!==1){
-                        this.sentStatus=false;
+                    if (response.data[0]['numbers'] < 3 && response.data[0]['sent_status'] !== 1) {
+                        this.sentStatus = false;
                     }
-                    if (response.data[0]['numbers'] === 0 && response.data[0]['sent_status']!==1) {
+                    if (response.data[0]['numbers'] === 0 && response.data[0]['sent_status'] !== 1) {
                         this.maxUploadFull = true;
-                        this.sentStatus=false;
+                        this.sentStatus = false;
                     }
                     if (response.data[0]['sent_status'] === 1) {
                         this.maxUploadFull = false;
-                        this.sentStatus=true;
-                        this.grantedSend=false;
+                        this.sentStatus = true;
+                        this.grantedSend = false;
                     }
                 })
                 .catch(error => {
@@ -1829,6 +1828,7 @@ export default {
             return `${jalaaliDate.jy}/${jalaaliDate.jm}/${jalaaliDate.jd}`;
         },
         getAllPosts(token) {
+            this.checkCondition(token);
             axios.get(`/posts/allposts/user/${token}`)
                 .then(response => {
                     this.allPosts = response.data.posts;
@@ -1919,45 +1919,79 @@ export default {
             window.open('storage/' + fileSrc.slice(7), '_blank');
         }
         ,
-        handleSubmit() {
-            const fileInput = this.$refs.fileInput;
-            const file = fileInput.files[0];
+        handleSubmit(token) {
+            if (this.activityType===null) {
+                alert('نوع فعالیت انتخاب نشده است.');
+                return false;
+            }else{
+                let fileInput = this.$refs.fileInput;
+                let file = fileInput.files[0];
 
-            const formData = new FormData();
+                const formData = new FormData();
 
-            formData.append('id', this.postID);
-            formData.append('name', this.name);
-            formData.append('research_format', this.research_format);
-            formData.append('scientific_group', this.scientific_group);
-            formData.append('research_type', this.research_type);
-            formData.append('page_number', this.page_number);
-            formData.append('publish_status', this.publish_status);
-            formData.append('special_section', this.special_section);
-            formData.append('activityType', this.activityType);
-            if (this.activityType === 'moshtarak') {
-                formData.append('myCooperation', this.Cooperation);
-                this.rows.forEach(row => {
-                    formData.append('rows[][name]', row.name);
-                    formData.append('rows[][lastname]', row.lastname);
-                    formData.append('rows[][codemeli]', row.codemeli);
-                    formData.append('rows[][filenumber]', row.filenumber);
-                    formData.append('rows[][Cooperation]', row.Cooperation);
-                    formData.append('rows[][phonenumber]', row.phonenumber);
-                });
-            }
-            formData.append('file', file);
-            axios.post(`/sendpost/this/${this.token}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'X-Requested-With': 'XMLHttpRequest'
+                formData.append('id', this.postID);
+                formData.append('name', this.name);
+                formData.append('research_format', this.research_format);
+                formData.append('scientific_group', this.scientific_group);
+                formData.append('research_type', this.research_type);
+                formData.append('page_number', this.page_number);
+                formData.append('publish_status', this.publish_status);
+                formData.append('special_section', this.special_section);
+                formData.append('activityType', this.activityType);
+                if (this.activityType === 'moshtarak') {
+                    formData.append('myCooperation', this.Cooperation);
+                    this.rows.forEach(row => {
+                        formData.append('rows[][name]', row.name);
+                        formData.append('rows[][lastname]', row.lastname);
+                        formData.append('rows[][codemeli]', row.codemeli);
+                        formData.append('rows[][filenumber]', row.filenumber);
+                        formData.append('rows[][Cooperation]', row.Cooperation);
+                        formData.append('rows[][phonenumber]', row.phonenumber);
+                    });
                 }
-            })
-                .then(function (response) {
-                    location.reload();
+                formData.append('file', file);
+                axios.post(`/sendpost/this/${this.token}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    }
                 })
-                .catch(function (error) {
-                    console.log(error);
-                });
+                    .then(response => {
+                        this.showModal=false;
+                        this.showModalEdit=false;
+                        this.showModal3=false;
+                        this.name=null;
+                        this.research_format="";
+                        this.scientific_group="";
+                        this.research_type="";
+                        this.page_number="";
+                        this.publish_status="";
+                        this.special_section="";
+                        this.activityType="fardi";
+                        this.Cooperation="";
+                        if (this.activityType === 'moshtarak') {
+                            this.rows.forEach(row => {
+                                row.name=null;
+                                row.lastname=null;
+                                row.codemeli=null;
+                                row.filenumber=null;
+                                row.Cooperation=null;
+                                row.phonenumber=null;
+                            });
+                        }
+                        this.file=null;
+                        this.fileName=null;
+                        this.nameFile=null;
+                        this.getAllPosts(token);
+                        alert('اثر جدید شما با موفقیت در سامانه ثبت شد.');
+                        var element = document.getElementById("posts");
+                        element.scrollIntoView();
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+
+            }
+
         }
         ,
         cancelshowModalLastSend() {
@@ -1997,16 +2031,26 @@ export default {
         ,
         checkEditedFile(event) {
             this.nameFile = '';
-            const file = event.target.files[0];
-            const allowedExtensions = /(\.pdf|\.doc|\.docx)$/i;
-            if (!allowedExtensions.test(file.name)) {
+            if (event.target.files.length === 0) {
                 this.fileSelected = false;
                 this.fileName = "";
-                this.error = 'خطا: پسوند فایل مجاز نیست!';
+                this.error = "خطا: فایلی انتخاب نشده است!";
             } else {
-                this.fileSelected = true;
-                this.error = false;
-                this.nameFile = event.target.files[0].name;
+                const file = event.target.files[0];
+                const allowedExtensions = /(\.pdf|\.doc|\.docx)$/i;
+                if (!allowedExtensions.test(file.name)) {
+                    this.fileSelected = false;
+                    this.fileName = "";
+                    this.error = 'خطا: پسوند فایل مجاز نیست!';
+                }else if (file.size>20*1024*1024) {
+                    this.fileSelected = false;
+                    this.fileName = "";
+                    this.error = 'خطا: حجم فایل مجاز نیست!';
+                } else {
+                    this.fileSelected = true;
+                    this.error = false;
+                    this.nameFile = event.target.files[0].name;
+                }
             }
         }
         ,
@@ -2023,8 +2067,11 @@ export default {
                     this.fileSelected = false;
                     this.fileName = "";
                     this.error = 'خطا: پسوند فایل مجاز نیست!';
+                }else if (file.size>20*1024*1024) {
+                    this.fileSelected = false;
+                    this.fileName = "";
+                    this.error = 'خطا: حجم فایل مجاز نیست!';
                 } else {
-                    // هنگامی که فایل مجاز است
                     this.fileSelected = true;
                     this.error = false;
                     this.nameFile = event.target.files[0].name;
@@ -2034,14 +2081,11 @@ export default {
         ,
         handleButtonClick(event) {
             if (this.isTotalCooperationValid()) {
-                if (this.fileSelected) { // چک کردن اینکه آیا فایلی انتخاب شده یا خیر
+                if (this.fileSelected) {
                     this.showModal = true;
                 } else {
-                    this.error = 'خطا: فایلی انتخاب نشده است!'; // افزودن پیغام خطا در صورت عدم انتخاب فایل
+                    this.error = 'خطا: فایلی انتخاب نشده است!';
                 }
-            } else {
-                // انجام عملیات مورد نظر در صورت عدم برقراری شرط اعتبارسنجی
-                // مثلا نمایش پیغام خطا یا انجام عملیات جایگزین
             }
         }
         ,
@@ -2062,10 +2106,10 @@ export default {
                 this.emptyErrors = 'وضعیت نشر انتخاب نشده است.';
             } else {
                 this.emptyErrors = '';
-                if (this.fileSelected) { // چک کردن اینکه آیا فایلی انتخاب شده یا خیر
+                if (this.fileSelected) {
                     this.showModal = true;
                 } else {
-                    this.error = 'خطا: فایلی انتخاب نشده است!'; // افزودن پیغام خطا در صورت عدم انتخاب فایل
+                    this.error = 'خطا: فایلی انتخاب نشده است!';
                 }
             }
         }
