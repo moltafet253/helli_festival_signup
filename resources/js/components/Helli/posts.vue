@@ -64,6 +64,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div v-else-if="festivalOver===true"
+                                     class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">
+                                    <div class=" flex-row ">
+                                        <div class="relative w-full">
+                                            <img class="bg-red-500 rounded-md p-1"
+                                                 src="build/assets/icons/Info Square.svg" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="w-full flex-row">
+                                        <div class="relative w-full mr-3">
+                                            <p class="mb-0">کاربر گرامی؛ زمان فراخوان ثبت نام در جشنواره به اتمام رسیده است.</p>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div
                                     v-else-if="maxUploadFull===true">
                                     <div class=" mx-4 p-3 flex bg-red-100 rounded-xl border border-colorborder w-full">
@@ -1530,6 +1544,7 @@ export default {
             showErrorAgeRequirement: false,
             maxUploadFull: false,
             sentStatus: '',
+            festivalOver:false,
 
             //get all this user posts
             allPosts: [],
@@ -1581,7 +1596,11 @@ export default {
         async checkCondition(token) {
             await axios.get(`/getactivefestival/${token}`)
                 .then(response => {
+                    if (response.data!=='FestivalIsOver'){
                         this.activeFestivalInfo = response.data;
+                    }else{
+                        this.festivalOver=true;
+                    }
                     }
                 )
                 .catch(error => {
@@ -1626,40 +1645,44 @@ export default {
 
             await axios.get(`/users/getuserinfo/${token}`)
                 .then(response => {
-                    this.personalInfo = response.data;
-                    if (response.data[0]['personalImageSrc'] === null) {
-                        this.grantedSend = false;
-                        this.showErrorNotSubmittedInfos = true;
-                    } else {
-                        let myBirthDate = response.data[0]['birthdate'];
-                        let chunksmyBirthDate = myBirthDate.slice(0, 4);
-                        let ActiveFestivalDate = this.activeFestivalInfo[0]['finish_date'];
-                        let chunksActiveFestivalDate = ActiveFestivalDate.slice(0, 4);
+                    if (this.activeFestivalInfo!=='FestivalISOver'){
+                        this.personalInfo = response.data;
+                        if (response.data[0]['personalImageSrc'] === null) {
+                            this.grantedSend = false;
+                            this.showErrorNotSubmittedInfos = true;
+                        } else {
+                            let myBirthDate = response.data[0]['birthdate'];
+                            let chunksmyBirthDate = myBirthDate.slice(0, 4);
+                            let ActiveFestivalDate = this.activeFestivalInfo;
+                            let chunksActiveFestivalDate = ActiveFestivalDate.slice(0, 4);
 
-                        switch (this.teachingInfo['isMaster']) {
-                            case 'بله':
-                                if (parseInt(chunksActiveFestivalDate) - parseInt(chunksmyBirthDate) <= 50) {
-                                    this.showErrorAgeRequirement = false;
-                                    this.grantedSend = true;
-                                    this.showErrorNotSubmittedInfos = false;
-                                } else {
-                                    this.showErrorAgeRequirement = true;
-                                    this.grantedSend = false;
-                                    this.showErrorNotSubmittedInfos = false;
-                                }
-                                break;
-                            case 'خیر':
-                                if (parseInt(chunksActiveFestivalDate) - parseInt(chunksmyBirthDate) <= 35) {
-                                    this.showErrorAgeRequirement = false;
-                                    this.grantedSend = true;
-                                    this.showErrorNotSubmittedInfos = false;
-                                } else {
-                                    this.showErrorAgeRequirement = true;
-                                    this.grantedSend = false;
-                                    this.showErrorNotSubmittedInfos = false;
-                                }
-                                break;
+                            switch (this.teachingInfo['isMaster']) {
+                                case 'بله':
+                                    if (parseInt(chunksActiveFestivalDate) - parseInt(chunksmyBirthDate) <= 50) {
+                                        this.showErrorAgeRequirement = false;
+                                        this.grantedSend = true;
+                                        this.showErrorNotSubmittedInfos = false;
+                                    } else {
+                                        this.showErrorAgeRequirement = true;
+                                        this.grantedSend = false;
+                                        this.showErrorNotSubmittedInfos = false;
+                                    }
+                                    break;
+                                case 'خیر':
+                                    if (parseInt(chunksActiveFestivalDate) - parseInt(chunksmyBirthDate) <= 35) {
+                                        this.showErrorAgeRequirement = false;
+                                        this.grantedSend = true;
+                                        this.showErrorNotSubmittedInfos = false;
+                                    } else {
+                                        this.showErrorAgeRequirement = true;
+                                        this.grantedSend = false;
+                                        this.showErrorNotSubmittedInfos = false;
+                                    }
+                                    break;
+                            }
                         }
+                    }else{
+                        this.festivalOver=true;
                     }
                 })
                 .catch(error => {

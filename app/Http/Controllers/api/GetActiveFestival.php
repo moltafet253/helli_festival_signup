@@ -23,7 +23,13 @@ class GetActiveFestival extends Controller
             'user_agent' => request()->userAgent(),
             'device' => $agent->device(),
         ]);
-        return DB::table('festivals')->select('finish_date')->where('active', '=', 1)->get();
+        $festivalInfo=DB::table('festivals')->select('finish_date')->where('active', '=', 1)->first();
+        if ($festivalInfo !== null) {
+            $result = $festivalInfo->finish_date;
+        } else {
+            $result = 'FestivalISOver';
+        }
 
+        return $result;
     }
 }
