@@ -6,6 +6,7 @@
         "build-app": "vite build",
         "copy-icons": "mkdir -p public/build/assets/icons && cp -r resources/images/icons public/build/assets/",
         "copy-fonts": "mkdir -p public/build/assets && find resources/css/Fonts/ -type f -exec cp {} public/build/assets/ \\;",
+        "copy-files": "mkdir -p public/build/assets && find resources/pub_files/ -type f -exec cp {} public/build/assets/ \\;",
         "build:prod": "cross-env NODE_ENV=production vite build"
     },
     "devDependencies": {
