@@ -56,14 +56,21 @@ class LastSendPosts extends Controller
             if ($userAllInfo['gender'] == 'مرد') {
                 $paye = EducationalInfo::select('paye')->where('national_code', $nationalcode)->get();
                 $paye = $paye[0]['paye'];
-                if ($paye == 1 or $paye == 2 or $paye == 3) {
-                    $rateLevel = 1;
-                } elseif ($paye == 4 or $paye == 5 or $paye == 6) {
-                    $rateLevel = 2;
-                } elseif ($paye == 7 or $paye == 8 or $paye == 9) {
+                if ($post['research_format'] != 'پایان‌نامه' and $post['research_format'] != 'تحقیق پایانی') {
+
+                    if ($paye == 1 or $paye == 2 or $paye == 3) {
+                        $rateLevel = 1;
+                    } elseif ($paye == 4 or $paye == 5 or $paye == 6) {
+                        $rateLevel = 2;
+                    } elseif ($paye == 7 or $paye == 8 or $paye == 9) {
+                        $rateLevel = 3;
+                    } elseif ($paye >= 10) {
+                        $rateLevel = 4;
+                    }
+                } elseif ($post['research_format'] != 'پایان‌نامه') {
                     $rateLevel = 3;
-                } elseif ($paye >= 10) {
-                    $rateLevel = 4;
+                } elseif ($post['research_format'] != 'تحقیق پایانی') {
+                    $rateLevel = 2;
                 }
             } elseif ($userAllInfo['gender'] == 'زن') {
                 $sath = EducationalInfo::select('sath')->where('national_code', $nationalcode)->get();
