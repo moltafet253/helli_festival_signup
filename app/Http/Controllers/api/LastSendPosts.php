@@ -131,7 +131,8 @@ class LastSendPosts extends Controller
                 'tedadsafhe' => $post['pages_number'],
                 'tedadsafahat250kalame' => $post['pages_number'],
                 'fileasar' => $AssignURL,
-                'vaziatkarnameostani'=>null
+                'vaziatkarnameostani'=>null,
+                'approve_sianat'=>9,
             ]);
 
 
