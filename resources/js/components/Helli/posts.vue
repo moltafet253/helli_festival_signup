@@ -2165,12 +2165,10 @@ export default {
                     this.isLoading=true;
                     this.isLoadingMessage='';
                     this.isLoading=false;
+                    location.reload();
                 })
                 .catch(function (error) {
                     // console.log(error);
-                })
-                .finally(()=>{
-
                 });
             // location.reload();
             // this.showModal = false;
