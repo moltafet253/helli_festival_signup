@@ -24,9 +24,7 @@ class LastSendPosts extends Controller
 
         $user = User::where('national_code', '=', $nationalcode)->value('id');
         $userAllInfo = User::find($user);
-        $posts = $userAllInfo->allPosts->filter(function ($post) {
-            return $post->sent == 0;
-        });
+        $posts = $userAllInfo->allPosts;
         foreach ($posts as $post) {
             $festivalID = Festival::where('active', '1')->value('id');
             $lastPostID = etelaat_a::orderBy('codeasar', 'desc')->first();
@@ -36,16 +34,19 @@ class LastSendPosts extends Controller
                     ->where('national_code', $nationalcode)->get();
             $teachingInfo = TeachingInfo::select('masterCode', 'teachingProvince', 'teachingCity', 'teachingPlaceName', 'isMaster')->where('national_code', $nationalcode)->get();
 
-            if (substr($lastPostID['codeasar'], 0, 2) == $festivalID) {
-                if ($lastPostID !== null and $lastPostID !== '') {
-                    $lastPostID['codeasar'] += 1;
+            if ($lastPostID) {
+                if (substr($lastPostID['codeasar'], 0, 2) == $festivalID) {
+                    if ($lastPostID !== null and $lastPostID !== '') {
+                        $lastPostID['codeasar'] += 1;
+                    } else {
+                        $lastPostID['codeasar'] = $festivalID . '00001';
+                    }
                 } else {
                     $lastPostID['codeasar'] = $festivalID . '00001';
                 }
-            } else {
+            }else{
                 $lastPostID['codeasar'] = $festivalID . '00001';
             }
-
 
             if ($post['activity_type'] == 'fardi') {
                 $activity_type = 'فردی';
@@ -179,6 +180,7 @@ class LastSendPosts extends Controller
                 'teachingCity' => $teachingInfo[0]['teachingCity'],
                 'teachingPlaceName' => $teachingInfo[0]['teachingPlaceName'],
             ]);
+
             if ($post->activity_type = 'moshtarak') {
                 $id = $post->id;
                 $post = Post::find($id);
@@ -196,6 +198,7 @@ class LastSendPosts extends Controller
                     ]);
                 }
             }
+
             $post->sent = 1;
             $post->sent_at = now();
             $post->assigned_post_id = $lastPostID['codeasar'];
@@ -211,12 +214,12 @@ class LastSendPosts extends Controller
             ]);
         }
 
-        $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->update([
+        HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->update([
             'sent_status' => 1,
             'numbers' => 0,
         ]);
-        if (!$maxUpload) {
-            return response()->json(['errors' => 'Empty File'], 422);
-        }
+//        if (!$maxUpload) {
+//            return response()->json(['errors' => 'Empty File'], 422);
+//        }
     }
 }

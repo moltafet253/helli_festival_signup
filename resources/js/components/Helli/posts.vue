@@ -1934,27 +1934,6 @@ export default {
             }
         }
         ,
-        lastSendFunction() {
-            axios.post(`/posts/approve/last/send/${this.token}`, {
-                approved: 1
-            })
-                .then(function (response) {
-                    this.isLoadingMessage='در حال ارسال آثار';
-                    this.isLoading=true;
-                    console.log(response.data);
-                })
-                .catch(function (error) {
-                    // console.log(error);
-                })
-                .finally(()=>{
-                    this.isLoadingMessage='';
-                    this.isLoading=false;
-                })
-            ;
-            // this.showModal2 = true;
-
-        }
-        ,
         downloadFile(fileSrc) {
             window.open('storage/' + fileSrc.slice(7), '_blank');
         }
@@ -1998,7 +1977,6 @@ export default {
                     }
                 })
                     .then(response => {
-                        console.log(response.data);
                         this.showModal=false;
                         this.showModalEdit=false;
                         this.showModal3=false;
@@ -2178,13 +2156,28 @@ export default {
         }
         ,
         confirm() {
-            this.lastSendFunction();
-            this.showModal = false;
-            this.showModalsuccess = false;
-            this.showModal2 = false;
-            this.showModalLastSend = false;
-            this.showModal3 = false;
-            location.reload();
+            axios.post(`/posts/approve/last/send/${this.token}`, {
+                approved: 1
+            })
+                .then(function (response) {
+                    console.log(response.data);
+                    this.isLoadingMessage='در حال ارسال آثار';
+                    this.isLoading=true;
+                    this.isLoadingMessage='';
+                    this.isLoading=false;
+                })
+                .catch(function (error) {
+                    // console.log(error);
+                })
+                .finally(()=>{
+
+                });
+            // location.reload();
+            // this.showModal = false;
+            // this.showModalsuccess = false;
+            // this.showModal2 = false;
+            // this.showModalLastSend = false;
+            // this.showModal3 = false;
             // this.showModalsuccess = true
         }
         ,

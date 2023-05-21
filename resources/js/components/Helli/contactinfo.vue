@@ -121,9 +121,8 @@ export default {
                         .then(response => {
                             this.getContactInfo(token);
                             alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.');
-                            location.reload();
-                            // let element = document.getElementById("education");
-                            // element.scrollIntoView();
+                            let element = document.getElementById("education");
+                            element.scrollIntoView();
                         })
                         .catch(error => {
                             console.log(error);

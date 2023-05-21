@@ -219,8 +219,9 @@ export default {
                         .then(response => {
                             this.getDataFromTeachingTable(token);
                             alert('اطلاعات تدریس شما با موفقیت در سامانه ثبت شد.');
-                            var element = document.getElementById("posts");
-                            element.scrollIntoView();
+                            location.reload();
+                            // var element = document.getElementById("posts");
+                            // element.scrollIntoView();
                         })
                         .catch(error => {
                             console.log(error);
