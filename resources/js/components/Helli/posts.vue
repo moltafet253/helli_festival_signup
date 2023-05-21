@@ -3,7 +3,9 @@
         <div v-if="isLoading" class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-500">
             <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900 "></div>
             <div class="pr-6">
-                <span class="ml-2 ">در حال ثبت اثر جدید</span>
+                <span class="ml-2 ">
+                    {{ isLoadingMessage }}
+                </span>
             </div>
         </div>
         <section dir="rtl" class="py-1">
@@ -1552,6 +1554,7 @@ export default {
             sentStatus: '',
             festivalOver:false,
             isLoading:false,
+            isLoadingMessage:'',
 
             //get all this user posts
             allPosts: [],
@@ -1936,11 +1939,18 @@ export default {
                 approved: 1
             })
                 .then(function (response) {
+                    this.isLoadingMessage='در حال ارسال آثار';
+                    this.isLoading=true;
                     console.log(response.data);
                 })
                 .catch(function (error) {
                     // console.log(error);
-                });
+                })
+                .finally(()=>{
+                    this.isLoadingMessage='';
+                    this.isLoading=false;
+                })
+            ;
             // this.showModal2 = true;
 
         }
@@ -1954,6 +1964,7 @@ export default {
                 alert('نوع فعالیت انتخاب نشده است.');
                 return false;
             }else{
+                this.isLoadingMessage='در حال ثبت اثر جدید';
                 this.isLoading = true;
                 let fileInput = this.$refs.fileInput;
                 let file = fileInput.files[0];
@@ -1987,6 +1998,7 @@ export default {
                     }
                 })
                     .then(response => {
+                        console.log(response.data);
                         this.showModal=false;
                         this.showModalEdit=false;
                         this.showModal3=false;
@@ -2019,6 +2031,7 @@ export default {
                         this.isLoading = false;
                     })
                     .finally(()=>{
+                        this.isLoadingMessage='';
                         this.isLoading = false;
                         this.getAllPosts(token);
                         alert('اثر جدید شما با موفقیت در سامانه ثبت شد.');
