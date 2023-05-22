@@ -46,7 +46,7 @@ class LastSendPosts extends Controller
                 } else {
                     $lastPostID['codeasar'] = $festivalID . '00001';
                 }
-            }else{
+            } else {
                 $lastPostID['codeasar'] = $festivalID . '00001';
             }
 
@@ -60,19 +60,18 @@ class LastSendPosts extends Controller
                 $paye = EducationalInfo::select('paye')->where('national_code', $nationalcode)->get();
                 $paye = $paye[0]['paye'];
                 if ($post['research_format'] != 'پایان‌نامه' and $post['research_format'] != 'تحقیق پایانی') {
-
                     if ($paye == 1 or $paye == 2 or $paye == 3) {
                         $rateLevel = 1;
                     } elseif ($paye == 4 or $paye == 5 or $paye == 6) {
                         $rateLevel = 2;
                     } elseif ($paye == 7 or $paye == 8 or $paye == 9) {
                         $rateLevel = 3;
-                    } elseif ($paye >= 10) {
+                    } elseif ($paye >= 10 and $paye == 'خارج') {
                         $rateLevel = 4;
                     }
-                } elseif ($post['research_format'] != 'پایان‌نامه') {
+                } elseif ($post['research_format'] == 'پایان‌نامه') {
                     $rateLevel = 3;
-                } elseif ($post['research_format'] != 'تحقیق پایانی') {
+                } elseif ($post['research_format'] == 'تحقیق پایانی') {
                     $rateLevel = 2;
                 }
             } elseif ($userAllInfo['gender'] == 'زن') {
@@ -100,11 +99,38 @@ class LastSendPosts extends Controller
                             $rateLevel = 4;
                             break;
                     }
-                } elseif ($post['research_format'] != 'پایان‌نامه') {
+                } elseif ($post['research_format'] == 'پایان‌نامه') {
                     $rateLevel = 3;
-                } elseif ($post['research_format'] != 'تحقیق پایانی') {
+                } elseif ($post['research_format'] == 'تحقیق پایانی') {
                     $rateLevel = 2;
                 }
+            }
+
+            $tahsilatghhozavi = $educationalInfo[0]['tahsilatghhozavi'];
+            switch ($tahsilatghhozavi) {
+                case 'لیسانس':
+                    switch ($rateLevel) {
+                        case 1:
+                        case 2:
+                        case 3:
+                            $rateLevel++;
+                            break;
+                    }
+                    break;
+                case 'فوق لیسانس':
+                    switch ($rateLevel) {
+                        case 1:
+                        case 2:
+                            $rateLevel += 2;
+                            break;
+                        case 3:
+                            $rateLevel += 1;
+                            break;
+                    }
+                    break;
+                case 'دکتری':
+                    $rateLevel = 4;
+                    break;
             }
 
             if ($post['special_section'] != null and $post['special_section'] != 'null' and $post['special_section'] != '') {
@@ -134,8 +160,8 @@ class LastSendPosts extends Controller
                 'tedadsafhe' => $post['pages_number'],
                 'tedadsafahat250kalame' => $post['pages_number'],
                 'fileasar' => $AssignURL,
-                'vaziatkarnameostani'=>null,
-                'approve_sianat'=>9,
+                'vaziatkarnameostani' => null,
+                'approve_sianat' => 9,
             ]);
 
 

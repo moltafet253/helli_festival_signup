@@ -2161,17 +2161,17 @@ export default {
         }
         ,
         confirm() {
-            this.disableLastSendButton=true;
-            this.isLoadingMessage='در حال ارسال آثار';
-            this.isLoading=true;
+            // this.disableLastSendButton=true;
+            // this.isLoadingMessage='در حال ارسال آثار';
+            // this.isLoading=true;
             axios.post(`/posts/approve/last/send/${this.token}`, {
                 approved: 1
             })
                 .then(function (response) {
-                    // console.log(response.data);
+                    console.log(response.data);
                     // this.isLoadingMessage='';
                     // this.isLoading=false;
-                    location.reload();
+                    // location.reload();
                 })
                 .catch(function (error) {
                     // console.log(error);
