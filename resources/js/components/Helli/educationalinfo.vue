@@ -102,30 +102,30 @@
                 </div>
                 <div class="w-full lg:w-2/12 px-4 flex-row" v-if="this.gender==='زن'">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2">ترم<span
+                        <label class="block uppercase text-base font-bold mb-2">ترم<span
                             style="color: red;">*</span></label>
                         <select :disabled="!showButton" v-model="item.term" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
-                            <option value="1" v-if="item.sath===2 || item.sath===3 || item.sath===4"
+                            <option value="1" v-if="item.sath=='2' || item.sath=='3' || item.sath=='4'"
                                     v-for="(item, index) in edu"
-                                    :key="index" v-bind:selected="item.term==='1'">1
+                                    :key="index" v-bind:selected="item.term=='1'">1
                             </option>
-                            <option value="2" v-if="item.sath===2 || item.sath===3 || item.sath===4"
+                            <option value="2" v-if="item.sath=='2' || item.sath=='3' || item.sath=='4'"
                                     v-for="(item, index) in edu"
-                                    :key="index" v-bind:selected="item.term==='2'">2
+                                    :key="index" v-bind:selected="item.term=='2'">2
                             </option>
-                            <option value="3" v-if="item.sath===2 || item.sath===3 || item.sath===4"
+                            <option value="3" v-if="item.sath=='2' || item.sath=='3' || item.sath=='4'"
                                     v-for="(item, index) in edu"
-                                    :key="index" v-bind:selected="item.term==='3'">3
+                                    :key="index" v-bind:selected="item.term=='3'">3
                             </option>
-                            <option value="4" v-if="item.sath===2 || item.sath===4" v-for="(item, index) in edu"
+                            <option value="4" v-if="item.sath=='2' || item.sath=='4'" v-for="(item, index) in edu"
                                     :key="index"
                                     v-bind:selected="item.term==='4'">4
                             </option>
-                            <option value="5" v-if="item.sath===2 || item.sath===4" v-for="(item, index) in edu"
+                            <option value="5" v-if="item.sath=='2' || item.sath=='4'" v-for="(item, index) in edu"
                                     :key="index"
-                                    v-bind:selected="item.term==='5'">5
+                                    v-bind:selected="item.term=='5'">5
                             </option>
                         </select>
                     </div>

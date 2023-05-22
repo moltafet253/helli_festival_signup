@@ -1,5 +1,6 @@
 <template>
-    <div v-if="isLoading" class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-500">
+    <div v-if="isLoading"
+         class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-500">
         <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900 "></div>
         <div class="pr-6">
                 <span class="ml-2 ">
@@ -82,7 +83,8 @@
                                     </div>
                                     <div class="w-full flex-row">
                                         <div class="relative w-full mr-3">
-                                            <p class="mb-0">کاربر گرامی؛ زمان فراخوان ثبت نام در جشنواره به اتمام رسیده است.</p>
+                                            <p class="mb-0">کاربر گرامی؛ زمان فراخوان ثبت نام در جشنواره به اتمام رسیده
+                                                است.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -176,7 +178,8 @@
                                                                 <label class="block uppercase  text-base font-bold mb-2"
                                                                 >نام اثر<span
                                                                     style="color: red;">*</span></label>
-                                                                <input type="text" id="name" name="name" v-model="name" placeholder="نام اثر را به صورت کامل وارد نمایید"
+                                                                <input type="text" id="name" name="name" v-model="name"
+                                                                       placeholder="نام اثر را به صورت کامل وارد نمایید"
                                                                        class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                                                             </div>
                                                         </div>
@@ -475,7 +478,8 @@
                                                                     class="bg-slate-200 border border-colorborder rounded-b-lg ">
                                                                     <div
                                                                         class="flex items-center justify-start px-5 py-3">
-                                                                        <p>آپلود فایل اثر <br>(با پسوند PDF, Doc, Docx و حداکثر سایز 20 مگابایت)
+                                                                        <p>آپلود فایل اثر <br>(با پسوند PDF, Doc, Docx و
+                                                                            حداکثر سایز 20 مگابایت)
                                                                         </p>
                                                                     </div>
 
@@ -562,7 +566,8 @@
                                                                     <div class="px-6 py-4 text-center">
                                                                         <p class="mb-14 font-bold">{{ message }}</p>
                                                                         <div class="flex justify-center pb-8">
-                                                                            <button @click="handleSubmit(this.token)" :disabled="disableNewPostButton"
+                                                                            <button @click="handleSubmit(this.token)"
+                                                                                    :disabled="disableNewPostButton"
                                                                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
                                                                                 بله
                                                                             </button>
@@ -783,8 +788,8 @@
                                         <div
                                             class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                             <div class="px-6 pt-4">
-<!--                                                <img class="mx-auto mt-8" src="build/assets/icons/success.png"-->
-<!--                                                     alt="Image">-->
+                                                <!--                                                <img class="mx-auto mt-8" src="build/assets/icons/success.png"-->
+                                                <!--                                                     alt="Image">-->
                                             </div>
                                             <div class="px-6 pb-4 text-center ">
                                                 <p class="mb-14 font-bold w-1/2 mx-auto">آثار انتخاب شده با موفقیت
@@ -990,7 +995,8 @@
                                                             >نام اثر<span
                                                                 style="color: red;">*</span></label>
                                                             <input type="text" id="name" name="name"
-                                                                   v-model="this.postName" placeholder="نام اثر را به صورت کامل وارد نمایید"
+                                                                   v-model="this.postName"
+                                                                   placeholder="نام اثر را به صورت کامل وارد نمایید"
                                                                    class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                                                         </div>
                                                     </div>
@@ -1373,7 +1379,8 @@
                                                                 class="bg-slate-200 border border-colorborder rounded-b-lg ">
                                                                 <div
                                                                     class="flex items-center justify-start px-5 py-3">
-                                                                    <p>آپلود فایل اثر <br>(با پسوند PDF, Doc, Docx و حداکثر سایز 20 مگابایت)
+                                                                    <p>آپلود فایل اثر <br>(با پسوند PDF, Doc, Docx و
+                                                                        حداکثر سایز 20 مگابایت)
                                                                     </p>
                                                                 </div>
 
@@ -1463,7 +1470,7 @@
                                                                     <div class="flex justify-center pb-8">
                                                                         <form @submit.prevent="handleSubmit">
                                                                             <button :disabled="disableNewPostButton"
-                                                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
+                                                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
                                                                                 بله
                                                                             </button>
                                                                         </form>
@@ -1552,12 +1559,12 @@ export default {
             showErrorAgeRequirement: false,
             maxUploadFull: false,
             sentStatus: '',
-            festivalOver:false,
-            isLoading:false,
-            isLoadingMessage:'در حال انجام عملیات',
-            disableNewPostButton:false,
-            disableEditPostButton:false,
-            disableLastSendButton:false,
+            festivalOver: false,
+            isLoading: false,
+            isLoadingMessage: 'در حال انجام عملیات',
+            disableNewPostButton: false,
+            disableEditPostButton: false,
+            disableLastSendButton: false,
 
             //get all this user posts
             allPosts: [],
@@ -1609,11 +1616,11 @@ export default {
         async checkCondition(token) {
             await axios.get(`/getactivefestival/${token}`)
                 .then(response => {
-                    if (response.data!=='FestivalIsOver'){
-                        this.activeFestivalInfo = response.data;
-                    }else{
-                        this.festivalOver=true;
-                    }
+                        if (response.data !== 'FestivalIsOver') {
+                            this.activeFestivalInfo = response.data;
+                        } else {
+                            this.festivalOver = true;
+                        }
                     }
                 )
                 .catch(error => {
@@ -1627,38 +1634,39 @@ export default {
                     this.contactInfo = response.data;
                     if (response.data[0]['approved'] === 0) {
                         this.showErrorNotSubmittedInfos = true;
+                    } else {
+                        axios.get(`/edu/geteduinfo/${token}`)
+                            .then(response => {
+                                this.eduInfo = response.data;
+                                if (response.data[0]['approved'] === 0) {
+                                    this.showErrorNotSubmittedInfos = true;
+                                } else {
+                                    axios.get(`/teaching/${token}`)
+                                        .then(response => {
+                                            this.teachingInfo = response.data[0];
+                                            if (response.data[0]['approved'] === 0) {
+                                                this.showErrorNotSubmittedInfos = true;
+                                                this.grantedSend = false;
+                                            }
+                                        })
+                                        .catch(error => {
+                                            console.log(error)
+                                        });
+                                }
+                            })
+                            .catch(error => {
+                                console.log(error)
+                            });
                     }
                 })
                 .catch(error => {
                     console.log(error)
                 });
 
-            await axios.get(`/edu/geteduinfo/${token}`)
-                .then(response => {
-                    this.eduInfo = response.data;
-                    if (response.data[0]['approved'] === 0) {
-                        this.showErrorNotSubmittedInfos = true;
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                });
-
-            await axios.get(`/teaching/${token}`)
-                .then(response => {
-                    this.teachingInfo = response.data[0];
-                    if (response.data[0]['approved'] === 0) {
-                        this.showErrorNotSubmittedInfos = true;
-                        this.grantedSend = false;
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                });
 
             await axios.get(`/users/getuserinfo/${token}`)
                 .then(response => {
-                    if (this.activeFestivalInfo!=='FestivalISOver'){
+                    if (this.activeFestivalInfo !== 'FestivalISOver') {
                         this.personalInfo = response.data;
                         if (response.data[0]['personalImageSrc'] === null) {
                             this.grantedSend = false;
@@ -1694,8 +1702,8 @@ export default {
                                     break;
                             }
                         }
-                    }else{
-                        this.festivalOver=true;
+                    } else {
+                        this.festivalOver = true;
                     }
                 })
                 .catch(error => {
@@ -1794,8 +1802,8 @@ export default {
                     alert('تعداد صفحات اشتباه وارد شده است.');
                     return false;
                 }
-                this.disableEditPostButton=true;
-                this.isLoadingMessage='در حال ویرایش اثر';
+                this.disableEditPostButton = true;
+                this.isLoadingMessage = 'در حال ویرایش اثر';
                 this.isLoading = true;
                 const fileInput = this.$refs.fileInput;
                 const file = fileInput.files[0];
@@ -1944,12 +1952,12 @@ export default {
         }
         ,
         handleSubmit(token) {
-            if (this.activityType===null) {
+            if (this.activityType === null) {
                 alert('نوع فعالیت انتخاب نشده است.');
                 return false;
-            }else{
-                this.disableNewPostButton=true;
-                this.isLoadingMessage='در حال ثبت اثر جدید';
+            } else {
+                this.disableNewPostButton = true;
+                this.isLoadingMessage = 'در حال ثبت اثر جدید';
                 this.isLoading = true;
                 let fileInput = this.$refs.fileInput;
                 let file = fileInput.files[0];
@@ -1983,36 +1991,36 @@ export default {
                     }
                 })
                     .then(response => {
-                        this.showModal=false;
-                        this.showModalEdit=false;
-                        this.showModal3=false;
-                        this.name=null;
-                        this.research_format="";
-                        this.scientific_group="";
-                        this.research_type="";
-                        this.page_number="";
-                        this.publish_status="";
-                        this.special_section="";
-                        this.activityType="fardi";
-                        this.Cooperation="";
+                        this.showModal = false;
+                        this.showModalEdit = false;
+                        this.showModal3 = false;
+                        this.name = null;
+                        this.research_format = "";
+                        this.scientific_group = "";
+                        this.research_type = "";
+                        this.page_number = "";
+                        this.publish_status = "";
+                        this.special_section = "";
+                        this.activityType = "fardi";
+                        this.Cooperation = "";
                         if (this.activityType === 'moshtarak') {
                             this.rows.forEach(row => {
-                                row.name=null;
-                                row.lastname=null;
-                                row.codemeli=null;
-                                row.filenumber=null;
-                                row.Cooperation=null;
-                                row.phonenumber=null;
+                                row.name = null;
+                                row.lastname = null;
+                                row.codemeli = null;
+                                row.filenumber = null;
+                                row.Cooperation = null;
+                                row.phonenumber = null;
                             });
                         }
-                        this.file=null;
-                        this.fileName=null;
-                        this.nameFile=null;
-                        this.isLoadingMessage='';
+                        this.file = null;
+                        this.fileName = null;
+                        this.nameFile = null;
+                        this.isLoadingMessage = '';
                         this.isLoading = false;
                         this.getAllPosts(token);
                         alert('اثر جدید شما با موفقیت در سامانه ثبت شد.');
-                        this.disableNewPostButton=false;
+                        this.disableNewPostButton = false;
                         var element = document.getElementById("posts");
                         element.scrollIntoView();
 
@@ -2074,7 +2082,7 @@ export default {
                     this.fileSelected = false;
                     this.fileName = "";
                     this.error = 'خطا: پسوند فایل مجاز نیست!';
-                }else if (file.size>20*1024*1024) {
+                } else if (file.size > 20 * 1024 * 1024) {
                     this.fileSelected = false;
                     this.fileName = "";
                     this.error = 'خطا: حجم فایل مجاز نیست!';
@@ -2099,7 +2107,7 @@ export default {
                     this.fileSelected = false;
                     this.fileName = "";
                     this.error = 'خطا: پسوند فایل مجاز نیست!';
-                }else if (file.size>20*1024*1024) {
+                } else if (file.size > 20 * 1024 * 1024) {
                     this.fileSelected = false;
                     this.fileName = "";
                     this.error = 'خطا: حجم فایل مجاز نیست!';
@@ -2161,9 +2169,9 @@ export default {
         }
         ,
         confirm() {
-            this.disableLastSendButton=true;
-            this.isLoadingMessage='در حال ارسال آثار';
-            this.isLoading=true;
+            this.disableLastSendButton = true;
+            this.isLoadingMessage = 'در حال ارسال آثار';
+            this.isLoading = true;
             axios.post(`/posts/approve/last/send/${this.token}`, {
                 approved: 1
             })
