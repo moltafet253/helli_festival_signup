@@ -562,7 +562,7 @@
                                                                     <div class="px-6 py-4 text-center">
                                                                         <p class="mb-14 font-bold">{{ message }}</p>
                                                                         <div class="flex justify-center pb-8">
-                                                                            <button @click="handleSubmit(this.token)"
+                                                                            <button @click="handleSubmit(this.token)" :disabled="disableNewPostButton"
                                                                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
                                                                                 بله
                                                                             </button>
@@ -1422,7 +1422,7 @@
                                                     <div class="flex justify-center mb-8 mt-24">
 
                                                         <button
-                                                            @click="editPostSend"
+                                                            @click="editPostSend" :disabled="disableEditPostButton"
                                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
                                                             <span class="text-white">ثبت اولیه اطلاعات</span>
                                                         </button>
@@ -1555,6 +1555,9 @@ export default {
             festivalOver:false,
             isLoading:false,
             isLoadingMessage:'',
+            disableNewPostButton:false,
+            disableEditPostButton:false,
+            disableLastSendButton:false,
 
             //get all this user posts
             allPosts: [],
@@ -1791,6 +1794,9 @@ export default {
                     alert('تعداد صفحات اشتباه وارد شده است.');
                     return false;
                 }
+                this.disableEditPostButton=true;
+                this.isLoadingMessage='در حال ویرایش اثر';
+                this.isLoading = true;
                 const fileInput = this.$refs.fileInput;
                 const file = fileInput.files[0];
 
@@ -1820,7 +1826,6 @@ export default {
                 axios.post(`/posts/updatepost/this`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        'X-Requested-With': 'XMLHttpRequest'
                     }
                 })
                     .then(function (response) {
@@ -1943,6 +1948,7 @@ export default {
                 alert('نوع فعالیت انتخاب نشده است.');
                 return false;
             }else{
+                this.disableNewPostButton=true;
                 this.isLoadingMessage='در حال ثبت اثر جدید';
                 this.isLoading = true;
                 let fileInput = this.$refs.fileInput;
@@ -2002,19 +2008,18 @@ export default {
                         this.file=null;
                         this.fileName=null;
                         this.nameFile=null;
+                        this.isLoadingMessage='';
+                        this.isLoading = false;
+                        this.getAllPosts(token);
+                        alert('اثر جدید شما با موفقیت در سامانه ثبت شد.');
+                        this.disableNewPostButton=false;
+                        var element = document.getElementById("posts");
+                        element.scrollIntoView();
 
                     })
                     .catch(error => {
                         console.log(error);
                         this.isLoading = false;
-                    })
-                    .finally(()=>{
-                        this.isLoadingMessage='';
-                        this.isLoading = false;
-                        this.getAllPosts(token);
-                        alert('اثر جدید شما با موفقیت در سامانه ثبت شد.');
-                        var element = document.getElementById("posts");
-                        element.scrollIntoView();
                     });
 
             }
@@ -2156,15 +2161,16 @@ export default {
         }
         ,
         confirm() {
+            this.disableLastSendButton=true;
+            this.isLoadingMessage='در حال ارسال آثار';
+            this.isLoading=true;
             axios.post(`/posts/approve/last/send/${this.token}`, {
                 approved: 1
             })
                 .then(function (response) {
-                    console.log(response.data);
-                    this.isLoadingMessage='در حال ارسال آثار';
-                    this.isLoading=true;
-                    this.isLoadingMessage='';
-                    this.isLoading=false;
+                    // console.log(response.data);
+                    // this.isLoadingMessage='';
+                    // this.isLoading=false;
                     location.reload();
                 })
                 .catch(function (error) {
