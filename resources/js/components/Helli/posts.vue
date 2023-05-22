@@ -1647,6 +1647,9 @@ export default {
                                             if (response.data[0]['approved'] === 0) {
                                                 this.showErrorNotSubmittedInfos = true;
                                                 this.grantedSend = false;
+                                            }else{
+                                                this.showErrorNotSubmittedInfos = false;
+                                                this.grantedSend = true;
                                             }
                                         })
                                         .catch(error => {
