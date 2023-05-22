@@ -1,13 +1,13 @@
 <template>
-    <div id="posts">
-        <div v-if="isLoading" class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-500">
-            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900 "></div>
-            <div class="pr-6">
+    <div v-if="isLoading" class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-500">
+        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900 "></div>
+        <div class="pr-6">
                 <span class="ml-2 ">
                     {{ isLoadingMessage }}
                 </span>
-            </div>
         </div>
+    </div>
+    <div id="posts" v-if="!isLoading">
         <section dir="rtl" class="py-1">
             <div class="w-full mt-6">
                 <div class="relative flex flex-col min-w-0 break-words w-full mb-6 rounded-lg  border-0">
@@ -719,7 +719,7 @@
                                                     پس از تایید، امکان ویرایش یا ارسال اثر دیگر وجود ندارد.
                                                     آیا تایید می‌کنید؟</p>
                                                 <div class="flex justify-center">
-                                                    <button @click="confirm"
+                                                    <button @click="confirm" :disabled="disableLastSendButton"
                                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
                                                         بله
                                                     </button>
@@ -1406,7 +1406,7 @@
 
                                                         <button
 
-                                                            @click="editPostSend"
+                                                            @click="editPostSend" :disabled="disableEditPostButton"
                                                             :class="[handleButtonClick ? ' bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl cursor-pointer' : 'bg-red-500 opacity-50  hover:bg-red-700 cursor-not-allowed text-white font-bold py-2 px-10 ml-8 rounded-xl']">
                                                             <span :class="[checkFile ? ' text-white' : 'text-black']">ثبت اولیه اطلاعات</span>
                                                         </button>
@@ -1462,7 +1462,7 @@
                                                                     <p class="mb-14 font-bold">{{ message }}</p>
                                                                     <div class="flex justify-center pb-8">
                                                                         <form @submit.prevent="handleSubmit">
-                                                                            <button
+                                                                            <button :disabled="disableNewPostButton"
                                                                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl">
                                                                                 بله
                                                                             </button>
@@ -1554,7 +1554,7 @@ export default {
             sentStatus: '',
             festivalOver:false,
             isLoading:false,
-            isLoadingMessage:'',
+            isLoadingMessage:'در حال انجام عملیات',
             disableNewPostButton:false,
             disableEditPostButton:false,
             disableLastSendButton:false,

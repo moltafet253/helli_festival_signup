@@ -24,7 +24,9 @@ class LastSendPosts extends Controller
 
         $user = User::where('national_code', '=', $nationalcode)->value('id');
         $userAllInfo = User::find($user);
-        $posts = $userAllInfo->allPosts;
+        $posts = $userAllInfo->allPosts->filter(function ($post) {
+            return $post->sent == 0;
+        });
         foreach ($posts as $post) {
             $festivalID = Festival::where('active', '1')->value('id');
             $lastPostID = etelaat_a::orderBy('codeasar', 'desc')->first();
