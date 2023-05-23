@@ -1634,12 +1634,14 @@ export default {
                     this.contactInfo = response.data;
                     if (response.data[0]['approved'] === 0) {
                         this.showErrorNotSubmittedInfos = true;
+                        this.grantedSend = false;
                     } else {
                         axios.get(`/edu/geteduinfo/${token}`)
                             .then(response => {
                                 this.eduInfo = response.data;
                                 if (response.data[0]['approved'] === 0) {
                                     this.showErrorNotSubmittedInfos = true;
+                                    this.grantedSend = false;
                                 } else {
                                     axios.get(`/teaching/${token}`)
                                         .then(response => {
@@ -1648,8 +1650,51 @@ export default {
                                                 this.showErrorNotSubmittedInfos = true;
                                                 this.grantedSend = false;
                                             }else{
-                                                this.showErrorNotSubmittedInfos = false;
-                                                this.grantedSend = true;
+                                                axios.get(`/users/getuserinfo/${token}`)
+                                                    .then(response => {
+                                                        if (this.activeFestivalInfo !== 'FestivalISOver') {
+                                                            this.personalInfo = response.data;
+                                                            if (response.data[0]['personalImageSrc'] === null) {
+                                                                this.grantedSend = false;
+                                                                this.showErrorNotSubmittedInfos = true;
+                                                            } else {
+                                                                let myBirthDate = response.data[0]['birthdate'];
+                                                                let chunksmyBirthDate = myBirthDate.slice(0, 4);
+                                                                let ActiveFestivalDate = this.activeFestivalInfo;
+                                                                let chunksActiveFestivalDate = ActiveFestivalDate.slice(0, 4);
+
+                                                                switch (this.teachingInfo['isMaster']) {
+                                                                    case 'بله':
+                                                                        if (parseInt(chunksActiveFestivalDate) - parseInt(chunksmyBirthDate) <= 50) {
+                                                                            this.showErrorAgeRequirement = false;
+                                                                            this.grantedSend = true;
+                                                                            this.showErrorNotSubmittedInfos = false;
+                                                                        } else {
+                                                                            this.showErrorAgeRequirement = true;
+                                                                            this.grantedSend = false;
+                                                                            this.showErrorNotSubmittedInfos = false;
+                                                                        }
+                                                                        break;
+                                                                    case 'خیر':
+                                                                        if (parseInt(chunksActiveFestivalDate) - parseInt(chunksmyBirthDate) <= 35) {
+                                                                            this.showErrorAgeRequirement = false;
+                                                                            this.grantedSend = true;
+                                                                            this.showErrorNotSubmittedInfos = false;
+                                                                        } else {
+                                                                            this.showErrorAgeRequirement = true;
+                                                                            this.grantedSend = false;
+                                                                            this.showErrorNotSubmittedInfos = false;
+                                                                        }
+                                                                        break;
+                                                                }
+                                                            }
+                                                        } else {
+                                                            this.festivalOver = true;
+                                                        }
+                                                    })
+                                                    .catch(error => {
+                                                        console.log(error)
+                                                    });
                                             }
                                         })
                                         .catch(error => {
@@ -1666,52 +1711,6 @@ export default {
                     console.log(error)
                 });
 
-
-            await axios.get(`/users/getuserinfo/${token}`)
-                .then(response => {
-                    if (this.activeFestivalInfo !== 'FestivalISOver') {
-                        this.personalInfo = response.data;
-                        if (response.data[0]['personalImageSrc'] === null) {
-                            this.grantedSend = false;
-                            this.showErrorNotSubmittedInfos = true;
-                        } else {
-                            let myBirthDate = response.data[0]['birthdate'];
-                            let chunksmyBirthDate = myBirthDate.slice(0, 4);
-                            let ActiveFestivalDate = this.activeFestivalInfo;
-                            let chunksActiveFestivalDate = ActiveFestivalDate.slice(0, 4);
-
-                            switch (this.teachingInfo['isMaster']) {
-                                case 'بله':
-                                    if (parseInt(chunksActiveFestivalDate) - parseInt(chunksmyBirthDate) <= 50) {
-                                        this.showErrorAgeRequirement = false;
-                                        this.grantedSend = true;
-                                        this.showErrorNotSubmittedInfos = false;
-                                    } else {
-                                        this.showErrorAgeRequirement = true;
-                                        this.grantedSend = false;
-                                        this.showErrorNotSubmittedInfos = false;
-                                    }
-                                    break;
-                                case 'خیر':
-                                    if (parseInt(chunksActiveFestivalDate) - parseInt(chunksmyBirthDate) <= 35) {
-                                        this.showErrorAgeRequirement = false;
-                                        this.grantedSend = true;
-                                        this.showErrorNotSubmittedInfos = false;
-                                    } else {
-                                        this.showErrorAgeRequirement = true;
-                                        this.grantedSend = false;
-                                        this.showErrorNotSubmittedInfos = false;
-                                    }
-                                    break;
-                            }
-                        }
-                    } else {
-                        this.festivalOver = true;
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                });
 
             await axios.get(`/defaults/maxUploads/${token}`)
                 .then(response => {
