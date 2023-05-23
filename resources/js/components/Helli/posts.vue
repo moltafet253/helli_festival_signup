@@ -24,7 +24,7 @@
                             <div class="flex items-center mt-4 gap-16">
 
                                 <div
-                                    v-if="grantedSend===true && maxUploadFull===false"
+                                    v-if="grantedSend===true && maxUploadFull===false && sentStatus!==true"
                                     class="w-full lg:w-3/12 flex-row bg-white  rounded-lg shadow">
                                     <!-- click open modal -->
                                     <div @click="showNewPostModal"
@@ -1714,18 +1714,20 @@ export default {
 
             await axios.get(`/defaults/maxUploads/${token}`)
                 .then(response => {
+                    console.log(response.data[0]['sent_status']);
                     this.max_uploads = response.data;
                     if (response.data[0]['numbers'] < 3 && response.data[0]['sent_status'] !== 1) {
                         this.sentStatus = false;
                     }
-                    if (response.data[0]['numbers'] === 0 && response.data[0]['sent_status'] !== 1) {
+                    else if (response.data[0]['numbers'] === 0 && response.data[0]['sent_status'] !== 1) {
                         this.maxUploadFull = true;
                         this.sentStatus = false;
                     }
-                    if (response.data[0]['sent_status'] === 1) {
+                    else if (response.data[0]['sent_status'] === 1) {
+                        this.grantedSend = false;
                         this.maxUploadFull = false;
                         this.sentStatus = true;
-                        this.grantedSend = false;
+
                     }
                 })
                 .catch(error => {
