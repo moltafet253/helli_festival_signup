@@ -106,33 +106,34 @@ class LastSendPosts extends Controller
                 }
             }
 
-            $tahsilatghhozavi = $educationalInfo[0]['tahsilatghhozavi'];
-            switch ($tahsilatghhozavi) {
-                case 'لیسانس':
-                    switch ($rateLevel) {
-                        case 1:
-                        case 2:
-                        case 3:
-                            $rateLevel++;
-                            break;
-                    }
-                    break;
-                case 'فوق لیسانس':
-                    switch ($rateLevel) {
-                        case 1:
-                        case 2:
-                            $rateLevel += 2;
-                            break;
-                        case 3:
-                            $rateLevel += 1;
-                            break;
-                    }
-                    break;
-                case 'دکتری':
-                    $rateLevel = 4;
-                    break;
+            if ($post['research_format'] != 'پایان‌نامه' and $post['research_format'] != 'تحقیق پایانی') {
+                $tahsilatghhozavi = $educationalInfo[0]['tahsilatghhozavi'];
+                switch ($tahsilatghhozavi) {
+                    case 'لیسانس':
+                        switch ($rateLevel) {
+                            case 1:
+                            case 2:
+                            case 3:
+                                $rateLevel++;
+                                break;
+                        }
+                        break;
+                    case 'فوق لیسانس':
+                        switch ($rateLevel) {
+                            case 1:
+                            case 2:
+                                $rateLevel += 2;
+                                break;
+                            case 3:
+                                $rateLevel += 1;
+                                break;
+                        }
+                        break;
+                    case 'دکتری':
+                        $rateLevel = 4;
+                        break;
+                }
             }
-
             if ($post['special_section'] != null and $post['special_section'] != 'null' and $post['special_section'] != '') {
                 $hasSpecial = 'هست';
                 $specialSection = $post['special_section'];
