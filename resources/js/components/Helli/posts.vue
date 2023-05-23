@@ -1716,7 +1716,7 @@ export default {
                 .then(response => {
                     console.log(response.data[0]['sent_status']);
                     this.max_uploads = response.data;
-                    if (response.data[0]['numbers'] < 3 && response.data[0]['sent_status'] !== 1) {
+                    if (response.data[0]['numbers'] < 3 && response.data[0]['numbers']>0 && response.data[0]['sent_status'] !== 1) {
                         this.sentStatus = false;
                     }
                     else if (response.data[0]['numbers'] === 0 && response.data[0]['sent_status'] !== 1) {
