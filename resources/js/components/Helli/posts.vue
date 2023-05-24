@@ -1946,7 +1946,7 @@ export default {
                     .catch(function (error) {
                         console.log(error);
                     }).finally(() => {
-                    // location.reload();
+                    location.reload();
                 });
             }
         }
