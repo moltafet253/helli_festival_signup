@@ -17,19 +17,16 @@ class VueController extends Controller
     public function index()
     {
         if (isset($_GET['token'])) {
-            $token = $_GET['token']; // دریافت توکن از پارامتر token در کوئری استرینگ
-            $url = "http://api-base.ismc.ir/Redirect/GetTokenInfo?key=" . $token; // تشکیل لینک با پارامتر توکن
+            $token = $_GET['token'];
+            $url = "http://api-base.ismc.ir/Redirect/GetTokenInfo?key=" . $token;
             $client = new Client();
             $response = $client->request('GET', $url);
             $data = json_decode($response->getBody(), true);
             if (isset($data['data']['person'])) {
-                $dataPersonal = $data['data']['person'];
                 $socialID = $data['data']['person']['SocialID'];
                 $Gender = $data['data']['person']['Gender'];
-//                $Gender = 'زن';
                 session(['nationalcode' => $socialID]);
                 session(['gender' => $Gender]);
-
 
                 $user = User::firstOrCreate([
                     'national_code' => $socialID
@@ -57,8 +54,8 @@ class VueController extends Controller
                     'gender' => $data['data']['person']['Gender'],
                 ]);
 
-                $setToken=User::where('national_code',$socialID)->where('remember_token',null)->update(['remember_token'=>$hash]);
-                if ($setToken){
+                $setToken = User::where('national_code', $socialID)->where('remember_token', null)->update(['remember_token' => $hash]);
+                if ($setToken) {
                     $agent = new Agent();
                     UserActivityLog::firstorcreate([
                         'user_id' => $user['id'],
@@ -68,8 +65,8 @@ class VueController extends Controller
                         'device' => $agent->device(),
                     ]);
                 }
-                $getToken=User::where('national_code',$socialID)->value('remember_token');
-                session(['token'=>$getToken]);
+                $getToken = User::where('national_code', $socialID)->value('remember_token');
+                session(['token' => $getToken]);
 
                 Contact::firstOrCreate([
                     'national_code' => $socialID
@@ -103,8 +100,6 @@ class VueController extends Controller
                 ], [
                     'national_code' => $socialID,
                 ]);
-
-
 
                 $agent = new Agent();
                 UserActivityLog::firstorcreate([

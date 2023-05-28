@@ -34,16 +34,30 @@ class UpdatePost extends Controller
             ]);
         }
 
-        $post2 = Post::where('id', $id)->update([
-            'title' => $name,
-            'research_format' => $research_format,
-            'scientific_group' => $scientific_group,
-            'research_type' => $research_type,
-            'pages_number' => $page_number,
-            'publish_status' => $publish_status,
-            'special_section' => $special_section,
-            'activity_type' => $activityType,
-        ]);
+
+        if ($special_section == '' or $special_section == null) {
+            $post2 = Post::where('id', $id)->update([
+                'title' => $name,
+                'research_format' => $research_format,
+                'scientific_group' => $scientific_group,
+                'research_type' => $research_type,
+                'pages_number' => $page_number,
+                'publish_status' => $publish_status,
+                'special_section' => null,
+                'activity_type' => $activityType,
+            ]);
+        } else {
+            $post2 = Post::where('id', $id)->update([
+                'title' => $name,
+                'research_format' => $research_format,
+                'scientific_group' => $scientific_group,
+                'research_type' => $research_type,
+                'pages_number' => $page_number,
+                'publish_status' => $publish_status,
+                'special_section' => $special_section,
+                'activity_type' => $activityType,
+            ]);
+        }
 
         if ($activityType === 'fardi') {
             Post::where('id', $id)->update([

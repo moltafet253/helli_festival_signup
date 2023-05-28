@@ -1086,7 +1086,7 @@
                                                             <select v-model="this.postSpecialSection"
                                                                     class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
                                                                 <option value=""
-                                                                        :selected="null===this.postSpecialSection">
+                                                                        :selected="null==this.postSpecialSection">
                                                                     نمی باشد
                                                                 </option>
                                                                 <option v-for="specials in special_sections"
@@ -1840,12 +1840,12 @@ export default {
                     }
                 })
                     .then(function (response) {
-
+                        console.log(response);
                     })
                     .catch(function (error) {
                         console.log(error);
                     }).finally(() => {
-                    location.reload();
+                    // location.reload();
 
                 });
             }
@@ -2185,7 +2185,10 @@ export default {
                     location.reload();
                 })
                 .catch(function (error) {
-                    // console.log(error);
+                    // this.isLoadingMessage='';
+                    // this.isLoading=false;
+                    alert('ارسال اثر با خطا مواجه شد.');
+                    console.log(error);
                 });
             // location.reload();
             // this.showModal = false;
