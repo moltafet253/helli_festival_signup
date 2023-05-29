@@ -18,7 +18,7 @@ use Jenssegers\Agent\Agent;
 
 class LastSendPosts extends Controller
 {
-    public function lastSendPosts(Request $request, $token)
+    public function lastSendPosts($token)
     {
         $nationalcode = User::where('remember_token', $token)->value('national_code');
 
@@ -27,14 +27,14 @@ class LastSendPosts extends Controller
         $posts = $userAllInfo->allPosts->filter(function ($post) {
             return $post->sent == 0;
         });
+        $festivalID = Festival::where('active', '1')->value('id');
+        $contactInfo = Contact::select('mobile', 'national_code', 'phone', 'postal_code', 'address')->where('national_code', $nationalcode)->get();
+        $educationalInfo =
+            EducationalInfo::select('namemarkaztahsili', 'noetahsilhozavi', 'paye', 'sath', 'term', 'ostantahsili', 'shahrtahsili', 'madresetahsili', 'shparvandetahsili', 'tahsilatghhozavi', 'reshtedaneshgahi', 'markaztakhasosihozavi', 'reshtetakhasosihozavi')
+                ->where('national_code', $nationalcode)->get();
+        $teachingInfo = TeachingInfo::select('masterCode', 'teachingProvince', 'teachingCity', 'teachingPlaceName', 'isMaster')->where('national_code', $nationalcode)->get();
         foreach ($posts as $post) {
-            $festivalID = Festival::where('active', '1')->value('id');
             $lastPostID = etelaat_a::orderBy('codeasar', 'desc')->first();
-            $contactInfo = Contact::select('mobile', 'national_code', 'phone', 'postal_code', 'address')->where('national_code', $nationalcode)->get();
-            $educationalInfo =
-                EducationalInfo::select('namemarkaztahsili', 'noetahsilhozavi', 'paye', 'sath', 'term', 'ostantahsili', 'shahrtahsili', 'madresetahsili', 'shparvandetahsili', 'tahsilatghhozavi', 'reshtedaneshgahi', 'markaztakhasosihozavi', 'reshtetakhasosihozavi')
-                    ->where('national_code', $nationalcode)->get();
-            $teachingInfo = TeachingInfo::select('masterCode', 'teachingProvince', 'teachingCity', 'teachingPlaceName', 'isMaster')->where('national_code', $nationalcode)->get();
 
             if ($lastPostID) {
                 if (substr($lastPostID['codeasar'], 0, 2) == $festivalID) {
