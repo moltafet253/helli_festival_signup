@@ -74,39 +74,6 @@ class LastSendPosts extends Controller
                 } elseif ($post['research_format'] == 'تحقیق پایانی') {
                     $rateLevel = 2;
                 }
-            } elseif ($userAllInfo['gender'] == 'زن') {
-                $sath = EducationalInfo::select('sath')->where('national_code', $nationalcode)->get();
-                $term = EducationalInfo::select('term')->where('national_code', $nationalcode)->get();
-                $sath = $sath[0]['sath'];
-                $term = $term[0]['term'];
-                if ($post['research_format'] != 'پایان‌نامه' and $post['research_format'] != 'تحقیق پایانی') {
-                    switch ($sath) {
-                        case 2:
-                            if ($term == 1 or $term == 2 or $term == 3) {
-                                $rateLevel = 1;
-                            } elseif ($term == 4 or $term == 5) {
-                                $rateLevel = 2;
-                            }
-                            break;
-                        case 3:
-                            if ($term == 1) {
-                                $rateLevel = 2;
-                            } elseif ($term == 2 or $term == 3) {
-                                $rateLevel = 2;
-                            }
-                            break;
-                        case 4:
-                            $rateLevel = 4;
-                            break;
-                    }
-                } elseif ($post['research_format'] == 'پایان‌نامه') {
-                    $rateLevel = 3;
-                } elseif ($post['research_format'] == 'تحقیق پایانی') {
-                    $rateLevel = 2;
-                }
-            }
-
-            if ($post['research_format'] != 'پایان‌نامه' and $post['research_format'] != 'تحقیق پایانی') {
                 $tahsilatghhozavi = $educationalInfo[0]['tahsilatghhozavi'];
                 switch ($tahsilatghhozavi) {
                     case 'لیسانس':
@@ -133,7 +100,64 @@ class LastSendPosts extends Controller
                         $rateLevel = 4;
                         break;
                 }
+            } elseif ($userAllInfo['gender'] == 'زن') {
+                $sath = EducationalInfo::select('sath')->where('national_code', $nationalcode)->get();
+                $term = EducationalInfo::select('term')->where('national_code', $nationalcode)->get();
+                $sath = $sath[0]['sath'];
+                $term = $term[0]['term'];
+                if ($post['research_format'] != 'پایان‌نامه' and $post['research_format'] != 'تحقیق پایانی') {
+                    switch ($sath) {
+                        case 2:
+                            if ($term == 1 or $term == 2 or $term == 3) {
+                                $rateLevel = 1;
+                            } elseif ($term == 4 or $term == 5) {
+                                $rateLevel = 2;
+                            }
+                            break;
+                        case 3:
+                            if ($term == 1) {
+                                $rateLevel = 2;
+                            } elseif ($term == 2 or $term == 3) {
+                                $rateLevel = 2;
+                            }
+                            break;
+                        case 4:
+                            $rateLevel = 4;
+                            break;
+                    }
+                    $tahsilatghhozavi = $educationalInfo[0]['tahsilatghhozavi'];
+                    switch ($tahsilatghhozavi) {
+                        case 'لیسانس':
+                            switch ($rateLevel) {
+                                case 1:
+                                case 2:
+                                case 3:
+                                    $rateLevel++;
+                                    break;
+                            }
+                            break;
+                        case 'فوق لیسانس':
+                            switch ($rateLevel) {
+                                case 1:
+                                case 2:
+                                    $rateLevel += 2;
+                                    break;
+                                case 3:
+                                    $rateLevel += 1;
+                                    break;
+                            }
+                            break;
+                        case 'دکتری':
+                            $rateLevel = 4;
+                            break;
+                    }
+                } elseif ($post['research_format'] == 'پایان‌نامه') {
+                    $rateLevel = 3;
+                } elseif ($post['research_format'] == 'تحقیق پایانی') {
+                    $rateLevel = 2;
+                }
             }
+
             if ($post['special_section'] != null and $post['special_section'] != 'null' and $post['special_section'] != '') {
                 $hasSpecial = 'هست';
                 $specialSection = $post['special_section'];
