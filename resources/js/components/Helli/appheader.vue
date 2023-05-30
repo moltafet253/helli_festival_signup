@@ -7,10 +7,14 @@
                     &nbsp;
                     <a target="_blank" href="./pub_files/conditions.pdf" class="mr-4 text-white">شرایط شرکت در جشنواره</a>
                 </div>
-                <div>
+                <div class="flex space-x-4">
                     <a href="https://pazhuhesh.ismc.ir" target="_blank">
-                        <img src="build/assets/icons/Logo.svg" alt="لوگو" class="h-14">
+                        <img src="build/assets/icons/Helli Logo.png" alt="لوگو علامه حلی" class="h-14">
                     </a>
+                    <a href="https://pazhuhesh.ismc.ir" target="_blank">
+                        <img src="build/assets/icons/Logo.svg" alt="لوگو پژوهش" class="h-14">
+                    </a>
+
                 </div>
             </div>
         </nav>
