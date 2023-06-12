@@ -193,9 +193,13 @@
                                                                     <option disabled selected value="">انتخاب کنید
                                                                     </option>
                                                                     <option v-for="formats in research_formats"
+                                                                            v-if="groupApprove===0"
                                                                             :value="formats.title"
-                                                                            v-if="groupApprove !== 'استاد' || (format.title !== 'تحقیق پایانی' && format.title !== 'پایان نامه')"
                                                                     >{{ formats.title }}
+                                                                    </option>
+                                                                    <option v-if="groupApprove===1" value="مقاله">مقاله
+                                                                    </option>
+                                                                    <option v-if="groupApprove===1" value="کتاب">کتاب
                                                                     </option>
                                                                 </select>
                                                             </div>
@@ -1013,7 +1017,13 @@
                                                                 </option>
                                                                 <option v-for="formats in research_formats"
                                                                         :selected="formats.title===this.postResearchFormat"
-                                                                        :value="formats.title">{{ formats.title }}
+                                                                        v-if="groupApprove===0"
+                                                                        :value="formats.title"
+                                                                >{{ formats.title }}
+                                                                </option>
+                                                                <option :selected="'مقاله'===this.postResearchFormat" v-if="groupApprove===1" value="مقاله">مقاله
+                                                                </option>
+                                                                <option :selected="'کتاب'===this.postResearchFormat" v-if="groupApprove===1" value="کتاب">کتاب
                                                                 </option>
                                                             </select>
                                                         </div>
@@ -1554,7 +1564,7 @@ export default {
             file: '',
 
             //Errors And Checks
-            groupApprove:'',
+            groupApprove: 0,
             grantedSend: false,
             emptyErrors: '',
             showErrorNotSubmittedInfos: false,
@@ -1652,7 +1662,7 @@ export default {
                                             if (response.data[0]['approved'] === 0) {
                                                 this.showErrorNotSubmittedInfos = true;
                                                 this.grantedSend = false;
-                                            }else{
+                                            } else {
                                                 axios.get(`/users/getuserinfo/${token}`)
                                                     .then(response => {
                                                         if (this.activeFestivalInfo !== 'FestivalISOver') {
@@ -1672,7 +1682,8 @@ export default {
                                                                             this.showErrorAgeRequirement = false;
                                                                             this.grantedSend = true;
                                                                             this.showErrorNotSubmittedInfos = false;
-                                                                            this.groupApprove='بله';
+                                                                            this.groupApprove = 1;
+
                                                                         } else {
                                                                             this.showErrorAgeRequirement = true;
                                                                             this.grantedSend = false;
@@ -1684,7 +1695,6 @@ export default {
                                                                             this.showErrorAgeRequirement = false;
                                                                             this.grantedSend = true;
                                                                             this.showErrorNotSubmittedInfos = false;
-                                                                            this.groupApprove='خیر';
                                                                         } else {
                                                                             this.showErrorAgeRequirement = true;
                                                                             this.grantedSend = false;
@@ -1720,14 +1730,12 @@ export default {
             await axios.get(`/defaults/maxUploads/${token}`)
                 .then(response => {
                     this.max_uploads = response.data;
-                    if (response.data[0]['numbers'] < 3 && response.data[0]['numbers']>0 && response.data[0]['sent_status'] !== 1) {
+                    if (response.data[0]['numbers'] < 3 && response.data[0]['numbers'] > 0 && response.data[0]['sent_status'] !== 1) {
                         this.sentStatus = false;
-                    }
-                    else if (response.data[0]['numbers'] === 0 && response.data[0]['sent_status'] !== 1) {
+                    } else if (response.data[0]['numbers'] === 0 && response.data[0]['sent_status'] !== 1) {
                         this.maxUploadFull = true;
                         this.sentStatus = false;
-                    }
-                    else if (response.data[0]['sent_status'] === 1) {
+                    } else if (response.data[0]['sent_status'] === 1) {
                         this.grantedSend = false;
                         this.maxUploadFull = false;
                         this.sentStatus = true;
