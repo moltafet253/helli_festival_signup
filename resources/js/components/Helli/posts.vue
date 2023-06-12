@@ -189,11 +189,13 @@
                                                                 >قالب پژوهش<span
                                                                     style="color: red;">*</span></label>
                                                                 <select v-model="research_format"
-                                                                        class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
+                                                                        class="border border-colorborder px-3 py-3 bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold ">
                                                                     <option disabled selected value="">انتخاب کنید
                                                                     </option>
                                                                     <option v-for="formats in research_formats"
-                                                                            :value="formats.title">{{ formats.title }}
+                                                                            :value="formats.title"
+                                                                            v-if="groupApprove !== 'استاد' || (format.title !== 'تحقیق پایانی' && format.title !== 'پایان نامه')"
+                                                                    >{{ formats.title }}
                                                                     </option>
                                                                 </select>
                                                             </div>
@@ -1551,7 +1553,8 @@ export default {
             special_section: '',
             file: '',
 
-            //errors
+            //Errors And Checks
+            groupApprove:'',
             grantedSend: false,
             emptyErrors: '',
             showErrorNotSubmittedInfos: false,
@@ -1669,6 +1672,7 @@ export default {
                                                                             this.showErrorAgeRequirement = false;
                                                                             this.grantedSend = true;
                                                                             this.showErrorNotSubmittedInfos = false;
+                                                                            this.groupApprove='بله';
                                                                         } else {
                                                                             this.showErrorAgeRequirement = true;
                                                                             this.grantedSend = false;
@@ -1680,6 +1684,7 @@ export default {
                                                                             this.showErrorAgeRequirement = false;
                                                                             this.grantedSend = true;
                                                                             this.showErrorNotSubmittedInfos = false;
+                                                                            this.groupApprove='خیر';
                                                                         } else {
                                                                             this.showErrorAgeRequirement = true;
                                                                             this.grantedSend = false;
