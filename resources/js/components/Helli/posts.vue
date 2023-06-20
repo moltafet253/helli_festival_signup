@@ -1972,9 +1972,9 @@ export default {
                 alert('نوع فعالیت انتخاب نشده است.');
                 return false;
             } else {
-                this.disableNewPostButton = true;
-                this.isLoadingMessage = 'در حال ثبت اثر جدید';
-                this.isLoading = true;
+                // this.disableNewPostButton = true;
+                // this.isLoadingMessage = 'در حال ثبت اثر جدید';
+                // this.isLoading = true;
                 let fileInput = this.$refs.fileInput;
                 let file = fileInput.files[0];
 
@@ -2029,14 +2029,14 @@ export default {
                                 row.phonenumber = null;
                             });
                         }
-                        this.file = null;
-                        this.fileName = null;
-                        this.nameFile = null;
-                        this.isLoadingMessage = '';
+                        // this.file = null;
+                        // this.fileName = null;
+                        // this.nameFile = null;
+                        // this.isLoadingMessage = '';
                         this.isLoading = false;
-                        this.getAllPosts(token);
+                        // this.getAllPosts(token);
                         alert('اثر جدید شما با موفقیت در سامانه ثبت شد.');
-                        location.reload();
+                        // location.reload();
                         // this.disableNewPostButton = false;
                         // var element = document.getElementById("posts");
                         // element.scrollIntoView();

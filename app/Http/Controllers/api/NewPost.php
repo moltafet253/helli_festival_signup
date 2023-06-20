@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\UserActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Jenssegers\Agent\Agent;
 
 class NewPost extends Controller
@@ -33,8 +34,8 @@ class NewPost extends Controller
 
         $file = $request->file('file');
         $hashName = uniqid('', true) . '.' . $request->file('file')->getClientOriginalName();
-        $path = $file->storeAs('public/asarFiles/' . $hashName , $hashName);
-
+//        $path = $file->storeAs('public/asarFiles/' . $hashName , $hashName);
+        $path = Storage::disk('public')->putFileAs('public/asarFiles/'.$hashName, $file, $hashName);
         if ($path) {
             $post = Post::create([
                 'user_id' => $user_id,
@@ -50,14 +51,14 @@ class NewPost extends Controller
                 'file_src' => $path,
             ]);
 
-            $maxUpload = DB::table('helli_user_max_upload_posts')->where('national_code', $nationalcode)->value('numbers');
-            if ($maxUpload == 3 or $maxUpload == 2 or $maxUpload == 1) {
-                $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->decrement('numbers', 1);
-            } else {
-                $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->update([
-                    'numbers' => 0,
-                ]);
-            }
+//            $maxUpload = DB::table('helli_user_max_upload_posts')->where('national_code', $nationalcode)->value('numbers');
+//            if ($maxUpload == 3 or $maxUpload == 2 or $maxUpload == 1) {
+//                $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->decrement('numbers', 1);
+//            } else {
+//                $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->update([
+//                    'numbers' => 0,
+//                ]);
+//            }
 
             if ($activityType == 'moshtarak') {
                 $myCooperation = $request->input('myCooperation');
