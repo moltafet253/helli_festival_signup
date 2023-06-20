@@ -21,7 +21,6 @@ class NewPost extends Controller
 
         $user_id = DB::table('users')->where('national_code', $nationalcode)->value('id');
         $festival_title = DB::table('festivals')->where('active', 1)->value('title');
-        $decrementBy = 1;
 
         $name = $request->input('name');
         $research_format = $request->input('research_format');
@@ -52,7 +51,7 @@ class NewPost extends Controller
 
         $maxUpload = DB::table('helli_user_max_upload_posts')->where('national_code', $nationalcode)->value('numbers');
         if ($maxUpload==3 or $maxUpload==2 or $maxUpload==1){
-            $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->decrement('numbers', $decrementBy);
+            $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->decrement('numbers', 1);
         }else{
             $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->update([
                 'numbers' => 0,
@@ -85,7 +84,7 @@ class NewPost extends Controller
             HelliUserMaxUploadPost::firstorcreate([
                 'national_code' => $cooperators[$c]['codemeli']
             ]);
-//        HelliUserMaxUploadPost::where('national_code', '=', $cooperators[$c]['codemeli'])->decrement('numbers', $decrementBy);
+//        HelliUserMaxUploadPost::where('national_code', '=', $cooperators[$c]['codemeli'])->decrement('numbers', 1);
             $count = count($cooperators) / 6;
             for ($i = 2; $i <= $count; $i++) {
                 Participant::create([
@@ -106,16 +105,18 @@ class NewPost extends Controller
             }
 //        $c = 2;
 //        for ($i = 2; $i <= $count; $i++) {
-//            HelliUserMaxUploadPost::where('national_code', '=', $cooperators[$c += 6]['codemeli'])->decrement('numbers', $decrementBy);
+//            HelliUserMaxUploadPost::where('national_code', '=', $cooperators[$c += 6]['codemeli'])->decrement('numbers', 1);
 //        }
-            $agent = new Agent();
-            UserActivityLog::create([
-                'user_id' => session('user_id'),
-                'activity' => 'Post New Post With This ID => ' . $post->id,
-                'ip_address' => request()->ip(),
-                'user_agent' => request()->userAgent(),
-                'device' => $agent->device(),
-            ]);
+
         }
+
+        $agent = new Agent();
+        UserActivityLog::create([
+            'user_id' => session('user_id'),
+            'activity' => 'Post New Post With This ID => ' . $post->id,
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+            'device' => $agent->device(),
+        ]);
     }
 }
