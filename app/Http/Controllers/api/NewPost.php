@@ -35,88 +35,83 @@ class NewPost extends Controller
         $hashName = uniqid('', true) . '.' . $request->file('file')->getClientOriginalName();
         $path = $file->storeAs('public/asarFiles/' . $hashName , $hashName);
 
-        $post = Post::create([
-            'user_id' => $user_id,
-            'festival_title' => $festival_title,
-            'title' => $name,
-            'research_format' => $research_format,
-            'scientific_group' => $scientific_group,
-            'research_type' => $research_type,
-            'pages_number' => $page_number,
-            'publish_status' => $publish_status,
-            'special_section' => $special_section,
-            'activity_type' => $activityType,
-            'file_src' => $path,
-        ]);
-
-        $maxUpload = DB::table('helli_user_max_upload_posts')->where('national_code', $nationalcode)->value('numbers');
-        if ($maxUpload==3 or $maxUpload==2 or $maxUpload==1){
-            $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->decrement('numbers', 1);
-        }else{
-            $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->update([
-                'numbers' => 0,
-            ]);
-        }
-
-        if ($activityType === 'moshtarak') {
-            $myCooperation = $request->input('myCooperation');
-            Post::where('id', $post->id)->update([
-                'participation_percentage' => $myCooperation
+        if ($path) {
+            $post = Post::create([
+                'user_id' => $user_id,
+                'festival_title' => $festival_title,
+                'title' => $name,
+                'research_format' => $research_format,
+                'scientific_group' => $scientific_group,
+                'research_type' => $research_type,
+                'pages_number' => $page_number,
+                'publish_status' => $publish_status,
+                'special_section' => $special_section,
+                'activity_type' => $activityType,
+                'file_src' => $path,
             ]);
 
-            $data = $request->input('rows');
-            $cooperators = $request->all()['rows'];
-            $a = 0;
-            $b = 1;
-            $c = 2;
-            $d = 3;
-            $e = 4;
-            $f = 5;
-            Participant::create([
-                'post_id' => $post->id,
-                'name' => $cooperators[$a]['name'],
-                'family' => $cooperators[$b]['lastname'],
-                'national_code' => $cooperators[$c]['codemeli'],
-                'case_number' => $cooperators[$d]['filenumber'],
-                'participation_percentage' => $cooperators[$e]['Cooperation'],
-                'mobile' => $cooperators[$f]['phonenumber'],
-            ]);
-            HelliUserMaxUploadPost::firstorcreate([
-                'national_code' => $cooperators[$c]['codemeli']
-            ]);
-//        HelliUserMaxUploadPost::where('national_code', '=', $cooperators[$c]['codemeli'])->decrement('numbers', 1);
-            $count = count($cooperators) / 6;
-            for ($i = 2; $i <= $count; $i++) {
+            $maxUpload = DB::table('helli_user_max_upload_posts')->where('national_code', $nationalcode)->value('numbers');
+            if ($maxUpload == 3 or $maxUpload == 2 or $maxUpload == 1) {
+                $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->decrement('numbers', 1);
+            } else {
+                $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->update([
+                    'numbers' => 0,
+                ]);
+            }
+
+            if ($activityType == 'moshtarak') {
+                $myCooperation = $request->input('myCooperation');
+                Post::where('id', $post->id)->update([
+                    'participation_percentage' => $myCooperation
+                ]);
+
+                $data = $request->input('rows');
+                $cooperators = $request->all()['rows'];
+                $a = 0;
+                $b = 1;
+                $c = 2;
+                $d = 3;
+                $e = 4;
+                $f = 5;
                 Participant::create([
                     'post_id' => $post->id,
-                    'name' => $cooperators[$a += 6]['name'],
-                    'family' => $cooperators[$b += 6]['lastname'],
-                    'national_code' => $cooperators[$c += 6]['codemeli'],
-                    'case_number' => $cooperators[$d += 6]['filenumber'],
-                    'participation_percentage' => $cooperators[$e += 6]['Cooperation'],
-                    'mobile' => $cooperators[$f += 6]['phonenumber'],
+                    'name' => $cooperators[$a]['name'],
+                    'family' => $cooperators[$b]['lastname'],
+                    'national_code' => $cooperators[$c]['codemeli'],
+                    'case_number' => $cooperators[$d]['filenumber'],
+                    'participation_percentage' => $cooperators[$e]['Cooperation'],
+                    'mobile' => $cooperators[$f]['phonenumber'],
                 ]);
-            }
-            $c = 2;
-            for ($i = 2; $i <= $count; $i++) {
                 HelliUserMaxUploadPost::firstorcreate([
-                    'national_code' => $cooperators[$c += 6]['codemeli']
+                    'national_code' => $cooperators[$c]['codemeli']
                 ]);
-            }
+//        HelliUserMaxUploadPost::where('national_code', '=', $cooperators[$c]['codemeli'])->decrement('numbers', 1);
+                $count = count($cooperators) / 6;
+                for ($i = 2; $i <= $count; $i++) {
+                    Participant::create([
+                        'post_id' => $post->id,
+                        'name' => $cooperators[$a += 6]['name'],
+                        'family' => $cooperators[$b += 6]['lastname'],
+                        'national_code' => $cooperators[$c += 6]['codemeli'],
+                        'case_number' => $cooperators[$d += 6]['filenumber'],
+                        'participation_percentage' => $cooperators[$e += 6]['Cooperation'],
+                        'mobile' => $cooperators[$f += 6]['phonenumber'],
+                    ]);
+                }
+                $c = 2;
+                for ($i = 2; $i <= $count; $i++) {
+                    HelliUserMaxUploadPost::firstorcreate([
+                        'national_code' => $cooperators[$c += 6]['codemeli']
+                    ]);
+                }
 //        $c = 2;
 //        for ($i = 2; $i <= $count; $i++) {
 //            HelliUserMaxUploadPost::where('national_code', '=', $cooperators[$c += 6]['codemeli'])->decrement('numbers', 1);
 //        }
 
+            }
+        }else{
+            return response()->json(['errors' => 'File Error'], 422);
         }
-
-        $agent = new Agent();
-        UserActivityLog::create([
-            'user_id' => session('user_id'),
-            'activity' => 'Post New Post With This ID => ' . $post->id,
-            'ip_address' => request()->ip(),
-            'user_agent' => request()->userAgent(),
-            'device' => $agent->device(),
-        ]);
     }
 }

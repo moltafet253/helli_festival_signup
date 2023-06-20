@@ -2043,12 +2043,13 @@ export default {
 
                     })
                     .catch(error => {
-                        console.log(error);
-                        this.file = null;
-                        this.fileName = null;
-                        this.nameFile = null;
-                        this.isLoadingMessage = '';
-                        this.isLoading = false;
+                        location.reload();
+                        // console.log(error);
+                        // this.file = null;
+                        // this.fileName = null;
+                        // this.nameFile = null;
+                        // this.isLoadingMessage = '';
+                        // this.isLoading = false;
                     });
 
             }
