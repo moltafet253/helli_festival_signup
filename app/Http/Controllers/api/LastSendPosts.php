@@ -265,8 +265,8 @@ class LastSendPosts extends Controller
             'sent_status' => 1,
             'numbers' => 0,
         ]);
-        if (!$maxUpload) {
-            return response()->json(['errors' => 'Empty File'], 422);
-        }
+//        if (!$maxUpload) {
+//            return response()->json(['errors' => 'Empty File'], 422);
+//        }
     }
 }
