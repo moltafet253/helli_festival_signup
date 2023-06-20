@@ -180,8 +180,14 @@ class LastSendPosts extends Controller
 
             if ($teachingInfo[0]['isMaster'] == 'بله') {
                 $teachingInfo[0]['isMaster'] = 'هست';
+                $ostantahsili = $teachingInfo[0]['teachingProvince'];
+                $shahrtahsili = $teachingInfo[0]['teachingCity'];
+                $madrese = $teachingInfo[0]['teachingPlaceName'];
             } elseif ($teachingInfo[0]['isMaster'] == 'خیر') {
                 $teachingInfo[0]['isMaster'] = 'نیست';
+                $ostantahsili = $educationalInfo[0]['ostantahsili'];
+                $shahrtahsili = $educationalInfo[0]['shahrtahsili'];
+                $madrese = $educationalInfo[0]['madresetahsili'];
             }
 
             $etelaat_p = DB::connection('helli')->table('etelaat_p')->insert([
@@ -201,9 +207,9 @@ class LastSendPosts extends Controller
                 'mobile' => $contactInfo[0]['mobile'],
                 'address' => $contactInfo[0]['address'],
 
-                'ostantahsili' => $educationalInfo[0]['ostantahsili'],
-                'shahrtahsili' => $educationalInfo[0]['shahrtahsili'],
-                'madrese' => $educationalInfo[0]['madresetahsili'],
+                'ostantahsili' => $ostantahsili,
+                'shahrtahsili' => $shahrtahsili,
+                'madrese' => $madrese,
                 'paye' => $educationalInfo[0]['paye'],
                 'sath' => $educationalInfo[0]['sath'],
                 'term' => $educationalInfo[0]['term'],
@@ -259,8 +265,8 @@ class LastSendPosts extends Controller
             'sent_status' => 1,
             'numbers' => 0,
         ]);
-//        if (!$maxUpload) {
-//            return response()->json(['errors' => 'Empty File'], 422);
-//        }
+        if (!$maxUpload) {
+            return response()->json(['errors' => 'Empty File'], 422);
+        }
     }
 }
