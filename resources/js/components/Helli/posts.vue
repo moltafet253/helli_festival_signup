@@ -2036,13 +2036,18 @@ export default {
                         this.isLoading = false;
                         this.getAllPosts(token);
                         alert('اثر جدید شما با موفقیت در سامانه ثبت شد.');
-                        this.disableNewPostButton = false;
-                        var element = document.getElementById("posts");
-                        element.scrollIntoView();
+                        location.reload();
+                        // this.disableNewPostButton = false;
+                        // var element = document.getElementById("posts");
+                        // element.scrollIntoView();
 
                     })
                     .catch(error => {
                         console.log(error);
+                        this.file = null;
+                        this.fileName = null;
+                        this.nameFile = null;
+                        this.isLoadingMessage = '';
                         this.isLoading = false;
                     });
 
