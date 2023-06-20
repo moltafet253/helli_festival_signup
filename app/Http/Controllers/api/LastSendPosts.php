@@ -177,17 +177,16 @@ class LastSendPosts extends Controller
                 'approve_sianat' => 9,
             ]);
 
-
+            $ostantahsili = $educationalInfo[0]['ostantahsili'];
+            $shahrtahsili = $educationalInfo[0]['shahrtahsili'];
+            $madrese = $educationalInfo[0]['madresetahsili'];
             if ($teachingInfo[0]['isMaster'] == 'بله') {
                 $teachingInfo[0]['isMaster'] = 'هست';
-                $ostantahsili = $teachingInfo[0]['teachingProvince'];
-                $shahrtahsili = $teachingInfo[0]['teachingCity'];
-                $madrese = $teachingInfo[0]['teachingPlaceName'];
+//                $ostantahsili = $teachingInfo[0]['teachingProvince'];
+//                $shahrtahsili = $teachingInfo[0]['teachingCity'];
+//                $madrese = $teachingInfo[0]['teachingPlaceName'];
             } elseif ($teachingInfo[0]['isMaster'] == 'خیر') {
                 $teachingInfo[0]['isMaster'] = 'نیست';
-                $ostantahsili = $educationalInfo[0]['ostantahsili'];
-                $shahrtahsili = $educationalInfo[0]['shahrtahsili'];
-                $madrese = $educationalInfo[0]['madresetahsili'];
             }
 
             $etelaat_p = DB::connection('helli')->table('etelaat_p')->insert([
