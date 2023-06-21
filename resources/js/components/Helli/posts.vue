@@ -2030,18 +2030,17 @@ export default {
                                 row.phonenumber = null;
                             });
                         }
-                        // this.file = null;
-                        // this.fileName = null;
-                        // this.nameFile = null;
-                        // this.isLoadingMessage = '';
+                        this.file = null;
+                        this.fileName = null;
+                        this.nameFile = null;
+                        this.isLoadingMessage = '';
                         this.isLoading = false;
-                        // this.getAllPosts(token);
+                        this.getAllPosts(token);
                         alert('اثر جدید شما با موفقیت در سامانه ثبت شد.');
                         // location.reload();
-                        // this.disableNewPostButton = false;
-                        // var element = document.getElementById("posts");
-                        // element.scrollIntoView();
-
+                        this.disableNewPostButton = false;
+                        var element = document.getElementById("posts");
+                        element.scrollIntoView();
                     })
                     .catch(error => {
                         location.reload();
