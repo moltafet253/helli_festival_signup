@@ -35,7 +35,7 @@
                                        class="file-input file-input-bordered w-full max-w-xs mb-3"/>
 
                                 <label class="label mb-3">
-                                    <span class="label-text-alt">حداکثر حجم فایل: 2 مگابایت</span>
+                                    <span class="label-text-alt">حداکثر حجم فایل: 10 مگابایت</span>
                                     <br>
                                     <span class="label-text-alt">با پسوندهای: png-jpg-jpeg-bmp</span>
                                 </label>
