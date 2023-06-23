@@ -2037,10 +2037,10 @@ export default {
                         this.isLoading = false;
                         this.getAllPosts(token);
                         alert('اثر جدید شما با موفقیت در سامانه ثبت شد.');
-                        // location.reload();
-                        this.disableNewPostButton = false;
-                        var element = document.getElementById("posts");
-                        element.scrollIntoView();
+                        location.reload();
+                        // this.disableNewPostButton = false;
+                        // var element = document.getElementById("posts");
+                        // element.scrollIntoView();
                     })
                     .catch(error => {
                         location.reload();
