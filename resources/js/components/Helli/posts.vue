@@ -1973,9 +1973,9 @@ export default {
                 alert('نوع فعالیت انتخاب نشده است.');
                 return false;
             } else {
-                // this.disableNewPostButton = true;
-                // this.isLoadingMessage = 'در حال ثبت اثر جدید';
-                // this.isLoading = true;
+                this.disableNewPostButton = true;
+                this.isLoadingMessage = 'در حال ثبت اثر جدید';
+                this.isLoading = true;
                 let fileInput = this.$refs.fileInput;
                 let file = fileInput.files[0];
 
