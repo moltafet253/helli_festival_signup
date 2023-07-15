@@ -92,17 +92,17 @@ class LastSendPosts extends Controller
                 if ($post['research_format'] != 'پایان‌نامه' and $post['research_format'] != 'تحقیق پایانی') {
                     switch ($sath) {
                         case 2:
-                            if ($term == 1 or $term == 2 or $term == 3) {
+                            if ($term == 1 or $term == 2 or $term == 3 or $term == 4 or $term == 5 or $term==6) {
                                 $rateLevel = 1;
-                            } elseif ($term == 4 or $term == 5) {
+                            } elseif ($term== 7 or $term==8 or $term==9 or $term==10) {
                                 $rateLevel = 2;
                             }
                             break;
                         case 3:
-                            if ($term == 1) {
+                            if ($term == 1 or $term==2) {
                                 $rateLevel = 2;
-                            } elseif ($term == 2 or $term == 3) {
-                                $rateLevel = 2;
+                            } elseif ($term == 3 or $term == 4 or $term==5 or $term==6) {
+                                $rateLevel = 3;
                             }
                             break;
                         case 4:

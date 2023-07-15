@@ -119,13 +119,33 @@
                                     v-for="(item, index) in edu"
                                     :key="index" v-bind:selected="item.term=='3'">3
                             </option>
-                            <option value="4" v-if="item.sath=='2' || item.sath=='4'" v-for="(item, index) in edu"
+                            <option value="4" v-if="item.sath=='2' || item.sath=='3' || item.sath=='4'" v-for="(item, index) in edu"
                                     :key="index"
                                     v-bind:selected="item.term==='4'">4
                             </option>
-                            <option value="5" v-if="item.sath=='2' || item.sath=='4'" v-for="(item, index) in edu"
+                            <option value="5" v-if="item.sath=='2' || item.sath=='3' || item.sath=='4'" v-for="(item, index) in edu"
                                     :key="index"
                                     v-bind:selected="item.term=='5'">5
+                            </option>
+                            <option value="6" v-if="item.sath=='2' || item.sath=='3' || item.sath=='4'" v-for="(item, index) in edu"
+                                    :key="index"
+                                    v-bind:selected="item.term=='6'">6
+                            </option>
+                            <option value="7" v-if="item.sath=='2'" v-for="(item, index) in edu"
+                                    :key="index"
+                                    v-bind:selected="item.term=='7'">7
+                            </option>
+                            <option value="8" v-if="item.sath=='2'" v-for="(item, index) in edu"
+                                    :key="index"
+                                    v-bind:selected="item.term=='8'">8
+                            </option>
+                            <option value="9" v-if="item.sath=='2'" v-for="(item, index) in edu"
+                                    :key="index"
+                                    v-bind:selected="item.term=='9'">9
+                            </option>
+                            <option value="10" v-if="item.sath=='2'" v-for="(item, index) in edu"
+                                    :key="index"
+                                    v-bind:selected="item.term=='10'">10
                             </option>
                         </select>
                     </div>
