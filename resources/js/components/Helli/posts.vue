@@ -680,7 +680,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div v-if="sentStatus===false" class="mt-8 mx-4 p-3 flex bg-red-200 rounded-xl border border-colorborder w-full">
+                            <div v-if="sentStatus===false" class="mt-8  p-3 flex bg-red-200 rounded-xl border border-colorborder w-full">
                                 <div class=" flex-row ">
                                     <div class="relative w-full">
                                         <img class="bg-red-500 rounded-md p-1" src="build/assets/icons/Info Square.svg" alt="">
