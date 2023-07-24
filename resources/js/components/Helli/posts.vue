@@ -680,9 +680,23 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <div v-if="sentStatus===false" class="mt-8 mx-4 p-3 flex bg-red-200 rounded-xl border border-colorborder w-full">
+                                <div class=" flex-row ">
+                                    <div class="relative w-full">
+                                        <img class="bg-red-500 rounded-md p-1" src="build/assets/icons/Info Square.svg" alt="">
+                                    </div>
+                                </div>
+                                <div class="w-full flex-row">
+                                    <div class="relative w-full mr-3">
+                                        <p class="mb-0 font-normal">کاربر گرامی!
+                                            توجه داشته باشید که گزینه «ارسال نهایی آثار به جشنواره» را تنها در صورتی بزنید که همه آثار خود را ثبت کرده باشید. در غیر این صورت، گزینه «اثر جدید» را انتخاب کنید.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                             <button v-if="sentStatus===false"
                                     @click="showModalLastSend = true"
-                                    class="bg-green-600 text-white font-bold py-2 px-4 mt-14 rounded-lg mx-auto block"
+                                    class="bg-green-600 text-white font-bold py-2 px-4 mt-6 rounded-lg mx-auto block"
                             >
                                 ارسال نهایی آثار به جشنواره
                             </button>
