@@ -28,42 +28,45 @@ class VueController extends Controller
                 session(['nationalcode' => $socialID]);
                 session(['gender' => $Gender]);
 
-                $user = User::firstOrCreate([
-                    'national_code' => $socialID
-                ], [
-                    'national_code' => $socialID,
-                ]);
-                session(['user_id' => $user->id]);
-
-                $salt = random_bytes(32);
-                $hash = password_hash($salt, PASSWORD_ARGON2ID);
-                $pos = strpos($hash, "/");
-                if ($pos !== false) {
-                    $hash = str_replace("/", "", $hash);
-                }
-                $pos = strpos($hash, "\\");
-                if ($pos !== false) {
-                    $hash = str_replace("\\", "", $hash);
-                }
-                User::where('national_code', '=', $socialID)->update([
-                    'name' => $data['data']['person']['FirstName'],
-                    'family' => $data['data']['person']['LastName'],
-                    'father_name' => $data['data']['person']['FatherName'],
-                    'shenasname' => $data['data']['person']['IDNumber'],
-                    'birthdate' => $data['data']['person']['Birthdate'],
-                    'gender' => $data['data']['person']['Gender'],
-                ]);
-
-                $setToken = User::where('national_code', $socialID)->where('remember_token', null)->update(['remember_token' => $hash]);
-                if ($setToken) {
-                    $agent = new Agent();
-                    UserActivityLog::firstorcreate([
-                        'user_id' => $user['id'],
-                        'activity' => 'Set Our Token => ' . $hash,
-                        'ip_address' => request()->ip(),
-                        'user_agent' => request()->userAgent(),
-                        'device' => $agent->device(),
+                $user=User::where('national_code',$socialID)->first();
+                if (!$user) {
+                    $user = User::firstOrCreate([
+                        'national_code' => $socialID
+                    ], [
+                        'national_code' => $socialID,
                     ]);
+                    session(['user_id' => $user->id]);
+
+                    $salt = random_bytes(32);
+                    $hash = password_hash($salt, PASSWORD_ARGON2ID);
+                    $pos = strpos($hash, "/");
+                    if ($pos !== false) {
+                        $hash = str_replace("/", "", $hash);
+                    }
+                    $pos = strpos($hash, "\\");
+                    if ($pos !== false) {
+                        $hash = str_replace("\\", "", $hash);
+                    }
+                    User::where('national_code', '=', $socialID)->update([
+                        'name' => $data['data']['person']['FirstName'],
+                        'family' => $data['data']['person']['LastName'],
+                        'father_name' => $data['data']['person']['FatherName'],
+                        'shenasname' => $data['data']['person']['IDNumber'],
+                        'birthdate' => $data['data']['person']['Birthdate'],
+                        'gender' => $data['data']['person']['Gender'],
+                    ]);
+
+                    $setToken = User::where('national_code', $socialID)->where('remember_token', null)->update(['remember_token' => $hash]);
+                    if ($setToken) {
+                        $agent = new Agent();
+                        UserActivityLog::firstorcreate([
+                            'user_id' => $user['id'],
+                            'activity' => 'Set Our Token => ' . $hash,
+                            'ip_address' => request()->ip(),
+                            'user_agent' => request()->userAgent(),
+                            'device' => $agent->device(),
+                        ]);
+                    }
                 }
                 $getToken = User::where('national_code', $socialID)->value('remember_token');
                 session(['token' => $getToken]);
