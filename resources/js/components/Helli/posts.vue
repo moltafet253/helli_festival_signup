@@ -694,7 +694,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button v-if="sentStatus===false"
+                            <button v-if="sentStatus===false && festivalOver===false"
                                     @click="showModalLastSend = true"
                                     class="bg-green-600 text-white font-bold py-2 px-4 mt-6 rounded-lg mx-auto block"
                             >
