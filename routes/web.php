@@ -34,6 +34,7 @@ use App\Http\Controllers\api\PostEducationInfo;
 use App\Http\Controllers\api\PostPersonalImage;
 use App\Http\Controllers\api\PostTeachingInfo;
 use App\Http\Controllers\api\UpdatePost;
+use App\Http\Controllers\ExcelExport;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VueController;
 
@@ -95,3 +96,9 @@ Route::middleware('CheckSession')->post('/edu/save', [PostEducationInfo::class ,
 Route::post('/teaching/save/{token}', [PostTeachingInfo::class , 'postTeaching']);
 Route::middleware('CheckSession')->post('/upload/{token}', [PostPersonalImage::class , 'postPersonalImage']);
 Route::middleware('CheckSession')->post('/sendpost/this/{token}', [NewPost::class , 'newPost']);
+
+//Excel Export Routes
+Route::prefix('export')->group(function () {
+    Route::get('/allPosts/{username}/{password}/{festival}', [ExcelExport::class, 'allPostsByFestival']);
+    Route::get('/allUsers', [ExcelExport::class, 'allUsers']);
+});

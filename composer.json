@@ -16,6 +16,7 @@
         "laravel/ui": "^4.2",
         "morilog/jalali": "^3.4",
         "nesbot/carbon": "^2.66",
+        "phpoffice/phpspreadsheet": "^1.29",
         "tymon/jwt-auth": "^2.0"
     },
     "require-dev": {
