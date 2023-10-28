@@ -123,7 +123,7 @@ class VueController extends Controller
                     'user_agent' => request()->userAgent(),
                     'device' => $agent->device(),
                 ]);
-                return redirect('http://login.ismc.ir/?refurl=http://ssmp.ismc.ir/', 302);
+                return redirect('http://login.ismc.ir/?refurl=https://ssmp.ismc.ir/', 302);
             }
         } else {
             $agent = new Agent();
@@ -133,7 +133,7 @@ class VueController extends Controller
                 'user_agent' => request()->userAgent(),
                 'device' => $agent->device(),
             ]);
-            return redirect('http://login.ismc.ir/?refurl=http://ssmp.ismc.ir/', 302);
+            return redirect('http://login.ismc.ir/?refurl=https://ssmp.ismc.ir/', 302);
         }
     }
 }

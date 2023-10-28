@@ -12,4 +12,9 @@ class Participant extends Model
 
     protected $table = 'participants';
     protected $guarded = [];
+    protected $hidden=[
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
 }

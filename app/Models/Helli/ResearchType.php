@@ -11,4 +11,9 @@ class ResearchType extends Model
     use HasFactory,SoftDeletes;
     protected $table='research_types';
     protected $guarded=[];
+    protected $hidden=[
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
 }

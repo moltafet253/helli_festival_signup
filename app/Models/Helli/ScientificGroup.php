@@ -11,4 +11,9 @@ class ScientificGroup extends Model
     use HasFactory,SoftDeletes;
     protected $table='scientific_groups';
     protected $guarded=[];
+    protected $hidden=[
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
 }

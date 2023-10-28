@@ -11,4 +11,9 @@ class SpecialSection extends Model
     use HasFactory,SoftDeletes;
     protected $table='special_sections';
     protected $guarded=[];
+    protected $hidden=[
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
 }

@@ -11,4 +11,9 @@ class Provinces extends Model
     use HasFactory,SoftDeletes;
     protected $table='provinces';
     protected $guarded=[];
+    protected $hidden=[
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
 }

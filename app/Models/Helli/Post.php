@@ -12,7 +12,11 @@ class Post extends Model
 
     protected $table = 'posts';
     protected $guarded = [];
-
+    protected $hidden=[
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
     public function moshtarakan()
     {
         return $this->hasMany(Participant::class, 'post_id', 'id');

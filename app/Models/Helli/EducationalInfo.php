@@ -12,5 +12,9 @@ class EducationalInfo extends Model
 
     protected $table='educational_infos';
     protected $guarded=[];
-
+    protected $hidden=[
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
 }

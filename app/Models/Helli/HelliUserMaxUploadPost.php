@@ -11,4 +11,9 @@ class HelliUserMaxUploadPost extends Model
     use HasFactory,SoftDeletes;
     protected $table='helli_user_max_upload_posts';
     protected $guarded=[];
+    protected $hidden=[
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
 }
