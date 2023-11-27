@@ -48,6 +48,11 @@ class ExcelExport extends Controller
         $sheet->setCellValue('AB1', 'نام مرکز تحصیلی');
         $sheet->setCellValue('AC1', 'نوع تحصیلات حوزوی');
         $sheet->setCellValue('AD1', 'تحصیلات غیر حوزوی');
+        $sheet->setCellValue('AE1', 'استاد؟');
+        $sheet->setCellValue('AF1', 'کد استادی');
+        $sheet->setCellValue('AG1', 'استان محل تدریس');
+        $sheet->setCellValue('AH1', 'شهر محل تدریس');
+        $sheet->setCellValue('AI1', 'محل تدریس');
         //Get Data
         $counter=2;
         $posts = etelaat_a::where('jashnvareh', $festival)->orderBy('codeasar', 'asc')->get();
@@ -57,7 +62,7 @@ class ExcelExport extends Controller
             foreach ($people as $person) {}
             $sheet->setCellValue('A' . $counter, $person->fname);
             $sheet->setCellValue('B' . $counter, $person->family);
-            $sheet->setCellValue('C' . $counter, $post->gender);
+            $sheet->setCellValue('C' . $counter, $person->gender);
             $sheet->setCellValue('D' . $counter, $post->codeasar);
             $sheet->setCellValue('E' . $counter, $post->nameasar);
             $sheet->setCellValue('F' . $counter, $post->ghalebpazhouhesh);
@@ -66,25 +71,30 @@ class ExcelExport extends Controller
             $sheet->setCellValue('I' . $counter, $person->ostantahsili);
             $sheet->setCellValue('J' . $counter, $person->shahrtahsili);
             $sheet->setCellValue('K' . $counter, $person->madrese);
-            $sheet->setCellValue('L' . $counter, $person->paye);
-            $sheet->setCellValue('M' . $counter, $person->sath);
-            $sheet->setCellValue('N' . $counter, $person->term);
-            $sheet->setCellValue('O' . $counter, $post->noepazhouhesh);
-            $sheet->setCellValue('P' . $counter, $post->tedadsafhe);
-            $sheet->setCellValue('Q' . $counter, $post->subject_bakhshvizheh);
-            $sheet->setCellValue('R' . $counter, $person->father_name);
-            $sheet->setCellValue('S' . $counter, $person->codemelli);
-            $sheet->setCellValue('T' . $counter, $person->tarikhtavallod);
-            $sheet->setCellValue('U' . $counter, $person->address);
-            $sheet->setCellValue('V' . $counter, $person->telephone);
-            $sheet->setCellValue('W' . $counter, $person->mobile);
-            $sheet->setCellValue('X' . $counter, $person->reshtedaneshgahi);
-            $sheet->setCellValue('Y' . $counter, $person->shparvandetahsili);
-            $sheet->setCellValue('Z' . $counter, $person->reshtetakhasosihozavi);
-            $sheet->setCellValue('AA' . $counter, $person->markaztakhasosihozavi);
-            $sheet->setCellValue('AB' . $counter, $person->namemarkaztahsili);
-            $sheet->setCellValue('AC' . $counter, $person->noetahsilathozavi);
-            $sheet->setCellValue('AC' . $counter, $person->tahsilatghhozavi);
+//            $sheet->setCellValue('L' . $counter, $person->paye);
+//            $sheet->setCellValue('M' . $counter, $person->sath);
+//            $sheet->setCellValue('N' . $counter, $person->term);
+//            $sheet->setCellValue('O' . $counter, $post->noepazhouhesh);
+//            $sheet->setCellValue('P' . $counter, $post->tedadsafhe);
+//            $sheet->setCellValue('Q' . $counter, $post->subject_bakhshvizheh);
+//            $sheet->setCellValue('R' . $counter, $person->father_name);
+//            $sheet->setCellValue('S' . $counter, $person->codemelli);
+//            $sheet->setCellValue('T' . $counter, $person->tarikhtavallod);
+//            $sheet->setCellValue('U' . $counter, $person->address);
+//            $sheet->setCellValue('V' . $counter, $person->telephone);
+//            $sheet->setCellValue('W' . $counter, $person->mobile);
+//            $sheet->setCellValue('X' . $counter, $person->reshtedaneshgahi);
+//            $sheet->setCellValue('Y' . $counter, $person->shparvandetahsili);
+//            $sheet->setCellValue('Z' . $counter, $person->reshtetakhasosihozavi);
+//            $sheet->setCellValue('AA' . $counter, $person->markaztakhasosihozavi);
+//            $sheet->setCellValue('AB' . $counter, $person->namemarkaztahsili);
+//            $sheet->setCellValue('AC' . $counter, $person->noetahsilathozavi);
+//            $sheet->setCellValue('AD' . $counter, $person->tahsilatghhozavi);
+//            $sheet->setCellValue('AE' . $counter, $person->master);
+//            $sheet->setCellValue('AF' . $counter, $person->mastercode);
+//            $sheet->setCellValue('AG' . $counter, $person->teachingProvince);
+//            $sheet->setCellValue('AH' . $counter, $person->teachingCity);
+//            $sheet->setCellValue('AI' . $counter, $person->teachingPlaceName);
             $counter+=1;
         }
 
