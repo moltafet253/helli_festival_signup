@@ -22,31 +22,29 @@ class LastSendPosts extends Controller
     {
         $festivalID = Festival::where('active', '1')->value('id');
         if($festivalID){
-            $nationalcode = User::where('remember_token', $token)->value('national_code');
+            $user = User::where('remember_token', $token)->first();
 
-            $user = User::where('national_code', '=', $nationalcode)->value('id');
-            $userAllInfo = User::find($user);
-            $posts = $userAllInfo->allPosts->filter(function ($post) {
+            $posts = $user->allPosts->filter(function ($post) {
                 return $post->sent == 0;
             });
-            $contactInfo = Contact::select('mobile', 'national_code', 'phone', 'postal_code', 'address')->where('national_code', $nationalcode)->get();
+            $contactInfo = Contact::select('mobile', 'national_code', 'phone', 'postal_code', 'address')->where('national_code', $user->national_code)->get();
             $educationalInfo =
                 EducationalInfo::select('namemarkaztahsili', 'noetahsilhozavi', 'paye', 'sath', 'term', 'ostantahsili', 'shahrtahsili', 'madresetahsili', 'shparvandetahsili', 'tahsilatghhozavi', 'reshtedaneshgahi', 'markaztakhasosihozavi', 'reshtetakhasosihozavi')
-                    ->where('national_code', $nationalcode)->get();
-            $teachingInfo = TeachingInfo::select('masterCode', 'teachingProvince', 'teachingCity', 'teachingPlaceName', 'isMaster')->where('national_code', $nationalcode)->get();
+                    ->where('national_code', $user->national_code)->get();
+            $teachingInfo = TeachingInfo::select('masterCode', 'teachingProvince', 'teachingCity', 'teachingPlaceName', 'isMaster')->where('national_code', $user->national_code)->get();
 
-            $gender = $userAllInfo['gender'];
+            $gender = $user->gender;
 
             switch ($gender) {
                 case 'مرد':
-                    $paye = EducationalInfo::select('paye')->where('national_code', $nationalcode)->get();
-                    $paye = $paye[0]['paye'];
+                    $paye = EducationalInfo::select('paye')->where('national_code', $user->national_code)->first();
+                    $paye = $paye['paye'];
                     break;
                 case 'زن':
-                    $sath = EducationalInfo::select('sath')->where('national_code', $nationalcode)->get();
-                    $term = EducationalInfo::select('term')->where('national_code', $nationalcode)->get();
-                    $sath = $sath[0]['sath'];
-                    $term = $term[0]['term'];
+                    $sath = EducationalInfo::select('sath')->where('national_code', $user->national_code)->first();
+                    $term = EducationalInfo::select('term')->where('national_code', $user->national_code)->first();
+                    $sath = $sath['sath'];
+                    $term = $term['term'];
                     break;
             }
 
@@ -193,7 +191,7 @@ class LastSendPosts extends Controller
                 $etelaat_p = DB::connection('helli')->table('etelaat_p')->insert([
                     'jashnvareh' => $festivalID . '-' . $post['festival_title'],
                     'codeasar' => $lastPostID['codeasar'],
-                    'codemelli' => $nationalcode,
+                    'codemelli' => $user->national_code,
                     'fname' => $userAllInfo['name'],
                     'family' => $userAllInfo['family'],
                     'father_name' => $userAllInfo['father_name'],
@@ -254,14 +252,14 @@ class LastSendPosts extends Controller
                 $agent = new Agent();
                 UserActivityLog::create([
                     'user_id' => session('user_id'),
-                    'activity' => 'Post Last Send With This NationalCode => ' . $nationalcode . ' And This Post ID=> ' . $post->id,
+                    'activity' => 'Post Last Send With This NationalCode => ' . $user->national_code . ' And This Post ID=> ' . $post->id,
                     'ip_address' => request()->ip(),
                     'user_agent' => request()->userAgent(),
                     'device' => $agent->device(),
                 ]);
             }
 
-            HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->update([
+            HelliUserMaxUploadPost::where('national_code', '=', $user->national_code)->update([
                 'sent_status' => 1,
                 'numbers' => 0,
             ]);

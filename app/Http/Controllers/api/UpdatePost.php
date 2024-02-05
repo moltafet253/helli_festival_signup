@@ -5,7 +5,9 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Helli\HelliUserMaxUploadPost;
 use App\Models\Helli\Participant;
+use App\Models\Helli\Persons;
 use App\Models\Helli\Post;
+use App\Models\Helli\TeachingInfo;
 use App\Models\UserActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +27,14 @@ class UpdatePost extends Controller
         $special_section = $request->input('special_section');
         $activityType = $request->input('activityType');
 
+        $postInfo=Post::find($id);
+        $person=Persons::find($postInfo->user_id);
+        $teachingInfo=TeachingInfo::where('national_code',$person->national_code)->first();
+
+        if ($teachingInfo->isMaster=='بله' and ($research_format=='تحقیق پایانی' or $research_format=='پایان‌نامه')){
+            return response()->json(['errors' => 'Masters cannot post thesis or final research'], 422);
+        }
+
         if ($request->file('file')) {
             $file = $request->file('file');
             $hashName = uniqid('', true) . '.' . $request->file('file')->getClientOriginalName();
@@ -36,7 +46,7 @@ class UpdatePost extends Controller
 
 
         if ($special_section == '' or $special_section == null) {
-            $post2 = Post::where('id', $id)->update([
+            $post2 = Post::find($id)->update([
                 'title' => $name,
                 'research_format' => $research_format,
                 'scientific_group' => $scientific_group,
@@ -47,7 +57,7 @@ class UpdatePost extends Controller
                 'activity_type' => $activityType,
             ]);
         } else {
-            $post2 = Post::where('id', $id)->update([
+            $post2 = Post::find($id)->update([
                 'title' => $name,
                 'research_format' => $research_format,
                 'scientific_group' => $scientific_group,

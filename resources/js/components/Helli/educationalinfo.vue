@@ -45,40 +45,12 @@
                         <select :disabled="!showButton" v-model="item.paye" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
-                            <option value="1" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye==='1'">1
-                            </option>
-                            <option value="2" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye==='2'">2
-                            </option>
-                            <option value="3" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye==='3'">3
-                            </option>
-                            <option value="4" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye==='4'">4
-                            </option>
-                            <option value="5" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye==='5'">5
-                            </option>
-                            <option value="6" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye==='6'">6
-                            </option>
-                            <option value="7" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye==='7'">7
-                            </option>
-                            <option value="8" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye==='8'">8
-                            </option>
-                            <option value="9" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye==='9'">9
-                            </option>
-                            <option value="10" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye==='10'">10
-                            </option>
-                            <option value="خارج" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.paye==='خارج'">خارج
+                            <option v-for="(optionItem, optionIndex) in [1,2,3,4,5,6,7,8,9,10,'خارج']" :key="optionIndex"
+                                    :value="optionItem" v-bind:selected="item.paye === optionItem.toString()">
+                                {{ optionItem }}
                             </option>
                         </select>
+
                     </div>
                 </div>
                 <div class="w-full lg:w-2/12 px-4 flex-row" v-if="this.gender==='زن'">
@@ -88,14 +60,9 @@
                         <select :disabled="!showButton" v-model="item.sath" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
-                            <option value="2" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.sath==='2'">2
-                            </option>
-                            <option value="3" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.sath==='3'">3
-                            </option>
-                            <option value="4" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.sath==='4'">4
+                            <option v-for="optionValue in [2, 3, 4]" :key="optionValue"
+                                    :value="optionValue" v-bind:selected="item.sath === optionValue.toString()">
+                                {{ optionValue }}
                             </option>
                         </select>
                     </div>
@@ -107,45 +74,10 @@
                         <select :disabled="!showButton" v-model="item.term" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
-                            <option value="1" v-if="item.sath=='2' || item.sath=='3' || item.sath=='4'"
-                                    v-for="(item, index) in edu"
-                                    :key="index" v-bind:selected="item.term=='1'">1
-                            </option>
-                            <option value="2" v-if="item.sath=='2' || item.sath=='3' || item.sath=='4'"
-                                    v-for="(item, index) in edu"
-                                    :key="index" v-bind:selected="item.term=='2'">2
-                            </option>
-                            <option value="3" v-if="item.sath=='2' || item.sath=='3' || item.sath=='4'"
-                                    v-for="(item, index) in edu"
-                                    :key="index" v-bind:selected="item.term=='3'">3
-                            </option>
-                            <option value="4" v-if="item.sath=='2' || item.sath=='3' || item.sath=='4'" v-for="(item, index) in edu"
-                                    :key="index"
-                                    v-bind:selected="item.term==='4'">4
-                            </option>
-                            <option value="5" v-if="item.sath=='2' || item.sath=='3' || item.sath=='4'" v-for="(item, index) in edu"
-                                    :key="index"
-                                    v-bind:selected="item.term=='5'">5
-                            </option>
-                            <option value="6" v-if="item.sath=='2' || item.sath=='3' || item.sath=='4'" v-for="(item, index) in edu"
-                                    :key="index"
-                                    v-bind:selected="item.term=='6'">6
-                            </option>
-                            <option value="7" v-if="item.sath=='2'" v-for="(item, index) in edu"
-                                    :key="index"
-                                    v-bind:selected="item.term=='7'">7
-                            </option>
-                            <option value="8" v-if="item.sath=='2'" v-for="(item, index) in edu"
-                                    :key="index"
-                                    v-bind:selected="item.term=='8'">8
-                            </option>
-                            <option value="9" v-if="item.sath=='2'" v-for="(item, index) in edu"
-                                    :key="index"
-                                    v-bind:selected="item.term=='9'">9
-                            </option>
-                            <option value="10" v-if="item.sath=='2'" v-for="(item, index) in edu"
-                                    :key="index"
-                                    v-bind:selected="item.term=='10'">10
+                            <option v-for="optionValue in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" :key="optionValue"
+                                    v-if="item.sath == '2' || item.sath == '3' || item.sath == '4'"
+                                    :value="optionValue" v-bind:selected="item.term === optionValue.toString()">
+                                {{ optionValue }}
                             </option>
                         </select>
                     </div>
@@ -211,26 +143,13 @@
                                 v-model="item.tahsilatghhozavi"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected :value="null" disabled style="color: #6c757d">انتخاب کنید</option>
-                            <option value="زیر دیپلم" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.tahsilatghhozavi==='زیر دیپلم'">زیر دیپلم
-                            </option>
-                            <option value="دیپلم" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.tahsilatghhozavi==='دیپلم'">دیپلم
-                            </option>
-                            <option value="فوق دیپلم" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.tahsilatghhozavi==='فوق دیپلم/کاردانی'">فوق دیپلم
-                            </option>
-                            <option value="لیسانس" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.tahsilatghhozavi==='لیسانس'">لیسانس
-                            </option>
-                            <option value="فوق لیسانس" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.tahsilatghhozavi==='فوق لیسانس'">فوق
-                                لیسانس
-                            </option>
-                            <option value="دکتری" v-for="(item, index) in edu" :key="index"
-                                    v-bind:selected="item.tahsilatghhozavi==='دکتری'">دکتری
+                            <option v-for="educationLevel in ['زیر دیپلم', 'دیپلم', 'فوق دیپلم', 'لیسانس', 'فوق لیسانس', 'دکتری']"
+                                    :key="educationLevel"
+                                    :value="educationLevel" v-bind:selected="item.tahsilatghhozavi === educationLevel">
+                                {{ educationLevel }}
                             </option>
                         </select>
+
                     </div>
                 </div>
                 <div v-if="showReshteDaneshgahiDiv" class="w-full lg:w-4/12 px-4 flex-row">
@@ -495,8 +414,7 @@ export default {
                         .then(response => {
                             this.getDataFromEduTable(token);
                             alert('اطلاعات تحصیلی شما با موفقیت در سامانه ثبت شد.');
-                            var element = document.getElementById("teaching");
-                            element.scrollIntoView();
+                            window.reload();
                         })
                         .catch(error => {
                             console.log(error);

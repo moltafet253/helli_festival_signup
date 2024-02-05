@@ -51,54 +51,54 @@ use App\Http\Controllers\VueController;
 Route::get('/', [VueController::class, 'index']);
 
 //Get's
-Route::middleware('CheckSession')->get('/getpersonalinfo/this/{token}/', [GetPersonalInfo::class, 'getpersonalinfo']);
-Route::middleware('CheckSession')->get('/contact/{token}', [GetContacts::class, 'contacts']);
-Route::middleware('CheckSession')->get('/edu/{token}', [GetEducationInfo::class, 'education']);
-Route::middleware('CheckSession')->get('/teaching/{token}', [GetTeachingInfo::class, 'teaching']);
-Route::middleware('CheckSession')->get('/getprofileimage/this/{token}', [GetPersonalImage::class, 'getPersonalImage']);
-Route::middleware('CheckSession')->get('/users/getuserinfo/{token}', [GetUserInfo::class, 'getUserInfo']);
-Route::middleware('CheckSession')->get('/edu/geteduinfo/{token}', [GetEduInfoForPosts::class, 'edu']);
-Route::middleware('CheckSession')->get('/getactivefestival/{token}', [GetActiveFestival::class, 'festival']);
+Route::middleware('CheckSession')->group(function () {
+    Route::get('/getpersonalinfo/this/{token}', [GetPersonalInfo::class, 'getpersonalinfo']);
+    Route::get('/contact/{token}', [GetContacts::class, 'contacts']);
+    Route::get('/edu/{token}', [GetEducationInfo::class, 'education']);
+    Route::get('/teaching/{token}', [GetTeachingInfo::class, 'teaching']);
+    Route::get('/getprofileimage/this/{token}', [GetPersonalImage::class, 'getPersonalImage']);
+    Route::get('/users/getuserinfo/{token}', [GetUserInfo::class, 'getUserInfo']);
+    Route::get('/edu/geteduinfo/{token}', [GetEduInfoForPosts::class, 'edu']);
+    Route::get('/getactivefestival/{token}', [GetActiveFestival::class, 'festival']);
 
-Route::prefix('defaults')->group(function () {
-    Route::middleware('CheckSession')->get('/centers/{gender}', [centers::class, 'centers']);
-    Route::middleware('CheckSession')->get('/provinces/{center}/{gender}', [provinces_with_gender::class, 'provinces']);
-    Route::middleware('CheckSession')->get('/cities/{center}/{province}/{gender}', [cities_with_gender::class, 'cities']);
-    Route::middleware('CheckSession')->get('/schools/{center}/{province}/{city}/{gender}', [schools_with_gender::class, 'schools']);
-    Route::middleware('CheckSession')->get('/research_formats', [research_formats::class, 'researchFormats']);
-    Route::middleware('CheckSession')->get('/scientific_groups', [scientific_groups::class, 'scientificGroups']);
-    Route::middleware('CheckSession')->get('/research_types', [research_types::class, 'researchTypes']);
-    Route::middleware('CheckSession')->get('/special_sections', [special_sections::class, 'specialSections']);
-    Route::middleware('CheckSession')->get('/specializedcenters', [specialized_centers::class, 'specialCenters']);
-    Route::middleware('CheckSession')->get('/maxUploads/{token}', [max_uploads::class, 'maxUploads']);
+    Route::prefix('defaults')->group(function () {
+        Route::get('/centers/{gender}', [centers::class, 'centers']);
+        Route::get('/provinces/{center}/{gender}', [provinces_with_gender::class, 'provinces']);
+        Route::get('/cities/{center}/{province}/{gender}', [cities_with_gender::class, 'cities']);
+        Route::get('/schools/{center}/{province}/{city}/{gender}', [schools_with_gender::class, 'schools']);
+        Route::get('/research_formats', [research_formats::class, 'researchFormats']);
+        Route::get('/scientific_groups', [scientific_groups::class, 'scientificGroups']);
+        Route::get('/research_types', [research_types::class, 'researchTypes']);
+        Route::get('/special_sections', [special_sections::class, 'specialSections']);
+        Route::get('/specializedcenters', [specialized_centers::class, 'specialCenters']);
+        Route::get('/maxUploads/{token}', [max_uploads::class, 'maxUploads']);
 
-    //For TeachingInfo
-    Route::middleware('CheckSession')->get('/provinces_without_gender/', [provinces_without_gender::class, 'provinces']);
-    Route::middleware('CheckSession')->get('/cities_without_gender/{province}', [cities_without_gender::class, 'cities']);
-    Route::middleware('CheckSession')->get('/schools_without_gender/{city}', [schools_without_gender::class, 'schools']);
+        Route::get('/provinces_without_gender/', [provinces_without_gender::class, 'provinces']);
+        Route::get('/cities_without_gender/{province}', [cities_without_gender::class, 'cities']);
+        Route::get('/schools_without_gender/{city}', [schools_without_gender::class, 'schools']);
+    });
+
+    Route::prefix('posts')->group(function () {
+        Route::get('/allposts/user/{token}', [GetAllPosts::class, 'getAllPosts']);
+        Route::get('/getPostInfo/{id}', [GetPostInfo::class, 'getPostInfo']);
+        Route::get('/getPostParticipants/this/{id}', [GetPostParticipants::class, 'postParticipants']);
+        Route::get('/getpost/{nationalcode}', [GetPost::class, 'getPost']);
+        Route::post('/updatepost/this', [UpdatePost::class, 'updatePost']);
+        Route::post('/delete/this/{id}', [DeletePost::class, 'deletePost']);
+        Route::post('/approve/last/send/{token}', [LastSendPosts::class, 'lastSendPosts']);
+        Route::post('/participant/delete/this/{id}', [DeleteParticipant::class, 'deleteParticipant']);
+    });
+
+    Route::post('/contact/save/{token}', [PostContactInfo::class, 'postContact']);
+    Route::post('/edu/save', [PostEducationInfo::class, 'postEducation']);
+    Route::post('/teaching/save/{token}', [PostTeachingInfo::class, 'postTeaching']);
+    Route::post('/upload/{token}', [PostPersonalImage::class, 'postPersonalImage']);
+    Route::post('/sendpost/this/{token}', [NewPost::class, 'newPost']);
 });
 
-//Post's
-//posts group
-Route::prefix('posts')->group(function () {
-    Route::middleware('CheckSession')->get('/allposts/user/{token}', [GetAllPosts::class, 'getAllPosts']);
-    Route::middleware('CheckSession')->get('/getPostInfo/{id}', [GetPostInfo::class, 'getPostInfo']);
-    Route::middleware('CheckSession')->get('/getPostParticipants/this/{id}', [GetPostParticipants::class, 'postParticipants']);
-    Route::middleware('CheckSession')->get('/getpost/{nationalcode}', [GetPost::class, 'getPost']);
-    Route::middleware('CheckSession')->post('/updatepost/this', [UpdatePost::class, 'updatePost']);
-    Route::middleware('CheckSession')->post('/delete/this/{id}', [DeletePost::class, 'deletePost']);
-    Route::middleware('CheckSession')->post('/approve/last/send/{token}', [LastSendPosts::class, 'lastSendPosts']);
-    Route::middleware('CheckSession')->post('/participant/delete/this/{id}', [DeleteParticipant::class, 'deleteParticipant']);
-});
-
-Route::middleware('CheckSession')->post('/contact/save/{token}', [PostContactInfo::class , 'postContact']);
-Route::middleware('CheckSession')->post('/edu/save', [PostEducationInfo::class , 'postEducation']);
-Route::post('/teaching/save/{token}', [PostTeachingInfo::class , 'postTeaching']);
-Route::middleware('CheckSession')->post('/upload/{token}', [PostPersonalImage::class , 'postPersonalImage']);
-Route::middleware('CheckSession')->post('/sendpost/this/{token}', [NewPost::class , 'newPost']);
 
 //Excel Export Routes
-Route::prefix('export')->group(function () {
-    Route::get('/allPosts/{username}/{password}/{festival}', [ExcelExport::class, 'allPostsByFestival']);
-    Route::get('/allUsers', [ExcelExport::class, 'allUsers']);
-});
+//Route::prefix('export')->group(function () {
+//    Route::get('/allPosts/{username}/{password}/{festival}', [ExcelExport::class, 'allPostsByFestival']);
+//    Route::get('/allUsers', [ExcelExport::class, 'allUsers']);
+//});

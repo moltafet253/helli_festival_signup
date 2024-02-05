@@ -55,8 +55,7 @@ class ExcelExport extends Controller
         $sheet->setCellValue('AI1', 'محل تدریس');
         //Get Data
         $counter=2;
-        $posts = etelaat_a::where('jashnvareh', $festival)->orderBy('codeasar', 'asc')->get();
-
+        $posts = etelaat_a::where('jashnvareh', $festival)->orderBy('codeasar', 'desc')->take(5092)->get();
         foreach ($posts as $post) {
             $people = etelaat_p::where('codeasar', $post->codeasar)->get();
             foreach ($people as $person) {}
@@ -71,10 +70,10 @@ class ExcelExport extends Controller
             $sheet->setCellValue('I' . $counter, $person->ostantahsili);
             $sheet->setCellValue('J' . $counter, $person->shahrtahsili);
             $sheet->setCellValue('K' . $counter, $person->madrese);
-//            $sheet->setCellValue('L' . $counter, $person->paye);
-//            $sheet->setCellValue('M' . $counter, $person->sath);
-//            $sheet->setCellValue('N' . $counter, $person->term);
-//            $sheet->setCellValue('O' . $counter, $post->noepazhouhesh);
+            $sheet->setCellValue('L' . $counter, $person->paye);
+            $sheet->setCellValue('M' . $counter, $person->sath);
+            $sheet->setCellValue('N' . $counter, $person->term);
+            $sheet->setCellValue('O' . $counter, $post->noepazhouhesh);
 //            $sheet->setCellValue('P' . $counter, $post->tedadsafhe);
 //            $sheet->setCellValue('Q' . $counter, $post->subject_bakhshvizheh);
 //            $sheet->setCellValue('R' . $counter, $person->father_name);

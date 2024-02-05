@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Helli\HelliUserMaxUploadPost;
 use App\Models\Helli\Participant;
 use App\Models\Helli\Post;
+use App\Models\Helli\TeachingInfo;
 use App\Models\User;
 use App\Models\UserActivityLog;
 use Illuminate\Http\Request;
@@ -31,6 +32,12 @@ class NewPost extends Controller
         $publish_status = $request->input('publish_status');
         $special_section = $request->input('special_section');
         $activityType = $request->input('activityType');
+
+        $teachingInfo=TeachingInfo::where('national_code',$nationalcode)->first();
+
+        if ($teachingInfo->isMaster=='بله' and ($research_format=='تحقیق پایانی' or $research_format=='پایان‌نامه')){
+            return response()->json(['errors' => 'Masters cannot post thesis or final research'], 422);
+        }
 
         $file = $request->file('file');
         $FileName=str_replace('‌',' ',$request->file('file')->getClientOriginalName());

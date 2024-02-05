@@ -172,8 +172,7 @@ export default {
                                 default:
                                     this.getPersonalImage(this.token);
                                     alert('تصویر پرسنلی شما با موفقیت بارگذاری شد.');
-                                    var element = document.getElementById("contact");
-                                    element.scrollIntoView();
+                                    window.reload();
                             }
                         })
                         .catch(error => {
