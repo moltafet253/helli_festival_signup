@@ -77,10 +77,8 @@ class VueController extends Controller
                     'national_code' => $socialID,
                 ]);
 
-                $contacts = Contact::where('national_code', '=', $socialID)->get();
-                foreach ($contacts as $contact) {
-                }
-                if (empty($contact['mobile'])) {
+                $contacts = Contact::where('national_code', '=', $socialID)->first();
+                if (empty($contacts->mobile)) {
                     Contact::where('national_code', '=', $socialID)->update([
                         'mobile' => $data['data']['contact']['Mobile'],
                     ]);
