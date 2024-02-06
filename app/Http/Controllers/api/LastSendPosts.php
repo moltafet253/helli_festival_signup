@@ -21,7 +21,7 @@ class LastSendPosts extends Controller
     public function lastSendPosts($token)
     {
         $festivalID = Festival::where('active', '1')->value('id');
-        if($festivalID){
+        if ($festivalID) {
             $user = User::where('remember_token', $token)->first();
 
             $posts = $user->allPosts->filter(function ($post) {
@@ -72,7 +72,7 @@ class LastSendPosts extends Controller
                 }
 
                 if ($gender == 'مرد') {
-                    if ($post['research_format'] != 'پایان‌نامه' and $post['research_format'] != 'تحقیق پایانی') {
+                    if ($post['research_format'] != 'پایان‌نامه سطح سه' and $post['research_format'] != 'تحقیق پایانی سطح دو') {
                         if ($paye == 1 or $paye == 2 or $paye == 3) {
                             $rateLevel = 1;
                         } elseif ($paye == 4 or $paye == 5 or $paye == 6) {
@@ -82,25 +82,25 @@ class LastSendPosts extends Controller
                         } else {
                             $rateLevel = 4;
                         }
-                    } elseif ($post['research_format'] == 'پایان‌نامه') {
+                    } elseif ($post['research_format'] == 'پایان‌نامه سطح سه') {
                         $rateLevel = 3;
-                    } elseif ($post['research_format'] == 'تحقیق پایانی') {
+                    } elseif ($post['research_format'] == 'تحقیق پایانی سطح دو') {
                         $rateLevel = 2;
                     }
                 } elseif ($gender == 'زن') {
-                    if ($post['research_format'] != 'پایان‌نامه' and $post['research_format'] != 'تحقیق پایانی') {
+                    if ($post['research_format'] != 'پایان‌نامه سطح سه' and $post['research_format'] != 'تحقیق پایانی سطح دو') {
                         switch ($sath) {
                             case 2:
-                                if ($term == 1 or $term == 2 or $term == 3 or $term == 4 or $term == 5 or $term==6) {
+                                if ($term == 1 or $term == 2 or $term == 3 or $term == 4 or $term == 5 or $term == 6) {
                                     $rateLevel = 1;
-                                } elseif ($term== 7 or $term==8 or $term==9 or $term==10) {
+                                } elseif ($term == 7 or $term == 8 or $term == 9 or $term == 10) {
                                     $rateLevel = 2;
                                 }
                                 break;
                             case 3:
-                                if ($term == 1 or $term==2) {
+                                if ($term == 1 or $term == 2) {
                                     $rateLevel = 2;
-                                } elseif ($term == 3 or $term == 4 or $term==5 or $term==6) {
+                                } elseif ($term == 3 or $term == 4 or $term == 5 or $term == 6) {
                                     $rateLevel = 3;
                                 }
                                 break;
@@ -109,14 +109,17 @@ class LastSendPosts extends Controller
                                 break;
                         }
 
-                    } elseif ($post['research_format'] == 'پایان‌نامه') {
+                    } elseif ($post['research_format'] == 'پایان‌نامه سطح سه') {
                         $rateLevel = 3;
-                    } elseif ($post['research_format'] == 'تحقیق پایانی') {
+                    } elseif ($post['research_format'] == 'تحقیق پایانی سطح دو') {
                         $rateLevel = 2;
                     }
                 }
 
-                if ($post['research_format'] == 'مقاله' or $post['research_format'] == 'کتاب') {
+                $book = 'کتاب';
+                $article = 'مقاله';
+
+                if (strpos($post['research_format'], $book) !== false or strpos($post['research_format'], $article) !== false) {
                     $tahsilatghhozavi = $educationalInfo[0]['tahsilatghhozavi'];
                     switch ($tahsilatghhozavi) {
                         case 'لیسانس':
@@ -192,13 +195,13 @@ class LastSendPosts extends Controller
                     'jashnvareh' => $festivalID . '-' . $post['festival_title'],
                     'codeasar' => $lastPostID['codeasar'],
                     'codemelli' => $user->national_code,
-                    'fname' => $userAllInfo['name'],
-                    'family' => $userAllInfo['family'],
-                    'father_name' => $userAllInfo['father_name'],
-                    'tarikhtavallod' => $userAllInfo['birthdate'],
-                    'gender' => $userAllInfo['gender'],
+                    'fname' => $user->name,
+                    'family' => $user->family,
+                    'father_name' => $user->father_name,
+                    'tarikhtavallod' => $user->birthdate,
+                    'gender' => $user->gender,
                     'shartsenni' => 'دارد',
-                    'sh_shenasnameh' => $userAllInfo['shenasnameh'],
+                    'sh_shenasnameh' => $user->shenasname,
 
                     'codeposti' => $contactInfo[0]['postal_code'],
                     'telephone' => $contactInfo[0]['phone'],

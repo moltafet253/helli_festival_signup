@@ -31,7 +31,7 @@ class UpdatePost extends Controller
         $person=Persons::find($postInfo->user_id);
         $teachingInfo=TeachingInfo::where('national_code',$person->national_code)->first();
 
-        if ($teachingInfo->isMaster=='بله' and ($research_format=='تحقیق پایانی' or $research_format=='پایان‌نامه')){
+        if ($teachingInfo->isMaster=='بله' and ($research_format=='تحقیق پایانی سطح دو' or $research_format=='پایان‌نامه سطح سه')){
             return response()->json(['errors' => 'Masters cannot post thesis or final research'], 422);
         }
 

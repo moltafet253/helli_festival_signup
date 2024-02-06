@@ -197,9 +197,27 @@
                                                                             :value="formats.title"
                                                                     >{{ formats.title }}
                                                                     </option>
-                                                                    <option v-if="groupApprove===1" value="مقاله">مقاله
+                                                                    <option v-if="groupApprove===1" value="کتاب علمی - پژوهشی">کتاب علمی - پژوهشی
                                                                     </option>
-                                                                    <option v-if="groupApprove===1" value="کتاب">کتاب
+                                                                    <option v-if="groupApprove===1" value="کتاب علمی - ترویجی">کتاب علمی - ترویجی
+                                                                    </option>
+                                                                    <option v-if="groupApprove===1" value="کتاب فرهنگی - تبلیغی">کتاب فرهنگی - تبلیغی
+                                                                    </option>
+                                                                    <option v-if="groupApprove===1" value="کتاب شرح و تعلیق">کتاب شرح و تعلیق
+                                                                    </option>
+                                                                    <option v-if="groupApprove===1" value="کتاب ترجمه">کتاب ترجمه
+                                                                    </option>
+                                                                    <option v-if="groupApprove===1" value="کتاب داستان و رمان">کتاب داستان و رمان
+                                                                    </option>
+                                                                    <option v-if="groupApprove===1" value="مقاله علمی - پژوهشی">مقاله علمی - پژوهشی
+                                                                    </option>
+                                                                    <option v-if="groupApprove===1" value="مقاله علمی - ترویجی">مقاله علمی - ترویجی
+                                                                    </option>
+                                                                    <option v-if="groupApprove===1" value="مقاله فرهنگی - تبلیغی">مقاله فرهنگی - تبلیغی
+                                                                    </option>
+                                                                    <option v-if="groupApprove===1" value="مقاله شرح و تعلیق">مقاله شرح و تعلیق
+                                                                    </option>
+                                                                    <option v-if="groupApprove===1" value="مقاله ترجمه">مقاله ترجمه
                                                                     </option>
                                                                 </select>
                                                             </div>
@@ -1035,9 +1053,27 @@
                                                                         :value="formats.title"
                                                                 >{{ formats.title }}
                                                                 </option>
-                                                                <option :selected="'مقاله'===this.postResearchFormat" v-if="groupApprove===1" value="مقاله">مقاله
+                                                                <option :selected="'کتاب علمی - پژوهشی'===this.postResearchFormat" v-if="groupApprove===1" value="کتاب علمی - پژوهشی">کتاب علمی - پژوهشی
                                                                 </option>
-                                                                <option :selected="'کتاب'===this.postResearchFormat" v-if="groupApprove===1" value="کتاب">کتاب
+                                                                <option :selected="'کتاب علمی - ترویجی'===this.postResearchFormat" v-if="groupApprove===1" value="کتاب علمی - ترویجی">کتاب علمی - ترویجی
+                                                                </option>
+                                                                <option :selected="'کتاب فرهنگی - تبلیغی'===this.postResearchFormat" v-if="groupApprove===1" value="کتاب فرهنگی - تبلیغی">کتاب فرهنگی - تبلیغی
+                                                                </option>
+                                                                <option :selected="'کتاب شرح و تعلیق'===this.postResearchFormat" v-if="groupApprove===1" value="کتاب شرح و تعلیق">کتاب شرح و تعلیق
+                                                                </option>
+                                                                <option :selected="'کتاب ترجمه'===this.postResearchFormat" v-if="groupApprove===1" value="کتاب ترجمه">کتاب ترجمه
+                                                                </option>
+                                                                <option :selected="'کتاب داستان و رمان'===this.postResearchFormat" v-if="groupApprove===1" value="کتاب داستان و رمان">کتاب داستان و رمان
+                                                                </option>
+                                                                <option :selected="'مقاله علمی - پژوهشی'===this.postResearchFormat" v-if="groupApprove===1" value="مقاله علمی - پژوهشی">مقاله علمی - پژوهشی
+                                                                </option>
+                                                                <option :selected="'مقاله علمی - ترویجی'===this.postResearchFormat" v-if="groupApprove===1" value="مقاله علمی - ترویجی">مقاله علمی - ترویجی
+                                                                </option>
+                                                                <option :selected="'مقاله فرهنگی - تبلیغی'===this.postResearchFormat" v-if="groupApprove===1" value="مقاله فرهنگی - تبلیغی">مقاله فرهنگی - تبلیغی
+                                                                </option>
+                                                                <option :selected="'مقاله شرح و تعلیق'===this.postResearchFormat" v-if="groupApprove===1" value="مقاله شرح و تعلیق">مقاله شرح و تعلیق
+                                                                </option>
+                                                                <option :selected="'مقاله ترجمه'===this.postResearchFormat" v-if="groupApprove===1" value="مقاله ترجمه">مقاله ترجمه
                                                                 </option>
                                                             </select>
                                                         </div>
