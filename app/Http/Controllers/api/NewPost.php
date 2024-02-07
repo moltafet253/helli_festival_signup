@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Helli\Festival;
 use App\Models\Helli\HelliUserMaxUploadPost;
 use App\Models\Helli\Participant;
 use App\Models\Helli\Post;
@@ -21,8 +22,8 @@ class NewPost extends Controller
 
         $nationalcode = User::where('remember_token', $token)->value('national_code');
 
-        $user_id = DB::table('users')->where('national_code', $nationalcode)->value('id');
-        $festival_title = DB::table('festivals')->where('active', 1)->value('title');
+        $user_id = User::where('national_code', $nationalcode)->value('id');
+        $festival_title = Festival::where('active', 1)->value('title');
 
         $name = $request->input('name');
         $research_format = $request->input('research_format');
