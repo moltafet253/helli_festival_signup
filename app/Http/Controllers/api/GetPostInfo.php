@@ -20,8 +20,11 @@ class GetPostInfo extends Controller
             'user_agent' => request()->userAgent(),
             'device' => $agent->device(),
         ]);
-        $post = Post::select('id', 'title', 'research_format', 'scientific_group', 'research_type', 'special_section', 'festival_title', 'pages_number', 'publish_status', 'activity_type', 'participation_percentage', 'sent_at')->find($id);
+        $post = Post::with('personInfo')->select('id', 'user_id', 'title', 'research_format', 'scientific_group', 'research_type', 'special_section', 'festival_title', 'pages_number', 'publish_status', 'activity_type', 'participation_percentage', 'sent_at')->find($id);
 
-        return json_encode(array($post));
+        if ($post->personInfo->id == session('user_id')) {
+            return json_encode(array($post));
+        }
+        abort(403);
     }
 }
