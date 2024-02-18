@@ -59,7 +59,7 @@ class NewPost extends Controller
                 'file_src' => $path,
             ]);
 
-            $maxUpload = DB::table('helli_user_max_upload_posts')->where('national_code', $nationalcode)->value('numbers');
+            $maxUpload = HelliUserMaxUploadPost::where('national_code', $nationalcode)->value('numbers');
             if ($maxUpload == 3 or $maxUpload == 2 or $maxUpload == 1) {
                 $maxUpload = HelliUserMaxUploadPost::where('national_code', '=', $nationalcode)->decrement('numbers', 1);
             } else {

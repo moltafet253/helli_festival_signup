@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Helli\Contact;
 use App\Models\User;
 use App\Models\UserActivityLog;
 use Illuminate\Http\Request;
@@ -11,8 +12,9 @@ use Jenssegers\Agent\Agent;
 
 class GetContacts extends Controller
 {
-    public function contacts($token) {
-        $nationalcode=User::where('remember_token',$token)->value('national_code');
+    public function contacts($token)
+    {
+        $nationalcode = User::where('remember_token', $token)->value('national_code');
 
         $agent = new Agent();
         UserActivityLog::create([
@@ -22,6 +24,6 @@ class GetContacts extends Controller
             'user_agent' => request()->userAgent(),
             'device' => $agent->device(),
         ]);
-        return DB::table('contacts')->select('phone','mobile','address','postal_code','approved')->where('national_code', '=', $nationalcode)->get();
+        return Contact::select('phone', 'mobile', 'address', 'postal_code', 'approved')->where('national_code', '=', $nationalcode)->get();
     }
 }

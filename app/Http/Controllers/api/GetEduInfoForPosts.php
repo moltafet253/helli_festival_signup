@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Helli\EducationalInfo;
 use App\Models\User;
 use App\Models\UserActivityLog;
 use Illuminate\Http\Request;
@@ -22,6 +23,6 @@ class GetEduInfoForPosts extends Controller
             'user_agent' => request()->userAgent(),
             'device' => $agent->device(),
         ]);
-        return DB::table('educational_infos')->where('national_code', '=', $nationalcode)->get();
+        return EducationalInfo::where('national_code', '=', $nationalcode)->get();
     }
 }

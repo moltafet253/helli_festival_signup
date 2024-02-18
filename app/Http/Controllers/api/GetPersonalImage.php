@@ -12,11 +12,12 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Jenssegers\Agent\Agent;
 use Illuminate\Session\Store;
+
 class GetPersonalImage extends Controller
 {
-    public function getPersonalImage($token , Request $request)
+    public function getPersonalImage($token, Request $request)
     {
-        $id = DB::table('users')->where('remember_token', $token)->value('personalImageSrc');
+        $id = User::where('remember_token', $token)->value('personalImageSrc');
         if ($id) {
             $path = Image::find($id);
             $src = $path->src;
@@ -25,7 +26,7 @@ class GetPersonalImage extends Controller
             }
             $profileUrl = Storage::url($src);
 
-            $sesion=session('nationalcode');
+            $sesion = session('nationalcode');
             $agent = new Agent();
             UserActivityLog::create([
                 'user_id' => session('user_id'),

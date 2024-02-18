@@ -23,6 +23,6 @@ class GetUserInfo extends Controller
             'user_agent' => request()->userAgent(),
             'device' => $agent->device(),
         ]);
-        return DB::table('users')->where('national_code', '=', $nationalcode)->get();
+        return User::where('national_code', '=', $nationalcode)->get();
     }
 }

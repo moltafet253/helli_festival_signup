@@ -1,12 +1,12 @@
 <?php
 
+use App\Models\Helli\ResearchFormat;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-        DB::table('research_formats')->insert([
+        ResearchFormat::insert([
             ['title' => 'پایان‌نامه', 'user' => '0371714941', 'created_at' => now(), 'updated_at' => now()],
             ['title' => 'تحقیق پایانی', 'user' => '0371714941', 'created_at' => now(), 'updated_at' => now()],
             ['title' => 'کتاب', 'user' => '0371714941', 'created_at' => now(), 'updated_at' => now()],

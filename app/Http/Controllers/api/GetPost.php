@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Helli\Post;
 use App\Models\UserActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,6 @@ class GetPost extends Controller
             'user_agent' => request()->userAgent(),
             'device' => $agent->device(),
         ]);
-        return DB::table('posts')->where('national_code', '=', $nationalcode)->get();
+        return Post::where('national_code', '=', $nationalcode)->get();
     }
 }

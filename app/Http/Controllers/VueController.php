@@ -70,6 +70,8 @@ class VueController extends Controller
                 }
                 $getToken = User::where('national_code', $socialID)->value('remember_token');
                 session(['token' => $getToken]);
+                $getUser = User::where('remember_token', $getToken)->first();
+                session(['user_id' => $getUser->id]);
 
                 Contact::firstOrCreate([
                     'national_code' => $socialID

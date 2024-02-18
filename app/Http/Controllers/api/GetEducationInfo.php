@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Helli\EducationalInfo;
 use App\Models\User;
 use App\Models\UserActivityLog;
 use Illuminate\Http\Request;
@@ -15,8 +16,7 @@ class GetEducationInfo extends Controller
     {
         $nationalcode = User::where('remember_token', $token)->value('national_code');
 
-        $edu = DB::table('educational_infos')
-            ->select('national_code','namemarkaztahsili','noetahsilhozavi','paye','sath','term','ostantahsili','shahrtahsili','madresetahsili','shparvandetahsili','tahsilatghhozavi','reshtedaneshgahi','markaztakhasosihozavi','reshtetakhasosihozavi','approved')
+        $edu = EducationalInfo::select('national_code','namemarkaztahsili','noetahsilhozavi','paye','sath','term','ostantahsili','shahrtahsili','madresetahsili','shparvandetahsili','tahsilatghhozavi','reshtedaneshgahi','markaztakhasosihozavi','reshtetakhasosihozavi','approved')
             ->where('national_code', '=', $nationalcode)
             ->get();
         $gender = session()->get('gender');

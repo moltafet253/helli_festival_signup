@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Helli\TeachingInfo;
 use App\Models\User;
 use App\Models\UserActivityLog;
 use Illuminate\Http\Request;
@@ -22,8 +23,8 @@ class GetTeachingInfo extends Controller
             'user_agent' => request()->userAgent(),
             'device' => $agent->device(),
         ]);
-        return DB::table('teaching_infos')
-            ->select('national_code','isMaster','masterCode','teachingProvince','teachingCity','teachingPlaceName','approved')
+        return TeachingInfo::
+            select('national_code','isMaster','masterCode','teachingProvince','teachingCity','teachingPlaceName','approved')
             ->where('national_code', '=', $nationalcode)->get();
     }
 }

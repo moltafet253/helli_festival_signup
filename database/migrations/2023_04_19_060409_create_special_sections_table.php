@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Helli\SpecialSection;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-        DB::table('special_sections')->insert([
+        SpecialSection::insert([
             ['title' => 'نقش حوزه‌های علمیه در راهبردهای فرهنگ عمومی و دین‌داری جامعه', 'user' => '0371714941', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }

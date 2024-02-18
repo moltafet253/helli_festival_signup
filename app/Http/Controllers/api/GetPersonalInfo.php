@@ -23,6 +23,5 @@ class GetPersonalInfo extends Controller
             'device' => $agent->device(),
         ]);
         return User::select('name','family','father_name','national_code','birthdate','gender','personalImageSrc')->where('remember_token',$token)->get();
-
     }
 }
