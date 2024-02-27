@@ -1728,17 +1728,16 @@ export default {
 
                                                                 switch (this.teachingInfo['isMaster']) {
                                                                     case 'بله':
-                                                                        if (parseInt(chunksActiveFestivalDate) - parseInt(chunksmyBirthDate) <= 50) {
+                                                                        // if (parseInt(chunksActiveFestivalDate) - parseInt(chunksmyBirthDate) <= 50) {
                                                                             this.showErrorAgeRequirement = false;
                                                                             this.grantedSend = true;
                                                                             this.showErrorNotSubmittedInfos = false;
                                                                             this.groupApprove = 1;
-
-                                                                        } else {
-                                                                            this.showErrorAgeRequirement = true;
-                                                                            this.grantedSend = false;
-                                                                            this.showErrorNotSubmittedInfos = false;
-                                                                        }
+                                                                        // } else {
+                                                                        //     this.showErrorAgeRequirement = true;
+                                                                        //     this.grantedSend = false;
+                                                                        //     this.showErrorNotSubmittedInfos = false;
+                                                                        // }
                                                                         break;
                                                                     case 'خیر':
                                                                         if (parseInt(chunksActiveFestivalDate) - parseInt(chunksmyBirthDate) <= 35) {
