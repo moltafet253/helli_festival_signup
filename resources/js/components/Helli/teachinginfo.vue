@@ -64,7 +64,7 @@
                 </div>
                 <div class="w-full lg:w-4/12 px-4 flex-row">
                     <div class="relative w-full mb-3">
-                        <label class="block uppercase  text-base font-bold mb-2">نام محل
+                        <label class="block uppercase  text-base font-bold mb-2">نام مدرسه محل
                             تدریس<span
                                 style="color: red;">*</span></label>
                         <select :disabled="disableSelection" v-model="item.teachingPlaceName"
