@@ -257,7 +257,7 @@
                                                             <div class="relative w-full mb-3">
                                                                 <label class="block uppercase  text-base font-bold mb-2"
                                                                 >تعداد صفحات
-                                                                    <span v-if="research_format==='مقاله'"
+                                                                    <span
                                                                           style="color: red;">*</span>
                                                                 </label>
                                                                 <input type="number" v-model="page_number"
@@ -1115,7 +1115,7 @@
                                                         <div class="relative w-full mb-3">
                                                             <label class="block uppercase  text-base font-bold mb-2"
                                                             >تعداد صفحات
-                                                                <span v-if="research_format==='مقاله'"
+                                                                <span
                                                                       style="color: red;">*</span>
                                                             </label>
                                                             <input type="number" v-model="this.postPagesNumber"
@@ -2209,7 +2209,7 @@ export default {
                 this.emptyErrors = 'گروه علمی انتخاب نشده است.';
             } else if (!this.research_type) {
                 this.emptyErrors = 'نوع پژوهش انتخاب نشده است.';
-            } else if (!this.page_number && this.research_format === 'مقاله') {
+            } else if (!this.page_number) {
                 this.emptyErrors = 'تعداد صفحات وارد نشده است.';
             } else if (this.page_number < 0) {
                 this.emptyErrors = 'تعداد صفحات اشتباه وارد شده است.';
