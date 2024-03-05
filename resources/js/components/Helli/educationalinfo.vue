@@ -414,7 +414,7 @@ export default {
                         .then(response => {
                             this.getDataFromEduTable(token);
                             alert('اطلاعات تحصیلی شما با موفقیت در سامانه ثبت شد.');
-                            window.reload();
+                            location.reload();
                         })
                         .catch(error => {
                             console.log(error);
