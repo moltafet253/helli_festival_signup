@@ -22,7 +22,7 @@
     </div>
 
     <!-- show modal for alert user (first time) -->
-    <transition enter-active-class="3 transition ease-out duration-100" enter-class="opacity-0"
+    <transition id="alert_user" enter-active-class="3 transition ease-out duration-100" enter-class="opacity-0"
                 v-if="this.showConfirmationModal"
                 enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75"
                 leave-class="opacity-100" leave-to-class="opacity-0">
@@ -61,10 +61,10 @@
                             <br/>
                             دبیرخانه جشنواره
                         </p>
-                        <div class="flex justify-center pb-8">
+                        <div class="flex justify-center mt-4">
                             <button @click="confirmForDataEntry"
-                                    class="bg-white hover:bg-slate-200 border border-colorborder text-black py-2 px-10 rounded-xl">
-                                بستن
+                                    class="bg-blue-300 hover:bg-slate-200 border border-colorborder text-black py-2 px-10 rounded-xl">
+                                متوجه شدم
                             </button>
                         </div>
                     </div>
@@ -80,27 +80,37 @@ export default {
     props: ['token'],
     data() {
         return {
-            showConfirmationModal: false
+            showConfirmationModal: null
         }
     },
     mounted() {
         this.checkDataEntry(this.token);
     },
     methods: {
-        checkDataEntry(token){
-            // axios.get(`/getConfirmationToDataEntry/${token}`)
-            //     .then(response => {
-            //             if (response.data) {
-            //                 this.showConfirmationModal = false;
-            //             }
-            //         }
-            //     )
-            //     .catch(error => {
-            //         console.log(error)
-            //     });
+        checkDataEntry() {
+            axios.get(`/getConfirmationToDataEntry`)
+                .then(response => {
+                        if (response.data) {
+                            this.showConfirmationModal = false;
+                        } else {
+                            this.showConfirmationModal = true;
+                        }
+                    }
+                )
+                .catch(error => {
+                });
         },
         confirmForDataEntry() {
-
+            axios.post(`/confirmDataEntry`, {
+                approved: 1
+            })
+                .then(function (response) {
+                    if (response.status==200) {
+                        alert_user.hidden = true;
+                    }
+                })
+                .catch(function (error) {
+                });
         }
     }
 }

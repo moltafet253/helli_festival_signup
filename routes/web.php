@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\DataEntryConfirmationController;
 use App\Http\Controllers\api\defaults\centers;
 use App\Http\Controllers\api\defaults\cities_with_gender;
 use App\Http\Controllers\api\defaults\cities_without_gender;
@@ -18,7 +19,6 @@ use App\Http\Controllers\api\DeletePost;
 use App\Http\Controllers\api\GetActiveFestival;
 use App\Http\Controllers\api\GetAllPosts;
 use App\Http\Controllers\api\GetContacts;
-use App\Http\Controllers\api\DataEntryConfirmation;
 use App\Http\Controllers\api\GetEducationInfo;
 use App\Http\Controllers\api\GetEduInfoForPosts;
 use App\Http\Controllers\api\GetPersonalImage;
@@ -53,7 +53,8 @@ Route::get('/', [VueController::class, 'index']);
 
 //Get's
 Route::middleware('CheckSession')->group(function () {
-    Route::get('/getConfirmationToDataEntry/{token}', [DataEntryConfirmation::class, 'getpersonalinfo']);
+    Route::get('/getConfirmationToDataEntry', [DataEntryConfirmationController::class, 'getDataEntryConfirmation']);
+    Route::post('/confirmDataEntry', [DataEntryConfirmationController::class, 'confirmDataEntry']);
 
     Route::get('/getpersonalinfo/this/{token}', [GetPersonalInfo::class, 'getpersonalinfo']);
     Route::get('/contact/{token}', [GetContacts::class, 'contacts']);
