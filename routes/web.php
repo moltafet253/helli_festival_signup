@@ -18,6 +18,7 @@ use App\Http\Controllers\api\DeletePost;
 use App\Http\Controllers\api\GetActiveFestival;
 use App\Http\Controllers\api\GetAllPosts;
 use App\Http\Controllers\api\GetContacts;
+use App\Http\Controllers\api\DataEntryConfirmation;
 use App\Http\Controllers\api\GetEducationInfo;
 use App\Http\Controllers\api\GetEduInfoForPosts;
 use App\Http\Controllers\api\GetPersonalImage;
@@ -52,6 +53,8 @@ Route::get('/', [VueController::class, 'index']);
 
 //Get's
 Route::middleware('CheckSession')->group(function () {
+    Route::get('/getConfirmationToDataEntry/{token}', [DataEntryConfirmation::class, 'getpersonalinfo']);
+
     Route::get('/getpersonalinfo/this/{token}', [GetPersonalInfo::class, 'getpersonalinfo']);
     Route::get('/contact/{token}', [GetContacts::class, 'contacts']);
     Route::get('/edu/{token}', [GetEducationInfo::class, 'education']);

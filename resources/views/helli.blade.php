@@ -10,7 +10,7 @@
 </head>
 <body class="antialiased">
 <div id="app">
-    <appheader></appheader>
+    <appheader :token="{{json_encode(session('token'))}}"></appheader>
     <underheader></underheader>
     <div class="px-16">
         <personalinfo :token="{{json_encode(session('token'))}}"></personalinfo>

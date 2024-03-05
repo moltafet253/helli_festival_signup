@@ -197,27 +197,45 @@
                                                                             :value="formats.title"
                                                                     >{{ formats.title }}
                                                                     </option>
-                                                                    <option v-if="groupApprove===1" value="کتاب علمی - پژوهشی">کتاب علمی - پژوهشی
+                                                                    <option v-if="groupApprove===1"
+                                                                            value="کتاب علمی - پژوهشی">کتاب علمی -
+                                                                        پژوهشی
                                                                     </option>
-                                                                    <option v-if="groupApprove===1" value="کتاب علمی - ترویجی">کتاب علمی - ترویجی
+                                                                    <option v-if="groupApprove===1"
+                                                                            value="کتاب علمی - ترویجی">کتاب علمی -
+                                                                        ترویجی
                                                                     </option>
-                                                                    <option v-if="groupApprove===1" value="کتاب فرهنگی - تبلیغی">کتاب فرهنگی - تبلیغی
+                                                                    <option v-if="groupApprove===1"
+                                                                            value="کتاب فرهنگی - تبلیغی">کتاب فرهنگی -
+                                                                        تبلیغی
                                                                     </option>
-                                                                    <option v-if="groupApprove===1" value="کتاب شرح و تعلیق">کتاب شرح و تعلیق
+                                                                    <option v-if="groupApprove===1"
+                                                                            value="کتاب شرح و تعلیق">کتاب شرح و تعلیق
                                                                     </option>
-                                                                    <option v-if="groupApprove===1" value="کتاب ترجمه">کتاب ترجمه
+                                                                    <option v-if="groupApprove===1" value="کتاب ترجمه">
+                                                                        کتاب ترجمه
                                                                     </option>
-                                                                    <option v-if="groupApprove===1" value="کتاب داستان و رمان">کتاب داستان و رمان
+                                                                    <option v-if="groupApprove===1"
+                                                                            value="کتاب داستان و رمان">کتاب داستان و
+                                                                        رمان
                                                                     </option>
-                                                                    <option v-if="groupApprove===1" value="مقاله علمی - پژوهشی">مقاله علمی - پژوهشی
+                                                                    <option v-if="groupApprove===1"
+                                                                            value="مقاله علمی - پژوهشی">مقاله علمی -
+                                                                        پژوهشی
                                                                     </option>
-                                                                    <option v-if="groupApprove===1" value="مقاله علمی - ترویجی">مقاله علمی - ترویجی
+                                                                    <option v-if="groupApprove===1"
+                                                                            value="مقاله علمی - ترویجی">مقاله علمی -
+                                                                        ترویجی
                                                                     </option>
-                                                                    <option v-if="groupApprove===1" value="مقاله فرهنگی - تبلیغی">مقاله فرهنگی - تبلیغی
+                                                                    <option v-if="groupApprove===1"
+                                                                            value="مقاله فرهنگی - تبلیغی">مقاله فرهنگی -
+                                                                        تبلیغی
                                                                     </option>
-                                                                    <option v-if="groupApprove===1" value="مقاله شرح و تعلیق">مقاله شرح و تعلیق
+                                                                    <option v-if="groupApprove===1"
+                                                                            value="مقاله شرح و تعلیق">مقاله شرح و تعلیق
                                                                     </option>
-                                                                    <option v-if="groupApprove===1" value="مقاله ترجمه">مقاله ترجمه
+                                                                    <option v-if="groupApprove===1" value="مقاله ترجمه">
+                                                                        مقاله ترجمه
                                                                     </option>
                                                                 </select>
                                                             </div>
@@ -258,7 +276,7 @@
                                                                 <label class="block uppercase  text-base font-bold mb-2"
                                                                 >تعداد صفحات
                                                                     <span
-                                                                          style="color: red;">*</span>
+                                                                        style="color: red;">*</span>
                                                                 </label>
                                                                 <input type="number" v-model="page_number"
                                                                        class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
@@ -698,16 +716,20 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div v-if="sentStatus===false && festivalOver===false" class="mt-8  p-3 flex bg-red-200 rounded-xl border border-colorborder w-full">
+                            <div v-if="sentStatus===false && festivalOver===false"
+                                 class="mt-8  p-3 flex bg-red-200 rounded-xl border border-colorborder w-full">
                                 <div class=" flex-row ">
                                     <div class="relative w-full">
-                                        <img class="bg-red-500 rounded-md p-1" src="build/assets/icons/Info Square.svg" alt="">
+                                        <img class="bg-red-500 rounded-md p-1" src="build/assets/icons/Info Square.svg"
+                                             alt="">
                                     </div>
                                 </div>
                                 <div class="w-full flex-row">
                                     <div class="relative w-full mr-3">
                                         <p class="mb-0 font-normal">کاربر گرامی!
-                                            توجه داشته باشید که گزینه «ارسال نهایی آثار به جشنواره» را تنها در صورتی بزنید که همه آثار خود را ثبت کرده باشید. در غیر این صورت، گزینه «اثر جدید» را انتخاب کنید. (آثار پس از ارسال نهایی قابل ویرایش نخواهند بود)
+                                            توجه داشته باشید که گزینه «ارسال نهایی آثار به جشنواره» را تنها در صورتی
+                                            بزنید که همه آثار خود را ثبت کرده باشید. در غیر این صورت، گزینه «اثر جدید»
+                                            را انتخاب کنید. (آثار پس از ارسال نهایی قابل ویرایش نخواهند بود)
                                         </p>
                                     </div>
                                 </div>
@@ -845,6 +867,7 @@
                                     </div>
                                 </div>
                             </transition>
+
 
                             <transition enter-active-class="transition ease-out duration-100" enter-class="opacity-0"
                                         enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75"
@@ -1053,27 +1076,60 @@
                                                                         :value="formats.title"
                                                                 >{{ formats.title }}
                                                                 </option>
-                                                                <option :selected="'کتاب علمی - پژوهشی'===this.postResearchFormat" v-if="groupApprove===1" value="کتاب علمی - پژوهشی">کتاب علمی - پژوهشی
+                                                                <option
+                                                                    :selected="'کتاب علمی - پژوهشی'===this.postResearchFormat"
+                                                                    v-if="groupApprove===1" value="کتاب علمی - پژوهشی">
+                                                                    کتاب علمی - پژوهشی
                                                                 </option>
-                                                                <option :selected="'کتاب علمی - ترویجی'===this.postResearchFormat" v-if="groupApprove===1" value="کتاب علمی - ترویجی">کتاب علمی - ترویجی
+                                                                <option
+                                                                    :selected="'کتاب علمی - ترویجی'===this.postResearchFormat"
+                                                                    v-if="groupApprove===1" value="کتاب علمی - ترویجی">
+                                                                    کتاب علمی - ترویجی
                                                                 </option>
-                                                                <option :selected="'کتاب فرهنگی - تبلیغی'===this.postResearchFormat" v-if="groupApprove===1" value="کتاب فرهنگی - تبلیغی">کتاب فرهنگی - تبلیغی
+                                                                <option
+                                                                    :selected="'کتاب فرهنگی - تبلیغی'===this.postResearchFormat"
+                                                                    v-if="groupApprove===1"
+                                                                    value="کتاب فرهنگی - تبلیغی">کتاب فرهنگی - تبلیغی
                                                                 </option>
-                                                                <option :selected="'کتاب شرح و تعلیق'===this.postResearchFormat" v-if="groupApprove===1" value="کتاب شرح و تعلیق">کتاب شرح و تعلیق
+                                                                <option
+                                                                    :selected="'کتاب شرح و تعلیق'===this.postResearchFormat"
+                                                                    v-if="groupApprove===1" value="کتاب شرح و تعلیق">
+                                                                    کتاب شرح و تعلیق
                                                                 </option>
-                                                                <option :selected="'کتاب ترجمه'===this.postResearchFormat" v-if="groupApprove===1" value="کتاب ترجمه">کتاب ترجمه
+                                                                <option
+                                                                    :selected="'کتاب ترجمه'===this.postResearchFormat"
+                                                                    v-if="groupApprove===1" value="کتاب ترجمه">کتاب
+                                                                    ترجمه
                                                                 </option>
-                                                                <option :selected="'کتاب داستان و رمان'===this.postResearchFormat" v-if="groupApprove===1" value="کتاب داستان و رمان">کتاب داستان و رمان
+                                                                <option
+                                                                    :selected="'کتاب داستان و رمان'===this.postResearchFormat"
+                                                                    v-if="groupApprove===1" value="کتاب داستان و رمان">
+                                                                    کتاب داستان و رمان
                                                                 </option>
-                                                                <option :selected="'مقاله علمی - پژوهشی'===this.postResearchFormat" v-if="groupApprove===1" value="مقاله علمی - پژوهشی">مقاله علمی - پژوهشی
+                                                                <option
+                                                                    :selected="'مقاله علمی - پژوهشی'===this.postResearchFormat"
+                                                                    v-if="groupApprove===1" value="مقاله علمی - پژوهشی">
+                                                                    مقاله علمی - پژوهشی
                                                                 </option>
-                                                                <option :selected="'مقاله علمی - ترویجی'===this.postResearchFormat" v-if="groupApprove===1" value="مقاله علمی - ترویجی">مقاله علمی - ترویجی
+                                                                <option
+                                                                    :selected="'مقاله علمی - ترویجی'===this.postResearchFormat"
+                                                                    v-if="groupApprove===1" value="مقاله علمی - ترویجی">
+                                                                    مقاله علمی - ترویجی
                                                                 </option>
-                                                                <option :selected="'مقاله فرهنگی - تبلیغی'===this.postResearchFormat" v-if="groupApprove===1" value="مقاله فرهنگی - تبلیغی">مقاله فرهنگی - تبلیغی
+                                                                <option
+                                                                    :selected="'مقاله فرهنگی - تبلیغی'===this.postResearchFormat"
+                                                                    v-if="groupApprove===1"
+                                                                    value="مقاله فرهنگی - تبلیغی">مقاله فرهنگی - تبلیغی
                                                                 </option>
-                                                                <option :selected="'مقاله شرح و تعلیق'===this.postResearchFormat" v-if="groupApprove===1" value="مقاله شرح و تعلیق">مقاله شرح و تعلیق
+                                                                <option
+                                                                    :selected="'مقاله شرح و تعلیق'===this.postResearchFormat"
+                                                                    v-if="groupApprove===1" value="مقاله شرح و تعلیق">
+                                                                    مقاله شرح و تعلیق
                                                                 </option>
-                                                                <option :selected="'مقاله ترجمه'===this.postResearchFormat" v-if="groupApprove===1" value="مقاله ترجمه">مقاله ترجمه
+                                                                <option
+                                                                    :selected="'مقاله ترجمه'===this.postResearchFormat"
+                                                                    v-if="groupApprove===1" value="مقاله ترجمه">مقاله
+                                                                    ترجمه
                                                                 </option>
                                                             </select>
                                                         </div>
@@ -1116,7 +1172,7 @@
                                                             <label class="block uppercase  text-base font-bold mb-2"
                                                             >تعداد صفحات
                                                                 <span
-                                                                      style="color: red;">*</span>
+                                                                    style="color: red;">*</span>
                                                             </label>
                                                             <input type="number" v-model="this.postPagesNumber"
                                                                    class="border border-colorborder px-3 py-3   bg-white rounded-lg text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
@@ -1471,10 +1527,7 @@
 
                                                 <section v-if="activityType === 'moshtarak'">
                                                     <div class="flex justify-center mb-8 mt-14">
-
-
                                                         <button
-
                                                             @click="editPostSend" :disabled="disableEditPostButton"
                                                             :class="[handleButtonClick ? ' bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 ml-8 rounded-xl cursor-pointer' : 'bg-red-500 opacity-50  hover:bg-red-700 cursor-not-allowed text-white font-bold py-2 px-10 ml-8 rounded-xl']">
                                                             <span :class="[checkFile ? ' text-white' : 'text-black']">ثبت اولیه اطلاعات</span>
@@ -1729,10 +1782,10 @@ export default {
                                                                 switch (this.teachingInfo['isMaster']) {
                                                                     case 'بله':
                                                                         // if (parseInt(chunksActiveFestivalDate) - parseInt(chunksmyBirthDate) <= 50) {
-                                                                            this.showErrorAgeRequirement = false;
-                                                                            this.grantedSend = true;
-                                                                            this.showErrorNotSubmittedInfos = false;
-                                                                            this.groupApprove = 1;
+                                                                        this.showErrorAgeRequirement = false;
+                                                                        this.grantedSend = true;
+                                                                        this.showErrorNotSubmittedInfos = false;
+                                                                        this.groupApprove = 1;
                                                                         // } else {
                                                                         //     this.showErrorAgeRequirement = true;
                                                                         //     this.grantedSend = false;
