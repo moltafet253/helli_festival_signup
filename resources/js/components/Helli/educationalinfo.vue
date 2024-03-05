@@ -88,7 +88,7 @@
                         <label class="block uppercase  text-base font-bold mb-2">استان محل تحصیل<span
                             style="color: red;">*</span></label>
                         <select :disabled="!showButton" v-model="item.ostantahsili" v-for="(item, index) in edu"
-                                @change="returnCity(item.ostantahsili,this.gender)"
+                                @change="returnCity(item.ostantahsili,this.gender)" id="edu_state"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option v-for="item in ostan" :value="item.ostan"
@@ -102,7 +102,7 @@
                         <label class="block uppercase  text-base font-bold mb-2">شهر محل
                             تحصیل<span style="color: red;">*</span></label>
                         <select :value="null" :disabled="!showButton" v-model="item.shahrtahsili"
-                                v-for="(item, index) in edu"
+                                v-for="(item, index) in edu" id="edu_city"
                                 @change="returnSchool(item.shahrtahsili)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
@@ -116,7 +116,7 @@
                     <div class="relative w-full mb-3">
                         <label class="block uppercase  text-base font-bold mb-2">مدرسه<span
                             style="color: red;">*</span></label>
-                        <select :disabled="!showButton" v-model="item.madresetahsili" v-for="(item, index) in edu"
+                        <select :disabled="!showButton" v-model="item.madresetahsili" v-for="(item, index) in edu" id="edu_school"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option v-for="item in madrese" :value="item.madrese"
@@ -245,9 +245,9 @@ export default {
         await this.getDataFromSpecializedCenters();
         await this.getDataFromProvincesTable(this.gender);
         if (this.edu[0]['namemarkaztahsili']) {
-            await this.returnProvince(this.edu[0]['namemarkaztahsili']);
-            await this.returnCity(this.edu[0]['ostantahsili']);
-            await this.returnSchool(this.edu[0]['shahrtahsili']);
+            await this.returnProvince2(this.edu[0]['namemarkaztahsili']);
+            await this.returnCity2(this.edu[0]['ostantahsili']);
+            await this.returnSchool2(this.edu[0]['shahrtahsili']);
         }
     },
     methods: {
@@ -324,6 +324,7 @@ export default {
                 }
             })
                 .then(response => {
+                    this.edu[0]['shahrtahsili']='';
                     this.ostan = response.data;
                 })
                 .catch(error => {
@@ -340,6 +341,7 @@ export default {
                 }
             })
                 .then(response => {
+                    this.edu[0]['madresetahsili']='';
                     this.shahr = response.data;
                 })
                 .catch(error => {
@@ -347,6 +349,52 @@ export default {
                 })
         },
         async returnSchool(city) {
+            await axios.get(`/defaults/schools/${this.centerSend}/${this.provinceSend}/${city}/${this.gender}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+                .then(response => {
+                    this.madrese = response.data;
+                })
+                .catch(error => {
+                    // console.log(error)
+                })
+        },
+        async returnProvince2(center) {
+            this.ostan = [];
+            this.shahr = [];
+            this.madrese = [];
+            this.centerSend = center;
+            await axios.get(`/defaults/provinces/${center}/${this.gender}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+                .then(response => {
+                    this.ostan = response.data;
+                })
+                .catch(error => {
+                    // console.log(error)
+                })
+        },
+        async returnCity2(province) {
+            this.shahr = [];
+            this.madrese = [];
+            this.provinceSend = province;
+            await axios.get(`/defaults/cities/${this.centerSend}/${province}/${this.gender}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+                .then(response => {
+                    this.shahr = response.data;
+                })
+                .catch(error => {
+                    // console.log(error)
+                })
+        },
+        async returnSchool2(city) {
             await axios.get(`/defaults/schools/${this.centerSend}/${this.provinceSend}/${city}/${this.gender}`, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
