@@ -4,9 +4,9 @@
         "dev": "vite",
         "build": "npm-run-all build-app copy-icons copy-fonts copy-files",
         "build-app": "vite build",
-        "copy-icons": "mkdir -p public/build/assets/icons && cp -r resources/images/icons public/build/assets/",
-        "copy-fonts": "mkdir -p public/build/assets && find resources/css/Fonts/ -type f -exec cp {} public/build/assets/ \\;",
-        "copy-files": "mkdir -p public/pub_files && find resources/pub_files/ -type f -exec cp {} public/pub_files \\;",
+        "copy-icons": "mkdirp public/build/assets/icons && ncp resources/images/icons public/build/assets/icons",
+        "copy-fonts": "mkdirp public/build/assets && ncp resources/css/Fonts public/build/assets/Fonts",
+        "copy-files": "mkdirp public/pub_files && ncp resources/pub_files public/pub_files",
         "build:prod": "cross-env NODE_ENV=production vite build"
     },
     "devDependencies": {
@@ -40,6 +40,8 @@
         "install": "^0.13.0",
         "jalaali-js": "^1.2.6",
         "lodash": "^4.17.21",
+        "mkdirp": "^3.0.1",
+        "ncp": "^2.0.0",
         "vee-validate": "^4.5.8",
         "vue-server-renderer": "^2.7.14"
     }
