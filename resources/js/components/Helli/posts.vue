@@ -1740,7 +1740,7 @@ export default {
                     }
                 )
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 }).finally(() => {
                     this.showLoading = false;
                 });
@@ -1810,22 +1810,22 @@ export default {
                                                         }
                                                     })
                                                     .catch(error => {
-                                                        console.log(error)
+                                                        // console.log(error)
                                                     });
                                             }
                                         })
                                         .catch(error => {
-                                            console.log(error)
+                                            // console.log(error)
                                         });
                                 }
                             })
                             .catch(error => {
-                                console.log(error)
+                                // console.log(error)
                             });
                     }
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 });
 
 
@@ -1845,7 +1845,7 @@ export default {
                     }
                 })
                 .catch(error => {
-                    console.log(error);
+                    // console.log(error);
                 });
 
 
@@ -1886,12 +1886,12 @@ export default {
                                 this.postParticipants = response.data;
                             })
                             .catch(error => {
-                                console.log(error)
+                                // console.log(error)
                             });
                     }
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 });
 
         },
@@ -1908,7 +1908,7 @@ export default {
 
                     })
                     .catch(function (error) {
-                        console.log(error);
+                        // console.log(error);
                     }).finally(() => {
                     this.postParticipants.splice(index, 1);
                 });
@@ -1955,11 +1955,11 @@ export default {
                     }
                 })
                     .then(function (response) {
-                        console.log(response);
+                        // console.log(response);
                         location.reload();
                     })
                     .catch(function (error) {
-                        console.log(error);
+                        // console.log(error);
                     }).finally(() => {
                     location.reload();
 
@@ -1973,7 +1973,7 @@ export default {
             this.showModalArzyabi = true;
             axios.get(`/posts/getPostInfo/${id}`)
                 .then(response => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     this.postName = response.data[0]['title'];
                     this.postScientificGroup = response.data[0]['scientific_group'];
                     this.postResearchType = response.data[0]['research_type'];
@@ -1982,7 +1982,7 @@ export default {
                     this.postSendDate = this.convertToJalaali(response.data[0]['sent_at']);
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 });
             this.postName = '';
 
@@ -2002,7 +2002,7 @@ export default {
                     }
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 })
         }
         ,
@@ -2012,7 +2012,7 @@ export default {
                     this.research_formats = response.data;
                 })
                 .catch(error => {
-                    console.log(error);
+                    // console.log(error);
                 })
         }
         ,
@@ -2022,7 +2022,7 @@ export default {
                     this.scientific_groups = response.data;
                 })
                 .catch(error => {
-                    console.log(error);
+                    // console.log(error);
                 })
         }
         ,
@@ -2032,7 +2032,7 @@ export default {
                     this.research_types = response.data;
                 })
                 .catch(error => {
-                    console.log(error);
+                    // console.log(error);
                 })
         }
         ,
@@ -2042,7 +2042,7 @@ export default {
                     this.special_sections = response.data;
                 })
                 .catch(error => {
-                    console.log(error);
+                    // console.log(error);
                 })
         }
         ,
@@ -2056,10 +2056,10 @@ export default {
                     }
                 })
                     .then(function (response) {
-                        console.log(response.data);
+                        // console.log(response.data);
                     })
                     .catch(function (error) {
-                        console.log(error);
+                        // console.log(error);
                     }).finally(() => {
                     location.reload();
                 });
@@ -2309,7 +2309,7 @@ export default {
                     // this.isLoadingMessage='';
                     // this.isLoading=false;
                     alert('ارسال اثر با خطا مواجه شد.');
-                    console.log(error);
+                    // console.log(error);
                 });
             // location.reload();
             // this.showModal = false;

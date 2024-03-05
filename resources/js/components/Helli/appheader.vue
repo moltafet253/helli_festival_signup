@@ -3,9 +3,9 @@
         <nav class="bg-navbar-base mb2 text-white px-10 border-b-8 border-c-orange">
             <div class="container flex items-center justify-between px-4 py-2">
                 <div class="mb-2">
-                    <a target="_blank" href="./pub_files/help.pdf" class="mr-4 text-white">راهنمای کار با سامانه</a>
+                    <a target="_blank" href="pub_files/help.pdf" class="mr-4 text-white">راهنمای کار با سامانه</a>
                     &nbsp;
-                    <a target="_blank" href="./pub_files/conditions.pdf" class="mr-4 text-white">شرایط شرکت در
+                    <a target="_blank" href="pub_files/conditions.pdf" class="mr-4 text-white">شرایط شرکت در
                         جشنواره</a>
                 </div>
                 <div class="flex space-x-4">
@@ -80,7 +80,7 @@ export default {
     props: ['token'],
     data() {
         return {
-            showConfirmationModal: true
+            showConfirmationModal: false
         }
     },
     mounted() {

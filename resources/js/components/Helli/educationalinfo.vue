@@ -45,7 +45,8 @@
                         <select :disabled="!showButton" v-model="item.paye" v-for="(item, index) in edu"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option :value="null" selected disabled style="color: #6c757d">انتخاب کنید</option>
-                            <option v-for="(optionItem, optionIndex) in [1,2,3,4,5,6,7,8,9,10,'خارج']" :key="optionIndex"
+                            <option v-for="(optionItem, optionIndex) in [1,2,3,4,5,6,7,8,9,10,'خارج']"
+                                    :key="optionIndex"
                                     :value="optionItem" v-bind:selected="item.paye === optionItem.toString()">
                                 {{ optionItem }}
                             </option>
@@ -143,9 +144,10 @@
                                 v-model="item.tahsilatghhozavi"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected :value="null" disabled style="color: #6c757d">انتخاب کنید</option>
-                            <option v-for="educationLevel in ['زیر دیپلم', 'دیپلم', 'فوق دیپلم', 'لیسانس', 'فوق لیسانس', 'دکتری']"
-                                    :key="educationLevel"
-                                    :value="educationLevel" v-bind:selected="item.tahsilatghhozavi === educationLevel">
+                            <option
+                                v-for="educationLevel in ['زیر دیپلم', 'دیپلم', 'فوق دیپلم', 'لیسانس', 'فوق لیسانس', 'دکتری']"
+                                :key="educationLevel"
+                                :value="educationLevel" v-bind:selected="item.tahsilatghhozavi === educationLevel">
                                 {{ educationLevel }}
                             </option>
                         </select>
@@ -203,7 +205,6 @@
         </form>
     </div>
 </template>
-
 <script>
 export default {
     name: "educationalinfo",
@@ -227,7 +228,6 @@ export default {
             showReshteTakhasosiDiv: false,
             showReshteDaneshgahiDiv: false,
 
-
             markaz: [],
             ostan: [],
             shahr: [],
@@ -244,6 +244,11 @@ export default {
         await this.getDataFromEduTable(this.token);
         await this.getDataFromSpecializedCenters();
         await this.getDataFromProvincesTable(this.gender);
+        if (this.edu[0]['namemarkaztahsili']) {
+            await this.returnProvince(this.edu[0]['namemarkaztahsili']);
+            await this.returnCity(this.edu[0]['ostantahsili']);
+            await this.returnSchool(this.edu[0]['shahrtahsili']);
+        }
     },
     methods: {
         ReshteDaneshgahiDiv(value) {
@@ -270,7 +275,7 @@ export default {
                     this.spCenters = response.data;
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 });
         },
         async getDataFromEduTable(token) {
@@ -292,7 +297,7 @@ export default {
                     }
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 });
         },
         async getDataFromProvincesTable(gender) {
@@ -305,7 +310,7 @@ export default {
                     this.markaz = response.data;
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 });
         },
         async returnProvince(center) {
@@ -322,7 +327,7 @@ export default {
                     this.ostan = response.data;
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 })
         },
         async returnCity(province) {
@@ -338,7 +343,7 @@ export default {
                     this.shahr = response.data;
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 })
         },
         async returnSchool(city) {
@@ -351,7 +356,7 @@ export default {
                     this.madrese = response.data;
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 })
         },
         handleSubmit(a, token) {
@@ -417,7 +422,7 @@ export default {
                             location.reload();
                         })
                         .catch(error => {
-                            console.log(error);
+                            // console.log(error);
                         });
                 }
             }

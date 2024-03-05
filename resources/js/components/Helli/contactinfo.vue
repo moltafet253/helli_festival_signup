@@ -89,7 +89,7 @@ export default {
                     }
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 });
         },
 
@@ -124,7 +124,7 @@ export default {
                             location.reload();
                         })
                         .catch(error => {
-                            console.log(error);
+                            // console.log(error);
                         });
 
                 }

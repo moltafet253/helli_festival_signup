@@ -112,6 +112,7 @@ export default {
     async mounted() {
         await this.getDataFromTeachingTable(this.token);
         await this.getDataFromProvincesTable(this.nationalcode);
+
     },
     methods: {
         getDataFromProvincesTable() {
@@ -124,7 +125,7 @@ export default {
                     this.ostan = response.data;
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 })
         },
         getDataFromTeachingTable(token) {
@@ -144,10 +145,14 @@ export default {
                     } else {
                         this.disableSelection = false;
                         this.showButton = true;
+                        if (this.teaching[0]['isMaster']){
+                            this.returnCity(this.teaching[0]['teachingProvince']);
+                            this.returnSchool(this.teaching[0]['teachingCity']);
+                        }
                     }
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 })
         },
         returnCity(province) {
@@ -163,7 +168,7 @@ export default {
                     this.shahr = response.data;
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 })
         },
         returnSchool(city) {
@@ -176,7 +181,7 @@ export default {
                     this.madrese = response.data;
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 })
         },
         divStatus(event) {
@@ -224,7 +229,7 @@ export default {
                             // element.scrollIntoView();
                         })
                         .catch(error => {
-                            console.log(error);
+                            // console.log(error);
                         });
                 }
 
