@@ -244,7 +244,7 @@ export default {
         await this.getDataFromEduTable(this.token);
         await this.getDataFromSpecializedCenters();
         await this.getDataFromProvincesTable(this.gender);
-        if (this.edu[0]['namemarkaztahsili']) {
+        if (this.edu[0]['namemarkaztahsili']!=null) {
             await this.returnProvince2(this.edu[0]['namemarkaztahsili']);
             await this.returnCity2(this.edu[0]['ostantahsili']);
             await this.returnSchool2(this.edu[0]['shahrtahsili']);
@@ -291,9 +291,9 @@ export default {
                     }
                     if (response.data.edu[0]['approved'] === 1) {
                         this.showButton = false;
-                        this.returnProvince(this.edu[0]['namemarkaztahsili']);
-                        this.returnCity(this.edu[0]['ostantahsili']);
-                        this.returnSchool(this.edu[0]['shahrtahsili']);
+                        this.returnProvince2(this.edu[0]['namemarkaztahsili']);
+                        this.returnCity2(this.edu[0]['ostantahsili']);
+                        this.returnSchool2(this.edu[0]['shahrtahsili']);
                     }
                 })
                 .catch(error => {
@@ -362,9 +362,6 @@ export default {
                 })
         },
         async returnProvince2(center) {
-            this.ostan = [];
-            this.shahr = [];
-            this.madrese = [];
             this.centerSend = center;
             await axios.get(`/defaults/provinces/${center}/${this.gender}`, {
                 headers: {
@@ -379,8 +376,6 @@ export default {
                 })
         },
         async returnCity2(province) {
-            this.shahr = [];
-            this.madrese = [];
             this.provinceSend = province;
             await axios.get(`/defaults/cities/${this.centerSend}/${province}/${this.gender}`, {
                 headers: {

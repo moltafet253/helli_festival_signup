@@ -140,8 +140,8 @@ export default {
                     if (userData[0]['approved'] === 1) {
                         this.showButton = false;
                         this.disableSelection = true;
-                        this.returnCity(this.teaching[0]['teachingProvince']);
-                        this.returnSchool(this.teaching[0]['teachingCity']);
+                        this.returnCity2(this.teaching[0]['teachingProvince']);
+                        this.returnSchool2(this.teaching[0]['teachingCity']);
                     } else {
                         this.disableSelection = false;
                         this.showButton = true;
