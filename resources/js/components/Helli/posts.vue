@@ -1606,6 +1606,52 @@
                                     </div>
                                 </div>
                             </transition>
+                            <!-- show modal for alert user (after new post) -->
+                            <transition id="alert_user" enter-active-class="3 transition ease-out duration-100"
+                                        enter-class="opacity-0"
+                                        v-if="this.showConfirmationModal"
+                                        enter-to-class="opacity-100" leave-active-class="transition ease-in duration-75"
+                                        leave-class="opacity-100" leave-to-class="opacity-0">
+                                <div class="fixed z-40 inset-0 overflow-y-auto">
+                                    <div
+                                        class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                                            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                        </div>
+                                        <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                                              aria-hidden="true">&#8203;</span>
+                                        <div
+                                            class="inline-block bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                            <div class="px-6 pt-4 text-center bg-amber-200 mb-2">
+                                                اثر جدید شما با موفقیت در سامانه ثبت شد.
+                                            </div>
+                                            <div class="px-6 pb-4 text-center ">
+                                                <p class="mb-2 font-bold mx-auto">
+                                                    شرکت‌کننده محترم
+                                                </p>
+                                                <p class="mb-2 font-bold mx-auto">
+                                                    در صورتی که اثر دیگری برای شرکت در جشنواره ندارید، حتما گزینه «ارسال
+                                                    نهایی آثار به جشنواره» را نیز بزنید و در صورتی که مایل به ثبت اثر
+                                                    جدید هستید پس از ثبت اثر دوم یا سوم خود، گزینه «ارسال نهایی آثار به
+                                                    جشنواره» را بزنید.
+                                                </p>
+                                                <p class="mb-2 font-bold mx-auto text-red-500">
+                                                    <br/>
+                                                    توجه داشته باشید در صورتی که گزینه «ارسال نهایی آثار به جشنواره» زده
+                                                    نشود، اثر شما وارد فرایند ارزیابی جشنواره نخواهد شد.
+                                                </p>
+                                                <div class="flex justify-center mt-4">
+                                                    <button @click="confirmAndReloadAfterNewPost"
+                                                            class="bg-blue-300 hover:bg-slate-200 border border-colorborder text-black py-2 px-10 rounded-xl">
+                                                        متوجه شدم
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </transition>
+
                         </div>
 
                     </div>
@@ -1636,6 +1682,7 @@ export default {
             showModal: false,
             showModal2: false,
             showModal3: false,
+            showConfirmationModal: false,
             showModalsuccess: false,
             showModalArzyabi: false,
             activityType: 'fardi',
@@ -2004,8 +2051,7 @@ export default {
                 .catch(error => {
                     // console.log(error)
                 })
-        }
-        ,
+        },
         getResearchFormat() {
             axios.get('/defaults/research_formats')
                 .then(response => {
@@ -2138,8 +2184,7 @@ export default {
                         this.isLoadingMessage = '';
                         this.isLoading = false;
                         this.getAllPosts(token);
-                        alert('اثر جدید شما با موفقیت در سامانه ثبت شد.');
-                        location.reload();
+                        this.showConfirmationModal = true;
                         // this.disableNewPostButton = false;
                         // var element = document.getElementById("posts");
                         // element.scrollIntoView();
@@ -2156,6 +2201,10 @@ export default {
 
             }
 
+        }
+        ,
+        confirmAndReloadAfterNewPost() {
+            location.reload();
         }
         ,
         cancelshowModalLastSend() {
