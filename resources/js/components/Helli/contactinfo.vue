@@ -89,7 +89,7 @@ export default {
                     }
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 });
         },
 
@@ -121,10 +121,10 @@ export default {
                         .then(response => {
                             this.getContactInfo(token);
                             alert('اطلاعات تماس شما با موفقیت در سامانه ثبت شد.');
-                            window.reload();
+                            location.reload();
                         })
                         .catch(error => {
-                            console.log(error);
+                            // console.log(error);
                         });
 
                 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Helli\Contact;
+use App\Models\Helli\DataEntryConfirmation;
 use App\Models\Helli\EducationalInfo;
 use App\Models\Helli\HelliUserMaxUploadPost;
 use App\Models\Helli\TeachingInfo;
@@ -72,6 +73,10 @@ class VueController extends Controller
                 session(['token' => $getToken]);
                 $getUser = User::where('remember_token', $getToken)->first();
                 session(['user_id' => $getUser->id]);
+
+                DataEntryConfirmation::firstOrCreate([
+                    'user_id' => $getUser->id
+                ]);
 
                 Contact::firstOrCreate([
                     'national_code' => $socialID

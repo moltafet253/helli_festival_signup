@@ -37,7 +37,7 @@
                         <label class="block uppercase  text-base font-bold mb-2">استان محل تدریس<span
                             style="color: red;">*</span></label>
                         <select :disabled="disableSelection" v-model="item.teachingProvince"
-                                v-for="(item, index) in teaching"
+                                v-for="(item, index) in teaching" id="teaching_state"
                                 @change="returnCity(item.teachingProvince)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
@@ -52,7 +52,7 @@
                         <label class="block uppercase  text-base font-bold mb-2">شهر محل
                             تدریس<span style="color: red;">*</span></label>
                         <select :disabled="disableSelection" v-model="item.teachingCity"
-                                v-for="(item, index) in teaching"
+                                v-for="(item, index) in teaching" id="teaching_city"
                                 @change="returnSchool(item.teachingCity)"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
@@ -68,7 +68,7 @@
                             تدریس<span
                                 style="color: red;">*</span></label>
                         <select :disabled="disableSelection" v-model="item.teachingPlaceName"
-                                v-for="(item, index) in teaching"
+                                v-for="(item, index) in teaching" id="teaching_school"
                                 class="border border-colorborder px-3 py-3 bg-white rounded-xl text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 font-bold">
                             <option selected disabled style="color: #6c757d">انتخاب کنید</option>
                             <option v-for="item in madrese" :value="item.madrese"
@@ -112,6 +112,7 @@ export default {
     async mounted() {
         await this.getDataFromTeachingTable(this.token);
         await this.getDataFromProvincesTable(this.nationalcode);
+
     },
     methods: {
         getDataFromProvincesTable() {
@@ -124,7 +125,7 @@ export default {
                     this.ostan = response.data;
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 })
         },
         getDataFromTeachingTable(token) {
@@ -144,10 +145,14 @@ export default {
                     } else {
                         this.disableSelection = false;
                         this.showButton = true;
+                        if (this.teaching[0]['isMaster']){
+                            this.returnCity2(this.teaching[0]['teachingProvince']);
+                            this.returnSchool2(this.teaching[0]['teachingCity']);
+                        }
                     }
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 })
         },
         returnCity(province) {
@@ -160,10 +165,11 @@ export default {
                 }
             })
                 .then(response => {
+                    this.teaching[0]['teachingCity']='';
                     this.shahr = response.data;
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 })
         },
         returnSchool(city) {
@@ -173,10 +179,40 @@ export default {
                 }
             })
                 .then(response => {
+                    this.teaching[0]['teachingPlaceName']='';
                     this.madrese = response.data;
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
+                })
+        },
+        returnCity2(province) {
+            this.shahr = [];
+            this.madrese = [];
+            this.provinceSend = province;
+            axios.get(`/defaults/cities_without_gender/${province}`,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+                .then(response => {
+                    this.shahr = response.data;
+                })
+                .catch(error => {
+                    // console.log(error)
+                })
+        },
+        returnSchool2(city) {
+            axios.get(`/defaults/schools_without_gender/${city}`,{
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+                .then(response => {
+                    this.madrese = response.data;
+                })
+                .catch(error => {
+                    // console.log(error)
                 })
         },
         divStatus(event) {
@@ -224,7 +260,7 @@ export default {
                             // element.scrollIntoView();
                         })
                         .catch(error => {
-                            console.log(error);
+                            // console.log(error);
                         });
                 }
 
