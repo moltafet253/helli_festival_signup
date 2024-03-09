@@ -2190,8 +2190,8 @@ export default {
                         // element.scrollIntoView();
                     })
                     .catch(error => {
-                        location.reload();
-                        // console.log(error);
+                        // location.reload();
+                        console.log(error);
                         // this.file = null;
                         // this.fileName = null;
                         // this.nameFile = null;
