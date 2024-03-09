@@ -2190,8 +2190,9 @@ export default {
                         // element.scrollIntoView();
                     })
                     .catch(error => {
-                        // location.reload();
-                        console.log(error);
+                        alert('ثبت اثر با مشکل مواجه شد! لطفا دوباره تلاش کرده و در صورت عدم ثبت اثر، با دبیرخانه تماس حاصل فرمایید.')
+                        location.reload();
+                        // console.log(error);
                         // this.file = null;
                         // this.fileName = null;
                         // this.nameFile = null;
