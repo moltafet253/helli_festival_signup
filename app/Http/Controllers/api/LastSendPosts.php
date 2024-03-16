@@ -158,7 +158,7 @@ class LastSendPosts extends Controller
 
                 $url = $post['file_src'];
                 $word_to_remove = "public";
-                $AssignURL = env('APP_URL') . '/' . str_replace($word_to_remove, 'storage', $url);
+                $AssignURL = 'https://ssmp.ismc.ir/' . str_replace($word_to_remove, 'storage', $url);
 
                 $etelaat_a = DB::connection('helli')->table('etelaat_a')->insert([
                     'jashnvareh' => $festivalID . '-' . $post['festival_title'],
